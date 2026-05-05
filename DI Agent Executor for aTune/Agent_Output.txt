@@ -1,0 +1,277 @@
+=============================================
+Author: Ascendion AAVA
+Created on: 
+Description: Bronze layer ETL pipeline orchestration procedure that loads 12 bronze tables sequentially and logs execution metrics
+=============================================
+
+-- =========================================================
+-- CONVERSION LOG
+-- =========================================================
+-- Input Type : Oracle Stored Procedure
+-- Target Platform : Snowflake
+-- Conversion Approach :
+-- - Converted Oracle CREATE OR REPLACE PROCEDURE to Snowflake CREATE OR REPLACE PROCEDURE with JavaScript
+-- - Replaced VARCHAR2 with VARCHAR
+-- - Converted SYSTIMESTAMP to CURRENT_TIMESTAMP()
+-- - Replaced NVL with COALESCE
+-- - Converted DBMS_OUTPUT.PUT_LINE to JavaScript console logging or return statements
+-- - Converted Oracle exception handling to JavaScript try-catch blocks
+-- - Replaced EXTRACT date functions with Snowflake DATEDIFF for time calculations
+-- - Converted TO_CHAR date formatting to TO_VARCHAR with appropriate format strings
+-- - Replaced USER with CURRENT_USER()
+-- - Converted Oracle INSERT INTO with Snowflake INSERT INTO syntax
+-- - Replaced SQLERRM and SQLCODE with JavaScript error object properties
+-- - Converted COMMIT to Snowflake auto-commit behavior
+-- - Replaced RAISE_APPLICATION_ERROR with JavaScript throw statement
+-- Major Risks / Checks :
+-- - Validate that child procedures (usp_Load_bz_*) exist in Snowflake
+-- - Validate audit log table structure matches INSERT statements
+-- - Validate date/time precision handling
+-- - Validate error logging behavior
+-- =========================================================
+
+CREATE OR REPLACE PROCEDURE bronze.usp_Load_bronze_Layer_Full()
+RETURNS VARCHAR
+LANGUAGE JAVASCRIPT
+EXECUTE AS CALLER
+AS
+$$
+    // Variable declarations
+    var v_ProcedureName = 'bronze.usp_Load_bronze_Layer_Full';
+    var v_StartTime = new Date();
+    var v_EndTime;
+    var v_ExecutionTime;
+    var v_OverallStatus = 'SUCCESS';
+    var v_ErrorMessage = '';
+    var v_ErrorNumber = 0;
+    var v_ErrorSeverity = 0;
+    var v_ErrorState = 0;
+    var v_ErrorLine = 0;
+    var v_TotalRowsProcessed = 0;
+    var v_TotalRowsInserted = 0;
+    var v_TotalRowsFailed = 0;
+    var v_TablesProcessed = 0;
+    var v_TablesSucceeded = 0;
+    var v_TablesFailed = 0;
+    var v_CurrentUser = snowflake.execute({sqlText: "SELECT CURRENT_USER()"}).next() ? snowflake.execute({sqlText: "SELECT CURRENT_USER()"}).getColumnValue(1) : 'UNKNOWN';
+    var v_BatchID;
+    
+    try {
+        // Format batch ID
+        var batchIdQuery = "SELECT TO_VARCHAR(CURRENT_TIMESTAMP(), 'YYYY-MM-DD HH24:MI:SS.FF3')";
+        var batchIdStmt = snowflake.execute({sqlText: batchIdQuery});
+        batchIdStmt.next();
+        v_BatchID = batchIdStmt.getColumnValue(1);
+        
+        // Log start of overall process
+        var logMessage = '';
+        logMessage += '================================================================================' + '\n';
+        logMessage += 'bronze Layer ETL Pipeline - Started at: ' + v_BatchID + '\n';
+        logMessage += 'Executed by: ' + v_CurrentUser + '\n';
+        logMessage += 'Batch ID: ' + v_BatchID + '\n';
+        logMessage += '================================================================================' + '\n';
+        logMessage += '' + '\n';
+        
+        // Load Table 1: bz_New_Monthly_HC_Report
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_New_Monthly_HC_Report('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 2: bz_SchTask (excludes TIMESTAMP column)
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_SchTask('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 3: bz_Hiring_Initiator_Project_Info
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_Hiring_Initiator_Project_Info('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 4: bz_Timesheet_New
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_Timesheet_New('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 5: bz_report_392_all
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_report_392_all('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 6: bz_vw_billing_timesheet_daywise_ne
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 7: bz_vw_consultant_timesheet_daywise
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_vw_consultant_timesheet_daywise('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 8: bz_DimDate
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_DimDate('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 9: bz_holidays_Mexico
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_holidays_Mexico('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 10: bz_holidays_Canada
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_holidays_Canada('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 11: bz_holidays
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_holidays('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Load Table 12: bz_holidays_India
+        snowflake.execute({sqlText: "CALL bronze.usp_Load_bz_holidays_India('" + v_BatchID + "')"});
+        v_TablesProcessed = v_TablesProcessed + 1;
+        
+        // Calculate summary statistics from audit log
+        var successQuery = `
+            SELECT 
+                COUNT(*),
+                COALESCE(SUM(records_inserted), 0)
+            FROM bronze.bz_Audit_Log
+            WHERE batch_id = '` + v_BatchID + `'
+                AND status = 'SUCCESS'
+        `;
+        var successStmt = snowflake.execute({sqlText: successQuery});
+        if (successStmt.next()) {
+            v_TablesSucceeded = successStmt.getColumnValue(1);
+            v_TotalRowsInserted = successStmt.getColumnValue(2);
+        }
+        
+        var failedQuery = `
+            SELECT 
+                COUNT(*),
+                COALESCE(SUM(records_failed), 0)
+            FROM bronze.bz_Audit_Log
+            WHERE batch_id = '` + v_BatchID + `'
+                AND status = 'FAILED'
+        `;
+        var failedStmt = snowflake.execute({sqlText: failedQuery});
+        if (failedStmt.next()) {
+            v_TablesFailed = failedStmt.getColumnValue(1);
+            v_TotalRowsFailed = failedStmt.getColumnValue(2);
+        }
+        
+        v_TotalRowsProcessed = v_TotalRowsInserted + (v_TotalRowsFailed || 0);
+        
+        // Calculate execution time
+        v_EndTime = new Date();
+        v_ExecutionTime = (v_EndTime - v_StartTime) / 1000; // Convert to seconds
+        
+        // Log completion
+        logMessage += '' + '\n';
+        logMessage += '================================================================================' + '\n';
+        logMessage += 'bronze Layer ETL Pipeline - Completed Successfully' + '\n';
+        logMessage += '================================================================================' + '\n';
+        logMessage += 'End Time: ' + v_EndTime.toISOString() + '\n';
+        logMessage += 'Execution Time: ' + v_ExecutionTime + ' seconds' + '\n';
+        logMessage += 'Tables Processed: ' + v_TablesProcessed + '\n';
+        logMessage += 'Tables Succeeded: ' + v_TablesSucceeded + '\n';
+        logMessage += 'Tables Failed: ' + v_TablesFailed + '\n';
+        logMessage += 'Total Rows Inserted: ' + v_TotalRowsInserted + '\n';
+        logMessage += 'Total Rows Failed: ' + (v_TotalRowsFailed || 0) + '\n';
+        logMessage += '================================================================================' + '\n';
+        
+        // Insert master audit record
+        var insertAuditQuery = `
+            INSERT INTO bronze.bz_Audit_Log (
+                source_table,
+                target_table,
+                load_timestamp,
+                start_timestamp,
+                end_timestamp,
+                processed_by,
+                processing_time,
+                status,
+                records_processed,
+                records_inserted,
+                records_failed,
+                batch_id,
+                load_type,
+                created_date
+            )
+            VALUES (
+                'source_layer.*',
+                'bronze.*',
+                '` + v_BatchID + `',
+                '` + v_BatchID + `',
+                TO_VARCHAR(CURRENT_TIMESTAMP(), 'YYYY-MM-DD HH24:MI:SS.FF3'),
+                '` + v_CurrentUser + `',
+                ` + v_ExecutionTime + `,
+                '` + v_OverallStatus + `',
+                ` + v_TotalRowsProcessed + `,
+                ` + v_TotalRowsInserted + `,
+                ` + (v_TotalRowsFailed || 0) + `,
+                '` + v_BatchID + `',
+                'FULL_REFRESH_ALL_TABLES',
+                CURRENT_TIMESTAMP()
+            )
+        `;
+        snowflake.execute({sqlText: insertAuditQuery});
+        
+        return logMessage;
+        
+    } catch (err) {
+        // Capture error details
+        v_ErrorMessage = err.message;
+        v_ErrorNumber = err.code || 0;
+        v_ErrorSeverity = 0;
+        v_ErrorState = 0;
+        v_ErrorLine = err.lineNumber || 0;
+        
+        v_EndTime = new Date();
+        v_ExecutionTime = (v_EndTime - v_StartTime) / 1000;
+        v_OverallStatus = 'FAILED';
+        
+        // Log error
+        var errorLog = '';
+        errorLog += '' + '\n';
+        errorLog += '================================================================================' + '\n';
+        errorLog += 'ERROR in bronze Layer ETL Pipeline' + '\n';
+        errorLog += '================================================================================' + '\n';
+        errorLog += 'Error Number: ' + v_ErrorNumber + '\n';
+        errorLog += 'Error Severity: ' + v_ErrorSeverity + '\n';
+        errorLog += 'Error State: ' + v_ErrorState + '\n';
+        errorLog += 'Error Line: ' + v_ErrorLine + '\n';
+        errorLog += 'Error Message: ' + v_ErrorMessage + '\n';
+        errorLog += '================================================================================' + '\n';
+        
+        // Insert error audit record
+        var insertErrorQuery = `
+            INSERT INTO bronze.bz_Audit_Log (
+                source_table,
+                target_table,
+                load_timestamp,
+                start_timestamp,
+                end_timestamp,
+                processed_by,
+                processing_time,
+                status,
+                error_message,
+                batch_id,
+                load_type,
+                created_date
+            )
+            VALUES (
+                'source_layer.*',
+                'bronze.*',
+                '` + v_BatchID + `',
+                '` + v_BatchID + `',
+                TO_VARCHAR(CURRENT_TIMESTAMP(), 'YYYY-MM-DD HH24:MI:SS.FF3'),
+                '` + v_CurrentUser + `',
+                ` + v_ExecutionTime + `,
+                '` + v_OverallStatus + `',
+                'Error ` + v_ErrorNumber + `: ` + v_ErrorMessage + `',
+                '` + v_BatchID + `',
+                'FULL_REFRESH_ALL_TABLES',
+                CURRENT_TIMESTAMP()
+            )
+        `;
+        
+        try {
+            snowflake.execute({sqlText: insertErrorQuery});
+        } catch (auditErr) {
+            errorLog += 'Failed to insert error audit record: ' + auditErr.message + '\n';
+        }
+        
+        // Re-throw error
+        throw new Error(errorLog + v_ErrorMessage);
+    }
+$$;
