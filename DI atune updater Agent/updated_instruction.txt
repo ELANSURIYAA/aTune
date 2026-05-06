@@ -147,6 +147,7 @@ Do not wrap the final output in double quotes or single quotes; the script must 
 
 ***​​
 
+
 EXPECTED OUTPUT:
 =============================================
 Author: Ascendion AAVA
@@ -246,47 +247,3 @@ Immediately include the conversion log
 End with Snowflake code only
 
 Not be wrapped in quotes of any kind
-
-// CHECK REQUIRED:
-// Oracle EXTRACT(HOUR/MINUTE/SECOND) converted to JavaScript date arithmetic.
-// Validate that execution time calculation preserves exact semantics for time difference computation.
-
-// CHECK REQUIRED:
-// Oracle SQLCODE and SQLERRM converted to JavaScript error.message.
-// Validate that error code mapping and error message formatting match expected audit log requirements.
-
-// NOTE: Oracle COMMIT omitted - Snowflake uses auto-commit for DDL/DML statements.
-// Transactional behavior validated as equivalent for this stored procedure.
-
-// All Oracle constructs successfully converted to Snowflake equivalents.
-// No unconvertible logic identified.
-
-// CHECK REQUIRED:
-// Oracle SYSTIMESTAMP converted to Snowflake CURRENT_TIMESTAMP().
-// Validate timezone handling and precision match requirements.
-
-// CHECK REQUIRED:
-// Oracle TO_CHAR date formatting converted to Snowflake TO_CHAR.
-// Validate format mask compatibility and output format.
-
-// CHECK REQUIRED:
-// Oracle procedure call converted to Snowflake CALL syntax.
-// Validate parameter types, order, and default values match child procedure signature.
-
-// CHECK REQUIRED:
-// Oracle INSERT converted to Snowflake INSERT syntax.
-// Validate data type mappings for all columns (VARCHAR, NUMBER, TIMESTAMP).
-// Ensure NULL handling behavior is consistent.
-
-// CHECK REQUIRED:
-// Oracle aggregation functions (COUNT, SUM) converted to Snowflake equivalents.
-// Validate NULL handling in COUNT and aggregation behavior matches Oracle semantics.
-
-// CHECK REQUIRED:
-// Oracle variable types (VARCHAR2, NUMBER) converted to JavaScript types.
-// Validate precision, scale, and length constraints are preserved in Snowflake table operations.
-
-// VALIDATION COMPLETE:
-// Output verified to contain zero Oracle-specific syntax.
-// All constructs converted to Snowflake-compatible SQL and JavaScript.
-// Ready for deployment as .sql file.
