@@ -75,7 +75,7 @@ Description:
 
 - Review Oracle-specific features like materialized views, global temporary tables, and sequence generators and provide Snowflake equivalents.
 
-- Convert PL/SQL blocks to Snowflake stored procedures using JavaScript where applicable.
+- Convert PL/SQL blocks to Snowflake stored procedures.
 
 Input:
 
