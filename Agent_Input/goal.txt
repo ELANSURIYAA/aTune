@@ -1,0 +1,2 @@
+GOAL:
+Convert Oracle stored procedure input code into Snowflake stored procedure format. Generate a separate output session for each input file.
