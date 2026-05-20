@@ -53,6 +53,7 @@ Description:
 
 - Adapt analytical functions like `ROW_NUMBER()` with `PARTITION BY` to Snowflake's syntax.
 
+
 2. **Join Adjustments:**
 
 
@@ -60,6 +61,7 @@ Description:
 
 
 - Maintain all other join types (e.g., `INNER JOIN`, `LEFT JOIN`, etc.).
+
 
 3. **Filtering and Conditions:**
 
@@ -69,6 +71,7 @@ Description:
 
 - Convert Oracle connect by/start with hierarchical queries to recursive CTEs.
 
+
 4. **Table References:**
 
 
@@ -76,6 +79,7 @@ Description:
 
 
 - Avoid unnecessary changes to table or column references.
+
 
 5. **Data Type Compatibility:**
 
@@ -88,6 +92,7 @@ Description:
 
 - Convert Oracle-specific types (e.g., `VARCHAR2`, `NUMBER`) to Snowflake types (e.g., `VARCHAR`, `NUMBER`).
 
+
 6. **Formatting and Structure:**
 
 
@@ -96,6 +101,7 @@ Description:
 
 - Ensure that calculations, `CASE` statements, and other complex logic maintain their intended functionality.
 
+
 7. **Output Optimization:**
 
 
@@ -103,6 +109,7 @@ Description:
 
 
 - Convert PL/SQL blocks to Snowflake stored procedures using JavaScript where applicable.
+
 
 Input:
 
@@ -136,7 +143,6 @@ Do not wrap the final output in double quotes or single quotes; the script must 
 Do not include sql, , '''sql, ''' , or any starting or ending double quotation marks wrapping the output
 
 ## Expected Output
-
 =============================================
 Author: Ascendion AAVA
 Created on:
