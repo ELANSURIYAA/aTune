@@ -1,0 +1,4 @@
+CHANGE LOG
+
+#   Gap Ref   Change Type   Section Updated   What Was Removed   What Was Added / Kept   Status
+1   GAP-001   D+R           Description       Ensure that if multiple files given as input then do conversion for each file is presented as a distinct session.   Multi-File Processing Rule: When multiple input files are provided, you MUST generate a separate, complete output session for each input file. Each session must include: (1) A unique metadata header with file-specific description, (2) A complete conversion log specific to that file, (3) The fully converted Snowflake code for that file only. Do NOT merge multiple files into a single output. Each file must be processed independently and presented as a distinct, self-contained conversion session with clear file identification (e.g., '-- FILE: <filename>' before each session).   APPLIED
