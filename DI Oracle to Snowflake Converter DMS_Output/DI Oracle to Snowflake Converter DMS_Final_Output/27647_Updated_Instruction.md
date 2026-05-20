@@ -4,15 +4,7 @@
 DI Oracle to Snowflake Converter DMS
 
 ## Description
-Please convert the following Oracle Query to Snowflake and provide an overview of the conversion. When multiple input files are provided, you MUST generate a separate, complete output session for each input file. Each session must include:
-- A unique metadata header with file-specific description
-- A complete conversion log
-- The fully converted Snowflake code for that specific file
-- Clear session separators between files (e.g., '--- END OF FILE: [filename] ---' followed by '--- START OF FILE: [filename] ---')
-
-Each output session must be self-contained and independently executable. Do not merge or combine outputs from multiple files into a single session.
-
-Ensure that the Snowflake query is formatted with proper indentation and line breaks so that it is ready to be stored as a `.sql` file.
+Please convert the following Oracle Query to Snowflake and provide an overview of the conversion. Ensure that if multiple files given as input then do conversion for each file is presented as a distinct session. Ensure that the Snowflake query is formatted with proper indentation and line breaks so that it is ready to be stored as a `.sql` file.
 
 Instructions:
 
@@ -124,35 +116,173 @@ Created on:
 
 Description: (Provide a concise summary of what the code does)
 
-Immediately after the metadata header, provide the converted Snowflake SQL code.
+Created on must be left empty.
 
-Do not include:
+***Initial Conversion Log (Immediately After Header)
 
-Any explanations
+-- =========================================================
+-- CONVERSION LOG
+-- =========================================================
+-- Input Type : Oracle Query / Procedure / Data Access Script
+-- Target Platform : Snowflake
+-- Conversion Approach :
+-- - Converted Oracle SELECT statements into Snowflake SELECT with equivalent column mappings
+-- - Translated Oracle WHERE conditions into Snowflake WHERE clauses preserving logical operators (=, <> , AND, OR)
+-- - Converted Oracle JOINs (INNER, LEFT, RIGHT, FULL) into Snowflake JOIN syntax
+-- - Mapped Oracle aggregation functions (SUM, COUNT, AVG, GROUP BY) into Snowflake aggregation queries
+-- - Converted Oracle UPDATE statements into Snowflake UPDATE with SET clauses
+-- - Translated Oracle INSERT INTO statements into Snowflake INSERT INTO SELECT or VALUES syntax
+-- - Converted Oracle DELETE statements into Snowflake DELETE with matching conditions
+-- - Replaced Oracle-specific functions (NVL, DECODE, SYSDATE) with Snowflake equivalents (COALESCE, CASE, CURRENT_TIMESTAMP)
+-- - Transformed Oracle procedural logic (loops, cursors) into set-based Snowflake queries wherever applicable
+-- - Mapped Oracle tables, views, and subqueries into Snowflake-compatible structures
+-- - Converted Oracle date, timestamp, and string functions into Snowflake equivalent functions
+-- Major Risks / Checks :
+-- - Validate data type mappings between Oracle and Snowflake
+-- - Validate NULL handling differences (NVL vs COALESCE behavior)
+-- - Validate date/time function behavior differences
+-- - Validate join behavior and aggregation consistency
+-- =========================================================
 
-Conversion overview
+**Conversion Log Content Rules:**
+- The conversion log MUST contain ONLY the structured comment block as shown in the template
+- The conversion log is a fixed-format header that documents the conversion approach at a high level
+- NO additional explanations, assumptions, validation notes, or commentary are allowed anywhere in the output
+- The conversion log is NOT a section for detailed conversion documentation
+- After the conversion log ends (after the closing =========================================================), the output MUST contain ONLY:
+  1. Executable Snowflake SQL code
+  2. Mandatory inline comments (CHECK REQUIRED, UNCONVERTED LOGIC, or platform semantic difference comments)
+  3. Standard SQL comments using -- for code clarity
 
-Assumptions
+**Strictly Prohibited After Conversion Log:**
+- Conversion overview sections
+- Assumptions sections
+- Validation notes sections
+- Troubleshooting sections
+- Explanation paragraphs
+- Documentation blocks
+- Summary sections
+- Any prose or narrative text
 
-Validation notes
+**Enforcement:** The output structure is: Metadata Header → Conversion Log → Snowflake SQL Code with Inline Comments ONLY. Nothing else is permitted.
 
-Unconvertible logic sections
+**IMPORTANT CLARIFICATION - Conversion Log vs. Prohibited Explanations:**
 
-Any additional commentary
+The Initial Conversion Log is a MANDATORY, FIXED-FORMAT header that appears exactly once immediately after the metadata header. It is NOT considered an "explanation section" in the context of prohibited content.
 
-The final output must:
+**What IS Allowed:**
+- The structured conversion log block (as templated above) - this is mandatory
+- Inline comments within SQL code (CHECK REQUIRED, UNCONVERTED LOGIC, platform differences)
+- Standard SQL comments (--) for code clarity
 
-Contain only Snowflake SQL syntax
+**What IS Prohibited:**
+- Additional conversion overview sections AFTER the conversion log
+- Separate assumptions sections
+- Separate validation notes sections
+- Narrative explanations outside the conversion log
+- Documentation sections
+- Summary sections at the end
 
-Be properly formatted and ready to store as a .sql file
+**Structure Enforcement:**
+```
+1. Metadata Header (MANDATORY)
+2. Conversion Log (MANDATORY - appears once)
+3. Snowflake SQL Code with Inline Comments ONLY (MANDATORY)
+4. Nothing else
+```
 
-Not include sql, sql, , single quotes, or double quotes at the beginning or end of the output
+The conversion log is a required structural element. All other explanatory content is prohibited.
 
-The metadata header must appear at the top, followed directly by the converted Snowflake SQL code.​
+## Inline Comment Standards (MANDATORY STYLE)
 
-Do not wrap the final output in double quotes or single quotes; the script must start directly with the metadata header and end with the SQL code only.​
+A. Validation required
 
-***​​
+-- CHECK REQUIRED:
+-- Original Oracle condition expression must be validated.
+-- Ensure Snowflake filter logic preserves the exact query semantics.
+
+**Mandatory Application Points for CHECK REQUIRED Comments:**
+- All Oracle-to-Snowflake function conversions where semantic differences exist (e.g., NVL to COALESCE, DECODE to CASE, TO_DATE format differences)
+- All timestamp and date arithmetic conversions (e.g., ADD_MONTHS, MONTHS_BETWEEN, TRUNC)
+- All NULL handling logic conversions
+- All aggregation function conversions where Oracle and Snowflake may behave differently
+- All implicit type casting from Oracle that requires explicit casting in Snowflake
+- All join condition conversions where Oracle outer join syntax (+) is converted to ANSI joins
+- All WHERE clause filter conditions that involve Oracle-specific operators or functions
+
+**Example Usage:**
+```sql
+-- CHECK REQUIRED:
+-- Original Oracle NVL function converted to Snowflake COALESCE.
+-- Ensure NULL handling behavior is validated for this column.
+SELECT COALESCE(column_name, 'default_value') FROM table_name;
+```
+
+**Enforcement:** Every conversion involving the above scenarios MUST include a CHECK REQUIRED comment immediately before or inline with the converted code.
+
+B. Cannot convert safely
+
+-- UNCONVERTED LOGIC:
+-- Oracle feature cannot be deterministically converted.
+-- Manual rewrite required using Snowflake aggregation or application-layer logic.
+
+**Mandatory Application Points for UNCONVERTED LOGIC Comments:**
+- Oracle CONNECT BY / START WITH hierarchical queries that cannot be fully represented in recursive CTEs without semantic loss
+- Oracle PL/SQL procedural constructs (loops, cursors, exception blocks) that cannot be converted to set-based Snowflake SQL
+- Oracle-specific features like ROWNUM, ROWID, or pseudocolumns that have no direct Snowflake equivalent
+- Oracle materialized views with complex refresh logic
+- Oracle global temporary tables with ON COMMIT semantics
+- Oracle autonomous transactions
+- Oracle database links or remote queries
+- Oracle packages, triggers, or object types that require architectural redesign
+- Any Oracle construct where 100% semantic certainty cannot be achieved
+
+**Example Usage:**
+```sql
+-- UNCONVERTED LOGIC:
+-- Original Oracle CONNECT BY hierarchical query cannot be deterministically converted.
+-- Manual rewrite required using Snowflake recursive CTE or application-layer logic.
+-- Original Oracle code:
+-- SELECT employee_id, manager_id, LEVEL
+-- FROM employees
+-- START WITH manager_id IS NULL
+-- CONNECT BY PRIOR employee_id = manager_id;
+```
+
+**Enforcement:** Any Oracle construct that cannot be converted with 100% semantic certainty MUST include an UNCONVERTED LOGIC comment with the original Oracle code snippet and recommended Snowflake approach.
+
+C. Platform semantic difference
+
+-- CHECK REQUIRED:
+-- Oracle data types converted to Snowflake data types.
+-- Validate behavior for NULL handling and implicit conversions.
+
+***What MUST NOT Appear in Output
+
+No markdown
+No documentation sections
+No assumptions
+No validation reports
+No conversion explanations
+No troubleshooting sections
+No repeated headers
+No fabricated logic
+
+Everything must exist only as:
+
+Executable Snowflake queries or aggregation pipelines
+
+Snowflake comments using //
+
+The script must:
+
+Start with the metadata header
+
+Immediately include the conversion log
+
+End with Snowflake code only
+
+Not be wrapped in quotes of any kind
 
 ## Expected Output
 =============================================
