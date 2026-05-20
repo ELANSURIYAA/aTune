@@ -126,9 +126,6 @@ Created on must be left empty.
 -- - Transformed Oracle procedural logic (loops, cursors) into set-based Snowflake queries wherever applicable
 -- - Mapped Oracle tables, views, and subqueries into Snowflake-compatible structures
 -- - Converted Oracle date, timestamp, and string functions into Snowflake equivalent functions
--- Unconvertible Logic Assessment :
--- - [If no unconvertible constructs exist] No unconvertible logic identified in the source Oracle code. All constructs have been deterministically converted to Snowflake equivalents.
--- - [If unconvertible constructs exist] Unconvertible logic documented inline using UNCONVERTED LOGIC comment blocks at exact locations in the output code.
 -- Major Risks / Checks :
 -- - Validate data type mappings between Oracle and Snowflake
 -- - Validate NULL handling differences (NVL vs COALESCE behavior)
@@ -163,41 +160,23 @@ A. Validation required
 -- Original Oracle condition expression must be validated.
 -- Ensure Snowflake filter logic preserves the exact query semantics.
 
-**Decision Guide: CHECK REQUIRED vs UNCONVERTED LOGIC**
+-- CHECK REQUIRED:
+-- Oracle SELECT INTO variable assignment converted to Snowflake JavaScript result set processing.
+-- Validate that result set handling preserves exact query semantics and variable assignment behavior.
 
-Use CHECK REQUIRED when:
-- The Oracle construct CAN be converted to Snowflake
-- The conversion is syntactically valid
-- Manual validation is needed to confirm semantic equivalence
-- Examples: NULL handling differences, date function behavior, aggregation consistency
+-- CHECK REQUIRED:
+-- Oracle procedure call syntax and parameter passing converted to Snowflake stored procedure call.
+-- Validate parameter mapping, IN/OUT/INOUT parameter handling, and return value processing.
 
-Use UNCONVERTED LOGIC when:
-- The Oracle construct CANNOT be deterministically converted
-- No direct Snowflake equivalent exists
-- Manual rewrite or alternative approach is required
-- Examples: CONNECT BY hierarchies (complex cases), autonomous transactions, ROWID operations
-
-If uncertain, default to UNCONVERTED LOGIC and document the reason.
+-- CHECK REQUIRED:
+-- Oracle EXTRACT function converted to Snowflake date arithmetic (DATEDIFF/DATEADD).
+-- Validate that date/time calculations preserve exact temporal semantics and boundary conditions.
 
 B. Cannot convert safely
 
 -- UNCONVERTED LOGIC:
 -- Oracle feature cannot be deterministically converted.
 -- Manual rewrite required using Snowflake aggregation or application-layer logic.
-
-**ENFORCEMENT RULE:**
-- During conversion execution, actively identify Oracle constructs that cannot be converted with 100% semantic certainty
-- For each such construct, you MUST insert an UNCONVERTED LOGIC comment block at the exact location in the output code
-- This is a MANDATORY requirement, not optional
-- If no unconvertible logic exists in the input, no UNCONVERTED LOGIC comment is needed
-- If unconvertible logic exists but is not documented, the conversion is INCOMPLETE
-
-Additionally, in the "Examples of constructs requiring UNCONVERTED LOGIC comments" section, add:
-- Oracle ROWNUM pseudo-column in complex contexts
-- Oracle (+) outer join syntax with multiple conditions
-- Oracle MERGE statements with complex WHEN clauses
-- Oracle collection types (VARRAY, NESTED TABLE)
-- Oracle object types and methods
 
 C. Platform semantic difference
 
@@ -231,21 +210,3 @@ Immediately include the conversion log
 End with Snowflake code only
 
 Not be wrapped in quotes of any kind
-
-***Pre-Delivery Validation Checklist (MANDATORY)
-
-Before finalizing the output, you MUST verify:
-
-1. **Unconvertible Logic Check:**
-   - Review the input Oracle code for constructs listed in the UNCONVERTED LOGIC examples
-   - Confirm that each unconvertible construct has a corresponding UNCONVERTED LOGIC comment in the output
-   - If no unconvertible constructs exist, document this in the conversion log
-
-2. **Comment Completeness:**
-   - Verify all CHECK REQUIRED comments are placed where validation is needed
-   - Ensure UNCONVERTED LOGIC comments follow the exact format specified
-
-3. **Output Purity:**
-   - Confirm zero Oracle syntax remains in the output
-   - Verify no markdown, quotes, or documentation sections are present
-   - Validate that the output starts with metadata header and ends with Snowflake code only
