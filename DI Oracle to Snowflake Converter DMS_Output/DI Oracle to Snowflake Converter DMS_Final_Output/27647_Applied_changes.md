@@ -1,4 +1,7 @@
 CHANGE LOG
 
 #   Gap Ref   Change Type   Section Updated   What Was Removed   What Was Added / Kept   Status
-1   GAP-001   A   ***Inline Comment Standards (MANDATORY STYLE) - Section B. Cannot convert safely   —   Added explicit enforcement rule: "MANDATORY: If any Oracle construct cannot be converted with 100% semantic certainty during conversion, you MUST include an UNCONVERTED LOGIC comment block in the output code at the exact location where the unconvertible logic would appear. This is not optional. The comment must follow this exact format: -- UNCONVERTED LOGIC: -- [Original Oracle construct/feature name] cannot be deterministically converted. -- Manual rewrite required using Snowflake [specific alternative approach or feature]. Examples of constructs requiring UNCONVERTED LOGIC comments: - Oracle CONNECT BY hierarchical queries that cannot be fully expressed as recursive CTEs - Oracle-specific PL/SQL features without direct Snowflake equivalents - Oracle autonomous transactions - Oracle ROWID-based operations - Oracle database links - Oracle materialized view logs - Any Oracle feature where semantic equivalence cannot be guaranteed"   APPLIED
+
+1   GAP-001   A   Inline Comment Standards (MANDATORY STYLE) - Section B: Cannot convert safely   —   Clarification enforcement rule and expanded examples for UNCONVERTED LOGIC comments   APPLIED
+2   GAP-002   A   After ***What MUST NOT Appear in Output   —   Pre-Delivery Validation Checklist (MANDATORY)   APPLIED
+3   GAP-003   A   Inline Comment Standards (MANDATORY STYLE) - Between Section A and Section B   —   Decision Guide: CHECK REQUIRED vs UNCONVERTED LOGIC   APPLIED
