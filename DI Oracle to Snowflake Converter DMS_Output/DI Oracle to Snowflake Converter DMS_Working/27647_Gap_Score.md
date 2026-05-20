@@ -2,35 +2,27 @@ QUALITY SCORE
 
 | Dimension | Weight | Raw Score | Weighted Score | Notes |
 |---|---|---|---|---|
-| Completeness | 40% | 100 / 100 | 40.0 / 40 | 17 of 17 required items present |
-| Accuracy | 40% | 100 / 100 | 40.0 / 40 | 17 of 17 present items correct |
+| Completeness | 40% | 60 / 100 | 24.0 / 40 | 6 of 10 required completeness items present |
+| Accuracy | 40% | 60 / 100 | 24.0 / 40 | 3 of 5 present items correct |
 | Efficiency | 20% | 100 / 100 | 20.0 / 20 | 0 observable optimization gaps |
-| TOTAL | 100% | | 100.0 / 100 | |
+| TOTAL | 100% | | 68.0 / 100 | |
 
 SCORE JUSTIFICATION
 
-All required completeness, accuracy, and efficiency criteria from the instructions and reviewer input are fully met. No missing, incorrect, or inefficient items were found in the output. All previously open and new gaps are now closed (see Gap Table: #1–#17). The output is fully aligned with the GOAL, INSTRUCTION, EXECUTOR_INPUT, and REVIEW_INPUTS. No deductions were necessary.
+Significant completeness gaps exist (Gaps 1, 2): mandatory CHECK REQUIRED and UNCONVERTED LOGIC comments are missing, which are explicitly required by the instructions and reviewer checks. Accuracy is impacted (Gap 3) due to the presence of explanations and conversion overview outside the allowed sections. All other required sections are present, and there are no efficiency gaps. The overall score reflects these critical omissions and misalignments.
 
 GAP STATUS SUMMARY
 
 | Gap Ref | Gap Summary | Opened Iteration | Previous Status | Current Status | Resolved Iteration | Evidence |
 |---|---|---|---|---|---|---|
-| 1 | Multiple input file session handling | ITERATION-1 | OPEN | CLOSED | CURRENT | Only one input file provided; requirement met. |
-| 2 | Output starts with metadata header | CURRENT | NONE | CLOSED | CURRENT | Output starts with metadata header. |
-| 3 | Metadata header appears once | CURRENT | NONE | CLOSED | CURRENT | Metadata header appears once. |
-| 4 | Metadata contains required fields | CURRENT | NONE | CLOSED | CURRENT | Metadata contains Author, Created on, Description. |
-| 5 | Conversion log after metadata | CURRENT | NONE | CLOSED | CURRENT | Conversion log present after metadata. |
-| 6 | All conversion log entries present | CURRENT | NONE | CLOSED | CURRENT | All mandatory log entries present. |
-| 7 | Snowflake SQL after log | CURRENT | NONE | CLOSED | CURRENT | Snowflake SQL code present after log. |
-| 8 | All Oracle procedures converted | CURRENT | NONE | CLOSED | CURRENT | All Oracle procedures converted. |
-| 9 | Only Snowflake SQL and comments | CURRENT | NONE | CLOSED | CURRENT | Only Snowflake SQL and comments present. |
-| 10 | Oracle functions mapped | CURRENT | NONE | CLOSED | CURRENT | All Oracle functions mapped. |
-| 11 | Joins/filtering/aggregation mapped | CURRENT | NONE | CLOSED | CURRENT | Joins/filtering/aggregation mapped. |
-| 12 | Data types mapped | CURRENT | NONE | CLOSED | CURRENT | Data types mapped. |
-| 13 | No Oracle/SQL Server syntax | CURRENT | NONE | CLOSED | CURRENT | No Oracle/SQL Server syntax. |
-| 14 | Table/column names unchanged | CURRENT | NONE | CLOSED | CURRENT | Table/column names unchanged. |
-| 15 | No assumptions/fabrications | CURRENT | NONE | CLOSED | CURRENT | No assumptions/fabrications. |
-| 16 | No repeated headers/logs | CURRENT | NONE | CLOSED | CURRENT | No repeated headers/logs. |
-| 17 | No redundancy/verbosity | CURRENT | NONE | CLOSED | CURRENT | No redundancy/verbosity. |
-
-No previous Gap Report provided. This is the baseline review. Gap tracking begins from the next iteration.
+| 1 | Missing CHECK REQUIRED comments for validation-required logic | CURRENT | NONE | OPEN | NOT RESOLVED | No CHECK REQUIRED comments found in the output for any validation-required logic. |
+| 2 | Missing UNCONVERTED LOGIC comments for unsupported deterministic conversions | CURRENT | NONE | OPEN | NOT RESOLVED | No UNCONVERTED LOGIC comments found in the output for any unsupported deterministic conversions. |
+| 3 | Output contains explanations/conversion overview outside allowed sections | CURRENT | NONE | OPEN | NOT RESOLVED | Output contains a conversion log section with explanations and overview, which is not allowed per the strict output requirements. |
+| 4 | No Oracle or SQL Server syntax present | CURRENT | NONE | CLOSED | CURRENT | Output does not contain Oracle or SQL Server syntax. |
+| 5 | Output begins with metadata header | CURRENT | NONE | CLOSED | CURRENT | Output begins with the metadata header. |
+| 6 | Output contains metadata header exactly once | CURRENT | NONE | CLOSED | CURRENT | Output contains the metadata header exactly once. |
+| 7 | Output contains conversion log section immediately after metadata header | CURRENT | NONE | CLOSED | CURRENT | Output contains the conversion log section immediately after the metadata header. |
+| 8 | Output contains converted Snowflake SQL code after conversion log | CURRENT | NONE | CLOSED | CURRENT | Output contains converted Snowflake SQL code after the conversion log. |
+| 9 | Output converts all Oracle queries/procedures from source input | CURRENT | NONE | CLOSED | CURRENT | Output converts the main procedure from the source input. |
+| 10 | Table and column names preserved | CURRENT | NONE | CLOSED | CURRENT | Output preserves table and column names. |
+| 11 | No redundant/repeated sections | CURRENT | NONE | CLOSED | CURRENT | Output does not contain redundant or repeated sections. |
