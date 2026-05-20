@@ -1,5 +1,0 @@
-| # | Dimension | Category | Expected Output | Actual Output | Gap Resolution Recommendation | Previous Status | Current Status |
-|---|---|---|---|---|---|---|---|
-1 | Completeness | NP | Output must include a "CHECK REQUIRED" comment for every place where semantic validation is required, as per INSTRUCTION and Reviewer Additional Input. | "CHECK REQUIRED" comments are present for SELECT INTO/result set processing and error propagation. | No action required. | OPEN | CLOSED |
-2 | Accuracy | NC | All Oracle SELECT INTO statements must be converted to Snowflake result set processing with explicit validation comments as per INSTRUCTION and Reviewer Additional Input. | SELECT INTO statements are converted to Snowflake result set processing, with explicit validation comments present. | No action required. | OPEN | CLOSED |
-3 | Accuracy | NC | All Oracle RAISE_APPLICATION_ERROR statements must be converted to Snowflake error propagation with explicit validation comments as per INSTRUCTION and Reviewer Additional Input. | RAISE_APPLICATION_ERROR is converted to JavaScript throw, with explicit validation comment present. | No action required. | OPEN | CLOSED |
