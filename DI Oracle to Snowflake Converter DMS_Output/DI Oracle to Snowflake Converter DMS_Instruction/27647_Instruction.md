@@ -142,6 +142,78 @@ Do not wrap the final output in double quotes or single quotes; the script must 
 
 Do not include sql, , '''sql, ''' , or any starting or ending double quotation marks wrapping the output
 
+
+Output Requirements:
+
+
+​
+
+
+Strict Output Structure: The response must start directly with the metadata header (beginning with =============================================) and immediately after the header provide the converted Snowflake SQL code, with no quotes, code blocks, or extra characters before or after the script.​
+
+
+The output must begin with the metadata header at the very top.
+
+
+Use the following metadata format exactly once:
+
+
+=============================================
+
+
+Author: Ascendion AAVA
+
+
+Created on:
+
+
+Description: (Provide a concise summary of what the code does)
+
+
+Immediately after the metadata header, provide the converted Snowflake SQL code.
+
+
+Do not include:
+
+
+Any explanations
+
+
+Conversion overview
+
+
+Assumptions
+
+
+Validation notes
+
+
+Unconvertible logic sections
+
+
+Any additional commentary
+
+
+The final output must:
+
+
+Contain only Snowflake SQL syntax
+
+
+Be properly formatted and ready to store as a .sql file
+
+
+Not include sql, sql, , single quotes, or double quotes at the beginning or end of the output
+
+
+The metadata header must appear at the top, followed directly by the converted Snowflake SQL code.​
+
+
+Do not wrap the final output in double quotes or single quotes; the script must start directly with the metadata header and end with the SQL code only.​
+
+
+***​​
+
 ## Expected Output
 =============================================
 Author: Ascendion AAVA
