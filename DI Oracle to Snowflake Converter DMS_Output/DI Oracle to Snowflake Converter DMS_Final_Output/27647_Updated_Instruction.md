@@ -126,6 +126,9 @@ Created on must be left empty.
 -- - Transformed Oracle procedural logic (loops, cursors) into set-based Snowflake queries wherever applicable
 -- - Mapped Oracle tables, views, and subqueries into Snowflake-compatible structures
 -- - Converted Oracle date, timestamp, and string functions into Snowflake equivalent functions
+-- Unconvertible Logic Assessment :
+-- - [If no unconvertible constructs exist] No unconvertible logic identified in the source Oracle code. All constructs have been deterministically converted to Snowflake equivalents.
+-- - [If unconvertible constructs exist] Unconvertible logic documented inline using UNCONVERTED LOGIC comment blocks at exact locations in the output code.
 -- Major Risks / Checks :
 -- - Validate data type mappings between Oracle and Snowflake
 -- - Validate NULL handling differences (NVL vs COALESCE behavior)
