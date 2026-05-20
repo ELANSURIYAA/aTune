@@ -42,7 +42,6 @@ Description:
 
 (Only once in the top)
 
-
 1. **Function and Syntax Conversion:**
 
 
@@ -54,7 +53,6 @@ Description:
 
 - Adapt analytical functions like `ROW_NUMBER()` with `PARTITION BY` to Snowflake's syntax.
 
-
 2. **Join Adjustments:**
 
 
@@ -62,7 +60,6 @@ Description:
 
 
 - Maintain all other join types (e.g., `INNER JOIN`, `LEFT JOIN`, etc.).
-
 
 3. **Filtering and Conditions:**
 
@@ -72,7 +69,6 @@ Description:
 
 - Convert Oracle connect by/start with hierarchical queries to recursive CTEs.
 
-
 4. **Table References:**
 
 
@@ -80,7 +76,6 @@ Description:
 
 
 - Avoid unnecessary changes to table or column references.
-
 
 5. **Data Type Compatibility:**
 
@@ -93,7 +88,6 @@ Description:
 
 - Convert Oracle-specific types (e.g., `VARCHAR2`, `NUMBER`) to Snowflake types (e.g., `VARCHAR`, `NUMBER`).
 
-
 6. **Formatting and Structure:**
 
 
@@ -102,7 +96,6 @@ Description:
 
 - Ensure that calculations, `CASE` statements, and other complex logic maintain their intended functionality.
 
-
 7. **Output Optimization:**
 
 
@@ -110,7 +103,6 @@ Description:
 
 
 - Convert PL/SQL blocks to Snowflake stored procedures using JavaScript where applicable.
-
 
 Input:
 
@@ -143,12 +135,10 @@ Do not wrap the final output in double quotes or single quotes; the script must 
 
 Do not include sql, , '''sql, ''' , or any starting or ending double quotation marks wrapping the output
 
-
 Output Requirements:
 
 
 ​
-
 
 Strict Output Structure: The response must start directly with the metadata header (beginning with =============================================) and immediately after the header provide the converted Snowflake SQL code, with no quotes, code blocks, or extra characters before or after the script.​
 
@@ -169,7 +159,6 @@ Created on:
 
 
 Description: (Provide a concise summary of what the code does)
-
 
 Immediately after the metadata header, provide the converted Snowflake SQL code.
 
@@ -194,7 +183,6 @@ Unconvertible logic sections
 
 Any additional commentary
 
-
 The final output must:
 
 
@@ -205,7 +193,6 @@ Be properly formatted and ready to store as a .sql file
 
 
 Not include sql, sql, , single quotes, or double quotes at the beginning or end of the output
-
 
 The metadata header must appear at the top, followed directly by the converted Snowflake SQL code.​
 
