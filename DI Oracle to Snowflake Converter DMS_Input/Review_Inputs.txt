@@ -1,0 +1,50 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+- Verify that the output begins with the required metadata header (Author, Created on, Description) exactly once at the top.
+- Confirm that the metadata header is followed immediately by the conversion log section, as specified.
+- Ensure all Oracle-specific functions (e.g., NVL, TO_DATE, DECODE, SYSTIMESTAMP, SQLERRM, SQLCODE) are addressed and converted or commented as required.
+- Check that all variable declarations and procedural logic from the input Oracle procedure are represented in the Snowflake output, either as converted code or documented as unconvertible logic.
+- Validate that all table load operations (bronze.usp_Load_bz_New_Monthly_HC_Report, bronze.usp_Load_bz_SchTask, etc.) are included and converted or commented appropriately.
+- Confirm that all audit log operations (INSERT INTO bronze.bz_Audit_Log, SELECT statements) are present and converted or commented as needed.
+- Ensure that exception handling logic is addressed, with unconvertible Oracle constructs documented per instruction.
+- Verify that all input tables and referenced entities from the Oracle code are included in the Snowflake output.
+- Check that the output contains only Snowflake SQL syntax and no Oracle or SQL Server-specific syntax remains.
+- Confirm that the output is formatted with proper indentation and line breaks for readability.
+- Ensure that the output does not include any explanations, conversion overview, assumptions, validation notes, or additional commentary.
+- Validate that the output is ready to be stored as a .sql file, with no wrapping quotes or code blocks.
+- Confirm that all mandatory inline comment standards (-- CHECK REQUIRED, -- UNCONVERTED LOGIC, etc.) are used where applicable.
+- Ensure that all required calculations, CASE statements, and complex logic are maintained in the converted output.
+- Verify that all business rules and dependencies from both instructions and input file are covered.
+- Check that the output structure follows the strict sequential execution requirement.
+
+Accuracy Checks
+- Validate that the output aligns with the provided instructions and does not introduce unsupported assumptions or hallucinated content.
+- Confirm that all Oracle constructs are either deterministically converted or documented as unconvertible logic with clear comments.
+- Ensure that dependency mappings and technical mappings are logically correct and traceable to the input file.
+- Check that data type conversions (e.g., VARCHAR2 to VARCHAR, NUMBER to NUMBER) are accurate and documented for semantic differences.
+- Validate that NULL handling, COUNT semantics, CHAR vs VARCHAR padding, DATE/TIMESTAMP handling, and DECIMAL precision/scale differences are analyzed and documented as required.
+- Confirm that all join operations and filter conditions are converted to Snowflake equivalents and preserve the original query semantics.
+- Ensure that all findings, recommendations, and gap identifications are justified by the input content.
+- Check that terminology is used consistently and required formatting standards are followed.
+- Validate that no false-positive gaps or false-negative omissions occur in the output.
+- Confirm that values, tables, and classifications accurately match the source content.
+- Ensure that relationships between entities/components are correctly interpreted and represented.
+- Check that status/resolution tracking is accurate if applicable.
+- Validate that recommendations align with the identified findings and are instruction-aligned.
+- Confirm that data extracted from the input file is represented correctly in the output.
+- Ensure that no instruction is misinterpreted or partially implemented.
+
+Efficiency Checks
+- Verify that duplicate analysis and redundant explanations are avoided in the output.
+- Confirm that repeated gap entries and duplicate dependency mappings are eliminated.
+- Ensure that the output remains concise, structured, and free of unnecessary sections.
+- Check that formatting is clean and optimized for readability and review efficiency.
+- Validate that excessive verbosity is avoided and overlapping findings are consolidated.
+- Ensure that tables and content from the input file are not unnecessarily repeated unless required.
+- Confirm that similar findings are grouped logically where appropriate.
+- Check that redundant classifications, tags, and validations are avoided.
+- Validate that large sections are summarized efficiently where allowed by instructions.
+- Ensure that the output structure improves readability and review efficiency.
+- Confirm that the output is token-efficient while maintaining completeness.
+- Check that the script starts directly with the metadata header and ends with Snowflake code only, with no wrapping quotes or extra characters.
