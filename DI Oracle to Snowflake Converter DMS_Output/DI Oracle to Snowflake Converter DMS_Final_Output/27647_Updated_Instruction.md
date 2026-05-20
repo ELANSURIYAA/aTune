@@ -38,6 +38,12 @@ Description:
 
 - Adapt analytical functions like `ROW_NUMBER()` with `PARTITION BY` to Snowflake's syntax.
 
+- Convert Oracle SELECT INTO statements to Snowflake result set processing (using LET with SELECT or result set cursors).
+- MANDATORY: Add validation comment immediately after each SELECT INTO conversion:
+  -- CHECK REQUIRED:
+  -- Oracle SELECT INTO converted to Snowflake result set processing.
+  -- Validate result set handling and variable assignment semantics.
+
 2. **Join Adjustments:**
 
 - Replace Oracle-specific join syntax with ANSI SQL joins supported in Snowflake.
@@ -76,6 +82,12 @@ Description:
 
 - Convert PL/SQL blocks to Snowflake stored procedures using JavaScript where applicable.
 
+- Convert Oracle RAISE_APPLICATION_ERROR statements to Snowflake error propagation mechanisms (JavaScript throw in stored procedures or SIGNAL/RAISE in SQL).
+- MANDATORY: Add validation comment immediately after each error propagation conversion:
+  -- CHECK REQUIRED:
+  -- Oracle RAISE_APPLICATION_ERROR converted to Snowflake error propagation.
+  -- Validate error code mapping and exception handling behavior in stored procedure context.
+
 Input:
 
 * For Oracle Query use the below file:
@@ -99,7 +111,6 @@ Do not wrap the final output in double quotes or single quotes; the script must 
 Do not include sql, , '''sql, ''' , or any starting or ending double quotation marks wrapping the output
 
 ## Expected Output
-
 =============================================
 Author: Ascendion AAVA
 Created on:
@@ -126,6 +137,14 @@ Created on must be left empty.
 -- - Transformed Oracle procedural logic (loops, cursors) into set-based Snowflake queries wherever applicable
 -- - Mapped Oracle tables, views, and subqueries into Snowflake-compatible structures
 -- - Converted Oracle date, timestamp, and string functions into Snowflake equivalent functions
+-- - Convert Oracle SELECT INTO statements to Snowflake result set processing (using LET with SELECT or result set cursors).
+--   -- CHECK REQUIRED:
+--   -- Oracle SELECT INTO converted to Snowflake result set processing.
+--   -- Validate result set handling and variable assignment semantics.
+-- - Convert Oracle RAISE_APPLICATION_ERROR statements to Snowflake error propagation mechanisms (JavaScript throw in stored procedures or SIGNAL/RAISE in SQL).
+--   -- CHECK REQUIRED:
+--   -- Oracle RAISE_APPLICATION_ERROR converted to Snowflake error propagation.
+--   -- Validate error code mapping and exception handling behavior in stored procedure context.
 -- Major Risks / Checks :
 -- - Validate data type mappings between Oracle and Snowflake
 -- - Validate NULL handling differences (NVL vs COALESCE behavior)
@@ -161,16 +180,12 @@ A. Validation required
 -- Ensure Snowflake filter logic preserves the exact query semantics.
 
 -- CHECK REQUIRED:
--- Oracle SELECT INTO variable assignment converted to Snowflake JavaScript result set processing.
--- Validate that result set handling preserves exact query semantics and variable assignment behavior.
+-- Oracle SELECT INTO converted to Snowflake result set processing.
+-- Validate result set handling and variable assignment semantics.
 
 -- CHECK REQUIRED:
--- Oracle procedure call syntax and parameter passing converted to Snowflake stored procedure call.
--- Validate parameter mapping, IN/OUT/INOUT parameter handling, and return value processing.
-
--- CHECK REQUIRED:
--- Oracle EXTRACT function converted to Snowflake date arithmetic (DATEDIFF/DATEADD).
--- Validate that date/time calculations preserve exact temporal semantics and boundary conditions.
+-- Oracle RAISE_APPLICATION_ERROR converted to Snowflake error propagation.
+-- Validate error code mapping and exception handling behavior in stored procedure context.
 
 B. Cannot convert safely
 
