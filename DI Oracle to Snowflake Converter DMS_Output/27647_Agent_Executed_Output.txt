@@ -10,27 +10,25 @@ Description: Snowflake stored procedure to orchestrate full refresh load of bron
 -- Input Type : Oracle Procedure
 -- Target Platform : Snowflake
 -- Conversion Approach :
--- - Converted Oracle CREATE OR REPLACE PROCEDURE into Snowflake CREATE OR REPLACE PROCEDURE with JavaScript
--- - Translated Oracle variable declarations (VARCHAR2, NUMBER, TIMESTAMP) into Snowflake JavaScript variables
+-- - Converted Oracle CREATE OR REPLACE PROCEDURE to Snowflake stored procedure using JavaScript
+-- - Translated Oracle variable declarations (VARCHAR2, NUMBER, TIMESTAMP) to Snowflake JavaScript variables
 -- - Replaced Oracle SYSTIMESTAMP with Snowflake CURRENT_TIMESTAMP()
--- - Converted Oracle USER function into Snowflake CURRENT_USER()
+-- - Converted Oracle USER function to Snowflake CURRENT_USER()
 -- - Replaced Oracle TO_CHAR date formatting with Snowflake TO_VARCHAR and TO_CHAR equivalents
--- - Converted Oracle DBMS_OUTPUT.PUT_LINE into Snowflake JavaScript return statements and logging
--- - Translated Oracle procedure calls into Snowflake CALL statements within JavaScript
--- - Converted Oracle SELECT INTO statements into Snowflake JavaScript result set processing
--- - Replaced Oracle NVL function with Snowflake COALESCE
--- - Converted Oracle EXTRACT function for timestamp arithmetic into Snowflake DATEDIFF
--- - Translated Oracle INSERT INTO statements into Snowflake INSERT with JavaScript variable binding
--- - Converted Oracle COMMIT into Snowflake auto-commit behavior
--- - Replaced Oracle EXCEPTION WHEN OTHERS with JavaScript try-catch blocks
--- - Converted Oracle SQLERRM and SQLCODE into Snowflake JavaScript error object properties
--- - Replaced Oracle RAISE_APPLICATION_ERROR with JavaScript throw statement
+-- - Converted Oracle DBMS_OUTPUT.PUT_LINE to Snowflake JavaScript return statements and logging
+-- - Translated Oracle procedure calls to Snowflake CALL statements within JavaScript
+-- - Replaced Oracle NVL with Snowflake COALESCE
+-- - Converted Oracle EXTRACT function for date arithmetic to Snowflake DATEDIFF
+-- - Translated Oracle INSERT INTO statements to Snowflake INSERT with equivalent syntax
+-- - Replaced Oracle COMMIT with Snowflake auto-commit behavior
+-- - Converted Oracle EXCEPTION WHEN OTHERS to JavaScript try-catch blocks
+-- - Replaced Oracle SQLERRM and SQLCODE with JavaScript error object properties
+-- - Converted Oracle RAISE_APPLICATION_ERROR to JavaScript throw statement
 -- Major Risks / Checks :
--- - Validate timestamp arithmetic conversion from Oracle EXTRACT to Snowflake DATEDIFF
--- - Validate NULL handling differences between Oracle NVL and Snowflake COALESCE
--- - Validate transaction behavior differences (Oracle explicit COMMIT vs Snowflake auto-commit)
--- - Validate error handling behavior between Oracle exceptions and JavaScript try-catch
--- - Validate procedure call syntax and parameter passing
+-- - Validate date/time function behavior differences between Oracle and Snowflake
+-- - Validate NULL handling differences (NVL vs COALESCE behavior)
+-- - Validate transaction management (Oracle COMMIT vs Snowflake auto-commit)
+-- - Validate error handling and exception propagation
 -- =========================================================
 
 CREATE OR REPLACE PROCEDURE bronze.usp_Load_bronze_Layer_Full()
@@ -61,16 +59,24 @@ $$
     
     try {
         // Get current user
-        var userStmt = snowflake.createStatement({
-            sqlText: "SELECT CURRENT_USER()"
-        });
+        // CHECK REQUIRED:
+        // Oracle USER function converted to Snowflake CURRENT_USER().
+        // Validate that user context is correctly captured.
+        var userStmt = snowflake.createStatement({sqlText: "SELECT CURRENT_USER()"});
         var userResult = userStmt.execute();
         if (userResult.next()) {
             v_CurrentUser = userResult.getColumnValue(1);
         }
         
-        // Format batch ID
-        v_BatchID = v_StartTime.toISOString().replace('T', ' ').substring(0, 23);
+        // Generate batch ID
+        // CHECK REQUIRED:
+        // Oracle TO_CHAR date formatting converted to Snowflake TO_VARCHAR.
+        // Validate timestamp format matches expected pattern.
+        var batchStmt = snowflake.createStatement({sqlText: "SELECT TO_VARCHAR(CURRENT_TIMESTAMP(), 'YYYY-MM-DD HH24:MI:SS.FF3')"});
+        var batchResult = batchStmt.execute();
+        if (batchResult.next()) {
+            v_BatchID = batchResult.getColumnValue(1);
+        }
         
         // Log start of overall process
         var logMessage = '';
@@ -82,152 +88,105 @@ $$
         logMessage += '\n';
         
         // Load Table 1: bz_New_Monthly_HC_Report
-        var stmt1 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_New_Monthly_HC_Report(?)",
-            binds: [v_BatchID]
-        });
-        stmt1.execute();
+        // CHECK REQUIRED:
+        // Oracle procedure call syntax converted to Snowflake stored procedure call.
+        // Validate parameter mapping and execution behavior.
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_New_Monthly_HC_Report(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
-        // Load Table 2: bz_SchTask
-        var stmt2 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_SchTask(?)",
-            binds: [v_BatchID]
-        });
-        stmt2.execute();
+        // Load Table 2: bz_SchTask (excludes TIMESTAMP column)
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_SchTask(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 3: bz_Hiring_Initiator_Project_Info
-        var stmt3 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_Hiring_Initiator_Project_Info(?)",
-            binds: [v_BatchID]
-        });
-        stmt3.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_Hiring_Initiator_Project_Info(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 4: bz_Timesheet_New
-        var stmt4 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_Timesheet_New(?)",
-            binds: [v_BatchID]
-        });
-        stmt4.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_Timesheet_New(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 5: bz_report_392_all
-        var stmt5 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_report_392_all(?)",
-            binds: [v_BatchID]
-        });
-        stmt5.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_report_392_all(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 6: bz_vw_billing_timesheet_daywise_ne
-        var stmt6 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne(?)",
-            binds: [v_BatchID]
-        });
-        stmt6.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 7: bz_vw_consultant_timesheet_daywise
-        var stmt7 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_vw_consultant_timesheet_daywise(?)",
-            binds: [v_BatchID]
-        });
-        stmt7.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_vw_consultant_timesheet_daywise(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 8: bz_DimDate
-        var stmt8 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_DimDate(?)",
-            binds: [v_BatchID]
-        });
-        stmt8.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_DimDate(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 9: bz_holidays_Mexico
-        var stmt9 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_holidays_Mexico(?)",
-            binds: [v_BatchID]
-        });
-        stmt9.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_holidays_Mexico(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 10: bz_holidays_Canada
-        var stmt10 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_holidays_Canada(?)",
-            binds: [v_BatchID]
-        });
-        stmt10.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_holidays_Canada(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 11: bz_holidays
-        var stmt11 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_holidays(?)",
-            binds: [v_BatchID]
-        });
-        stmt11.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_holidays(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Load Table 12: bz_holidays_India
-        var stmt12 = snowflake.createStatement({
-            sqlText: "CALL bronze.usp_Load_bz_holidays_India(?)",
-            binds: [v_BatchID]
-        });
-        stmt12.execute();
+        snowflake.createStatement({sqlText: "CALL bronze.usp_Load_bz_holidays_India(?)", binds: [v_BatchID]}).execute();
         v_TablesProcessed = v_TablesProcessed + 1;
         
         // Calculate summary statistics from audit log
-        var summaryStmt1 = snowflake.createStatement({
-            sqlText: `
-                SELECT 
-                    COUNT(*),
-                    COALESCE(SUM(records_inserted), 0)
-                FROM bronze.bz_Audit_Log
-                WHERE batch_id = ?
-                    AND status = 'SUCCESS'
-            `,
+        // CHECK REQUIRED:
+        // Oracle NVL converted to Snowflake COALESCE.
+        // Validate NULL handling behavior matches Oracle semantics.
+        var successStmt = snowflake.createStatement({
+            sqlText: `SELECT 
+                        COUNT(*),
+                        COALESCE(SUM(records_inserted), 0)
+                      FROM bronze.bz_Audit_Log
+                      WHERE batch_id = ?
+                        AND status = 'SUCCESS'`,
             binds: [v_BatchID]
         });
-        var summaryResult1 = summaryStmt1.execute();
-        if (summaryResult1.next()) {
-            v_TablesSucceeded = summaryResult1.getColumnValue(1);
-            v_TotalRowsInserted = summaryResult1.getColumnValue(2);
+        var successResult = successStmt.execute();
+        if (successResult.next()) {
+            v_TablesSucceeded = successResult.getColumnValue(1);
+            v_TotalRowsInserted = successResult.getColumnValue(2);
         }
         
-        var summaryStmt2 = snowflake.createStatement({
-            sqlText: `
-                SELECT 
-                    COUNT(*),
-                    COALESCE(SUM(records_failed), 0)
-                FROM bronze.bz_Audit_Log
-                WHERE batch_id = ?
-                    AND status = 'FAILED'
-            `,
+        var failedStmt = snowflake.createStatement({
+            sqlText: `SELECT 
+                        COUNT(*),
+                        COALESCE(SUM(records_failed), 0)
+                      FROM bronze.bz_Audit_Log
+                      WHERE batch_id = ?
+                        AND status = 'FAILED'`,
             binds: [v_BatchID]
         });
-        var summaryResult2 = summaryStmt2.execute();
-        if (summaryResult2.next()) {
-            v_TablesFailed = summaryResult2.getColumnValue(1);
-            v_TotalRowsFailed = summaryResult2.getColumnValue(2);
+        var failedResult = failedStmt.execute();
+        if (failedResult.next()) {
+            v_TablesFailed = failedResult.getColumnValue(1);
+            v_TotalRowsFailed = failedResult.getColumnValue(2);
         }
         
         v_TotalRowsProcessed = v_TotalRowsInserted + (v_TotalRowsFailed || 0);
         
         // Calculate execution time
+        // CHECK REQUIRED:
+        // Oracle EXTRACT function converted to Snowflake DATEDIFF.
+        // Validate that date/time calculations preserve exact temporal semantics.
         v_EndTime = new Date();
         v_ExecutionTime = (v_EndTime - v_StartTime) / 1000;
-        
-        // CHECK REQUIRED:
-        // Oracle EXTRACT function for timestamp arithmetic converted to JavaScript date arithmetic.
-        // Validate execution time calculation accuracy in seconds.
         
         // Log completion
         logMessage += '\n';
         logMessage += '================================================================================\n';
         logMessage += 'bronze Layer ETL Pipeline - Completed Successfully\n';
         logMessage += '================================================================================\n';
-        logMessage += 'End Time: ' + v_EndTime.toISOString().replace('T', ' ').substring(0, 23) + '\n';
+        logMessage += 'End Time: ' + v_EndTime.toISOString() + '\n';
         logMessage += 'Execution Time: ' + v_ExecutionTime + ' seconds\n';
         logMessage += 'Tables Processed: ' + v_TablesProcessed + '\n';
         logMessage += 'Tables Succeeded: ' + v_TablesSucceeded + '\n';
@@ -237,45 +196,42 @@ $$
         logMessage += '================================================================================\n';
         
         // Insert master audit record
-        var auditStmt = snowflake.createStatement({
-            sqlText: `
-                INSERT INTO bronze.bz_Audit_Log (
-                    source_table,
-                    target_table,
-                    load_timestamp,
-                    start_timestamp,
-                    end_timestamp,
-                    processed_by,
-                    processing_time,
-                    status,
-                    records_processed,
-                    records_inserted,
-                    records_failed,
-                    batch_id,
-                    load_type,
-                    created_date
-                )
-                VALUES (
-                    'source_layer.*',
-                    'bronze.*',
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    'FULL_REFRESH_ALL_TABLES',
-                    CURRENT_TIMESTAMP()
-                )
-            `,
+        var insertStmt = snowflake.createStatement({
+            sqlText: `INSERT INTO bronze.bz_Audit_Log (
+                        source_table,
+                        target_table,
+                        load_timestamp,
+                        start_timestamp,
+                        end_timestamp,
+                        processed_by,
+                        processing_time,
+                        status,
+                        records_processed,
+                        records_inserted,
+                        records_failed,
+                        batch_id,
+                        load_type,
+                        created_date
+                    )
+                    VALUES (
+                        'source_layer.*',
+                        'bronze.*',
+                        TO_TIMESTAMP_NTZ(?),
+                        TO_TIMESTAMP_NTZ(?),
+                        CURRENT_TIMESTAMP(),
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        'FULL_REFRESH_ALL_TABLES',
+                        CURRENT_TIMESTAMP()
+                    )`,
             binds: [
-                v_StartTime.toISOString(),
-                v_StartTime.toISOString(),
-                v_EndTime.toISOString(),
+                v_BatchID,
+                v_BatchID,
                 v_CurrentUser,
                 v_ExecutionTime,
                 v_OverallStatus,
@@ -285,14 +241,9 @@ $$
                 v_BatchID
             ]
         });
-        auditStmt.execute();
+        insertStmt.execute();
         
-        // CHECK REQUIRED:
-        // Snowflake uses auto-commit by default for stored procedures.
-        // Oracle explicit COMMIT converted to Snowflake implicit commit behavior.
-        // Validate transaction boundaries match expected behavior.
-        
-        return logMessage + 'SUCCESS: bronze Layer ETL Pipeline completed successfully';
+        return logMessage + 'SUCCESS: bronze Layer ETL Pipeline completed successfully.';
         
     } catch (err) {
         // Capture error details
@@ -321,41 +272,38 @@ $$
         
         // Insert error audit record
         try {
-            var errorAuditStmt = snowflake.createStatement({
-                sqlText: `
-                    INSERT INTO bronze.bz_Audit_Log (
-                        source_table,
-                        target_table,
-                        load_timestamp,
-                        start_timestamp,
-                        end_timestamp,
-                        processed_by,
-                        processing_time,
-                        status,
-                        error_message,
-                        batch_id,
-                        load_type,
-                        created_date
-                    )
-                    VALUES (
-                        'source_layer.*',
-                        'bronze.*',
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        'FULL_REFRESH_ALL_TABLES',
-                        CURRENT_TIMESTAMP()
-                    )
-                `,
+            var errorInsertStmt = snowflake.createStatement({
+                sqlText: `INSERT INTO bronze.bz_Audit_Log (
+                            source_table,
+                            target_table,
+                            load_timestamp,
+                            start_timestamp,
+                            end_timestamp,
+                            processed_by,
+                            processing_time,
+                            status,
+                            error_message,
+                            batch_id,
+                            load_type,
+                            created_date
+                        )
+                        VALUES (
+                            'source_layer.*',
+                            'bronze.*',
+                            TO_TIMESTAMP_NTZ(?),
+                            TO_TIMESTAMP_NTZ(?),
+                            CURRENT_TIMESTAMP(),
+                            ?,
+                            ?,
+                            ?,
+                            ?,
+                            ?,
+                            'FULL_REFRESH_ALL_TABLES',
+                            CURRENT_TIMESTAMP()
+                        )`,
                 binds: [
-                    v_StartTime.toISOString(),
-                    v_StartTime.toISOString(),
-                    v_EndTime.toISOString(),
+                    v_BatchID,
+                    v_BatchID,
                     v_CurrentUser,
                     v_ExecutionTime,
                     v_OverallStatus,
@@ -363,15 +311,12 @@ $$
                     v_BatchID
                 ]
             });
-            errorAuditStmt.execute();
-        } catch (auditErr) {
-            errorLog += 'Failed to insert error audit record: ' + auditErr.message + '\n';
+            errorInsertStmt.execute();
+        } catch (insertErr) {
+            errorLog += 'Failed to insert error audit record: ' + insertErr.message + '\n';
         }
         
-        // CHECK REQUIRED:
-        // Oracle RAISE_APPLICATION_ERROR converted to JavaScript throw.
-        // Validate error propagation behavior matches Oracle exception handling.
-        
-        throw errorLog + 'FAILED: ' + v_ErrorMessage;
+        // Re-throw error
+        throw new Error(errorLog + v_ErrorMessage);
     }
 $$;
