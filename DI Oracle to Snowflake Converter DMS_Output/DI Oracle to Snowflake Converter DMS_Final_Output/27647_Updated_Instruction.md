@@ -30,6 +30,16 @@ Description:
 
 (Only once in the top)
 
+**Multiple File Handling:**
+When multiple input files are provided:
+1) Process each file sequentially
+2) Generate a complete output session for each file containing:
+   a) Metadata header (=============================================, Author: Ascendion AAVA, Created on:, Description:)
+   b) Conversion log section (-- ========================================================= CONVERSION LOG =========================================================)
+   c) Converted Snowflake SQL code
+3) Separate each file's output session with a clear delimiter: '-- ========================================================= END OF FILE: <filename> ========================================================='
+4) Begin the next file's session immediately after the delimiter
+
 1. **Function and Syntax Conversion:**
 
 - Replace Oracle-specific functions (e.g., `NVL`, `TO_DATE`, `DECODE`) with their Snowflake equivalents (e.g., `IFNULL/COALESCE`, `TO_DATE`, `IFF/CASE`).
@@ -37,12 +47,6 @@ Description:
 - Ensure correct handling of date functions like `ADD_MONTHS`, `MONTHS_BETWEEN`, and `TRUNC` for dates.
 
 - Adapt analytical functions like `ROW_NUMBER()` with `PARTITION BY` to Snowflake's syntax.
-
-- Convert Oracle SELECT INTO statements to Snowflake result set processing (using LET with SELECT or result set cursors).
-- MANDATORY: Add validation comment immediately after each SELECT INTO conversion:
-  -- CHECK REQUIRED:
-  -- Oracle SELECT INTO converted to Snowflake result set processing.
-  -- Validate result set handling and variable assignment semantics.
 
 2. **Join Adjustments:**
 
@@ -82,12 +86,6 @@ Description:
 
 - Convert PL/SQL blocks to Snowflake stored procedures using JavaScript where applicable.
 
-- Convert Oracle RAISE_APPLICATION_ERROR statements to Snowflake error propagation mechanisms (JavaScript throw in stored procedures or SIGNAL/RAISE in SQL).
-- MANDATORY: Add validation comment immediately after each error propagation conversion:
-  -- CHECK REQUIRED:
-  -- Oracle RAISE_APPLICATION_ERROR converted to Snowflake error propagation.
-  -- Validate error code mapping and exception handling behavior in stored procedure context.
-
 Input:
 
 * For Oracle Query use the below file:
@@ -109,6 +107,54 @@ Do not wrap the final output in double quotes or single quotes; the script must 
 ***Note:(Mandatory)
 
 Do not include sql, , '''sql, ''' , or any starting or ending double quotation marks wrapping the output
+
+Output Requirements:
+
+​
+
+Strict Output Structure: The response must start directly with the metadata header (beginning with =============================================) and immediately after the header provide the converted Snowflake SQL code, with no quotes, code blocks, or extra characters before or after the script.​
+
+The output must begin with the metadata header at the very top.
+
+Use the following metadata format exactly once:
+
+=============================================
+
+Author: Ascendion AAVA
+
+Created on:
+
+Description: (Provide a concise summary of what the code does)
+
+Immediately after the metadata header, provide the converted Snowflake SQL code.
+
+Do not include:
+
+Any explanations
+
+Conversion overview
+
+Assumptions
+
+Validation notes
+
+Unconvertible logic sections
+
+Any additional commentary
+
+The final output must:
+
+Contain only Snowflake SQL syntax
+
+Be properly formatted and ready to store as a .sql file
+
+Not include sql, sql, , single quotes, or double quotes at the beginning or end of the output
+
+The metadata header must appear at the top, followed directly by the converted Snowflake SQL code.​
+
+Do not wrap the final output in double quotes or single quotes; the script must start directly with the metadata header and end with the SQL code only.​
+
+***​​
 
 ## Expected Output
 =============================================
@@ -137,14 +183,6 @@ Created on must be left empty.
 -- - Transformed Oracle procedural logic (loops, cursors) into set-based Snowflake queries wherever applicable
 -- - Mapped Oracle tables, views, and subqueries into Snowflake-compatible structures
 -- - Converted Oracle date, timestamp, and string functions into Snowflake equivalent functions
--- - Convert Oracle SELECT INTO statements to Snowflake result set processing (using LET with SELECT or result set cursors).
---   -- CHECK REQUIRED:
---   -- Oracle SELECT INTO converted to Snowflake result set processing.
---   -- Validate result set handling and variable assignment semantics.
--- - Convert Oracle RAISE_APPLICATION_ERROR statements to Snowflake error propagation mechanisms (JavaScript throw in stored procedures or SIGNAL/RAISE in SQL).
---   -- CHECK REQUIRED:
---   -- Oracle RAISE_APPLICATION_ERROR converted to Snowflake error propagation.
---   -- Validate error code mapping and exception handling behavior in stored procedure context.
 -- Major Risks / Checks :
 -- - Validate data type mappings between Oracle and Snowflake
 -- - Validate NULL handling differences (NVL vs COALESCE behavior)
@@ -178,14 +216,12 @@ A. Validation required
 -- CHECK REQUIRED:
 -- Original Oracle condition expression must be validated.
 -- Ensure Snowflake filter logic preserves the exact query semantics.
-
--- CHECK REQUIRED:
--- Oracle SELECT INTO converted to Snowflake result set processing.
--- Validate result set handling and variable assignment semantics.
-
--- CHECK REQUIRED:
--- Oracle RAISE_APPLICATION_ERROR converted to Snowflake error propagation.
--- Validate error code mapping and exception handling behavior in stored procedure context.
+-- CHECK REQUIRED: Oracle VARCHAR2 converted to Snowflake VARCHAR - validate length limits and padding behavior
+-- CHECK REQUIRED: Oracle NUMBER converted to Snowflake NUMBER - validate precision and scale
+-- CHECK REQUIRED: Oracle NVL converted to Snowflake COALESCE - validate NULL handling semantics
+-- CHECK REQUIRED: Oracle SYSDATE converted to Snowflake CURRENT_TIMESTAMP() - validate timezone behavior
+-- CHECK REQUIRED: Oracle TO_DATE converted to Snowflake TO_DATE - validate format string compatibility
+-- CHECK REQUIRED: Oracle implicit type casting made explicit in Snowflake - validate conversion behavior
 
 B. Cannot convert safely
 
@@ -225,3 +261,14 @@ Immediately include the conversion log
 End with Snowflake code only
 
 Not be wrapped in quotes of any kind
+
+## Mandatory Validation Comments Rule
+Every conversion involving the following must include a CHECK REQUIRED comment immediately above or inline with the converted code:
+- Data type conversions (VARCHAR2→VARCHAR, NUMBER→NUMBER, DATE→DATE, TIMESTAMP→TIMESTAMP)
+- NULL handling functions (NVL→COALESCE, NVL2→IFF)
+- Date/time functions (SYSDATE→CURRENT_TIMESTAMP(), ADD_MONTHS→DATEADD, TRUNC→DATE_TRUNC)
+- Implicit to explicit type casting
+- String padding differences (CHAR vs VARCHAR)
+- Numeric precision/scale changes
+
+***
