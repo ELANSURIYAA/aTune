@@ -160,26 +160,41 @@ A. Validation required
 -- Original Oracle condition expression must be validated.
 -- Ensure Snowflake filter logic preserves the exact query semantics.
 
+**Decision Guide: CHECK REQUIRED vs UNCONVERTED LOGIC**
+
+Use CHECK REQUIRED when:
+- The Oracle construct CAN be converted to Snowflake
+- The conversion is syntactically valid
+- Manual validation is needed to confirm semantic equivalence
+- Examples: NULL handling differences, date function behavior, aggregation consistency
+
+Use UNCONVERTED LOGIC when:
+- The Oracle construct CANNOT be deterministically converted
+- No direct Snowflake equivalent exists
+- Manual rewrite or alternative approach is required
+- Examples: CONNECT BY hierarchies (complex cases), autonomous transactions, ROWID operations
+
+If uncertain, default to UNCONVERTED LOGIC and document the reason.
+
 B. Cannot convert safely
 
 -- UNCONVERTED LOGIC:
 -- Oracle feature cannot be deterministically converted.
 -- Manual rewrite required using Snowflake aggregation or application-layer logic.
 
-MANDATORY: If any Oracle construct cannot be converted with 100% semantic certainty during conversion, you MUST include an UNCONVERTED LOGIC comment block in the output code at the exact location where the unconvertible logic would appear. This is not optional. The comment must follow this exact format:
+**ENFORCEMENT RULE:**
+- During conversion execution, actively identify Oracle constructs that cannot be converted with 100% semantic certainty
+- For each such construct, you MUST insert an UNCONVERTED LOGIC comment block at the exact location in the output code
+- This is a MANDATORY requirement, not optional
+- If no unconvertible logic exists in the input, no UNCONVERTED LOGIC comment is needed
+- If unconvertible logic exists but is not documented, the conversion is INCOMPLETE
 
--- UNCONVERTED LOGIC:
--- [Original Oracle construct/feature name] cannot be deterministically converted.
--- Manual rewrite required using Snowflake [specific alternative approach or feature].
-
-Examples of constructs requiring UNCONVERTED LOGIC comments:
-- Oracle CONNECT BY hierarchical queries that cannot be fully expressed as recursive CTEs
-- Oracle-specific PL/SQL features without direct Snowflake equivalents
-- Oracle autonomous transactions
-- Oracle ROWID-based operations
-- Oracle database links
-- Oracle materialized view logs
-- Any Oracle feature where semantic equivalence cannot be guaranteed
+Additionally, in the "Examples of constructs requiring UNCONVERTED LOGIC comments" section, add:
+- Oracle ROWNUM pseudo-column in complex contexts
+- Oracle (+) outer join syntax with multiple conditions
+- Oracle MERGE statements with complex WHEN clauses
+- Oracle collection types (VARRAY, NESTED TABLE)
+- Oracle object types and methods
 
 C. Platform semantic difference
 
@@ -213,3 +228,21 @@ Immediately include the conversion log
 End with Snowflake code only
 
 Not be wrapped in quotes of any kind
+
+***Pre-Delivery Validation Checklist (MANDATORY)
+
+Before finalizing the output, you MUST verify:
+
+1. **Unconvertible Logic Check:**
+   - Review the input Oracle code for constructs listed in the UNCONVERTED LOGIC examples
+   - Confirm that each unconvertible construct has a corresponding UNCONVERTED LOGIC comment in the output
+   - If no unconvertible constructs exist, document this in the conversion log
+
+2. **Comment Completeness:**
+   - Verify all CHECK REQUIRED comments are placed where validation is needed
+   - Ensure UNCONVERTED LOGIC comments follow the exact format specified
+
+3. **Output Purity:**
+   - Confirm zero Oracle syntax remains in the output
+   - Verify no markdown, quotes, or documentation sections are present
+   - Validate that the output starts with metadata header and ends with Snowflake code only
