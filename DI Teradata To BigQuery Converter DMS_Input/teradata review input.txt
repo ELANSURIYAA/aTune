@@ -1,0 +1,52 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+- All mandatory input type detection rules from the instructions are applied to the input file.
+- All BTEQ commands (.LOGON, .LOGOFF, .IF, .GOTO, .LABEL) present in the input file are identified and addressed.
+- All standalone Teradata SQL statements in the input file are analyzed and included in the conversion plan.
+- All source tables (EmployeeSample, Employee, Salary) and target tables (employee_bkup) referenced in the input file are captured and mapped.
+- All error handling constructs (ERRORCODE, ACTIVITYCOUNT) in the input file are addressed per instruction requirements.
+- All join operations and filters present in the input file are included in the conversion analysis.
+- All business rules and execution order from the input file are covered in the conversion plan.
+- All mandatory mappings from Teradata BTEQ to Python + BigQuery SQL are included as per instructions.
+- All required conversion steps (removal of BTEQ commands, translation of execution order, replacement of ACTIVITYCOUNT and ERRORCODE) are present.
+- All formatting and structural requirements from the instructions are followed in the output.
+- No relevant section or command from the input file is ignored.
+- All gap/missing item handling requirements (e.g., "Unspecified in source") are included if applicable.
+- All dependencies and execution sequence from the input file are captured.
+- All referenced files/content are analyzed where required.
+
+Accuracy Checks
+- Output aligns with the provided conversion instructions for Teradata BTEQ to Python + BigQuery SQL.
+- Output correctly reflects all BTEQ commands and SQL statements from the input file.
+- No hallucinated content or unsupported assumptions are introduced in the conversion.
+- Dependency mappings between tables and commands are logically correct and traceable to the input file.
+- Error handling logic (ERRORCODE, ACTIVITYCOUNT) is accurately mapped to Python exception handling and query result row count.
+- Execution order from the input file is preserved in the output.
+- Terminology and constructs are used consistently and as specified in the instructions.
+- No false-positive gaps or false-negative omissions occur in the conversion.
+- Values, tables, and classifications accurately match the source content.
+- Relationships between entities/components (e.g., join between Employee and Salary) are correctly interpreted.
+- Status/resolution tracking is accurate if applicable.
+- Recommendations and conversion steps align with the identified findings from the input file.
+- Data extracted from the input file is represented correctly in the output.
+- No instruction is misinterpreted or partially implemented.
+- No residual Teradata syntax remains in the final output as mandated by instructions.
+- All mandatory quality assurance checks (zero-row conditions, partial data, reruns after failures) are validated.
+
+Efficiency Checks
+- Duplicate analysis of BTEQ commands and SQL statements is avoided.
+- Redundant explanations and repeated gap entries are eliminated.
+- Output remains concise and structured, following the instructions.
+- Unnecessary sections or conversion steps are not generated.
+- Duplicate dependency mappings and repeated risks/recommendations are avoided.
+- Formatting remains clean and optimized for reviewer efficiency.
+- Excessive verbosity is avoided; findings are summarized efficiently where allowed.
+- Overlapping findings (e.g., repeated error handling) are consolidated logically.
+- Tables and conversion steps are not unnecessarily repeated.
+- Output is token-efficient while maintaining completeness and accuracy.
+- Repeated content from the input file is minimized unless necessary for conversion.
+- Similar findings (e.g., multiple error handling steps) are grouped logically where appropriate.
+- Redundant classifications/tags/validations are avoided.
+- Large sections are summarized efficiently where allowed by instructions.
+- Output structure improves readability and review efficiency.
