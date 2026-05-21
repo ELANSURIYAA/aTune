@@ -7,14 +7,14 @@ Completeness Checks
 - Check that metadata (Author, Created on, Description) appears only once at the very top inside the "document" value.
 - Ensure the "Created on" field is left empty.
 - Confirm that the following sections are present in the exact order: Overview of Program, Code Structure and Design, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, Key Outputs, API Cost Calculations.
-- Validate that the Overview of Program is a single concise paragraph (max 2–3 sentences) and does not include generic Oracle descriptions.
-- Ensure Code Structure and Design contains only bullet points, each starting with an action verb, and covers all technical elements explicitly present in the source.
+- Validate that the Overview of Program is a single concise paragraph (minimum 50 sentences) and does not include generic Oracle descriptions.
+- Ensure Code Structure and Design does not any contains bullet points, each starting with an action verb, and covers all technical elements explicitly present in the source.
 - Confirm that the ASCII workflow diagram is present, formatted as specified, and includes only steps explicitly found in the source code.
 - Check that the Data Mapping section uses the required Markdown table format and includes only mappings explicitly inferable from the source, or states "Not explicitly present in source."
 - Verify that the Complexity Analysis section uses the required Markdown table format and only includes deterministic values or "Not explicitly present in source."
 - Ensure the Sensitive and Privacy Data Assessment section follows the required table format or outputs "No sensitive data found" if applicable.
 - Confirm that Key Outputs are listed as bullet points and only include critical outputs directly produced by the implementation, or state "Not explicitly present in source."
-- Check that API Cost Calculations are included in the specified format with full decimal precision.
+- API Cost should not included in the final output.
 - Validate that all 12 table loads and their corresponding procedures from the input are addressed in the documentation.
 - Ensure that audit logging, error handling, and summary statistics logic from the input are documented in the appropriate sections.
 - Confirm that all variables, exception handling, and commit logic from the input are covered in the documentation.
