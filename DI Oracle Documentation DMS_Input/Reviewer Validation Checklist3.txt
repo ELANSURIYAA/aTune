@@ -1,0 +1,57 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that the output is a valid JSON object containing only the "document" key.
+- Confirm that the "document" value contains full Markdown documentation as specified.
+- Check that metadata (Author, Created on, Description) appears only once at the very top inside the "document" value.
+- Ensure the "Created on" field is left empty.
+- Confirm that the following sections are present in the exact order: Overview of Program, Code Structure and Design, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, Key Outputs, API Cost Calculations.
+- Validate that the Overview of Program is a single concise paragraph (max 2–3 sentences) and does not include generic Oracle descriptions.
+- Ensure Code Structure and Design contains only bullet points, each starting with an action verb, and covers all technical elements explicitly present in the source.
+- Confirm that the ASCII workflow diagram is present, formatted as specified, and includes only steps explicitly found in the source code.
+- Check that the Data Mapping section uses the required Markdown table format and includes only mappings explicitly inferable from the source, or states "Not explicitly present in source."
+- Verify that the Complexity Analysis section uses the required Markdown table format and only includes deterministic values or "Not explicitly present in source."
+- Ensure the Sensitive and Privacy Data Assessment section follows the required table format or outputs "No sensitive data found" if applicable.
+- Confirm that Key Outputs are listed as bullet points and only include critical outputs directly produced by the implementation, or state "Not explicitly present in source."
+- Check that API Cost Calculations are included in the specified format with full decimal precision.
+- Validate that all 12 table loads and their corresponding procedures from the input are addressed in the documentation.
+- Ensure that audit logging, error handling, and summary statistics logic from the input are documented in the appropriate sections.
+- Confirm that all variables, exception handling, and commit logic from the input are covered in the documentation.
+- Verify that no required section or content from the input is skipped.
+
+Accuracy Checks
+
+- Confirm that the output strictly follows the provided instructions and does not include any explanation before or after the JSON.
+- Ensure that the documentation content is fully traceable to the actual Oracle SQL / PL-SQL implementation provided.
+- Validate that no content is hallucinated or assumed beyond what is explicitly present in the input.
+- Check that all technical steps, variables, procedures, and logic in the input are accurately reflected in the documentation.
+- Ensure that the ASCII workflow diagram only includes steps present in the source code and follows the required zig-zag/snake layout.
+- Verify that the Data Mapping section does not invent columns or mappings and only includes what is inferable from the source.
+- Confirm that the Complexity Analysis uses only measurable values from the source or states "Not explicitly present in source."
+- Ensure that sensitive data classification is only applied to fields clearly containing sensitive data as per the input.
+- Check that terminology and section order are consistent with the instructions.
+- Validate that error handling and audit logic are accurately described and placed in the correct sections.
+- Confirm that all references to batch processing, audit logs, and summary statistics are directly supported by the input.
+- Ensure that the output does not include unsupported assumptions, extra commentary, or recommendations.
+- Verify that all formatting standards (Markdown tables, ASCII diagram, bullet points) are followed exactly as instructed.
+- Confirm that no false-positive or false-negative omissions occur in the mapping or complexity analysis.
+- Ensure that the API cost is reported in the correct format and with the required precision.
+- Validate that all findings and documentation points are traceable to either the instructions or the input file.
+
+Efficiency Checks
+
+- Verify that duplicate analysis and redundant explanations are avoided throughout the documentation.
+- Ensure that repeated gap entries, findings, or recommendations are not present.
+- Confirm that the output remains concise, structured, and free of unnecessary sections.
+- Check that duplicate dependency mappings and repeated risks are eliminated.
+- Validate that formatting is clean, optimized, and does not include excessive verbosity.
+- Ensure that overlapping findings are consolidated and similar findings are grouped logically where appropriate.
+- Confirm that tables are not unnecessarily repeated and that content from the input file is not redundantly restated.
+- Verify that the output is token-efficient while maintaining completeness and traceability.
+- Ensure that the documentation does not include repeated metadata or section headers.
+- Confirm that large sections are summarized efficiently where allowed by the instructions.
+- Validate that the output structure improves readability and review efficiency as per the requirements.
+- Check that only the required sections and content are generated, with no extraneous information.
+- Ensure that the output does not include sample code, generic logs, or repetitive technical outputs unless explicitly present in the source.
+- Confirm that the output avoids unnecessary commentary, summary, or assumptions.
