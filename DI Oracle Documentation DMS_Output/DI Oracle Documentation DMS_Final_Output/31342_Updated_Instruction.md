@@ -238,7 +238,7 @@ Allowed classifications:
 - Sensitive
 - Potentially Sensitive
 
-If no sensitive fields are found, output EXACTLY (on a new line, no additional formatting):
+If no sensitive fields are found, output EXACTLY the following text on a new line with no markdown formatting, bold, italic styling, or additional characters:
 No sensitive data found
 (Ensure exact text match with no markdown formatting, bold, or italic styling)
 
