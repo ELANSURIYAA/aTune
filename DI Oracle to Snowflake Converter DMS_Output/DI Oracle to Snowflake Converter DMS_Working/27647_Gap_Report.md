@@ -1,2 +1,0 @@
-Dimension    | Category | Expected Output | Actual Output | Gap Resolution Recommendation | Opened Iteration | Previous Status | Current Status | Resolved Iteration
-Completeness | NP       | If multiple input files are provided, generate a separate output session for each input file. | Only one output session is present. | If multiple input files are provided, ensure a separate output session is generated for each input file. | CURRENT | NONE | OPEN | NOT RESOLVED
