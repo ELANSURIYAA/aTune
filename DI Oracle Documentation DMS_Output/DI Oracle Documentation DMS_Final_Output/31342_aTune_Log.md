@@ -81,3 +81,9 @@ Step 1:
 
 Step 2:
 - Called the Executer agent using the DI Aava Workflow Executor tool. The agent was executed with the updated instruction file and the output was written to GitHub at 'ELANSURIYAA/aTune/DI Oracle Documentation DMS_Output/31342_Agent_Executed_Output.txt'. Proceeding to Step 3.
+
+Step 3:
+- Called the Reviewer agent using the DI Aava Workflow Executor tool. The Reviewer compared the executed output against the goal and instruction and produced the Gap Report and Gap Score files written to GitHub at 'ELANSURIYAA/aTune/DI Oracle Documentation DMS_Output/DI Oracle Documentation DMS_Working/31342_Gap_Report.md' and 'ELANSURIYAA/aTune/DI Oracle Documentation DMS_Output/DI Oracle Documentation DMS_Working/31342_Gap_Score.md'. Proceeding to Step 4.
+
+Step 4:
+- Gap score is 80. Threshold is 90. 80 is less than 90, so I am continuing to Step 5.
