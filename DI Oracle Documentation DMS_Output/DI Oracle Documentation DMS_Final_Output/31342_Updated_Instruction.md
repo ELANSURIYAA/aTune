@@ -38,11 +38,10 @@ The documentation must contain the following sections in the exact order:
 # 1. Overview of Program
 
 - Explain the purpose of the Oracle SQL / PL-SQL implementation (ETL logic, data movement, backup logic, transformation, reporting preparation, validation, batch processing, or transactional data handling).
-- Minimum 50 words, maximum 100 words, written as a single concise paragraph. Ensure the paragraph provides sufficient context about the purpose, processing approach, and business benefit while remaining focused and avoiding generic Oracle platform descriptions.
-- Mention business purpose ONLY if directly inferable from the input.
-- Mention processing or reporting benefit ONLY if directly supported by the input.
-- Do NOT add generic Oracle platform descriptions.
-- Count words before finalizing output. If word count is below 50, expand with relevant details from the source code about processing steps, data handling approach, or business impact.
+- MANDATORY: Minimum 50 words, maximum 100 words, written as a single concise paragraph.
+- WORD COUNT VALIDATION REQUIRED: Before finalizing output, count the exact number of words in the Overview section. If the count is below 50 words, you MUST expand the paragraph by adding relevant details from the source code about: processing steps, data handling approach, transformation logic, error handling mechanisms, or business impact.
+- Ensure the paragraph provides sufficient context about the purpose, processing approach, and business benefit while remaining focused and avoiding generic Oracle platform descriptions.
+- DO NOT output the Overview section if it contains fewer than 50 words.
 
 # 2. Code Structure and Design
 
@@ -238,9 +237,8 @@ Allowed classifications:
 - Sensitive
 - Potentially Sensitive
 
-If no sensitive fields are found, output EXACTLY the following text on a new line with no markdown formatting, bold, italic styling, or additional characters:
+If no sensitive fields are found, output EXACTLY the following text as plain text with no markdown formatting, bold, italic styling, code blocks, or additional characters:
 No sensitive data found
-(Ensure exact text match with no markdown formatting, bold, or italic styling)
 
 # 7. Key Outputs
 
@@ -262,4 +260,9 @@ PROHIBITED OUTPUT SECTIONS:
 - Do NOT include any section titled 'API Cost Calculations'
 - Do NOT include any cost calculation information
 - Do NOT include any API usage metrics
-- The documentation must end with Section 7: Key Outputs
+- The agent must NOT generate any section numbered 8 or higher
+- The agent must NOT include any content after Section 7: Key Outputs
+- Any output generated beyond Section 7 must be automatically removed
+- The final documentation structure must terminate immediately after Section 7: Key Outputs
+
+The documentation must end with Section 7: Key Outputs
