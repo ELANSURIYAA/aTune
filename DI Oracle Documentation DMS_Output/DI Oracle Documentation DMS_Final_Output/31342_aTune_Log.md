@@ -1,0 +1,3 @@
+Iteration 1:
+Step 1:
+- Used the DI AAVA Agent Metadata Extractor tool to extract the agent's role, goal, backstory, description, and expected output. Created the Goal file and Instruction file and wrote both to GitHub at 'ELANSURIYAA/aTune/DI Oracle Documentation DMS_Output/DI Oracle Documentation DMS_Instruction/31342_Goal.md' and 'ELANSURIYAA/aTune/DI Oracle Documentation DMS_Output/DI Oracle Documentation DMS_Instruction/31342_Instruction.md'. Proceeding to Step 2.
