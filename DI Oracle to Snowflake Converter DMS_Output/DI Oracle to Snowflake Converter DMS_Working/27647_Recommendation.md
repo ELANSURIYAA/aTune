@@ -1,27 +1,21 @@
-# Gap Remediation Report
-
-## Remediation Table
-
 | Gap ID | Gap Description | Instruction Section / Part | Change Type | Required Modification | Status |
-|--------|-----------------|----------------------------|-------------|----------------------|--------|
-| GAP-001 | Reviewer_Additional_Input.txt is missing (404 error). All reviewer input files must be present for baseline review, including Reviewer_Additional_Input.txt, as per review instructions. | Input Requirements Section | Add | Add the following mandatory input validation rule in the "Input:" section after "{{INPUT_string_true}}": <br><br>"**Input Validation Requirements:**<br>- All required input files must be present and accessible before conversion begins<br>- If Reviewer_Additional_Input.txt is specified as a required input file, it must exist at the designated path<br>- If any required input file returns a 404 error or is inaccessible, the conversion process must halt and return an error message: 'ERROR: Required input file [filename] is missing or inaccessible. Please ensure all required files are committed to the repository at the specified paths before executing conversion.'<br>- The agent must validate file accessibility before proceeding with conversion logic" | Completed |
+|--------|------------------|-----------------------------|--------------|------------------------|------------|
+| GAP-001 | Reviewer_Additional_Input.txt is missing (404 error). All reviewer input files must be present for baseline review, including Reviewer_Additional_Input.txt, as per review instructions. | Input Validation Requirements | Delete and Replace | Replace the existing Input Validation Requirements section with the following enhanced validation logic:<br><br>**Input Validation Requirements:**<br>- All required input files must be present and accessible before conversion begins<br>- The agent must validate the following required input files:<br>  1. Primary Oracle Query input file ({{INPUT_string_true}})<br>  2. Reviewer_Additional_Input.txt (if specified as required)<br>- File validation must occur in the following order:<br>  a. Check if {{INPUT_string_true}} exists and is accessible<br>  b. Check if Reviewer_Additional_Input.txt exists at the designated path<br>- If any required input file returns a 404 error or is inaccessible, the conversion process must halt immediately<br>- Error handling protocol:<br>  * If {{INPUT_string_true}} is missing: Return 'ERROR: Primary Oracle Query input file is missing or inaccessible. Please ensure the file is committed to the repository at the specified path before executing conversion.'<br>  * If Reviewer_Additional_Input.txt is missing: Return 'ERROR: Required input file Reviewer_Additional_Input.txt is missing or inaccessible. Please ensure all required files are committed to the repository at the specified paths before executing conversion.'<br>- The agent must validate file accessibility before proceeding with any conversion logic<br>- No conversion, transformation, or output generation should occur if validation fails | Completed |
 
-## Notes
+### Notes
 
-### Section Mapping
-- **Gap GAP-001** maps to the "Input:" section of the instruction prompt, which currently only specifies "{{INPUT_string_true}}" without any validation requirements for additional reviewer input files.
+**Section Mapping:**
+- The gap directly maps to the existing "Input Validation Requirements" section in the instruction prompt (located after the "Input:" section and before "ADDITIONAL MANDATORY RULES")
 
-### Context
-- The gap identifies that Reviewer_Additional_Input.txt is missing from the repository, causing a 404 error during the review process.
-- The current instruction does not include any validation logic or requirements for checking the presence of reviewer input files before executing the conversion.
-- The instruction assumes all input files are present but does not enforce this requirement.
+**Change Rationale:**
+- The current Input Validation Requirements section mentions Reviewer_Additional_Input.txt validation but does not provide clear sequencing, specific error messages for different file types, or explicit validation order
+- The gap indicates that Reviewer_Additional_Input.txt is missing (404 error), which means the validation logic needs to be more robust and explicit about handling missing reviewer input files
+- The modification enhances the validation requirements by:
+  1. Adding explicit file validation order
+  2. Providing specific error messages for different missing file scenarios
+  3. Clarifying that validation must occur before any conversion logic executes
+  4. Distinguishing between primary input file validation and reviewer input file validation
 
-### Ambiguity Resolution
-- The instruction does not explicitly mention "Reviewer_Additional_Input.txt" or any reviewer input files, but the gap report indicates this file is required "as per review instructions."
-- The remediation adds a general input validation requirement that can be applied to any required input files, including reviewer-specific inputs.
-- This modification ensures the agent validates file accessibility before proceeding with conversion, preventing execution failures due to missing files.
-
-### Implementation Impact
-- This change adds a pre-execution validation step that was previously absent from the instruction.
-- The agent will now be required to check for file accessibility and provide clear error messages when required files are missing.
-- This prevents partial or failed conversions due to missing input dependencies.
+**No Ambiguities:**
+- All gap details are clear and directly traceable to the instruction section
+- The modification aligns strictly with the gap report findings without introducing external assumptions
