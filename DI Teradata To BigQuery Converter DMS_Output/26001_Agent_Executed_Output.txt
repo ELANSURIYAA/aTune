@@ -1,0 +1,148 @@
+============================================
+Author: Ascendion AAVA
+Created on: 2024
+Description: Converted from Teradata input to Google BigQuery–compatible implementation.
+============================================
+
+-- =========================================================
+-- CONVERSION LOG
+-- =========================================================
+
+-- Input Type : Teradata BTEQ
+-- Target Platform : Google BigQuery
+
+-- Conversion Approach :
+
+-- - Removed all BTEQ control commands (.LOGON, .LOGOFF, .IF, .GOTO, .LABEL)
+-- - Translated BTEQ execution flow to sequential BigQuery execution
+-- - Replaced ACTIVITYCOUNT with query result row counts
+-- - Replaced ERRORCODE checks with Python exception handling
+-- - Enforced idempotent writes using CREATE OR REPLACE TABLE
+-- - Converted Unique Primary Index to standard BigQuery table (no index needed)
+-- - Converted CHAR datatypes to STRING
+-- - Converted INTEGER and SMALLINT to INT64
+-- - Replaced SAMPLE clause with LIMIT
+
+-- Major Risks / Checks :
+
+-- - Validate row-count based branching logic
+-- - Confirm error-handling equivalence
+-- - Verify that conditional table drop logic is correctly implemented
+-- - Check that empty result set handling matches original BTEQ behavior
+
+-- =========================================================
+
+"""
+Python script to execute BigQuery SQL with BTEQ-equivalent control flow
+"""
+
+from google.cloud import bigquery
+import sys
+
+# Initialize BigQuery client
+client = bigquery.Client()
+
+# Set default dataset
+dataset_id = "your_project.tduser"  # Replace with your actual project and dataset
+
+def execute_query(query, description=""):
+    """Execute a BigQuery query and return row count"""
+    try:
+        print(f"Executing: {description}")
+        query_job = client.query(query)
+        result = query_job.result()
+        row_count = result.total_rows
+        print(f"Success: {description} - Rows affected: {row_count}")
+        return row_count, None
+    except Exception as e:
+        print(f"Error: {description} - {str(e)}")
+        return 0, e
+
+# Step 1: Create employee_bkup table
+create_table_query = """
+CREATE OR REPLACE TABLE `{dataset}.employee_bkup` (
+  EmployeeNo INT64,
+  FirstName STRING,
+  LastName STRING,
+  DepartmentNo INT64,
+  NetPay INT64
+)
+""".format(dataset=dataset_id)
+
+row_count, error = execute_query(create_table_query, "Create employee_bkup table")
+
+# BTEQ: .IF ERRORCODE <> 0 THEN .EXIT ERRORCODE
+if error:
+    print(f"ERRORCODE detected during table creation. Exiting.")
+    sys.exit(1)
+
+# Step 2: Check if EmployeeSample has data (SAMPLE 1 equivalent)
+check_data_query = """
+SELECT * FROM `{dataset}.EmployeeSample`
+LIMIT 1
+""".format(dataset=dataset_id)
+
+row_count, error = execute_query(check_data_query, "Check EmployeeSample for data")
+
+# BTEQ: .IF ACTIVITYCOUNT <> 0 THEN .GOTO InsertEmployee
+# If row_count > 0, skip the DROP TABLE and go directly to INSERT
+if row_count > 0:
+    print("ACTIVITYCOUNT > 0: Skipping DROP TABLE, proceeding to InsertEmployee")
+else:
+    # Step 3: Drop employee_bkup table (only if ACTIVITYCOUNT = 0)
+    print("ACTIVITYCOUNT = 0: Executing DROP TABLE")
+    drop_table_query = """
+    DROP TABLE IF EXISTS `{dataset}.employee_bkup`
+    """.format(dataset=dataset_id)
+    
+    row_count, error = execute_query(drop_table_query, "Drop employee_bkup table")
+    
+    # BTEQ: .IF ERRORCODE <> 0 THEN .EXIT ERRORCODE
+    if error:
+        print(f"ERRORCODE detected during table drop. Exiting.")
+        sys.exit(1)
+    
+    # After dropping table, exit the script (no insert needed)
+    print("Table dropped. Exiting script.")
+    sys.exit(0)
+
+# Step 4: .LABEL InsertEmployee - Insert data into employee_bkup
+insert_query = """
+INSERT INTO `{dataset}.employee_bkup`
+SELECT 
+  a.EmployeeNo,
+  a.FirstName,
+  a.LastName,
+  a.DepartmentNo,
+  b.NetPay
+FROM 
+  `{dataset}.Employee` a 
+INNER JOIN 
+  `{dataset}.Salary` b
+ON 
+  a.EmployeeNo = b.EmployeeNo
+""".format(dataset=dataset_id)
+
+row_count, error = execute_query(insert_query, "Insert into employee_bkup")
+
+# BTEQ: .IF ERRORCODE <> 0 THEN .EXIT ERRORCODE
+if error:
+    print(f"ERRORCODE detected during insert. Exiting.")
+    sys.exit(1)
+
+print("Script completed successfully.")
+
+# -- CHECK REQUIRED:
+# -- Original BTEQ used ACTIVITYCOUNT-based branching to conditionally drop table.
+# -- Validate that the row count check correctly replicates the original logic.
+# -- Verify that the dataset_id variable is set to the correct project and dataset.
+
+# -- CHECK REQUIRED:
+# -- Teradata CHAR padding behavior differs from BigQuery STRING handling.
+# -- FirstName and LastName were CHAR(30) in Teradata (space-padded).
+# -- BigQuery STRING does not pad with spaces. Verify if trimming is needed.
+
+# -- CHECK REQUIRED:
+# -- Original BTEQ SAMPLE 1 returns exactly 1 row if available.
+# -- BigQuery LIMIT 1 provides equivalent behavior.
+# -- Confirm that empty table handling matches expected behavior.
