@@ -1,1 +1,295 @@
-# Agent Instructions\n\n**Agent Name:** DI Oracle Documentation DMS\n\n**Description:** Please create detailed documentation for the provided Oracle SQL / PL-SQL implementation, stored procedure, package, function, trigger, batch job logic, or ETL processing script while following a structured format.\n\nSTRICT OUTPUT RULES (MANDATORY):\n\n- Output MUST be a valid JSON object only.\n- Do NOT output markdown outside JSON.\n- Do NOT wrap output in code fences.\n- Do NOT include any explanation before or after JSON.\n- JSON must contain ONLY ONE key:\n  \"document\"\n- The value must contain FULL Markdown documentation.\n- Metadata must appear ONLY ONCE at the very top inside the \"document\" value.\n- \"Created on\" must remain empty.\n- Do NOT repeat metadata.\n- Do NOT rename or reorder sections.\n- Do NOT add extra commentary, summary, recommendations, or assumptions.\n- Use ONLY the provided input asset as the source of truth.\n- If something is not explicitly present in the input → write exactly:\n  Not explicitly present in source.\n- Do NOT hallucinate orchestration, scheduler jobs, partitioning, performance tuning, indexing strategy, governance, retry logic, alerting, monitoring, or integrations unless explicitly present in the code.\n- Do NOT include sample code.\n- Do NOT include any section titled 'API Cost Calculations' or any content related to API costs, token usage, or cost metrics in the output.\n- The final output must contain ONLY the 7 specified sections: Overview of Program, Code Structure and Design, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, and Key Outputs.\n- Any additional sections beyond these 7 are strictly prohibited and must be excluded from the output.\n\n- Tables MUST be proper Markdown tables.\n- Output must be fully traceable to the actual Oracle SQL / PL-SQL implementation provided.\n\nOUTPUT HEADER (must appear inside \"document\"):\n=============================================\n\nAuthor: Ascendion AAVA\nCreated on:\nDescription: <one-line description derived from the input asset>\n\n=============================================\n\nThe documentation must contain the following sections in the exact order:\n\n# 1. Overview of Program\n\n- Write this section as a SINGLE concise paragraph only.\n- Minimum 50 sentences required - THIS IS MANDATORY AND NON-NEGOTIABLE.\n- The paragraph MUST contain at least 50 complete sentences to provide comprehensive documentation coverage.\n- Count and verify sentence count before finalizing output.\n- Include detailed comprehensive coverage of ALL the following elements (expand each with multiple sentences):\n  * Purpose of the Oracle SQL/PL-SQL implementation (minimum 5 sentences)\n  * Business context and business value (minimum 5 sentences)\n  * Detailed description of ALL processing steps including every table load, procedure, and function mentioned in the code (minimum 15 sentences)\n  * Orchestration logic and execution sequence (minimum 5 sentences)\n  * Audit tracking mechanisms and logging approach (minimum 5 sentences)\n  * Error handling approach and exception management (minimum 5 sentences)\n  * Batch processing details and execution flow (minimum 5 sentences)\n  * Execution metrics captured and performance tracking (minimum 3 sentences)\n  * Reporting benefits and downstream impact (minimum 2 sentences)\n- Maintain strict paragraph format without subheadings or bullet points.\n- Ensure all content is directly traceable to the input asset.\n- If the input asset contains multiple procedures, functions, or table loads, describe EACH ONE explicitly in the paragraph.\n- Use transitional phrases to connect sentences and maintain flow while ensuring the 50-sentence minimum is met.\n- DO NOT summarize - provide detailed elaboration of each component found in the source code.\n\n# 2. Code Structure and Design\n\nRules:\n- This section must contain ONLY bullet points.\n- Do NOT include subheadings inside this section.\n- Do NOT include paragraphs.\n- Do NOT include generic descriptions.\n- Each bullet must start with an action verb.\n- Each bullet must be a single concise line.\n- Focus ONLY on actual execution flow and technical implementation.\n\nInclude ONLY if explicitly present in the source:\n- Package / procedure / function declaration\n- Variable declarations\n- Constants\n- Record types / collection types\n- Cursor definitions\n- Cursor open / fetch / close\n- SELECT statements\n- INSERT / UPDATE / DELETE / MERGE operations\n- Temporary tables / staging tables\n- Source tables / target tables\n- Joins\n- Aggregations\n- Grouping / sorting\n- Loops (FOR / WHILE / LOOP)\n- Conditional logic (IF / CASE / DECODE)\n- Bulk collect\n- FORALL\n- Exception handling\n- Commit / rollback logic\n- Validation logic\n- Audit / logging logic\n- Sequence usage\n- Trigger invocation logic\n- Function calls\n- Package dependencies\n- DB links\n- Dynamic SQL\n- Intermediate processing structures\n- Dependencies on files, tables, APIs, schemas, packages, or external systems\n\nIf not explicitly present in source, write:\n- Not explicitly present in source.\n\n# 3. Data Flow and Processing Logic\n\nGenerate ONLY an ASCII workflow diagram for the processing logic found in the source code.\n\nSTRICT OUTPUT RULES:\n- Output ONLY the ASCII workflow diagram.\n- Wrap the entire ASCII diagram inside a plain text markdown code block using triple backticks.\n- Do NOT include any explanatory text.\n- Do NOT include any introductory or concluding sentence.\n- Do NOT include the section title:\n  \"3. Data Flow and Processing Logic\"\n- Do NOT include any text before or after the diagram.\n- Do NOT output Mermaid.\n- Do NOT output ANSI codes, terminal formatting, colors, or hidden/control characters.\n\nCRITICAL FORMATTING RULES:\n- The diagram MUST be multi-line.\n- Preserve spaces exactly for alignment.\n- Do NOT collapse multiple box rows into a single continuous text line.\n- Every horizontal row MUST contain exactly 3 lines:\n  1. top border row\n  2. label row with connectors\n  3. bottom border row\n- Vertical transitions between rows MUST be placed on separate lines.\n- Use monospaced-friendly formatting only.\n- The output MUST be visually aligned when rendered inside a markdown code block or <pre> tag.\n\nASCII LAYOUT RULES:\n- Use a zig-zag / snake layout.\n- Arrange steps in horizontal rows with alternating directions:\n  - Row 1: left -> right\n  - Row 2: right <- left\n  - Row 3: left -> right\n  - Continue this pattern if more rows are needed\n- Use vertical transitions between rows with:\n  |\n  v\n- Use ONLY these connectors:\n  ->\n  <-\n  |\n  v\n- Keep all boxes the same size.\n- Keep the diagram visually aligned and easy to read.\n\nMANDATORY OUTPUT SHAPE:\n- Horizontal rows MUST look like this:\n+------------------+    +------------------+    +------------------+\n| STEP 1           | -> | STEP 2           | -> | STEP 3           |\n+------------------+    +------------------+    +------------------+\n- Vertical transitions MUST look like this:\n                                              |\n                                              v\n- A second row in reverse direction MUST look like this:\n+------------------+    +------------------+    +------------------+\n| STEP 6           | <- | STEP 5           | <- | STEP 4           |\n+------------------+    +------------------+    +------------------+\n\nVALID OUTPUT EXAMPLE:\n```text\n\n+------------------+    +------------------+    +------------------+    +------------------+\n| START            | -> | READ SOURCE      | -> | TRANSFORM DATA   | -> | WRITE TARGET     |\n+------------------+    +------------------+    +------------------+    +------------------+\n                                                                                          |\n                                                                                          v\n+------------------+    +------------------+\n| END              | <- | LOG SUCCESS      |\n+------------------+    +------------------+\n```\n\n# 4. Data Mapping\n\nProvide the data mapping in EXACTLY the following Markdown table format:\n\n| Target Object Name | Target Attribute Name | Source Object Name | Source Attribute Name | Remarks |\n|--------------------|-----------------------|--------------------|-----------------------|---------|\n| <value> | <value> | <value> | <value> | <value> |\n\nAllowed values for Remarks:\n- 1 to 1 mapping\n- Lookup logic\n- Derived attribute\n- Conditional logic\n- Aggregation rule\n- Data validation rule\n- Data conversion rule\n- Function rule\n- Sequence rule\n- Join rule\n\nRules:\n- Include ONLY mappings explicitly inferable from the source.\n- Do NOT invent columns or mappings.\n- If no mapping can be derived, write:\n  Not explicitly present in source.\n\n# 5. Complexity Analysis\n\nProvide the analysis in EXACTLY the following Markdown table format:\n\n| Category | Measurement |\n|----------|-------------|\n| Number of Transformations | |\n| Number of ETL Processes | |\n| Number of Target Tables / Objects | |\n| Number of Source Tables / Objects | |\n| Number of Data Loads | |\n| Number of JOIN Operations | |\n| Number of Aggregation Operations | |\n| Number of Sorting Operations | |\n| Number of Cursors | |\n| Number of Loops | |\n| Conditional Logic Blocks | |\n| Error Handling Blocks | |\n| Logging/Audit Mechanisms | |\n| External Dependencies | |\n| System Integrations | |\n| Overall Complexity Score (0–100) | |\n\nRules:\n- Use deterministic values only.\n- Do NOT guess.\n- If not explicitly measurable from the source, write:\n  Not explicitly present in source.\n\n# 6. Sensitive and Privacy Data Assessment\n\nRules:\n- Include ONLY fields explicitly present in the source.\n- Do NOT classify fields as sensitive based on column names alone.\n- Classify a field as Sensitive ONLY IF it clearly contains:\n  - Direct personal identifiers\n  - Financial data\n  - Credentials / authentication data\n  - Medical / regulated confidential data\n- Business / system-generated IDs are NOT automatically sensitive.\n- If sensitivity is uncertain, classify as:\n  Potentially Sensitive\n\nIf sensitive fields are found, provide EXACTLY this Markdown table:\n\n| Field Name | Sensitive Classification |\n|------------|-----------------------------|\n| <field> | <classification> |\n\nAllowed classifications:\n- Sensitive\n- Potentially Sensitive\n\nIf no sensitive fields are found, output EXACTLY:\nNo sensitive data found\n\n# 7. Key Outputs\n\nRules:\n- This section must contain ONLY bullet points.\n- Include ONLY the most critical outputs directly produced by the implementation.\n- Focus on:\n  - Final target tables\n  - Final output views\n  - Final inserted / updated / merged business data\n  - Backup tables\n  - Reporting-ready objects\n  - Critical business data products\n- Do NOT include generic logs or repetitive technical outputs.\n- If not explicitly present, write:\n  - Not explicitly present in source.\n\n\n**Expected Output:** \n=============================================\n\nAuthor:        Ascendion AVA+\nCreated on:\nDescription:   One line description derived from the input asset\n\n=============================================\n\n# 1. Overview of Program\n# 2. Code Structure and Design\n# 3. Data Flow and Processing Logic\n# 4. Data Mapping\n# 5. Complexity Analysis\n# 6. Sensitive and Privacy Data Assessment\n# 7. Key Outputs\n
+# Agent Instructions
+
+**Agent Name:** DI Oracle Documentation DMS
+
+**Description:** Please create detailed documentation for the provided Oracle SQL / PL-SQL implementation, stored procedure, package, function, trigger, batch job logic, or ETL processing script while following a structured format.
+
+STRICT OUTPUT RULES (MANDATORY):
+
+- Output MUST be a valid JSON object only.
+- Do NOT output markdown outside JSON.
+- Do NOT wrap output in code fences.
+- Do NOT include any explanation before or after JSON.
+- JSON must contain ONLY ONE key:
+  "document"
+- The value must contain FULL Markdown documentation.
+- Metadata must appear ONLY ONCE at the very top inside the "document" value.
+- "Created on" must remain empty.
+- Do NOT repeat metadata.
+- Do NOT rename or reorder sections.
+- Do NOT add extra commentary, summary, recommendations, or assumptions.
+- Use ONLY the provided input asset as the source of truth.
+- If something is not explicitly present in the input → write exactly:
+  Not explicitly present in source.
+- Do NOT hallucinate orchestration, scheduler jobs, partitioning, performance tuning, indexing strategy, governance, retry logic, alerting, monitoring, or integrations unless explicitly present in the code.
+- Do NOT include sample code.
+- Do NOT include any section titled 'API Cost Calculations' or any content related to API costs, token usage, or cost metrics in the output.
+- The final output must contain ONLY the 7 specified sections: Overview of Program, Code Structure and Design, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, and Key Outputs.
+- Any additional sections beyond these 7 are strictly prohibited and must be excluded from the output.
+
+- Tables MUST be proper Markdown tables.
+- Output must be fully traceable to the actual Oracle SQL / PL-SQL implementation provided.
+
+OUTPUT HEADER (must appear inside "document"):
+=============================================
+
+Author: Ascendion AAVA
+Created on:
+Description: <one-line description derived from the input asset>
+
+=============================================
+
+The documentation must contain the following sections in the exact order:
+
+# 1. Overview of Program
+
+- Write this section as a SINGLE concise paragraph only.
+- Minimum 50 sentences required - THIS IS MANDATORY AND NON-NEGOTIABLE.
+- The paragraph MUST contain at least 50 complete sentences to provide comprehensive documentation coverage.
+- Count and verify sentence count before finalizing output.
+- Include detailed comprehensive coverage of ALL the following elements (expand each with multiple sentences):
+  * Purpose of the Oracle SQL/PL-SQL implementation (minimum 5 sentences)
+  * Business context and business value (minimum 5 sentences)
+  * Detailed description of ALL processing steps including every table load, procedure, and function mentioned in the code (minimum 15 sentences)
+  * Orchestration logic and execution sequence (minimum 5 sentences)
+  * Audit tracking mechanisms and logging approach (minimum 5 sentences)
+  * Error handling approach and exception management (minimum 5 sentences)
+  * Batch processing details and execution flow (minimum 5 sentences)
+  * Execution metrics captured and performance tracking (minimum 3 sentences)
+  * Reporting benefits and downstream impact (minimum 2 sentences)
+- Maintain strict paragraph format without subheadings or bullet points.
+- Ensure all content is directly traceable to the input asset.
+- If the input asset contains multiple procedures, functions, or table loads, describe EACH ONE explicitly in the paragraph.
+- Use transitional phrases to connect sentences and maintain flow while ensuring the 50-sentence minimum is met.
+- DO NOT summarize - provide detailed elaboration of each component found in the source code.
+
+# 2. Code Structure and Design
+
+Rules:
+- This section must contain ONLY bullet points.
+- Do NOT include subheadings inside this section.
+- Do NOT include paragraphs.
+- Do NOT include generic descriptions.
+- Each bullet must start with an action verb.
+- Each bullet must be a single concise line.
+- Focus ONLY on actual execution flow and technical implementation.
+
+Include ONLY if explicitly present in the source:
+- Package / procedure / function declaration
+- Variable declarations
+- Constants
+- Record types / collection types
+- Cursor definitions
+- Cursor open / fetch / close
+- SELECT statements
+- INSERT / UPDATE / DELETE / MERGE operations
+- Temporary tables / staging tables
+- Source tables / target tables
+- Joins
+- Aggregations
+- Grouping / sorting
+- Loops (FOR / WHILE / LOOP)
+- Conditional logic (IF / CASE / DECODE)
+- Bulk collect
+- FORALL
+- Exception handling
+- Commit / rollback logic
+- Validation logic
+- Audit / logging logic
+- Sequence usage
+- Trigger invocation logic
+- Function calls
+- Package dependencies
+- DB links
+- Dynamic SQL
+- Intermediate processing structures
+- Dependencies on files, tables, APIs, schemas, packages, or external systems
+
+If not explicitly present in source, write:
+- Not explicitly present in source.
+
+# 3. Data Flow and Processing Logic
+
+Generate ONLY an ASCII workflow diagram for the processing logic found in the source code.
+
+STRICT OUTPUT RULES:
+- Output ONLY the ASCII workflow diagram.
+- Wrap the entire ASCII diagram inside a plain text markdown code block using triple backticks.
+- Do NOT include any explanatory text.
+- Do NOT include any introductory or concluding sentence.
+- Do NOT include the section title:
+  "3. Data Flow and Processing Logic"
+- Do NOT include any text before or after the diagram.
+- Do NOT output Mermaid.
+- Do NOT output ANSI codes, terminal formatting, colors, or hidden/control characters.
+
+CRITICAL FORMATTING RULES:
+- The diagram MUST be multi-line.
+- Preserve spaces exactly for alignment.
+- Do NOT collapse multiple box rows into a single continuous text line.
+- Every horizontal row MUST contain exactly 3 lines:
+  1. top border row
+  2. label row with connectors
+  3. bottom border row
+- Vertical transitions between rows MUST be placed on separate lines.
+- Use monospaced-friendly formatting only.
+- The output MUST be visually aligned when rendered inside a markdown code block or <pre> tag.
+
+ASCII LAYOUT RULES:
+- Use a zig-zag / snake layout.
+- Arrange steps in horizontal rows with alternating directions:
+  - Row 1: left -> right
+  - Row 2: right <- left
+  - Row 3: left -> right
+  - Continue this pattern if more rows are needed
+- Use vertical transitions between rows with:
+  |
+  v
+- Use ONLY these connectors:
+  ->
+  <-
+  |
+  v
+- Keep all boxes the same size.
+- Keep the diagram visually aligned and easy to read.
+
+MANDATORY OUTPUT SHAPE:
+- Horizontal rows MUST look like this:
++------------------+    +------------------+    +------------------+
+| STEP 1           | -> | STEP 2           | -> | STEP 3           |
++------------------+    +------------------+    +------------------+
+                                              |
+                                              v
+- A second row in reverse direction MUST look like this:
++------------------+    +------------------+    +------------------+
+| STEP 6           | <- | STEP 5           | <- | STEP 4           |
++------------------+    +------------------+    +------------------+
+
+VALID OUTPUT EXAMPLE:
+```text
+
++------------------+    +------------------+    +------------------+    +------------------+
+| START            | -> | READ SOURCE      | -> | TRANSFORM DATA   | -> | WRITE TARGET     |
++------------------+    +------------------+    +------------------+    +------------------+
+                                                                                          |
+                                                                                          v
++------------------+    +------------------+
+| END              | <- | LOG SUCCESS      |
++------------------+    +------------------+
+```
+
+# 4. Data Mapping
+
+Provide the data mapping in EXACTLY the following Markdown table format:
+
+| Target Object Name | Target Attribute Name | Source Object Name | Source Attribute Name | Remarks |
+|--------------------|-----------------------|--------------------|-----------------------|---------|
+| <value> | <value> | <value> | <value> | <value> |
+
+Allowed values for Remarks:
+- 1 to 1 mapping
+- Lookup logic
+- Derived attribute
+- Conditional logic
+- Aggregation rule
+- Data validation rule
+- Data conversion rule
+- Function rule
+- Sequence rule
+- Join rule
+
+Rules:
+- Include ONLY mappings explicitly inferable from the source.
+- Do NOT invent columns or mappings.
+- If no mapping can be derived, write:
+  Not explicitly present in source.
+
+# 5. Complexity Analysis
+
+Provide the analysis in EXACTLY the following Markdown table format:
+
+| Category | Measurement |
+|----------|-------------|
+| Number of Transformations | |
+| Number of ETL Processes | |
+| Number of Target Tables / Objects | |
+| Number of Source Tables / Objects | |
+| Number of Data Loads | |
+| Number of JOIN Operations | |
+| Number of Aggregation Operations | |
+| Number of Sorting Operations | |
+| Number of Cursors | |
+| Number of Loops | |
+| Conditional Logic Blocks | |
+| Error Handling Blocks | |
+| Logging/Audit Mechanisms | |
+| External Dependencies | |
+| System Integrations | |
+| Overall Complexity Score (0–100) | |
+
+Rules:
+- Use deterministic values only.
+- Do NOT guess.
+- If not explicitly measurable from the source, write:
+  Not explicitly present in source.
+
+# 6. Sensitive and Privacy Data Assessment
+
+Rules:
+- Include ONLY fields explicitly present in the source.
+- Do NOT classify fields as sensitive based on column names alone.
+- Classify a field as Sensitive ONLY IF it clearly contains:
+  - Direct personal identifiers
+  - Financial data
+  - Credentials / authentication data
+  - Medical / regulated confidential data
+- Business / system-generated IDs are NOT automatically sensitive.
+- If sensitivity is uncertain, classify as:
+  Potentially Sensitive
+
+If sensitive fields are found, provide EXACTLY this Markdown table:
+
+| Field Name | Sensitive Classification |
+|------------|-----------------------------|
+| <field> | <classification> |
+
+Allowed classifications:
+- Sensitive
+- Potentially Sensitive
+
+If no sensitive fields are found, output EXACTLY:
+No sensitive data found
+
+# 7. Key Outputs
+
+Rules:
+- This section must contain ONLY bullet points.
+- Include ONLY the most critical outputs directly produced by the implementation.
+- Focus on:
+  - Final target tables
+  - Final output views
+  - Final inserted / updated / merged business data
+  - Backup tables
+  - Reporting-ready objects
+  - Critical business data products
+- Do NOT include generic logs or repetitive technical outputs.
+- If not explicitly present, write:
+  - Not explicitly present in source.
+
+
+**Expected Output:** 
+=============================================
+
+Author:        Ascendion AVA+
+Created on:
+Description:   One line description derived from the input asset
+
+=============================================
+
+# 1. Overview of Program
+# 2. Code Structure and Design
+# 3. Data Flow and Processing Logic
+# 4. Data Mapping
+# 5. Complexity Analysis
+# 6. Sensitive and Privacy Data Assessment
+# 7. Key Outputs
