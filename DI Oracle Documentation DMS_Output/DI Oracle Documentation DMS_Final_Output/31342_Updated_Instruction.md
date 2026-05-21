@@ -42,6 +42,7 @@ The documentation must contain the following sections in the exact order:
 - Mention business purpose ONLY if directly inferable from the input.
 - Mention processing or reporting benefit ONLY if directly supported by the input.
 - Do NOT add generic Oracle platform descriptions.
+- Count words before finalizing output. If word count is below 50, expand with relevant details from the source code about processing steps, data handling approach, or business impact.
 
 # 2. Code Structure and Design
 
