@@ -8,3 +8,6 @@ Step 2:
 Step 3:
 - Created an empty Gap Report file in GitHub to initialise the review cycle.
 - Called the Reviewer agent using the DI Aava Workflow Executor tool. The Reviewer compared the executed output against the goal and instruction and produced the Gap Report and Gap Score files written to GitHub at 'ELANSURIYAA/aTune/DI Oracle Documentation DMS_Output/DI Oracle Documentation DMS_Working/31342_Gap_Report.md' and 'ELANSURIYAA/aTune/DI Oracle Documentation DMS_Output/DI Oracle Documentation DMS_Working/31342_Gap_Score.md'. Proceeding to Step 4.
+
+Step 4:
+- Gap score is 94.0. Threshold is 90. 94.0 is greater than or equal to 90, so I am stopping the process here.
