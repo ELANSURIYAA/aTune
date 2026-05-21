@@ -1,0 +1,3 @@
+Iteration 1:
+Step 1:
+- Used the DI AAVA Agent Metadata Extractor tool to extract the agent's role, goal, backstory, description, and expected output. Created the Goal file and Instruction file and wrote both to GitHub at ELANSURIYAA/aTune/DI TWB Components Extractor IMS Split and Merge Part1 For Visuals And Measures_Output/DI TWB Components Extractor IMS Split and Merge Part1 For Visuals And Measures_Instruction/39174_Goal.md and 39174_Instruction.md. Proceeding to Step 2.
