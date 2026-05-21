@@ -35,3 +35,11 @@ Step 4:
 
 Step 5:
 - Called the Recommender agent using the DI Aava Workflow Executor tool. The Recommender analysed the Gap Report against the current instruction and produced a structured Recommendation file written to GitHub. Proceeding to Step 6.
+
+Step 6:
+- Called the Updater agent using the DI Aava Workflow Executor tool. The Updater applied the recommended changes to the instruction and produced the Updated Instruction and Applied Changes files written to GitHub. Starting next iteration.
+
+Iteration 3:
+
+Step 1:
+- Extraction is not required for this iteration. Skipping Step 1.
