@@ -1,0 +1,40 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that all mandatory sections specified in the instructions (Tables, Columns, Calculated Columns, Relationships) are present in the output.
+- Confirm that every physical column from the metadata-records in the TWB files is included in the Columns section, with no omissions.
+- Ensure all calculated columns identified in Level 2 (direct column elements with <calculation> child) are included in the Calculated Columns section.
+- Check that all required fields/columns (Table Name, Column Name, Source Field, Data Type, Role, Is Calculated, Formula) are present in their respective tables.
+- Validate that all Table Names (excluding Parameters) from each <datasource> element are listed in the Tables section.
+- Confirm that all relationships (joins and blends) present in the input files are extracted and included in the Relationships section.
+- Ensure that all validation rules from Section 7 of the instructions are addressed in the output.
+- Verify that all formatting and structural requirements for markdown output are followed as specified.
+- Confirm that the S3FileWriterTool is called exactly once at the end, as mandated.
+- Ensure that no required section, field, or entity from the input files is skipped or ignored.
+
+Accuracy Checks
+
+- Confirm that the output aligns exactly with the column name resolution algorithm described in the instructions, including caption overrides and fallback logic.
+- Verify that no column name in the output contains square brackets, raw calculation IDs, or leading/trailing spaces.
+- Ensure that physical columns do not appear in the Calculated Columns section and calculated columns do not appear in the Columns section.
+- Check that the Source Field column contains the stripped internal name for every row.
+- Validate that the Formula column for calculated columns contains the verbatim raw formula from the input, wrapped in backticks if necessary, and is never blank (use "(no formula)" if absent).
+- Confirm that all data types and roles are extracted and represented exactly as in the input files.
+- Ensure that all dependency and technical mappings (e.g., joins, blends) are logically and technically correct per the input content.
+- Check that all findings, values, and classifications in the output are traceable to either the instructions or the input files, with no unsupported assumptions or hallucinated content.
+- Validate that all business rule interpretations (e.g., handling of missing captions, exclusion of internal object IDs) are correct and instruction-aligned.
+- Confirm that the output contains no contradictions, false-positive gaps, or false-negative omissions.
+
+Efficiency Checks
+
+- Ensure that duplicate analysis, redundant explanations, and repeated gap entries are avoided in the output.
+- Verify that the output is concise, well-structured, and free from unnecessary sections or verbosity.
+- Confirm that duplicate dependency mappings, risks, recommendations, and validations are eliminated.
+- Check that similar findings are logically grouped and overlapping content is consolidated where appropriate.
+- Ensure that tables are not unnecessarily repeated and that large sections are summarized efficiently if allowed.
+- Validate that the output structure improves readability and review efficiency, with clean and optimized formatting.
+- Confirm that repeated content from the input file is minimized unless explicitly required by the instructions.
+- Ensure that redundant classifications, tags, and checks are avoided in the output.
+- Verify that the output is token-efficient while maintaining completeness and accuracy.
+- Confirm that only the required markdown structure is used, with no JSON or extraneous formatting.
