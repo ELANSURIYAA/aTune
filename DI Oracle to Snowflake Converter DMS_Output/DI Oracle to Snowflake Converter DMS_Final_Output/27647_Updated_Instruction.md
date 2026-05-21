@@ -10,119 +10,92 @@ Instructions:
 
 **Metadata Requirements:**
 
-
 - Add the following metadata at the top of each converted/generated file:
 
-
 =============================================
-
 
 Author: Ascendion AAVA
 
-
 Created on: (Leave it empty)
-
 
 Description:
 
-
 =============================================
-
 
 (give it only once in the top of the output)
 
-
 - If the source code already contains metadata headers, update them to match this format while preserving any relevant description content.
-
 
 - For the description, provide a concise summary of what the code does.
 
-
 (Only once in the top)
-
 
 1. **Function and Syntax Conversion:**
 
-
 - Replace Oracle-specific functions (e.g., `NVL`, `TO_DATE`, `DECODE`) with their Snowflake equivalents (e.g., `IFNULL/COALESCE`, `TO_DATE`, `IFF/CASE`).
-
 
 - Ensure correct handling of date functions like `ADD_MONTHS`, `MONTHS_BETWEEN`, and `TRUNC` for dates.
 
-
 - Adapt analytical functions like `ROW_NUMBER()` with `PARTITION BY` to Snowflake's syntax.
-
 
 2. **Join Adjustments:**
 
-
 - Replace Oracle-specific join syntax with ANSI SQL joins supported in Snowflake.
-
 
 - Maintain all other join types (e.g., `INNER JOIN`, `LEFT JOIN`, etc.).
 
-
 3. **Filtering and Conditions:**
-
 
 - Ensure Oracle-specific filter conditions are adapted to Snowflake equivalents.
 
-
 - Convert Oracle connect by/start with hierarchical queries to recursive CTEs.
-
 
 4. **Table References:**
 
-
 - Preserve table names as they appear in the original SQL query without schema prefixes unless explicitly required.
-
 
 - Avoid unnecessary changes to table or column references.
 
-
 5. **Data Type Compatibility:**
-
 
 - Ensure that implicit type casting in Oracle is explicitly defined in Snowflake where needed.
 
-
 - Validate compatibility with Snowflake data types, such as `INTEGER`, `VARCHAR`, etc.
-
 
 - Convert Oracle-specific types (e.g., `VARCHAR2`, `NUMBER`) to Snowflake types (e.g., `VARCHAR`, `NUMBER`).
 
-
 6. **Formatting and Structure:**
-
 
 - Use proper indentation and line breaks for readability.
 
-
 - Ensure that calculations, `CASE` statements, and other complex logic maintain their intended functionality.
-
 
 7. **Output Optimization:**
 
-
 - Review Oracle-specific features like materialized views, global temporary tables, and sequence generators and provide Snowflake equivalents.
-
 
 - Convert PL/SQL blocks to Snowflake stored procedures using JavaScript where applicable.
 
-
 Input:
 
-
 * For Oracle Query use the below file:
-
 
 {{INPUT_string_true}} 
 
 **Input Validation Requirements:**
 - All required input files must be present and accessible before conversion begins
-- If Reviewer_Additional_Input.txt is specified as a required input file, it must exist at the designated path
-- If any required input file returns a 404 error or is inaccessible, the conversion process must halt and return an error message: 'ERROR: Required input file [filename] is missing or inaccessible. Please ensure all required files are committed to the repository at the specified paths before executing conversion.'
-- The agent must validate file accessibility before proceeding with conversion logic
+- The agent must validate the following required input files:
+  1. Primary Oracle Query input file ({{INPUT_string_true}})
+  2. Reviewer_Additional_Input.txt (if specified as required)
+- File validation must occur in the following order:
+  a. Check if {{INPUT_string_true}} exists and is accessible
+  b. Check if Reviewer_Additional_Input.txt exists at the designated path
+- If any required input file returns a 404 error or is inaccessible, the conversion process must halt immediately
+- Error handling protocol:
+  * If {{INPUT_string_true}} is missing: Return 'ERROR: Primary Oracle Query input file is missing or inaccessible. Please ensure the file is committed to the repository at the specified path before executing conversion.'
+  * If Reviewer_Additional_Input.txt is missing: Return 'ERROR: Required input file Reviewer_Additional_Input.txt is missing or inaccessible. Please ensure all required files are committed to the repository at the specified paths before executing conversion.'
+- The agent must validate file accessibility before proceeding with any conversion logic
+- No conversion, transformation, or output generation should occur if validation fails
 
 ​​​​ADDITIONAL MANDATORY RULES
 
@@ -141,7 +114,6 @@ Do not wrap the final output in double quotes or single quotes; the script must 
 
 ​Deterministic Output Only: Do not introduce logic, control flow, or transformations that are not directly traceable to the input. Avoid "best practice" enhancements unless explicitly marked as optional recommendations. No Residual Syntax Rule: Final output must contain zero oracle syntax and zero SQL Server–specific syntax. Use only snowflake SQL.​
 
-
 ***Note:(Mandatory)
 
 
@@ -149,7 +121,6 @@ Do not include sql, , '''sql, ''' , or any starting or ending double quotation m
 
 
 Output Requirements:
-
 
 ​
 
@@ -162,60 +133,41 @@ The output must begin with the metadata header at the very top.
 
 Use the following metadata format exactly once:
 
-
 =============================================
-
 
 Author: Ascendion AAVA
 
-
 Created on:
-
 
 Description: (Provide a concise summary of what the code does)
 
-
 Immediately after the metadata header, provide the converted Snowflake SQL code.
-
 
 Do not include:
 
-
 Any explanations
-
 
 Conversion overview
 
-
 Assumptions
-
 
 Validation notes
 
-
 Unconvertible logic sections
-
 
 Any additional commentary
 
-
 The final output must:
-
 
 Contain only Snowflake SQL syntax
 
-
 Be properly formatted and ready to store as a .sql file
-
 
 Not include sql, sql, , single quotes, or double quotes at the beginning or end of the output
 
-
 The metadata header must appear at the top, followed directly by the converted Snowflake SQL code.​
 
-
 Do not wrap the final output in double quotes or single quotes; the script must start directly with the metadata header and end with the SQL code only.​
-
 
 ***​​
 
