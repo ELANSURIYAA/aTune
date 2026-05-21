@@ -1,0 +1,53 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that the output includes all mandatory sections specified in the instructions, including "Dashboards & Visuals" and "Summary".
+- Confirm that every <worksheet> in both TWB files appears exactly once in the output.
+- Ensure every <dashboard> in both TWB files appears in the Page Name column.
+- Check that all required columns in the Dashboards & Visuals table (Page Name, Sheet Name, Power BI Visual Type, Mark Class(es), Dimensions, Measures, Filter Fields) are present and populated for each entry.
+- Confirm that all dimensions, measures, and filter fields are resolved using the two-level column name resolution algorithm.
+- Ensure that all mark classes from each worksheet are collected and listed as required.
+- Verify that all standalone worksheets not referenced by any dashboard are included and labeled with "(Standalone Sheet)" as Page Name.
+- Confirm that the Summary table includes all dashboards with correct counts and unique visual types used.
+- Ensure that all required data type mappings from Tableau to Power BI are applied as per the mapping tables in the instructions.
+- Check that all formatting requirements (pure markdown, no JSON, no code fences, no raw Tableau syntax, no leading/trailing spaces) are followed.
+- Verify that the S3FileWriterTool is called exactly once with the correct file path, file name, and complete markdown content.
+- Confirm that all business rules and validation rules from the instructions are addressed in the output.
+- Ensure that all dependencies and integrations between dashboards, worksheets, and visuals are captured.
+- Verify that all required inferred/derived fields are generated if instructed by the prompt.
+- Confirm that no worksheet, dashboard, or required field from the input files is omitted.
+
+Accuracy Checks
+
+- Validate that the output strictly aligns with the provided instructions and does not introduce unsupported assumptions.
+- Confirm that all worksheet and dashboard names are extracted exactly as present in the input files, with no internal Tableau syntax.
+- Ensure that visual type detection follows the exact stepwise logic and mapping rules specified in the instructions.
+- Verify that dimensions, measures, and filter fields use resolved captions and not internal bracket names.
+- Confirm that filter fields are shown as "—" if no filters exist for a sheet, as per output rules.
+- Check that mark class detection and listing are accurate and complete for each worksheet.
+- Ensure that all data type mappings are correct and match the mapping tables provided.
+- Validate that all findings, classifications, and mappings are traceable to either the instructions or the input file content.
+- Confirm that no hallucinated content, false-positive gaps, or unsupported values are present in the output.
+- Ensure that all business rule interpretations (e.g., minimum matrix upgrade, standalone sheet labeling) are correct.
+- Verify that terminology is used consistently and matches the instructions and input files.
+- Check that all relationships between dashboards, worksheets, and visuals are accurately represented.
+- Confirm that the output does not contradict itself or the source content.
+- Ensure that all formatting standards (markdown, table structure, column order) are followed precisely.
+- Validate that the S3 write step is performed only after the complete document is generated.
+- Confirm that no instruction is misinterpreted or partially implemented.
+
+Efficiency Checks
+
+- Verify that duplicate analysis of worksheets, dashboards, or visuals is avoided.
+- Ensure that redundant explanations, repeated gap entries, and unnecessary sections are not present in the output.
+- Confirm that each worksheet and dashboard appears only once in the relevant tables.
+- Check that the output is concise, well-structured, and free from excessive verbosity.
+- Ensure that similar findings are logically grouped where appropriate and overlapping findings are consolidated.
+- Confirm that tables are not unnecessarily repeated and that content from the input files is not duplicated unless required.
+- Verify that formatting remains clean, optimized, and improves readability and review efficiency.
+- Ensure that redundant classifications, tags, or validations are eliminated.
+- Confirm that the output is token-efficient while maintaining completeness and accuracy.
+- Check that the S3FileWriterTool is not called more than once and only after the full output is ready.
+- Ensure that large sections are summarized efficiently where allowed by the instructions.
+- Confirm that the output structure supports efficient review and validation by reviewers.
