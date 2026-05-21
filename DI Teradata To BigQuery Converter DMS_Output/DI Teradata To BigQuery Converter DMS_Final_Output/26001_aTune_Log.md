@@ -8,3 +8,22 @@ Step 2:
 Step 3:
 - Created an empty Gap Report file in GitHub to initialise the review cycle.
 - Called the Reviewer agent using the DI Aava Workflow Executor tool. The Reviewer compared the executed output against the goal and instruction and produced the Gap Report and Gap Score files written to GitHub at 'ELANSURIYAA/aTune/DI Teradata To BigQuery Converter DMS_Output/DI Teradata To BigQuery Converter DMS_Working/26001_Gap_Report.md' and 'ELANSURIYAA/aTune/DI Teradata To BigQuery Converter DMS_Output/DI Teradata To BigQuery Converter DMS_Working/26001_Gap_Score.md'. Proceeding to Step 4.
+
+Step 4:
+- Gap score is 100. Threshold is 90. 100 is greater than or equal to 90, so I am stopping the process here.
+
+---
+
+Tuning Outcome:
+- Status: COMPLETED — Threshold Met
+- Agent ID tuned: 26001
+- Agent Name: DI Teradata To BigQuery Converter DMS
+- Threshold set: 90
+- Final Gap Score achieved: 100
+- Total iterations run: 1
+
+Iteration Summary:
+
+| Iteration | Gap Score | Decision        |
+|-----------|-----------|-----------------|
+| 1         | 100       | STOP            |
