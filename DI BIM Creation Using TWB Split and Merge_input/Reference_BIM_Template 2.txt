@@ -1,0 +1,165 @@
+{
+  "name": "Generated_Model_From_TWB",
+  "compatibilityLevel": 1600,
+  "model": {
+    "culture": "en-IN",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-IN",
+    "tables": [
+      {
+        "name": "<FACT_TABLE_FROM_TWB>",
+        "lineageTag": "<stable-guid-or-hash-facttable>",
+        "columns": [
+          {
+            "name": "<Date Column>",
+            "dataType": "dateTime",
+            "sourceColumn": "<Source Date Column>",
+            "formatString": "Long Date",
+            "lineageTag": "<stable-guid-or-hash-datecol>",
+            "summarizeBy": "none",
+            "variations": [
+              {
+                "name": "Variation",
+                "relationship": "<date-relationship-guid>",
+                "defaultHierarchy": {
+                  "table": "LocalDateTable_<guid>",
+                  "hierarchy": "Date Hierarchy"
+                },
+                "isDefault": true
+              }
+            ],
+            "annotations": [
+              { "name": "SummarizationSetBy", "value": "Automatic" },
+              { "name": "UnderlyingDateTimeDataType", "value": "Date" }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "<Calculated Column Name>",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "<VALID_DAX_EXPRESSION>",
+            "lineageTag": "<stable-guid-or-hash-calccol>",
+            "summarizeBy": "none",
+            "annotations": [
+              { "name": "SummarizationSetBy", "value": "Automatic" }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "<FACT_TABLE_FROM_TWB>",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "<M_QUERY_EXPRESSION>"
+            }
+          }
+        ]
+      },
+      {
+        "name": "MeasureTable",
+        "lineageTag": "<stable-guid-or-hash-measuretable>",
+        "partitions": [
+          {
+            "name": "MeasureTable",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "let Source = #table(type table [Dummy = text], {{"X"}}), Result = Table.RemoveColumns(Source,{"Dummy"}) in Result"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "<Measure Name>",
+            "description": "SOURCE_TABLEAU_CALC: <original calc> | STATUS: OK",
+            "expression": "<VALID_DAX_MEASURE>",
+            "lineageTag": "<stable-guid-or-hash-measure>",
+            "annotations": [
+              { "name": "PBI_FormatHint", "value": "{"isGeneralNumber":true}" }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "LocalDateTable_<guid>",
+        "isHidden": true,
+        "showAsVariationsOnly": true,
+        "lineageTag": "<stable-guid-or-hash-localdate>",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Date",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "[Date]",
+            "lineageTag": "<guid>",
+            "dataCategory": "PaddedDateTableDates",
+            "summarizeBy": "none"
+          },
+          {
+            "type": "calculated",
+            "name": "Year",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "YEAR([Date])",
+            "lineageTag": "<guid>",
+            "summarizeBy": "none"
+          },
+          {
+            "type": "calculated",
+            "name": "Month",
+            "dataType": "string",
+            "isHidden": true,
+            "expression": "FORMAT([Date], "MMMM")",
+            "sortByColumn": "MonthNo",
+            "lineageTag": "<guid>",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "LocalDateTable_<guid>",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "CALENDAR(DATE(YEAR(MIN('<FACT_TABLE_FROM_TWB>'[<Date Column>])),1,1), DATE(YEAR(MAX('<FACT_TABLE_FROM_TWB>'[<Date Column>])),12,31))"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "lineageTag": "<guid>",
+            "levels": [
+              { "name": "Year", "ordinal": 0, "column": "Year" },
+              { "name": "Month", "ordinal": 1, "column": "Month" }
+            ]
+          }
+        ],
+        "annotations": [
+          { "name": "__PBI_LocalDateTable", "value": "true" }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "<date-relationship-guid>",
+        "fromTable": "<FACT_TABLE_FROM_TWB>",
+        "fromColumn": "<Date Column>",
+        "toTable": "LocalDateTable_<guid>",
+        "toColumn": "Date",
+        "joinOnDateBehavior": "datePartOnly"
+      }
+    ],
+    "annotations": [
+      { "name": "__PBI_TimeIntelligenceEnabled", "value": "1" },
+      { "name": "PBI_QueryOrder", "value": "["<FACT_TABLE_FROM_TWB>","MeasureTable"]" }
+    ]
+  }
+}
