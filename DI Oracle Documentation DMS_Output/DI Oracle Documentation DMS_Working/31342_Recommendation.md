@@ -1,23 +1,37 @@
 # Gap Remediation Report
 
-## Instruction Prompt Modifications
+## Remediation Table
 
 | Gap ID | Gap Description | Instruction Section / Part | Change Type | Required Modification | Status |
 |--------|-----------------|----------------------------|-------------|----------------------|--------|
-| GAP-001 | The "Sensitive and Privacy Data Assessment" section must follow the required table format or output exactly "No sensitive data found" if applicable. Current output shows "No sensitive data found" without proper formatting emphasis. | # 6. Sensitive and Privacy Data Assessment | Delete and Replace | Replace the current output rule with: "If no sensitive fields are found, output EXACTLY (on a new line, no additional formatting): \n\nNo sensitive data found\n\n(Ensure exact text match with no markdown formatting, bold, or italic styling)" | Completed |
-| GAP-002 | The "API Cost Calculations" section must not be included in the final output. The instruction currently includes this as section #8 and requires it in the output. | # 8. API Cost Calculations (entire section) AND Expected Output section | Delete | Delete the entire section "# 8. API Cost Calculations" including all rules and formatting requirements. Also remove "# 7. API Cost Calculations" from the Expected Output section at the end of the instruction. Renumber remaining sections if needed. | Completed |
-| GAP-003 | The "Overview of Program" section must be a single concise paragraph with minimum 50 words. Current instruction states "Maximum 2–3 sentences" which may result in fewer than 50 words. | # 1. Overview of Program | Delete and Replace | Replace the current rule "Maximum 2–3 sentences" with: "Minimum 50 words, maximum 100 words, written as a single concise paragraph. Ensure the paragraph provides sufficient context about the purpose, processing approach, and business benefit while remaining focused and avoiding generic Oracle platform descriptions." | Completed |
+| GAP-001 | The "Sensitive and Privacy Data Assessment" section must follow the required table format or output exactly "No sensitive data found" if applicable. | Section 6: Sensitive and Privacy Data Assessment | Delete and Replace | Replace the existing output rule with: "If no sensitive fields are found, output EXACTLY (on a new line, no additional formatting): No sensitive data found (Ensure exact text match with no markdown formatting, bold, or italic styling)" | Completed |
+| GAP-002 | The "API Cost Calculations" section must not be included in the final output. | New Section Addition Required | Add | Add a new strict output rule after Section 7 (Key Outputs): "PROHIBITED OUTPUT SECTIONS: - Do NOT include any section titled 'API Cost Calculations' - Do NOT include any cost calculation information - Do NOT include any API usage metrics - The documentation must end with Section 7: Key Outputs" | Completed |
+| GAP-003 | The "Overview of Program" section must be a single concise paragraph (minimum 50 words) and not include generic Oracle descriptions. | Section 1: Overview of Program | Delete and Replace | Replace the word count requirement with: "Minimum 50 words, maximum 100 words, written as a single concise paragraph. Ensure the paragraph provides sufficient context about the purpose, processing approach, and business benefit while remaining focused and avoiding generic Oracle platform descriptions." | Completed |
 
 ## Notes
 
-- **GAP-001**: The instruction already contains the correct output format requirement. The gap appears to be in enforcement clarity. The modification adds explicit formatting guidance to ensure no markdown styling is applied to the "No sensitive data found" text.
+### Gap-001 Analysis
+- **Instruction Section Found:** Yes - Section 6: Sensitive and Privacy Data Assessment
+- **Current Instruction Text:** The section contains rules for sensitive data classification but the output format specification needs clarification
+- **Issue:** The instruction states "If no sensitive fields are found, output EXACTLY (on a new line, no additional formatting): No sensitive data found" but this rule may not be enforced strictly enough
+- **Remediation Action:** Strengthen the output format rule by explicitly stating the exact text match requirement with no markdown formatting
 
-- **GAP-002**: This gap requires deletion of an entire section from the instruction prompt. The section "# 8. API Cost Calculations" must be completely removed from both the detailed instruction body and the Expected Output template. After deletion, section "# 7. Key Outputs" should remain as the final section.
+### Gap-002 Analysis
+- **Instruction Section Found:** No - This is a new prohibition requirement
+- **Current State:** The instruction does not explicitly prohibit the "API Cost Calculations" section
+- **Issue:** The agent is adding an unauthorized section that should not appear in the output
+- **Remediation Action:** Add a new mandatory rule section that explicitly lists prohibited output sections, specifically mentioning "API Cost Calculations"
+- **Placement:** This rule should be added after Section 7 or in the STRICT OUTPUT RULES section at the beginning
 
-- **GAP-003**: The current instruction contains conflicting guidance - it requests a "concise paragraph" but limits it to "Maximum 2–3 sentences" which typically results in fewer than 50 words. The modification replaces the sentence limit with a word count requirement (minimum 50 words, maximum 100 words) to ensure adequate detail while maintaining conciseness.
+### Gap-003 Analysis
+- **Instruction Section Found:** Yes - Section 1: Overview of Program
+- **Current Instruction Text:** "Write this section as a SINGLE concise paragraph only."
+- **Issue:** The instruction mentions "single concise paragraph" but does not explicitly state the minimum word count requirement clearly enough, and the actual output was less than 50 words
+- **Remediation Action:** Replace the existing paragraph requirement with explicit word count boundaries (minimum 50 words, maximum 100 words) and add guidance to ensure sufficient context is provided
 
-- All three gaps are related to **Completeness** dimension and **NC (Non-Conformance)** category.
-
-- All modifications maintain strict alignment with the instruction prompt's existing structure and do not introduce external assumptions or unrelated logic.
-
-- No sections were found to be missing or ambiguous in mapping. All gaps map directly to existing instruction sections.
+### Additional Observations
+- All three gaps are related to output format compliance and content restrictions
+- Gap-001 and Gap-003 require modifications to existing instruction sections
+- Gap-002 requires addition of a new prohibition rule
+- No ambiguous mappings identified - all gaps can be clearly traced to specific instruction sections or missing rules
+- All modifications maintain strict alignment with the instruction prompt's purpose and structure
