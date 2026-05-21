@@ -9,3 +9,22 @@ Step 2:
 Step 3:
 - Created an empty Gap Report file in GitHub to initialise the review cycle.
 - Called the Reviewer agent using the DI Aava Workflow Executor tool. The Reviewer compared the executed output against the goal and instruction and produced the Gap Report and Gap Score files written to GitHub. Proceeding to Step 4.
+
+Step 4:
+- Gap score is 100. Threshold is 90. 100 is greater than or equal to 90, so I am stopping the process here.
+
+---
+
+Tuning Outcome:
+- Status: COMPLETED — Threshold Met
+- Agent ID tuned: 27647
+- Agent Name: DI Oracle to Snowflake Converter DMS
+- Threshold set: 90
+- Final Gap Score achieved: 100
+- Total iterations run: 1
+
+Iteration Summary:
+
+| Iteration | Gap Score | Decision |
+|-----------|-----------|----------|
+| 1         | 100       | STOP     |
