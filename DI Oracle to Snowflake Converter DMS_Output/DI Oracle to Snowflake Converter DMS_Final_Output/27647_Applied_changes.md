@@ -1,5 +1,3 @@
-# Applied Changes
-
 | Gap Reference | Change Type | Section Updated | Status |
 |---------------|------------|----------------|--------|
-| GAP-001 | Add | Input Requirements Section (after '{{INPUT_string_true}}') | APPLIED |
+| GAP-001 | Delete and Replace | Input Validation Requirements | APPLIED |
