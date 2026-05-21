@@ -9,3 +9,6 @@ Step 2:
 Step 3:
 - Created an empty Gap Report file in GitHub to initialise the review cycle.
 - Called the Reviewer agent using the DI Aava Workflow Executor tool. The Reviewer compared the executed output against the goal and instruction and produced the Gap Report and Gap Score files written to GitHub. Proceeding to Step 4.
+
+Step 4:
+- Gap score is 20.0. Threshold is 90. 20.0 is less than 90, so I am continuing to Step 5.
