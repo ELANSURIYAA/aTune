@@ -1,0 +1,2887 @@
+{
+  "name": "Patient_Event_Analytics_Model",
+  "compatibilityLevel": 1600,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Patient_Event_Detail",
+        "lineageTag": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "columns": [
+          {
+            "name": "AESalesTeam",
+            "dataType": "string",
+            "sourceColumn": "AESalesTeam",
+            "lineageTag": "col-aesalesteam-001",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AEcallDate",
+            "dataType": "dateTime",
+            "sourceColumn": "AEcallDate",
+            "formatString": "Long Date",
+            "lineageTag": "col-aecalldate-002",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "AEhiredate",
+            "dataType": "dateTime",
+            "sourceColumn": "AEhiredate",
+            "formatString": "Long Date",
+            "lineageTag": "col-aehiredate-003",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "AEtermdate",
+            "dataType": "dateTime",
+            "sourceColumn": "AEtermdate",
+            "formatString": "Long Date",
+            "lineageTag": "col-aetermdate-004",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "Clientfirstname",
+            "dataType": "string",
+            "sourceColumn": "Clientfirstname",
+            "lineageTag": "col-clientfirstname-005",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Clientlastname",
+            "dataType": "string",
+            "sourceColumn": "Clientlastname",
+            "lineageTag": "col-clientlastname-006",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "EpisodeVisitNumber",
+            "dataType": "string",
+            "sourceColumn": "EpisodeVisitNumber",
+            "lineageTag": "col-episodevisitnumber-007",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Hipps",
+            "dataType": "string",
+            "sourceColumn": "Hipps",
+            "lineageTag": "col-hipps-008",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PayorFrequencyId",
+            "dataType": "string",
+            "sourceColumn": "PayorFrequencyId",
+            "lineageTag": "col-payorfrequencyid-009",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PayorSource",
+            "dataType": "string",
+            "sourceColumn": "PayorSource",
+            "lineageTag": "col-payorsource-010",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PayorTypeId",
+            "dataType": "string",
+            "sourceColumn": "PayorTypeId",
+            "lineageTag": "col-payortypeid-011",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PayorType",
+            "dataType": "string",
+            "sourceColumn": "PayorType",
+            "lineageTag": "col-payortype-012",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PayorWorkflowType",
+            "dataType": "string",
+            "sourceColumn": "PayorWorkflowType",
+            "lineageTag": "col-payorworkflowtype-013",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PhysicianEIN",
+            "dataType": "string",
+            "sourceColumn": "PhysicianEIN",
+            "lineageTag": "col-physicianein-014",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PhysicianFirstName",
+            "dataType": "string",
+            "sourceColumn": "PhysicianFirstName",
+            "lineageTag": "col-physicianfirstname-015",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PhysicianId",
+            "dataType": "string",
+            "sourceColumn": "PhysicianId",
+            "lineageTag": "col-physicianid-016",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PhysicianLastname",
+            "dataType": "string",
+            "sourceColumn": "PhysicianLastname",
+            "lineageTag": "col-physicianlastname-017",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PhysicianNPI",
+            "dataType": "string",
+            "sourceColumn": "PhysicianNPI",
+            "lineageTag": "col-physiciannpi-018",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ProviderAgencyProviderMedicareNo",
+            "dataType": "string",
+            "sourceColumn": "ProviderAgencyProviderMedicareNo",
+            "lineageTag": "col-provideragencyprovidermedicareno-019",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ProviderBranchAddress",
+            "dataType": "string",
+            "sourceColumn": "ProviderBranchAddress",
+            "lineageTag": "col-providerbranchaddress-020",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ProviderBranchCity",
+            "dataType": "string",
+            "sourceColumn": "ProviderBranchCity",
+            "lineageTag": "col-providerbranchcity-021",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ProviderBranchNPI",
+            "dataType": "string",
+            "sourceColumn": "ProviderBranchNPI",
+            "lineageTag": "col-providerbranchnpi-022",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ProviderBranchTeamName",
+            "dataType": "string",
+            "sourceColumn": "ProviderBranchTeamName",
+            "lineageTag": "col-providerbranchteamname-023",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ProviderBranchZip",
+            "dataType": "string",
+            "sourceColumn": "ProviderBranchZip",
+            "lineageTag": "col-providerbranchzip-024",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "RevSeq",
+            "dataType": "string",
+            "sourceColumn": "RevSeq",
+            "lineageTag": "col-revseq-025",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Seq",
+            "dataType": "string",
+            "sourceColumn": "Seq",
+            "lineageTag": "col-seq-026",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "VisitDateOfService",
+            "dataType": "string",
+            "sourceColumn": "VisitDateOfService",
+            "lineageTag": "col-visitdateofservice-027",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "VisitDate",
+            "dataType": "dateTime",
+            "sourceColumn": "VisitDate",
+            "formatString": "Long Date",
+            "lineageTag": "col-visitdate-028",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "admissionCoordId",
+            "dataType": "int64",
+            "sourceColumn": "admissionCoordId",
+            "formatString": "0",
+            "lineageTag": "col-admissioncoordid-029",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "admissionCoordName",
+            "dataType": "string",
+            "sourceColumn": "admissionCoordName",
+            "lineageTag": "col-admissioncoordname-030",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "admissionDate",
+            "dataType": "dateTime",
+            "sourceColumn": "admissionDate",
+            "formatString": "Long Date",
+            "lineageTag": "col-admissiondate-031",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "admissionId",
+            "dataType": "string",
+            "sourceColumn": "admissionId",
+            "lineageTag": "col-admissionid-032",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "admitdiscipline",
+            "dataType": "string",
+            "sourceColumn": "admitdiscipline",
+            "lineageTag": "col-admitdiscipline-033",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "budgetAdmits",
+            "dataType": "int64",
+            "sourceColumn": "budgetAdmits",
+            "formatString": "0",
+            "lineageTag": "col-budgetadmits-034",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "budgetType",
+            "dataType": "string",
+            "sourceColumn": "budgetType",
+            "lineageTag": "col-budgettype-035",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "budgetdate",
+            "dataType": "dateTime",
+            "sourceColumn": "budgetdate",
+            "formatString": "Long Date",
+            "lineageTag": "col-budgetdate-036",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "callcount",
+            "dataType": "int64",
+            "sourceColumn": "callcount",
+            "formatString": "0",
+            "lineageTag": "col-callcount-037",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "caretype",
+            "dataType": "string",
+            "sourceColumn": "caretype",
+            "lineageTag": "col-caretype-038",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "census",
+            "dataType": "int64",
+            "sourceColumn": "census",
+            "formatString": "0",
+            "lineageTag": "col-census-039",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "city",
+            "dataType": "string",
+            "sourceColumn": "city",
+            "lineageTag": "col-city-040",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "collectedRevenue",
+            "dataType": "double",
+            "sourceColumn": "collectedRevenue",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "col-collectedrevenue-041",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ]
+          },
+          {
+            "name": "county",
+            "dataType": "string",
+            "sourceColumn": "county",
+            "lineageTag": "col-county-042",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "diagnosis1",
+            "dataType": "string",
+            "sourceColumn": "diagnosis1",
+            "lineageTag": "col-diagnosis1-043",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "diagnosis2",
+            "dataType": "string",
+            "sourceColumn": "diagnosis2",
+            "lineageTag": "col-diagnosis2-044",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "diagnosis3",
+            "dataType": "string",
+            "sourceColumn": "diagnosis3",
+            "lineageTag": "col-diagnosis3-045",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "diagnosis4",
+            "dataType": "string",
+            "sourceColumn": "diagnosis4",
+            "lineageTag": "col-diagnosis4-046",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "dischargeCode",
+            "dataType": "string",
+            "sourceColumn": "dischargeCode",
+            "lineageTag": "col-dischargecode-047",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "dischargeDate",
+            "dataType": "dateTime",
+            "sourceColumn": "dischargeDate",
+            "formatString": "Long Date",
+            "lineageTag": "col-dischargedate-048",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "dischargeId",
+            "dataType": "string",
+            "sourceColumn": "dischargeId",
+            "lineageTag": "col-dischargeid-049",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "dischargeReasonCodeDesc",
+            "dataType": "string",
+            "sourceColumn": "dischargeReasonCodeDesc",
+            "lineageTag": "col-dischargereasoncodedesc-050",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "dischargeReasonCode",
+            "dataType": "string",
+            "sourceColumn": "dischargeReasonCode",
+            "lineageTag": "col-dischargereasoncode-051",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "elaraServiceLineCode",
+            "dataType": "string",
+            "sourceColumn": "elaraServiceLineCode",
+            "lineageTag": "col-elaraservicelinecode-052",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "elaraServiceLine",
+            "dataType": "string",
+            "sourceColumn": "elaraServiceLine",
+            "lineageTag": "col-elaraserviceline-053",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "episodeEnddate",
+            "dataType": "dateTime",
+            "sourceColumn": "episodeEnddate",
+            "formatString": "Long Date",
+            "lineageTag": "col-episodeenddate-054",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "episodeLastUpdatedOn",
+            "dataType": "string",
+            "sourceColumn": "episodeLastUpdatedOn",
+            "lineageTag": "col-episodelastupdatedon-055",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "episodePendingReason",
+            "dataType": "string",
+            "sourceColumn": "episodePendingReason",
+            "lineageTag": "col-episodependingreason-056",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "episodeStartDate",
+            "dataType": "dateTime",
+            "sourceColumn": "episodeStartDate",
+            "formatString": "Long Date",
+            "lineageTag": "col-episodestartdate-057",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "episodeStatus",
+            "dataType": "string",
+            "sourceColumn": "episodeStatus",
+            "lineageTag": "col-episodestatus-058",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "episodeTimingCode",
+            "dataType": "string",
+            "sourceColumn": "episodeTimingCode",
+            "lineageTag": "col-episodetimingcode-059",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "episodeid",
+            "dataType": "string",
+            "sourceColumn": "episodeid",
+            "lineageTag": "col-episodeid-060",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "eventDate",
+            "dataType": "dateTime",
+            "sourceColumn": "eventDate",
+            "formatString": "Long Date",
+            "lineageTag": "col-eventdate-061",
+            "summarizeBy": "none",
+            "variations": [
+              {
+                "name": "Variation",
+                "relationship": "rel-eventdate-localdatetable",
+                "defaultHierarchy": {
+                  "table": "LocalDateTable_eventDate",
+                  "hierarchy": "Date Hierarchy"
+                },
+                "isDefault": true
+              }
+            ],
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "eventSubType",
+            "dataType": "string",
+            "sourceColumn": "eventSubType",
+            "lineageTag": "col-eventsubtype-062",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "eventType",
+            "dataType": "string",
+            "sourceColumn": "eventType",
+            "lineageTag": "col-eventtype-063",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "expectedRevenue",
+            "dataType": "double",
+            "sourceColumn": "expectedRevenue",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "col-expectedrevenue-064",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ]
+          },
+          {
+            "name": "homecareCoordinator",
+            "dataType": "string",
+            "sourceColumn": "homecareCoordinator",
+            "lineageTag": "col-homecarecoordinator-065",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isActiveBranch",
+            "dataType": "boolean",
+            "sourceColumn": "isActiveBranch",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "col-isactivebranch-066",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isAdmissionEpisode",
+            "dataType": "int64",
+            "sourceColumn": "isAdmissionEpisode",
+            "formatString": "0",
+            "lineageTag": "col-isadmissionepisode-067",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isCaretinuumLead",
+            "dataType": "boolean",
+            "sourceColumn": "isCaretinuumLead",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "col-iscaretinuumlead-068",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isCaretinuumQualifiedReferral",
+            "dataType": "boolean",
+            "sourceColumn": "isCaretinuumQualifiedReferral",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "col-iscaretinuumqualifiedreferral-069",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isCaretinuum",
+            "dataType": "boolean",
+            "sourceColumn": "isCaretinuum",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "col-iscaretinuum-070",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isCreatedFromDischargeEpisode",
+            "dataType": "int64",
+            "sourceColumn": "isCreatedFromDischargeEpisode",
+            "formatString": "0",
+            "lineageTag": "col-iscreatedfromdischargeepisode-071",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isCreatedFromRecertEpisode",
+            "dataType": "int64",
+            "sourceColumn": "isCreatedFromRecertEpisode",
+            "formatString": "0",
+            "lineageTag": "col-iscreatedfromrecertepisode-072",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isDeleted",
+            "dataType": "boolean",
+            "sourceColumn": "isDeleted",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "col-isdeleted-073",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isDischargeEpisode",
+            "dataType": "int64",
+            "sourceColumn": "isDischargeEpisode",
+            "formatString": "0",
+            "lineageTag": "col-isdischargeepisode-074",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isEpisodic",
+            "dataType": "boolean",
+            "sourceColumn": "isEpisodic",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "col-isepisodic-075",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isMissingAdmitRec",
+            "dataType": "int64",
+            "sourceColumn": "isMissingAdmitRec",
+            "formatString": "0",
+            "lineageTag": "col-ismissingadmitrec-076",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isPPS",
+            "dataType": "boolean",
+            "sourceColumn": "isPPS",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "col-ispps-077",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "isbudgetMedicare",
+            "dataType": "boolean",
+            "sourceColumn": "isbudgetMedicare",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "col-isbudgetmedicare-078",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "lastRecertificationId",
+            "dataType": "string",
+            "sourceColumn": "lastRecertificationId",
+            "lineageTag": "col-lastrecertificationid-079",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "lastloadDate",
+            "dataType": "dateTime",
+            "sourceColumn": "lastloadDate",
+            "formatString": "General Date",
+            "lineageTag": "col-lastloaddate-080",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "listEpisodeId",
+            "dataType": "string",
+            "sourceColumn": "listEpisodeId",
+            "lineageTag": "col-listepisodeid-081",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "listInvoiceno",
+            "dataType": "string",
+            "sourceColumn": "listInvoiceno",
+            "lineageTag": "col-listinvoiceno-082",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "listPatientId",
+            "dataType": "string",
+            "sourceColumn": "listPatientId",
+            "lineageTag": "col-listpatientid-083",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "lupaThreshold",
+            "dataType": "string",
+            "sourceColumn": "lupaThreshold",
+            "lineageTag": "col-lupathreshold-084",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "nonadmitdate",
+            "dataType": "dateTime",
+            "sourceColumn": "nonadmitdate",
+            "formatString": "Long Date",
+            "lineageTag": "col-nonadmitdate-085",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "open_AR",
+            "dataType": "double",
+            "sourceColumn": "open_AR",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "col-openar-086",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ]
+          },
+          {
+            "name": "patientId",
+            "dataType": "string",
+            "sourceColumn": "patientId",
+            "lineageTag": "col-patientid-087",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "patientStatus",
+            "dataType": "string",
+            "sourceColumn": "patientStatus",
+            "lineageTag": "col-patientstatus-088",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "patientdischargeConditions",
+            "dataType": "string",
+            "sourceColumn": "patientdischargeConditions",
+            "lineageTag": "col-patientdischargeconditions-089",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorClassName",
+            "dataType": "string",
+            "sourceColumn": "payorClassName",
+            "lineageTag": "col-payorclassname-090",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorClass",
+            "dataType": "string",
+            "sourceColumn": "payorClass",
+            "lineageTag": "col-payorclass-091",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorDimKey",
+            "dataType": "int64",
+            "sourceColumn": "payorDimKey",
+            "formatString": "0",
+            "lineageTag": "col-payordimkey-092",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorFrequency",
+            "dataType": "string",
+            "sourceColumn": "payorFrequency",
+            "lineageTag": "col-payorfrequency-093",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorName",
+            "dataType": "string",
+            "sourceColumn": "payorName",
+            "lineageTag": "col-payorname-094",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorServiceLine",
+            "dataType": "string",
+            "sourceColumn": "payorServiceLine",
+            "lineageTag": "col-payorserviceline-095",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorSourceId",
+            "dataType": "string",
+            "sourceColumn": "payorSourceId",
+            "lineageTag": "col-payorsourceid-096",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorSourceName",
+            "dataType": "string",
+            "sourceColumn": "payorSourceName",
+            "lineageTag": "col-payorsourcename-097",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payorSubClass",
+            "dataType": "string",
+            "sourceColumn": "payorSubClass",
+            "lineageTag": "col-payorsubclass-098",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "previousdischargedate",
+            "dataType": "dateTime",
+            "sourceColumn": "previousdischargedate",
+            "formatString": "Long Date",
+            "lineageTag": "col-previousdischargedate-099",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "providerAgencyProviderNo",
+            "dataType": "string",
+            "sourceColumn": "providerAgencyProviderNo",
+            "lineageTag": "col-provideragencyproviderno-100",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerAgencyState",
+            "dataType": "string",
+            "sourceColumn": "providerAgencyState",
+            "lineageTag": "col-provideragencystate-101",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerBranchDimKey",
+            "dataType": "int64",
+            "sourceColumn": "providerBranchDimKey",
+            "formatString": "0",
+            "lineageTag": "col-providerbranchdimkey-102",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerBranchGL",
+            "dataType": "string",
+            "sourceColumn": "providerBranchGL",
+            "lineageTag": "col-providerbranchgl-103",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerBranchLocation",
+            "dataType": "string",
+            "sourceColumn": "providerBranchLocation",
+            "lineageTag": "col-providerbranchlocation-104",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerBranchRegion",
+            "dataType": "string",
+            "sourceColumn": "providerBranchRegion",
+            "lineageTag": "col-providerbranchregion-105",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerBranchTeamId",
+            "dataType": "string",
+            "sourceColumn": "providerBranchTeamId",
+            "lineageTag": "col-providerbranchteamid-106",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerCompanyName",
+            "dataType": "string",
+            "sourceColumn": "providerCompanyName",
+            "lineageTag": "col-providercompanyname-107",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerbranchName",
+            "dataType": "string",
+            "sourceColumn": "providerbranchName",
+            "lineageTag": "col-providerbranchname-108",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerbranchState",
+            "dataType": "string",
+            "sourceColumn": "providerbranchState",
+            "lineageTag": "col-providerbranchstate-109",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "providerbranchcode",
+            "dataType": "string",
+            "sourceColumn": "providerbranchcode",
+            "lineageTag": "col-providerbranchcode-110",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "recertificationDate",
+            "dataType": "dateTime",
+            "sourceColumn": "recertificationDate",
+            "formatString": "Long Date",
+            "lineageTag": "col-recertificationdate-111",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "recertificationno",
+            "dataType": "int64",
+            "sourceColumn": "recertificationno",
+            "formatString": "0",
+            "lineageTag": "col-recertificationno-112",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralDate",
+            "dataType": "dateTime",
+            "sourceColumn": "referralDate",
+            "formatString": "General Date",
+            "lineageTag": "col-referraldate-113",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralDispositionReasonCode",
+            "dataType": "string",
+            "sourceColumn": "referralDispositionReasonCode",
+            "lineageTag": "col-referraldispositionreasoncode-114",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralDispositionReasonDesc",
+            "dataType": "string",
+            "sourceColumn": "referralDispositionReasonDesc",
+            "lineageTag": "col-referraldispositionreasondesc-115",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralDispositionStage",
+            "dataType": "string",
+            "sourceColumn": "referralDispositionStage",
+            "lineageTag": "col-referraldispositionstage-116",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralEligibilityNotes",
+            "dataType": "string",
+            "sourceColumn": "referralEligibilityNotes",
+            "lineageTag": "col-referraleligibilitynotes-117",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralFacilityCity",
+            "dataType": "string",
+            "sourceColumn": "referralFacilityCity",
+            "lineageTag": "col-referralfacilitycity-118",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralFacilityEIN",
+            "dataType": "string",
+            "sourceColumn": "referralFacilityEIN",
+            "lineageTag": "col-referralfacilityein-119",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralFacilityId",
+            "dataType": "string",
+            "sourceColumn": "referralFacilityId",
+            "lineageTag": "col-referralfacilityid-120",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralFacilityNPI",
+            "dataType": "string",
+            "sourceColumn": "referralFacilityNPI",
+            "lineageTag": "col-referralfacilitynpi-121",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralFacilityName",
+            "dataType": "string",
+            "sourceColumn": "referralFacilityName",
+            "lineageTag": "col-referralfacilityname-122",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralFacilityState",
+            "dataType": "string",
+            "sourceColumn": "referralFacilityState",
+            "lineageTag": "col-referralfacilitystate-123",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralFacilityType",
+            "dataType": "string",
+            "sourceColumn": "referralFacilityType",
+            "lineageTag": "col-referralfacilitytype-124",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralFacilityZip",
+            "dataType": "string",
+            "sourceColumn": "referralFacilityZip",
+            "lineageTag": "col-referralfacilityzip-125",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralId",
+            "dataType": "string",
+            "sourceColumn": "referralId",
+            "lineageTag": "col-referralid-126",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralPhysicianOfficeCity",
+            "dataType": "string",
+            "sourceColumn": "referralPhysicianOfficeCity",
+            "lineageTag": "col-referralphysicianofficecity-127",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralPhysicianOfficeId",
+            "dataType": "string",
+            "sourceColumn": "referralPhysicianOfficeId",
+            "lineageTag": "col-referralphysicianofficeid-128",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralPhysicianOfficeState",
+            "dataType": "string",
+            "sourceColumn": "referralPhysicianOfficeState",
+            "lineageTag": "col-referralphysicianofficestate-129",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralPhysicianOfficeZip",
+            "dataType": "string",
+            "sourceColumn": "referralPhysicianOfficeZip",
+            "lineageTag": "col-referralphysicianofficezip-130",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralPhysicianOfficeadmissionCoordId",
+            "dataType": "string",
+            "sourceColumn": "referralPhysicianOfficeadmissionCoordId",
+            "lineageTag": "col-referralphysicianofficeadmissioncoordid-131",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralPhysicianSpecialty",
+            "dataType": "string",
+            "sourceColumn": "referralPhysicianSpecialty",
+            "lineageTag": "col-referralphysicianspecialty-132",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralSourceSubType",
+            "dataType": "string",
+            "sourceColumn": "referralSourceSubType",
+            "lineageTag": "col-referralsourcesubtype-133",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referralSourceType",
+            "dataType": "string",
+            "sourceColumn": "referralSourceType",
+            "lineageTag": "col-referralsourcetype-134",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "referraltype",
+            "dataType": "string",
+            "sourceColumn": "referraltype",
+            "lineageTag": "col-referraltype-135",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "srckey",
+            "dataType": "string",
+            "sourceColumn": "srckey",
+            "lineageTag": "col-srckey-136",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "streetaddress",
+            "dataType": "string",
+            "sourceColumn": "streetaddress",
+            "lineageTag": "col-streetaddress-137",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitBranchCode",
+            "dataType": "string",
+            "sourceColumn": "visitBranchCode",
+            "lineageTag": "col-visitbranchcode-138",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitBranchRegion",
+            "dataType": "string",
+            "sourceColumn": "visitBranchRegion",
+            "lineageTag": "col-visitbranchregion-139",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitBranchState",
+            "dataType": "string",
+            "sourceColumn": "visitBranchState",
+            "lineageTag": "col-visitbranchstate-140",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitDescription",
+            "dataType": "string",
+            "sourceColumn": "visitDescription",
+            "lineageTag": "col-visitdescription-141",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitDiscipline",
+            "dataType": "string",
+            "sourceColumn": "visitDiscipline",
+            "lineageTag": "col-visitdiscipline-142",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitDuration",
+            "dataType": "string",
+            "sourceColumn": "visitDuration",
+            "lineageTag": "col-visitduration-143",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeCategoryCode",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeCategoryCode",
+            "lineageTag": "col-visitemployeecategorycode-144",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeCategoryDesc",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeCategoryDesc",
+            "lineageTag": "col-visitemployeecategorydesc-145",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeFirstname",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeFirstname",
+            "lineageTag": "col-visitemployeefirstname-146",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeHomeBranchCode",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeHomeBranchCode",
+            "lineageTag": "col-visitemployeehomebranchcode-147",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeHomeBranchRegion",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeHomeBranchRegion",
+            "lineageTag": "col-visitemployeehomebranchregion-148",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeHomeBranchState",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeHomeBranchState",
+            "lineageTag": "col-visitemployeehomebranchstate-149",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeId",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeId",
+            "lineageTag": "col-visitemployeeid-150",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeJobTitle",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeJobTitle",
+            "lineageTag": "col-visitemployeejobtitle-151",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeJobType",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeJobType",
+            "lineageTag": "col-visitemployeejobtype-152",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeLastName",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeLastName",
+            "lineageTag": "col-visitemployeelastname-153",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeMileagePaymentMethod",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeMileagePaymentMethod",
+            "lineageTag": "col-visitemployeemileagepaymentmethod-154",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeePayrollNo",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeePayrollNo",
+            "lineageTag": "col-visitemployeepayrollno-155",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeStatus",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeStatus",
+            "lineageTag": "col-visitemployeestatus-156",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitEmployeeType",
+            "dataType": "string",
+            "sourceColumn": "visitEmployeeType",
+            "lineageTag": "col-visitemployeetype-157",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitId",
+            "dataType": "string",
+            "sourceColumn": "visitId",
+            "lineageTag": "col-visitid-158",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitServiceCode",
+            "dataType": "string",
+            "sourceColumn": "visitServiceCode",
+            "lineageTag": "col-visitservicecode-159",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitTypeCode",
+            "dataType": "string",
+            "sourceColumn": "visitTypeCode",
+            "lineageTag": "col-visittypecode-160",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "visitType",
+            "dataType": "string",
+            "sourceColumn": "visitType",
+            "lineageTag": "col-visittype-161",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "zipcode",
+            "dataType": "string",
+            "sourceColumn": "zipcode",
+            "lineageTag": "col-zipcode-162",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Patient_Event_Detail",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "let\n    Source = Sql.Database(\"sqlproxy\", \"PatientEventDB\"),\n    Patient_Event_Detail = Source{[Schema=\"dbo\",Item=\"Patient_Event_Detail\"]}[Data]\nin\n    Patient_Event_Detail"
+            }
+          }
+        ]
+      },
+      {
+        "name": "HOS_Budget_2024",
+        "lineageTag": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+        "columns": [
+          {
+            "name": "AVPO",
+            "dataType": "string",
+            "sourceColumn": "AVPO",
+            "lineageTag": "col-avpo-201",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AVPS",
+            "dataType": "string",
+            "sourceColumn": "AVPS",
+            "lineageTag": "col-avps-202",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Metric",
+            "dataType": "string",
+            "sourceColumn": "Metric",
+            "lineageTag": "col-metric-203",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Cost Center",
+            "dataType": "string",
+            "sourceColumn": "Cost Center",
+            "lineageTag": "col-costcenter-204",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Branch",
+            "dataType": "string",
+            "sourceColumn": "Branch",
+            "lineageTag": "col-branch-205",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "State",
+            "dataType": "string",
+            "sourceColumn": "State",
+            "lineageTag": "col-state-206",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Attribute",
+            "dataType": "dateTime",
+            "sourceColumn": "Attribute",
+            "formatString": "Long Date",
+            "lineageTag": "col-attribute-207",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "Value",
+            "dataType": "double",
+            "sourceColumn": "Value",
+            "lineageTag": "col-value-208",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "HOS_Budget_2024",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "let\n    Source = Excel.Workbook(File.Contents(\"HOS Budget 2024.xlsx\"), null, true),\n    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],\n    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])\nin\n    #\"Promoted Headers\""
+            }
+          }
+        ]
+      },
+      {
+        "name": "MeasureTable",
+        "lineageTag": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+        "partitions": [
+          {
+            "name": "MeasureTable",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "let Source = #table(type table [Dummy = text], {{\"X\"}}), Result = Table.RemoveColumns(Source,{\"Dummy\"}) in Result"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "# of Admits (no unsynced)",
+            "description": "SOURCE_TABLEAU_CALC: IF [Event Type] = 'ADMISSION' THEN 1 ELSE 0 END | STATUS: OK",
+            "expression": "SUMX(Patient_Event_Detail, IF(Patient_Event_Detail[eventType] = \"ADMISSION\", 1, 0))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-admitsnosync-301"
+          },
+          {
+            "name": "HCHB Quota",
+            "description": "SOURCE_TABLEAU_CALC: ZN(SUM([Budget Admits])) | STATUS: OK",
+            "expression": "IF(ISBLANK(SUM(Patient_Event_Detail[budgetAdmits])), 0, SUM(Patient_Event_Detail[budgetAdmits]))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-hchbquota-302"
+          },
+          {
+            "name": "AE Tenure",
+            "description": "SOURCE_TABLEAU_CALC: DATEDIFF('month',[AE Hire Date], [Today]) | STATUS: OK",
+            "expression": "DATEDIFF(Patient_Event_Detail[AEhiredate], [Today], MONTH)",
+            "formatString": "#,##0",
+            "lineageTag": "meas-aetenure-303"
+          },
+          {
+            "name": "# of Referrals",
+            "description": "SOURCE_TABLEAU_CALC: IF [Event Type] = \"Referrals\" THEN 1 ELSE 0 END | STATUS: OK",
+            "expression": "SUMX(Patient_Event_Detail, IF(Patient_Event_Detail[eventType] = \"Referrals\", 1, 0))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-referrals-304"
+          },
+          {
+            "name": "Today",
+            "description": "SOURCE_TABLEAU_CALC: TODAY() | STATUS: OK",
+            "expression": "TODAY()",
+            "formatString": "General Date",
+            "lineageTag": "meas-today-305"
+          },
+          {
+            "name": "Calls/Business Day",
+            "description": "SOURCE_TABLEAU_CALC: SUM([Callcount])/[# of Weekdays] | STATUS: OK",
+            "expression": "DIVIDE(SUM(Patient_Event_Detail[callcount]), [# of Weekdays], 0)",
+            "formatString": "#,##0.00",
+            "lineageTag": "meas-callsbusday-306"
+          },
+          {
+            "name": "# of Admits",
+            "description": "SOURCE_TABLEAU_CALC: SUM([Unsynced Admits])+SUM([# of Admits (no unsynced)]) | STATUS: OK",
+            "expression": "[Unsynced Admits] + [# of Admits (no unsynced)]",
+            "formatString": "#,##0",
+            "lineageTag": "meas-admits-307"
+          },
+          {
+            "name": "Unsynced Admits",
+            "description": "SOURCE_TABLEAU_CALC: IF [Visit Type]='HOSPICE SOC' AND [Event Type]='SCHEDULEDVISIT' and [Event Sub Type] = 'INCOMPLETE' OR [Visit Type]='HOSPICE SOC' AND [Event Type]='SCHEDULEDVISIT' AND [Event Sub Type]= 'LATE' THEN 1 ELSE 0 END | STATUS: OK",
+            "expression": "SUMX(Patient_Event_Detail, IF((Patient_Event_Detail[visitType] = \"HOSPICE SOC\" && Patient_Event_Detail[eventType] = \"SCHEDULEDVISIT\" && Patient_Event_Detail[eventSubType] = \"INCOMPLETE\") || (Patient_Event_Detail[visitType] = \"HOSPICE SOC\" && Patient_Event_Detail[eventType] = \"SCHEDULEDVISIT\" && Patient_Event_Detail[eventSubType] = \"LATE\"), 1, 0))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-unsyncedadmits-308"
+          },
+          {
+            "name": "% to Quota",
+            "description": "SOURCE_TABLEAU_CALC: ZN([# of Admits]/[HCHB Quota]) | STATUS: OK",
+            "expression": "IF([HCHB Quota] = 0, 0, DIVIDE([# of Admits], [HCHB Quota], 0))",
+            "formatString": "0%",
+            "lineageTag": "meas-pctquota-309"
+          },
+          {
+            "name": "ADC",
+            "description": "SOURCE_TABLEAU_CALC: [Census]/[Gone in month ADC] | STATUS: OK",
+            "expression": "DIVIDE(SUM(Patient_Event_Detail[census]), [Gone in month ADC], 0)",
+            "formatString": "#,##0",
+            "lineageTag": "meas-adc-310"
+          },
+          {
+            "name": "Gone in month ADC",
+            "description": "SOURCE_TABLEAU_CALC: If MONTH([Event Date])=MONTH([Till Date Selector]) then [Days Gone in Month ADC] else [Days in Month RR] END | STATUS: OK",
+            "expression": "IF(MONTH(Patient_Event_Detail[eventDate]) = MONTH([Till Date Selector]), [Days Gone in Month ADC], [Days in Month RR])",
+            "formatString": "#,##0",
+            "lineageTag": "meas-goneinmonthadc-311"
+          },
+          {
+            "name": "Days Gone in Month ADC",
+            "description": "SOURCE_TABLEAU_CALC: DATEDIFF('day',(DATEADD('day',-(DAY(TODAY())),TODAY())),TODAY()) | STATUS: OK",
+            "expression": "DATEDIFF(DATE(YEAR(TODAY()), MONTH(TODAY()), 1), TODAY(), DAY)",
+            "formatString": "#,##0",
+            "lineageTag": "meas-daysgoneinmonthadc-312"
+          },
+          {
+            "name": "Days in Month RR",
+            "description": "SOURCE_TABLEAU_CALC: DATEPART('day', DATEADD('day', -1, DATEADD('month', 1, DATETRUNC('month', [Event Date])))) | STATUS: OK",
+            "expression": "DAY(EOMONTH(Patient_Event_Detail[eventDate], 0))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-daysinmonthrr-313"
+          },
+          {
+            "name": "ADC Container",
+            "description": "SOURCE_TABLEAU_CALC: 1 | STATUS: OK",
+            "expression": "1",
+            "formatString": "#,##0",
+            "lineageTag": "meas-adccontainer-314"
+          },
+          {
+            "name": "% to ADC Container",
+            "description": "SOURCE_TABLEAU_CALC: 1 | STATUS: OK",
+            "expression": "1",
+            "formatString": "0%",
+            "lineageTag": "meas-pctadccontainer-315"
+          },
+          {
+            "name": "ADC Budget",
+            "description": "SOURCE_TABLEAU_CALC: IF [Metric] = '6 - ADC' then [Value] END | STATUS: OK",
+            "expression": "CALCULATE(SUM(HOS_Budget_2024[Value]), HOS_Budget_2024[Metric] = \"6 - ADC\")",
+            "formatString": "#,##0",
+            "lineageTag": "meas-adcbudget-316"
+          },
+          {
+            "name": "Budget",
+            "description": "Variance calculation base",
+            "expression": "[ADC Budget]",
+            "formatString": "#,##0",
+            "lineageTag": "meas-budget-317"
+          },
+          {
+            "name": "Variance",
+            "description": "ADC Variance to Budget",
+            "expression": "[ADC] - [Budget]",
+            "formatString": "#,##0",
+            "lineageTag": "meas-variance-318"
+          },
+          {
+            "name": "% to Budget",
+            "description": "Percentage to Budget",
+            "expression": "IF([Budget] = 0, 0, DIVIDE([ADC], [Budget], 0) - 1)",
+            "formatString": "0.0%",
+            "lineageTag": "meas-pctbudget-319"
+          },
+          {
+            "name": "ADC to Budget Up Down",
+            "description": "SOURCE_TABLEAU_CALC: IF [ADC % to Budget] < 0 THEN \"Down\" elseif [ADC % to Budget] >= 0 then \"Up\" END | STATUS: OK",
+            "expression": "IF([% to Budget] < 0, \"Down\", \"Up\")",
+            "lineageTag": "meas-adctobudgetupdown-320"
+          },
+          {
+            "name": "Countd Referrals",
+            "description": "SOURCE_TABLEAU_CALC: COUNTD([Referral Id]) | STATUS: OK",
+            "expression": "DISTINCTCOUNT(Patient_Event_Detail[referralId])",
+            "formatString": "#,##0",
+            "lineageTag": "meas-countdreferrals-321"
+          },
+          {
+            "name": "# of Referrals (copy 2)",
+            "description": "SOURCE_TABLEAU_CALC: COUNTD(IF [Event Type] = \"Referrals\" THEN [Referral Id] END) | STATUS: OK",
+            "expression": "CALCULATE(DISTINCTCOUNT(Patient_Event_Detail[referralId]), Patient_Event_Detail[eventType] = \"Referrals\")",
+            "formatString": "#,##0",
+            "lineageTag": "meas-referralscopy2-322"
+          },
+          {
+            "name": "# of Discharges",
+            "description": "SOURCE_TABLEAU_CALC: SUM(IF [Event Type] = 'Discharge' THEN 1 ELSE 0 END) | STATUS: OK",
+            "expression": "SUMX(Patient_Event_Detail, IF(Patient_Event_Detail[eventType] = \"Discharge\", 1, 0))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-discharges-323"
+          },
+          {
+            "name": "ALOS 2",
+            "description": "SOURCE_TABLEAU_CALC: SUM([ADC])*(AVG([Days Gone in Month ADC Yesterday])/[# of Discharges]) | STATUS: OK",
+            "expression": "DIVIDE([ADC] * AVERAGE([Days Gone in Month ADC Yesterday]), [# of Discharges], 0)",
+            "formatString": "#,##0.00",
+            "lineageTag": "meas-alos2-324"
+          },
+          {
+            "name": "Days Gone in Month ADC Yesterday",
+            "description": "SOURCE_TABLEAU_CALC: DATEDIFF('day',(DATEADD('day',-(DAY(TODAY())),TODAY())),TODAY())-1 | STATUS: OK",
+            "expression": "[Days Gone in Month ADC] - 1",
+            "formatString": "#,##0",
+            "lineageTag": "meas-daysgoneinmonthadcyesterday-325"
+          },
+          {
+            "name": "# of Live Discharges",
+            "description": "SOURCE_TABLEAU_CALC: ZN(IF [Event Sub Type]=\"live discharge\" THEN [Discharges] END) | STATUS: OK",
+            "expression": "CALCULATE([Discharges], Patient_Event_Detail[eventSubType] = \"live discharge\")",
+            "formatString": "#,##0",
+            "lineageTag": "meas-liveDischarges-326"
+          },
+          {
+            "name": "Discharges",
+            "description": "SOURCE_TABLEAU_CALC: IF [Event Type] = \"Discharge\" THEN 1 ELSE 0 END | STATUS: OK",
+            "expression": "SUMX(Patient_Event_Detail, IF(Patient_Event_Detail[eventType] = \"Discharge\", 1, 0))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-discharges2-327"
+          },
+          {
+            "name": "Live Discharge Rate %",
+            "description": "SOURCE_TABLEAU_CALC: ZN(SUM([# of Live Discharges])/[# of Discharges]) | STATUS: OK",
+            "expression": "IF([# of Discharges] = 0, 0, DIVIDE([# of Live Discharges], [# of Discharges], 0))",
+            "formatString": "0%",
+            "lineageTag": "meas-livedischargerate-328"
+          },
+          {
+            "name": "Net Fill",
+            "description": "SOURCE_TABLEAU_CALC: [# of Admits]-[# of Discharges] | STATUS: OK",
+            "expression": "[# of Admits] - [# of Discharges]",
+            "formatString": "#,##0",
+            "lineageTag": "meas-netfill-329"
+          },
+          {
+            "name": "Conversion Rate",
+            "description": "SOURCE_TABLEAU_CALC: ZN([# of Admits]/[# of Referrals (copy 2)]) | STATUS: OK",
+            "expression": "IF([# of Referrals (copy 2)] = 0, 0, DIVIDE([# of Admits], [# of Referrals (copy 2)], 0))",
+            "formatString": "0.0%",
+            "lineageTag": "meas-conversionrate-330"
+          },
+          {
+            "name": "# of Weekdays",
+            "description": "SOURCE_TABLEAU_CALC: MIN(DATEDIFF('day', [Event Date Weekday (Start of Month)], [Event Date Weekday (End of Month)]) + 1 - 2 * DATEDIFF('week', [Event Date Weekday (Start of Month)], [Event Date Weekday (End of Month)])) | STATUS: OK",
+            "expression": "VAR StartOfMonth = DATE(YEAR(MIN(Patient_Event_Detail[eventDate])), MONTH(MIN(Patient_Event_Detail[eventDate])), 1)\nVAR EndOfMonth = EOMONTH(MIN(Patient_Event_Detail[eventDate]), 0)\nVAR AdjustedStart = IF(WEEKDAY(StartOfMonth, 1) = 1, StartOfMonth + 1, IF(WEEKDAY(StartOfMonth, 1) = 7, StartOfMonth + 2, StartOfMonth))\nVAR AdjustedEnd = IF(WEEKDAY(EndOfMonth, 1) = 1, EndOfMonth + 1, IF(WEEKDAY(EndOfMonth, 1) = 7, EndOfMonth + 2, EndOfMonth))\nVAR TotalDays = DATEDIFF(AdjustedStart, AdjustedEnd, DAY) + 1\nVAR WeekendDays = 2 * INT(TotalDays / 7)\nRETURN TotalDays - WeekendDays",
+            "formatString": "#,##0",
+            "lineageTag": "meas-weekdays-331"
+          },
+          {
+            "name": "Referral Days Aging",
+            "description": "SOURCE_TABLEAU_CALC: IF [DSR] < 1 Then 'Today' ELSEIF [DSR] <=1 Then 'Yesterday' ELSEIF [DSR] >=2 AND [DSR]<=7 Then '2 - 7 Days' ELSEIF [DSR] >=8 AND [DSR]<=14 Then '8 - 14 Days' ELSEIF [DSR] >=15 AND [DSR]<=29 Then '15 - 29 Days' ELSEIF [DSR] >=30 Then '30+ Days' END | STATUS: OK",
+            "expression": "VAR DSR = [DSR]\nRETURN\nIF(DSR < 1, \"Today\",\nIF(DSR <= 1, \"Yesterday\",\nIF(DSR >= 2 && DSR <= 7, \"2 - 7 Days\",\nIF(DSR >= 8 && DSR <= 14, \"8 - 14 Days\",\nIF(DSR >= 15 && DSR <= 29, \"15 - 29 Days\",\nIF(DSR >= 30, \"30+ Days\", BLANK()))))))",
+            "lineageTag": "meas-referraldaysaging-332"
+          },
+          {
+            "name": "DSR",
+            "description": "SOURCE_TABLEAU_CALC: TODAY()-DATETRUNC('day', [Referral Date]) | STATUS: OK",
+            "expression": "DATEDIFF(Patient_Event_Detail[referralDate], TODAY(), DAY)",
+            "formatString": "#,##0",
+            "lineageTag": "meas-dsr-333"
+          },
+          {
+            "name": "Till Date Selector",
+            "description": "Date selector for calculations",
+            "expression": "TODAY()",
+            "formatString": "General Date",
+            "lineageTag": "meas-tilldateselector-334"
+          },
+          {
+            "name": "Admits MTD",
+            "description": "Month-to-date admits",
+            "expression": "CALCULATE([# of Admits], DATESMTD(Patient_Event_Detail[eventDate]))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-admitsmtd-335"
+          },
+          {
+            "name": "Admits Budget MTD",
+            "description": "Month-to-date budget admits",
+            "expression": "CALCULATE([HCHB Quota], DATESMTD(Patient_Event_Detail[eventDate]))",
+            "formatString": "#,##0",
+            "lineageTag": "meas-admitsbudgetmtd-336"
+          },
+          {
+            "name": "Admits Run Rate (Projection)",
+            "description": "Projected admits for full month",
+            "expression": "VAR DaysInMonth = DAY(EOMONTH(TODAY(), 0))\nVAR DaysGone = DAY(TODAY())\nRETURN IF(DaysGone > 0, ([Admits MTD] / DaysGone) * DaysInMonth, 0)",
+            "formatString": "#,##0",
+            "lineageTag": "meas-admitsrunrate-337"
+          },
+          {
+            "name": "Admits Run Rate to Budget %",
+            "description": "Run rate percentage to budget",
+            "expression": "IF([Admits Budget MTD] = 0, 0, DIVIDE([Admits Run Rate (Projection)], [Admits Budget MTD], 0) - 1)",
+            "formatString": "0.0%",
+            "lineageTag": "meas-admitsrunratetobudgetpct-338"
+          }
+        ]
+      },
+      {
+        "name": "LocalDateTable_eventDate",
+        "isHidden": true,
+        "showAsVariationsOnly": true,
+        "lineageTag": "d4e5f6a7-b8c9-0123-def0-234567890123",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Date",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "[Date]",
+            "formatString": "General Date",
+            "lineageTag": "ldtcol-date-401",
+            "dataCategory": "PaddedDateTableDates",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Year",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "YEAR([Date])",
+            "formatString": "0",
+            "lineageTag": "ldtcol-year-402",
+            "dataCategory": "Years",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Year"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "MonthNo",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "MONTH([Date])",
+            "formatString": "0",
+            "lineageTag": "ldtcol-monthno-403",
+            "dataCategory": "MonthOfYear",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Month",
+            "dataType": "string",
+            "isHidden": true,
+            "expression": "FORMAT([Date], \"MMMM\")",
+            "sortByColumn": "MonthNo",
+            "lineageTag": "ldtcol-month-404",
+            "dataCategory": "Months",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Month"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "QuarterNo",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "INT(([MonthNo] + 2) / 3)",
+            "formatString": "0",
+            "lineageTag": "ldtcol-quarterno-405",
+            "dataCategory": "QuarterOfYear",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "QuarterNumber"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Quarter",
+            "dataType": "string",
+            "isHidden": true,
+            "expression": "\"Qtr \" & [QuarterNo]",
+            "sortByColumn": "QuarterNo",
+            "lineageTag": "ldtcol-quarter-406",
+            "dataCategory": "Quarters",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Quarter"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Day",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "DAY([Date])",
+            "formatString": "0",
+            "lineageTag": "ldtcol-day-407",
+            "dataCategory": "DayOfMonth",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Day"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "LocalDateTable_eventDate",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "CALENDAR(DATE(YEAR(MIN(Patient_Event_Detail[eventDate])), 1, 1), DATE(YEAR(MAX(Patient_Event_Detail[eventDate])), 12, 31))"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "lineageTag": "ldthier-datehier-501",
+            "levels": [
+              {
+                "name": "Year",
+                "ordinal": 0,
+                "column": "Year",
+                "lineageTag": "ldthierlvl-year-601"
+              },
+              {
+                "name": "Quarter",
+                "ordinal": 1,
+                "column": "Quarter",
+                "lineageTag": "ldthierlvl-quarter-602"
+              },
+              {
+                "name": "Month",
+                "ordinal": 2,
+                "column": "Month",
+                "lineageTag": "ldthierlvl-month-603"
+              },
+              {
+                "name": "Day",
+                "ordinal": 3,
+                "column": "Day",
+                "lineageTag": "ldthierlvl-day-604"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "__PBI_LocalDateTable",
+            "value": "true"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "rel-eventdate-localdatetable",
+        "fromTable": "Patient_Event_Detail",
+        "fromColumn": "eventDate",
+        "toTable": "LocalDateTable_eventDate",
+        "toColumn": "Date",
+        "joinOnDateBehavior": "datePartOnly",
+        "securityFilteringBehavior": "bothDirections"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "1"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Patient_Event_Detail\",\"HOS_Budget_2024\",\"MeasureTable\"]"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.120.0.0 (23.08)"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ]
+  }
+}
