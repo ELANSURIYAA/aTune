@@ -1,0 +1,46 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+- All mandatory sections from the instructions are present: PII Classification, Bronze Layer Logical Model, Audit Table Design, Conceptual Data Model Diagram, and API Cost.
+- All required fields/columns from the input source data structure are included in the Bronze layer logical model, excluding primary and foreign key fields.
+- All entities listed in both the conceptual model and input tables are addressed in the logical model output.
+- All metadata columns (load_timestamp, update_timestamp, source_system) are included in the Bronze layer tables.
+- Audit Table includes all specified fields: record_id, source_table, load_timestamp, processed_by, processing_time, status.
+- PII fields are identified and classified across all layers, with reasons provided for each.
+- Descriptions for all columns are included as required.
+- Relationships between tables are documented in the conceptual data model diagram, specifying connection by key fields.
+- Rationale for key design decisions and assumptions is provided.
+- Consistent naming convention for Bronze layer tables is applied, with 'Bz_' prefix.
+- No mandatory section or entity from the instructions or input files is skipped.
+- All business rules and constraints from the input files are covered.
+- All referenced files/content are analyzed and integrated as required.
+
+Accuracy Checks
+- Output aligns with the provided instructions and follows the specified output format.
+- Output correctly reflects the provided input file/content, including all entities, attributes, and relationships.
+- No hallucinated content or unsupported assumptions are introduced.
+- Dependency and relationship mappings between entities/components are logically correct and traceable to the input files.
+- PII classification is based on common standards (e.g., GDPR) and justified by input content.
+- Terminology and naming conventions are used consistently across all sections.
+- Required formatting standards are followed, including exclusion of physical key field names (e.g., '_ID').
+- No false-positive gaps or false-negative omissions occur in entity or field coverage.
+- Values, tables, and classifications accurately match the source content.
+- Relationships between entities/components are correctly interpreted and documented.
+- Status/resolution tracking in the Audit Table is accurate and aligns with instructions.
+- Recommendations and rationale align with identified findings and input content.
+- Data extracted from the input files is represented correctly in the logical model.
+- No instruction is misinterpreted or partially implemented.
+
+Efficiency Checks
+- Duplicate analysis and redundant explanations are avoided across all sections.
+- Repeated gap entries and duplicate dependency mappings are eliminated.
+- Output remains concise, structured, and token-efficient while maintaining completeness.
+- Unnecessary sections or content not requested by instructions are not generated.
+- Formatting remains clean and optimized for reviewer readability.
+- Overlapping findings are consolidated and similar findings are grouped logically.
+- Tables are not unnecessarily repeated and content from input files is minimized unless necessary.
+- Redundant classifications, tags, and validations are avoided.
+- Large sections are summarized efficiently where allowed by instructions.
+- Output structure improves readability and review efficiency.
+- Audit Table and metadata columns are included only once and not duplicated across tables.
+- API Cost is reported as a single float value, up to six decimal places, as required.
