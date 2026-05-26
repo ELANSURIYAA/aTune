@@ -30,3 +30,8 @@ Step 5:
 - The Recommendation file was written to GitHub at karthikeyan.iyappan@ascendion.com/DI BIM Creation Using TWB Split and Merge_Output/DI BIM Creation Using TWB Split and Merge_Working/.
 - Validation: I checked that 36594_Recommendation.md exists in the correct location with content present. File verified.
 - Decision: All outputs verified so I am proceeding to Step 6.
+
+[ERROR] Attempt 1 of 3 — Updater agent workflow execution failed or returned no output.
+
+Step 6:
+- Retrying the Updater agent to apply the recommended changes to the instruction.
