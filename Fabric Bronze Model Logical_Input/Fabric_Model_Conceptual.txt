@@ -1,0 +1,181 @@
+# Comprehensive Conceptual Data Model for Inventory Management Reports
+
+## 1. Domain Overview
+
+The Inventory Management System is designed to track and manage inventory across multiple warehouses, monitor supplier performance, analyze sales correlations, optimize warehouse utilization, and forecast product demand. This system supports five key reporting areas:
+
+1. Inventory Stock Levels Report - Monitors current stock levels across warehouses
+2. Supplier Performance Report - Evaluates supplier efficiency and reliability
+3. Sales and Inventory Correlation Report - Analyzes relationships between sales trends and inventory levels
+4. Warehouse Utilization Report - Tracks warehouse capacity utilization
+5. Product Demand Forecast Report - Provides predictive insights into future product demand
+
+## 2. List of Entity Names with Descriptions
+
+1. **Product** - Represents items in inventory that are tracked, sold, and restocked
+2. **Category** - Classification of products into logical groupings
+3. **Warehouse** - Physical locations where inventory is stored
+4. **Region** - Geographical areas that contain one or more warehouses
+5. **Supplier** - External vendors that provide products to the company
+6. **Inventory** - Represents the current stock of products at specific warehouses
+7. **PurchaseOrder** - Orders placed with suppliers to replenish inventory
+8. **Sales** - Records of products sold to customers
+9. **StockAdjustment** - Records of inventory changes not related to sales or purchases
+10. **Shipment** - Deliveries from suppliers to warehouses
+11. **Forecast** - Predictions of future product demand
+
+## 3. List of Attributes for Each Entity with Descriptions
+
+### Product
+- Name - Unique identifier for the product
+- Description - Detailed information about the product
+- MinimumThreshold - Minimum stock level before reordering
+- MaximumThreshold - Maximum desired stock level
+- AverageDailySales - Average quantity sold per day
+- LeadTime - Time required for replenishment
+- ReorderPoint - Calculated point at which to reorder stock
+
+### Category
+- Name - Name of the product category
+- Description - Description of the category
+
+### Warehouse
+- Name - Unique name of the warehouse
+- Location - Physical address or coordinates
+- Capacity - Total storage capacity (in square feet or cubic meters)
+- UtilizedSpace - Currently used storage space
+
+### Region
+- Name - Name of the geographical region
+- Description - Description of the region
+
+### Supplier
+- Name - Unique name of the supplier
+- AverageDeliveryTime - Average time taken for delivery (in days)
+- OrderFulfillmentRate - Percentage of orders fulfilled completely
+- RejectedItemsPercentage - Percentage of items rejected due to defects
+- DelayedDeliveryPercentage - Percentage of deliveries that were delayed
+
+### Inventory
+- StockLevel - Current quantity of a product in a warehouse
+- ReplenishmentStatus - Status indicating if stock is below, optimal, or overstocked
+- DaysOfInventoryRemaining - Calculated days until stock depletion
+
+### PurchaseOrder
+- SupplierName - Name of the supplier for the order
+- OrderDate - Date when the order was placed
+- ExpectedDeliveryDate - Expected date of delivery
+- ActualDeliveryDate - Actual date of delivery
+- OrderValue - Total value of the order
+- OrderStatus - Current status of the order
+
+### Sales
+- ProductName - Name of the product sold
+- Quantity - Quantity sold
+- SaleDate - Date of the sale
+- WarehouseName - Warehouse from which the product was sold
+- RegionName - Region where the sale occurred
+
+### StockAdjustment
+- ProductName - Name of the product adjusted
+- AdjustmentQuantity - Quantity adjusted (positive or negative)
+- AdjustmentDate - Date of adjustment
+- AdjustmentReason - Reason for the adjustment
+- WarehouseName - Warehouse where adjustment occurred
+
+### Shipment
+- PurchaseOrderReference - Reference to the associated purchase order
+- ArrivalDate - Date of arrival
+- TotalItems - Total number of items in the shipment
+- DefectiveItems - Number of defective items identified
+
+### Forecast
+- ProductName - Name of the product being forecasted
+- PredictedDemand - Predicted quantity to be demanded
+- ForecastPeriod - Time period for the forecast
+- SeasonalFactors - Seasonal influences on demand
+- TrendFactors - Trend influences on demand
+- ForecastAccuracy - Accuracy of previous forecasts
+
+## 4. KPI List
+
+### Inventory Stock Levels Report KPIs
+1. Days of Inventory Remaining
+2. Stockout Percentage
+3. Overstock Percentage
+
+### Supplier Performance Report KPIs
+1. On-Time Delivery Rate
+2. Average Lead Time
+3. Defective Items Percentage
+4. Supplier Fulfillment Rate
+
+### Sales and Inventory Correlation Report KPIs
+1. Inventory Turnover Ratio
+2. Fast-Moving vs. Slow-Moving Product Ratio
+3. Average Days to Sell Inventory
+
+### Warehouse Utilization Report KPIs
+1. Warehouse Utilization Rate
+2. Underutilized Space
+3. Overstocked vs. Understocked Percentage
+
+### Product Demand Forecast Report KPIs
+1. Forecast Accuracy
+2. Predicted vs. Actual Demand
+3. Seasonal Demand Trends
+
+## 5. Conceptual Data Model Diagram
+
+```
+[Product] -----< [Inventory] >----- [Warehouse]
+    |                |                  |
+    |                |                  |
+    v                v                  v
+[Category]    [StockAdjustment]     [Region]
+    |                                   |
+    |                                   |
+    v                                   v
+[Forecast] ------< [Sales] >----------- |
+                     |
+                     |
+                     v
+[Supplier] -----< [PurchaseOrder] >---- |
+    |                |
+    |                |
+    v                v
+[Shipment] --------- |
+```
+
+## 6. Common Data Elements in Report Requirements
+
+### Common Attributes
+1. Product Name - Used in all five reports
+2. Warehouse Name - Used in four reports
+3. Stock Level - Used in three reports
+4. Region - Used in three reports
+5. Category - Used in three reports
+
+### Common Calculations
+1. Percentage calculations (Overstock, Stockout, On-Time Delivery, etc.)
+2. Time-based metrics (Days of Inventory, Lead Time, Average Days to Sell)
+3. Ratio calculations (Inventory Turnover, Utilization Rate)
+
+### Common Data Constraints
+1. Unique identifiers (Product Name, Warehouse Name, Supplier Name)
+2. Non-negative values for quantities and levels
+3. Percentage values between 0% and 100%
+4. Prevention of duplicate entries for unique fields
+
+### Common Validations
+1. Ensuring percentage calculations do not exceed 100%
+2. Validating that calculations use correct input data
+3. Ensuring time-based metrics result in positive values
+
+### Common Security Requirements
+1. Role-based access (Warehouse Managers, Inventory Managers, Executives)
+2. Data segregation by warehouse or region
+3. Aggregated views for executive-level reporting
+
+## 7. API Cost Calculation
+- Cost for this Call: $0.00 (Not applicable for conceptual data modeling)
