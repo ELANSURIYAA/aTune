@@ -1,0 +1,224 @@
+# Fabric Bronze Model Logical - Output
+
+## 1. PII Classification
+
+### PII Fields Identified:
+
+| Column Name | Table Name | Reason for PII Classification |
+|------------|------------|------------------------------|
+| Contact_Number | Suppliers | Contains personal contact information of supplier representatives which can be used to identify or contact specific individuals. This is considered PII under GDPR as it relates to an identifiable natural person. |
+| Email | Customers | Contains email addresses which are directly identifiable personal information. Email addresses are explicitly classified as PII under GDPR Article 4(1) as they can identify a natural person. |
+| Customer_Name | Customers | Contains the full name of customers which is direct personal identification information. Names are classified as PII under GDPR and other privacy frameworks as they directly identify individuals. |
+| Location | Warehouses | Contains physical address information which can be used to identify specific locations and potentially individuals associated with those locations. Physical addresses are considered PII under GDPR. |
+
+---
+
+## 2. Bronze Layer Logical Model
+
+### Table 1: Bz_Products
+
+**Description:** Bronze layer table that mirrors the source Products table, storing raw product information including product names and categories as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Product_Name | Name of the product | VARCHAR(255) |
+| Category | Product category | VARCHAR(100) |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 2: Bz_Suppliers
+
+**Description:** Bronze layer table that mirrors the source Suppliers table, storing raw supplier information including supplier names and contact details as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Supplier_Name | Name of the supplier | VARCHAR(255) |
+| Contact_Number | Contact number of the supplier | VARCHAR(20) |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 3: Bz_Warehouses
+
+**Description:** Bronze layer table that mirrors the source Warehouses table, storing raw warehouse information including location and capacity details as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Location | Physical location of the warehouse | VARCHAR(255) |
+| Capacity | Total storage capacity of the warehouse | INT |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 4: Bz_Inventory
+
+**Description:** Bronze layer table that mirrors the source Inventory table, storing raw inventory records including product quantities available at warehouses as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Quantity_Available | Quantity of product available in inventory | INT |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 5: Bz_Orders
+
+**Description:** Bronze layer table that mirrors the source Orders table, storing raw customer order information including order dates as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Order_Date | Date when the order was placed | DATE |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 6: Bz_Order_Details
+
+**Description:** Bronze layer table that mirrors the source Order_Details table, storing raw order line item information including quantities ordered as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Quantity_Ordered | Quantity of product ordered | INT |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 7: Bz_Shipments
+
+**Description:** Bronze layer table that mirrors the source Shipments table, storing raw shipment information including shipment dates as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Shipment_Date | Date when the shipment was dispatched | DATE |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 8: Bz_Returns
+
+**Description:** Bronze layer table that mirrors the source Returns table, storing raw product return information including return reasons as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Return_Reason | Reason for the product return | VARCHAR(255) |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 9: Bz_Stock_Levels
+
+**Description:** Bronze layer table that mirrors the source Stock_Levels table, storing raw stock level records including reorder thresholds as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Reorder_Threshold | Quantity at which the product needs to be reordered | INT |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+### Table 10: Bz_Customers
+
+**Description:** Bronze layer table that mirrors the source Customers table, storing raw customer information including customer names and email addresses as received from the source system.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| Customer_Name | Name of the customer | VARCHAR(255) |
+| Email | Contact email address of the customer | VARCHAR(255) |
+| load_timestamp | Timestamp when the record was loaded into the Bronze layer | TIMESTAMP |
+| update_timestamp | Timestamp when the record was last updated | TIMESTAMP |
+| source_system | Source system from which the data originated | VARCHAR(100) |
+
+---
+
+## 3. Audit Table Design
+
+### Table: Bz_Audit_Log
+
+**Description:** Audit table to track all data loading and processing activities in the Bronze layer for monitoring, troubleshooting, and compliance purposes.
+
+| Column Name | Business Description | Data Type |
+|------------|---------------------|-----------|
+| record_id | Unique identifier for each audit record | INT |
+| source_table | Name of the source table being processed | VARCHAR(255) |
+| load_timestamp | Timestamp when the data load process started | TIMESTAMP |
+| processed_by | User or system that processed the data | VARCHAR(255) |
+| processing_time | Time taken to process the data in seconds | DECIMAL(10,2) |
+| status | Status of the data load process (Success, Failed, In Progress) | VARCHAR(50) |
+
+---
+
+## 4. Conceptual Data Model Diagram (Tabular Form)
+
+### Table Relationships:
+
+| Source Table | Related Table | Relationship Key Field | Relationship Type | Description |
+|-------------|---------------|----------------------|-------------------|-------------|
+| Products | Inventory | Product_ID | One-to-Many | One product can have multiple inventory records across different warehouses |
+| Products | Suppliers | Product_ID | Many-to-One | Multiple products can be supplied by one supplier |
+| Products | Order_Details | Product_ID | One-to-Many | One product can appear in multiple order details |
+| Products | Stock_Levels | Product_ID | One-to-Many | One product can have multiple stock level records across warehouses |
+| Warehouses | Inventory | Warehouse_ID | One-to-Many | One warehouse can store multiple products in inventory |
+| Warehouses | Stock_Levels | Warehouse_ID | One-to-Many | One warehouse can have multiple stock level records for different products |
+| Orders | Order_Details | Order_ID | One-to-Many | One order can contain multiple order line items |
+| Orders | Shipments | Order_ID | One-to-Many | One order can have multiple shipments |
+| Orders | Returns | Order_ID | One-to-Many | One order can have multiple return records |
+| Customers | Orders | Customer_ID | One-to-Many | One customer can place multiple orders |
+
+---
+
+## 5. Design Decisions and Assumptions
+
+### Key Design Decisions:
+
+1. **Naming Convention:** All Bronze layer tables are prefixed with 'Bz_' to clearly identify them as part of the Bronze layer in the medallion architecture.
+
+2. **Metadata Columns:** Three standard metadata columns (load_timestamp, update_timestamp, source_system) are added to all Bronze layer tables to track data lineage and processing history.
+
+3. **Primary and Foreign Keys Exclusion:** As per instructions, all primary key and foreign key fields from the source tables have been excluded from the Bronze layer logical model. The Bronze layer focuses on capturing raw data without enforcing referential integrity.
+
+4. **Data Type Preservation:** Data types from the source system are preserved in the Bronze layer to maintain data fidelity and avoid transformation errors.
+
+5. **Audit Table:** A comprehensive audit table (Bz_Audit_Log) is included to track all data loading activities, enabling monitoring, troubleshooting, and compliance reporting.
+
+### Assumptions Made:
+
+1. **Source System Identifier:** Assumed that the source_system column will contain a standardized identifier for the originating system (e.g., "Inventory_Management_App").
+
+2. **Timestamp Format:** Assumed that TIMESTAMP data type will capture both date and time with appropriate precision for audit and tracking purposes.
+
+3. **Processing User:** Assumed that the processed_by field in the audit table will capture either a system service account or user identifier responsible for the data load.
+
+4. **Status Values:** Assumed standard status values for the audit table (Success, Failed, In Progress) to track processing outcomes.
+
+5. **Data Volume:** Assumed that the Bronze layer will handle raw data ingestion at scale, requiring appropriate partitioning and indexing strategies in the physical implementation.
+
+6. **PII Handling:** Identified PII fields will require appropriate security measures, encryption, and access controls in the physical implementation, though these are not explicitly modeled in the logical layer.
+
+---
+
+## 6. API Cost
+
+**apiCost:** 0.000000
+
+---
+
+## End of Output
