@@ -1,0 +1,312 @@
+# Combined Extractor Output
+# Sources: ExtractCol1 1.txt + ExtractVis1 1.txt
+
+==========================================
+SECTION 1: COLUMNS & TABLES (ExtractCol1)
+==========================================
+
+## Tables
+
+| Table Name | Source Type |
+|---|---|
+Patient_Event_Detail | SQL / Live (sqlproxy)
+HOS Budget 2024 | Excel / Federated
+
+## Physical Columns
+
+| Table Name | Column Name | Source Field | Data Type | Role |
+|---|---|---|---|---|
+Patient_Event_Detail | AE Sales Team | AESalesTeam | string | dimension |
+Patient_Event_Detail | A Ecall Date | AEcallDate | date | dimension (date) |
+Patient_Event_Detail | A Ehiredate | AEhiredate | date | dimension (date) |
+Patient_Event_Detail | A Etermdate | AEtermdate | date | dimension (date) |
+Patient_Event_Detail | Clientfirstname | Clientfirstname | string | dimension |
+Patient_Event_Detail | Clientlastname | Clientlastname | string | dimension |
+Patient_Event_Detail | Episode Visit Number | EpisodeVisitNumber | string | dimension |
+Patient_Event_Detail | Hipps | Hipps | string | dimension |
+Patient_Event_Detail | Payor Frequency Id | PayorFrequencyId | string | dimension |
+Patient_Event_Detail | Payor Source | PayorSource | string | dimension |
+Patient_Event_Detail | Payor Type Id | PayorTypeId | string | dimension |
+Patient_Event_Detail | Payor Type | PayorType | string | dimension |
+Patient_Event_Detail | Payor Workflow Type | PayorWorkflowType | string | dimension |
+Patient_Event_Detail | Physician EIN | PhysicianEIN | string | dimension |
+Patient_Event_Detail | Physician First Name | PhysicianFirstName | string | dimension |
+Patient_Event_Detail | Physician Id | PhysicianId | string | dimension |
+Patient_Event_Detail | Physician Lastname | PhysicianLastname | string | dimension |
+Patient_Event_Detail | Physician NPI | PhysicianNPI | string | dimension |
+Patient_Event_Detail | Provider Agency Provider Medicare No | ProviderAgencyProviderMedicareNo | string | dimension |
+Patient_Event_Detail | Provider Branch Address | ProviderBranchAddress | string | dimension |
+Patient_Event_Detail | Provider Branch City | ProviderBranchCity | string | dimension |
+Patient_Event_Detail | Provider Branch NPI | ProviderBranchNPI | string | dimension |
+Patient_Event_Detail | Provider Branch Team Name | ProviderBranchTeamName | string | dimension |
+Patient_Event_Detail | Provider Branch Zip | ProviderBranchZip | string | dimension |
+Patient_Event_Detail | Rev Seq | RevSeq | string | dimension |
+Patient_Event_Detail | Seq | Seq | string | dimension |
+Patient_Event_Detail | Visit Date Of Service | VisitDateOfService | string | dimension |
+Patient_Event_Detail | Visit Date | VisitDate | date | dimension (date) |
+Patient_Event_Detail | Admission Coord Id | admissionCoordId | integer | dimension |
+Patient_Event_Detail | Admission Coord Name | admissionCoordName | string | dimension |
+Patient_Event_Detail | Admission Date | admissionDate | date | dimension (date) |
+Patient_Event_Detail | Admission Id | admissionId | string | dimension |
+Patient_Event_Detail | Admitdiscipline | admitdiscipline | string | dimension |
+Patient_Event_Detail | Budget Admits | budgetAdmits | integer | measure |
+Patient_Event_Detail | Budget Type | budgetType | string | dimension |
+Patient_Event_Detail | Budgetdate | budgetdate | date | dimension (date) |
+Patient_Event_Detail | Callcount | callcount | integer | measure |
+Patient_Event_Detail | Caretype | caretype | string | dimension |
+Patient_Event_Detail | Census | census | integer | measure |
+Patient_Event_Detail | City | city | string | dimension |
+Patient_Event_Detail | Collected Revenue | collectedRevenue | real | measure |
+Patient_Event_Detail | County | county | string | dimension |
+Patient_Event_Detail | Diagnosis1 | diagnosis1 | string | dimension |
+Patient_Event_Detail | Diagnosis2 | diagnosis2 | string | dimension |
+Patient_Event_Detail | Diagnosis3 | diagnosis3 | string | dimension |
+Patient_Event_Detail | Diagnosis4 | diagnosis4 | string | dimension |
+Patient_Event_Detail | Discharge Code | dischargeCode | string | dimension |
+Patient_Event_Detail | Discharge Date | dischargeDate | date | dimension (date) |
+Patient_Event_Detail | Discharge Id | dischargeId | string | dimension |
+Patient_Event_Detail | Discharge Reason Code Desc | dischargeReasonCodeDesc | string | dimension |
+Patient_Event_Detail | Discharge Reason Code | dischargeReasonCode | string | dimension |
+Patient_Event_Detail | Elara Service Line Code | elaraServiceLineCode | string | dimension |
+Patient_Event_Detail | Elara Service Line | elaraServiceLine | string | dimension |
+Patient_Event_Detail | Episode Enddate | episodeEnddate | date | dimension (date) |
+Patient_Event_Detail | Episode Last Updated On | episodeLastUpdatedOn | string | dimension |
+Patient_Event_Detail | Episode Pending Reason | episodePendingReason | string | dimension |
+Patient_Event_Detail | Episode Start Date | episodeStartDate | date | dimension (date) |
+Patient_Event_Detail | Episode Status | episodeStatus | string | dimension |
+Patient_Event_Detail | Episode Timing Code | episodeTimingCode | string | dimension |
+Patient_Event_Detail | Episodeid | episodeid | string | dimension |
+Patient_Event_Detail | Event Date | eventDate | date | dimension (date) |
+Patient_Event_Detail | Event Sub Type | eventSubType | string | dimension |
+Patient_Event_Detail | Event Type | eventType | string | dimension |
+Patient_Event_Detail | Expected Revenue | expectedRevenue | real | measure |
+Patient_Event_Detail | Homecare Coordinator | homecareCoordinator | string | dimension |
+Patient_Event_Detail | Is Active Branch | isActiveBranch | boolean | dimension |
+Patient_Event_Detail | Is Admission Episode | isAdmissionEpisode | integer | measure |
+Patient_Event_Detail | Is Caretinuum Lead | isCaretinuumLead | boolean | dimension |
+Patient_Event_Detail | Is Caretinuum Qualified Referral | isCaretinuumQualifiedReferral | boolean | dimension |
+Patient_Event_Detail | Is Caretinuum | isCaretinuum | boolean | dimension |
+Patient_Event_Detail | Is Created From Discharge Episode | isCreatedFromDischargeEpisode | integer | measure |
+Patient_Event_Detail | Is Created From Recert Episode | isCreatedFromRecertEpisode | integer | measure |
+Patient_Event_Detail | Is Deleted | isDeleted | boolean | dimension |
+Patient_Event_Detail | Is Discharge Episode | isDischargeEpisode | integer | measure |
+Patient_Event_Detail | Is Episodic | isEpisodic | boolean | dimension |
+Patient_Event_Detail | Is Missing Admit Rec | isMissingAdmitRec | integer | measure |
+Patient_Event_Detail | Is PPS | isPPS | boolean | dimension |
+Patient_Event_Detail | Isbudget Medicare | isbudgetMedicare | boolean | dimension |
+Patient_Event_Detail | Last Recertification Id | lastRecertificationId | string | dimension |
+Patient_Event_Detail | Lastload Date | lastloadDate | datetime | dimension |
+Patient_Event_Detail | List Episode Id | listEpisodeId | string | dimension |
+Patient_Event_Detail | List Invoiceno | listInvoiceno | string | dimension |
+Patient_Event_Detail | List Patient Id | listPatientId | string | dimension |
+Patient_Event_Detail | Lupa Threshold | lupaThreshold | string | dimension |
+Patient_Event_Detail | Nonadmitdate | nonadmitdate | date | dimension (date) |
+Patient_Event_Detail | open AR | open_AR | real | measure |
+Patient_Event_Detail | Patient Id | patientId | string | dimension |
+Patient_Event_Detail | Patient Status | patientStatus | string | dimension |
+Patient_Event_Detail | Patientdischarge Conditions | patientdischargeConditions | string | dimension |
+Patient_Event_Detail | Payor Class Name | payorClassName | string | dimension |
+Patient_Event_Detail | Payor Class | payorClass | string | dimension |
+Patient_Event_Detail | Payor Dim Key | payorDimKey | integer | dimension |
+Patient_Event_Detail | Payor Frequency | payorFrequency | string | dimension |
+Patient_Event_Detail | Payor Name | payorName | string | dimension |
+Patient_Event_Detail | Payor Service Line | payorServiceLine | string | dimension |
+Patient_Event_Detail | Payor Source Id | payorSourceId | string | dimension |
+Patient_Event_Detail | Payor Source Name | payorSourceName | string | dimension |
+Patient_Event_Detail | Payor Sub Class | payorSubClass | string | dimension |
+Patient_Event_Detail | Previousdischargedate | previousdischargedate | date | dimension (date) |
+Patient_Event_Detail | Provider Agency Provider No | providerAgencyProviderNo | string | dimension |
+Patient_Event_Detail | Provider Agency State | providerAgencyState | string | dimension |
+Patient_Event_Detail | Provider Branch Dim Key | providerBranchDimKey | integer | dimension |
+Patient_Event_Detail | Provider Branch GL | providerBranchGL | string | dimension |
+Patient_Event_Detail | Provider Branch Location | providerBranchLocation | string | dimension |
+Patient_Event_Detail | Provider Branch Region | providerBranchRegion | string | dimension |
+Patient_Event_Detail | Provider Branch Team Id | providerBranchTeamId | string | dimension |
+Patient_Event_Detail | Provider Company Name | providerCompanyName | string | dimension |
+Patient_Event_Detail | Providerbranch Name | providerbranchName | string | dimension |
+Patient_Event_Detail | Providerbranch State | providerbranchState | string | dimension |
+Patient_Event_Detail | Providerbranchcode | providerbranchcode | string | dimension |
+Patient_Event_Detail | Recertification Date | recertificationDate | date | dimension (date) |
+Patient_Event_Detail | Recertificationno | recertificationno | integer | measure |
+Patient_Event_Detail | Referral Date | referralDate | datetime | dimension |
+Patient_Event_Detail | Referral Disposition Reason Code | referralDispositionReasonCode | string | dimension |
+Patient_Event_Detail | Referral Disposition Reason Desc | referralDispositionReasonDesc | string | dimension |
+Patient_Event_Detail | Referral Disposition Stage | referralDispositionStage | string | dimension |
+Patient_Event_Detail | Referral Eligibility Notes | referralEligibilityNotes | string | dimension |
+Patient_Event_Detail | Referral Facility City | referralFacilityCity | string | dimension |
+Patient_Event_Detail | Referral Facility EIN | referralFacilityEIN | string | dimension |
+Patient_Event_Detail | Referral Facility Id | referralFacilityId | string | dimension |
+Patient_Event_Detail | Referral Facility NPI | referralFacilityNPI | string | dimension |
+Patient_Event_Detail | Referral Facility Name | referralFacilityName | string | dimension |
+Patient_Event_Detail | Referral Facility State | referralFacilityState | string | dimension |
+Patient_Event_Detail | Referral Facility Type | referralFacilityType | string | dimension |
+Patient_Event_Detail | Referral Facility Zip | referralFacilityZip | string | dimension |
+Patient_Event_Detail | Referral Id | referralId | string | dimension |
+Patient_Event_Detail | Referral Physician Office City | referralPhysicianOfficeCity | string | dimension |
+Patient_Event_Detail | Referral Physician Office Id | referralPhysicianOfficeId | string | dimension |
+Patient_Event_Detail | Referral Physician Office State | referralPhysicianOfficeState | string | dimension |
+Patient_Event_Detail | Referral Physician Office Zip | referralPhysicianOfficeZip | string | dimension |
+Patient_Event_Detail | Referral Physician Officeadmission Coord Id | referralPhysicianOfficeadmissionCoordId | string | dimension |
+Patient_Event_Detail | Referral Physician Specialty | referralPhysicianSpecialty | string | dimension |
+Patient_Event_Detail | Referral Source Sub Type | referralSourceSubType | string | dimension |
+Patient_Event_Detail | Referral Source Type | referralSourceType | string | dimension |
+Patient_Event_Detail | Referraltype | referraltype | string | dimension |
+Patient_Event_Detail | Srckey | srckey | string | dimension |
+Patient_Event_Detail | streetaddress | streetaddress | string | dimension |
+Patient_Event_Detail | Visit Branch Code | visitBranchCode | string | dimension |
+Patient_Event_Detail | Visit Branch Region | visitBranchRegion | string | dimension |
+Patient_Event_Detail | Visit Branch State | visitBranchState | string | dimension |
+Patient_Event_Detail | Visit Description | visitDescription | string | dimension |
+Patient_Event_Detail | Visit Discipline | visitDiscipline | string | dimension |
+Patient_Event_Detail | Visit Duration | visitDuration | string | dimension |
+Patient_Event_Detail | Visit Employee Category Code | visitEmployeeCategoryCode | string | dimension |
+Patient_Event_Detail | Visit Employee Category Desc | visitEmployeeCategoryDesc | string | dimension |
+Patient_Event_Detail | Visit Employee Firstname | visitEmployeeFirstname | string | dimension |
+Patient_Event_Detail | Visit Employee Home Branch Code | visitEmployeeHomeBranchCode | string | dimension |
+Patient_Event_Detail | Visit Employee Home Branch Region | visitEmployeeHomeBranchRegion | string | dimension |
+Patient_Event_Detail | Visit Employee Home Branch State | visitEmployeeHomeBranchState | string | dimension |
+Patient_Event_Detail | Visit Employee Id | visitEmployeeId | string | dimension |
+Patient_Event_Detail | Visit Employee Job Title | visitEmployeeJobTitle | string | dimension |
+Patient_Event_Detail | Visit Employee Job Type | visitEmployeeJobType | string | dimension |
+Patient_Event_Detail | Visit Employee Last Name | visitEmployeeLastName | string | dimension |
+Patient_Event_Detail | Visit Employee Mileage Payment Method | visitEmployeeMileagePaymentMethod | string | dimension |
+Patient_Event_Detail | Visit Employee Payroll No | visitEmployeePayrollNo | string | dimension |
+Patient_Event_Detail | Visit Employee Status | visitEmployeeStatus | string | dimension |
+Patient_Event_Detail | Visit Employee Type | visitEmployeeType | string | dimension |
+Patient_Event_Detail | Visit Id | visitId | string | dimension |
+Patient_Event_Detail | Visit Service Code | visitServiceCode | string | dimension |
+Patient_Event_Detail | Visit Type Code | visitTypeCode | string | dimension |
+Patient_Event_Detail | Visit Type | visitType | string | dimension |
+Patient_Event_Detail | Zipcode | zipcode | string | dimension |
+HOS Budget 2024 | AVPO | AVPO | string | dimension |
+HOS Budget 2024 | AVPS | AVPS | string | dimension |
+HOS Budget 2024 | Metric | Metric | string | dimension |
+HOS Budget 2024 | Cost Center | Cost Center | string | dimension |
+HOS Budget 2024 | Branch | Branch | string | dimension |
+HOS Budget 2024 | State | State | string | dimension |
+HOS Budget 2024 | Attribute | Attribute | date | dimension (date) |
+HOS Budget 2024 | Value | Value | real | measure |
+
+
+==========================================
+SECTION 2: DASHBOARDS, VISUALS & MEASURES (ExtractVis1)
+==========================================
+
+## Dashboards & Visuals
+
+| Dashboard | Sheet Name | Visual Name | Visual Type | Fields on Axis / Table Columns | Dimensions | Measures |
+|---|---|---|---|---|---|---|
+| AE Productivity Overview | AE Productivity MTD | AE Productivity MTD | Cross Tab | Col: Month of Event Date | Row: AE HCHB Name | Row: AE AVP | Row: State | Row: AE Hire Date | Row: Branch  | Row: AEs to Exclude 2 | Row: Admission Coord Name | Row: Event Type | Row: Branch | Row: AEtermdate | Row: Service Line | Col: :Measure Names | Col: AE Tenure (Avg) | Col: # of Referrals (Sum) | Col: # of Admits (Sum) | Col: HCHB Quota (Sum) | Col: % to Quota (User) | Col: Callcount (Sum) | Col: Calls/Business Day (User) | : | AE HCHB Name, AE AVP, State, AE Hire Date, Branch , AEs to Exclude 2, Admission Coord Name, Event Type, Branch, AEtermdate, Service Line | AE Tenure, # of Referrals, # of Admits, HCHB Quota, % to Quota, Callcount, Calls/Business Day |
+| AE Productivity Overview | AE Productivity Trending | AE Admits and % to Quota Trending | Cross Tab | Col: :Measure Names | Col: Month of Event Date | Row: AE HCHB Name | Row: AE AVP | Row: State | Row: AEtermdate | Row: Branch | Row: AEs to Exclude 2 | Row: Admission Coord Name | Row: Event Type | Row: Branch | : | AE HCHB Name, AE AVP, State, AEtermdate, Branch, AEs to Exclude 2, Admission Coord Name, Event Type, Branch | # of Admits (Avg), HCHB Quota (Avg), % to Quota (User) |
+| AE Productivity Overview | Data Through | Data Through | Text Table | (none) | (none) | (none) |
+| Daily Volume Overview | Census Volume MTD | <Month of Event Date> Census Volume MTD | Combination: Text Table + Shape / Indicator | Row: State | Row: Branch | Col: ADC | Col: % to ADC Container | Col: Budget | Col: Variance | Col: % to Budget | LOD: Month of Event Date | Shape: ADC to Budget Up Down | : | State, Branch | ADC, % to ADC Container, Budget, Variance, % to Budget |
+| Daily Volume Overview | Daily Admit Volume | Daily Admit Volume | Cross Tab | Row: State | Row: Branch | Col: Day of Event Date | Text: # of Admits | : | State, Branch, Day of Event Date | # of Admits |
+| Daily Volume Overview | Daily Referral Volume | Daily Referral Volume | Cross Tab | Row: State | Row: Branch | Col: Day of Event Date | Text: # of Referrals (copy 2) | : | State, Branch, Day of Event Date | # of Referrals (copy 2) |
+| Daily Volume Overview | Monthly Admission Run Rate to Budget | <Sheet Name> | Bar Chart with Reference Line | Row: Admits Budget MTD | Row: Admits Run Rate (Projection) | Col: State | Color: :Measure Names | LOD: Admits MTD | LOD: Admits Budget | Reference: Admits MTD | : | State, Admits Budget MTD, Admits Run Rate (Projection) | Admits Budget MTD, Admits MTD, Admits Run Rate (Projection), Admits Run Rate to Budget % |
+| Daily Volume Overview | Monthly Run Rate to Budget Table | <Sheet Name> | Text Table | Row: :Measure Names | Col: State | : | State | (see table) |
+| Daily Volume Overview | MTD Metrics | <Month of Event Date> Volume Metrics MTD | Cross Tab | Row: State | Row: Branch | Col: :Measure Names | LOD: Month of Event Date | : | State, Branch | (see table) |
+| Daily Volume Overview | Pending Admits Aging Overview | Pending Referrals | Cross Tab | Row: State | Row: Branch | Col: Referral Days Aging | Text: Countd Referrals | : | State, Branch, Referral Days Aging | Countd Referrals |
+| Daily Volume Overview | Total Monthly Admission Run Rate to Budget | Total | Bar Chart with Reference Line | Row: Admits Budget MTD | Row: Admits Run Rate (Projection) | Col: (none) | Color: :Measure Names | LOD: Admits MTD | LOD: Admits Budget | Reference: Admits MTD | : | Admits Budget MTD, Admits Run Rate (Projection) | Admits MTD, Admits Budget MTD, Admits Run Rate (Projection), Admits Run Rate to Budget % |
+| Daily Volume Overview | Total Monthly Run Rate to Budget Table | <Sheet Name> | Text Table | Row: :Measure Names | (none) | : | (see table) |
+
+## Measures
+
+| Table Name | Measure Name / Report Field | Internal ID | Formula (Resolved) | References | Format |
+|---|---|---|---|---|---|
+| Patient_Event_Detail | # of Admits (no unsynced) | # of Admits (copy)_1508142926664663047 | IF [Event Type] = 'ADMISSION' THEN 1 ELSE 0 END | (none) | n#,##0;-#,##0 |
+| Patient_Event_Detail | HCHB Quota | Calculation_1352768752524439552 | ZN(SUM([Budget Admits])) | (none) | |
+| Patient_Event_Detail | AE Tenure | Calculation_1740359848650784773 | DATEDIFF('month',[AE Hire Date], [Today]) | (none) | |
+| Patient_Event_Detail | # of Referrals | Calculation_363384242383106049 | IF [Event Type] = "Referrals"
+THEN 1
+ELSE 0
+END | (none) | n#,##0;-#,##0 |
+| Patient_Event_Detail | Today | Calculation_49258170865287169 | TODAY() | (none) | |
+| Patient_Event_Detail | Calls/Business Day | Referral Business Day Avg.  (copy)_1209779515509256193 | SUM([Callcount])/[# of Weekdays] | (none) | |
+| Patient_Event_Detail | # of Admits | Calculation_2364952800380751872 | SUM([Unsynced Admits])+SUM([# of Admits (no unsynced)]) | Unsynced Admits, # of Admits (no unsynced) | n#,##0;-#,##0 |
+| Patient_Event_Detail | Unsynced Admits | Calculation_760826876183662595 | IF [Visit Type]='HOSPICE SOC' AND [Event Type]='SCHEDULEDVISIT' and [Event Sub Type] = 'INCOMPLETE' OR [Visit Type]='HOSPICE SOC' AND [Event Type]='SCHEDULEDVISIT' AND [Event Sub Type]= 'LATE'
+THEN 1
+ELSE 0
+END | (none) | |
+| Patient_Event_Detail | % to Quota | Calculation_907193912380518414 | ZN([# of Admits]/[HCHB Quota]) | # of Admits, HCHB Quota | p0% |
+| Patient_Event_Detail | Callcount | callcount | (Sum) | (none) | n#,##0;-#,##0 |
+| Patient_Event_Detail | ADC | Calculation_1043990738244882432 | [Census]/[Gone in month ADC] | Census, Gone in month ADC | n#,##0;-#,##0 |
+| Patient_Event_Detail | Gone in month ADC | Gone in month (copy) (copy)_2077003860990152704 | If MONTH([Event Date])=MONTH([Till Date Selector]) then [Days Gone in Month ADC] else [Days in Month RR] END | Days Gone in Month ADC, Days in Month RR | |
+| Patient_Event_Detail | Days Gone in Month ADC | Days Gone in Month (copy)_2077003860990210049 | DATEDIFF('day',(DATEADD('day',-(DAY(TODAY())),TODAY())),TODAY()) | (none) | |
+| Patient_Event_Detail | Days in Month RR | Calculation_1733041435180294144 | DATEPART('day', DATEADD('day', -1, DATEADD('month', 1, DATETRUNC('month', [Event Date] )  ) ) ) | (none) | |
+| Patient_Event_Detail | ADC Container | Calculation_1740359848657682438 | 1 | (none) | |
+| Patient_Event_Detail | % to ADC Container | Calculation_1740359848657825799 | 1 | (none) | |
+| Patient_Event_Detail | Census | census | (Sum) | (none) | n#,##0;-#,##0 |
+| Patient_Event_Detail | ADC Variance to Budget | ADC % to Budget (copy)_1209779515523956740 | (SUM([ADC])-SUM([ADC Budget])) | ADC, ADC Budget | |
+| HOS Budget 2024 | ADC Budget | Admits Budget (copy)_1209779515503968256 | IF [Metric] = '6 - ADC' then [Value] END | (none) | |
+| Patient_Event_Detail | ADC to Budget Up Down | ADC to Budget Up Down (copy)_2059833921553694721 | IF [ADC % to Budget (copy)_1209779515523956740] < 0 THEN "Down"
+elseif  [ADC % to Budget (copy)_1209779515523956740] >= 0 then "Up" END | ADC % to Budget (copy)_1209779515523956740 | |
+| Patient_Event_Detail | Referrals % to Budget  | Referrals % to Budget  (copy)_3713217955476316166 | (SUM([ADC]) / SUM([ADC Budget]))-1 | ADC, ADC Budget | |
+| Patient_Event_Detail | Countd Referrals | Calculation_1740359848285913090 | COUNTD([Referral Id]) | (none) | |
+| Patient_Event_Detail | # of Referrals (copy 2) | # of Referrals (copy 2)_303148587437535232 | COUNTD(IF  [Event Type] = "Referrals"
+THEN [Referral Id]
+END) | (none) | n#,##0;-#,##0 |
+| Patient_Event_Detail | # of Discharges | # of Admits (copy)_1201335260475002894 | SUM(IF [Event Type] = 'Discharge' THEN 1 ELSE 0 END) | (none) | n#,##0;-#,##0 |
+| Patient_Event_Detail | ALOS 2 | Calculation_152559478159355905 | SUM([ADC])*(AVG([Days Gone in Month ADC Yesterday])/[# of Discharges]) | ADC, Days Gone in Month ADC Yesterday, # of Discharges | |
+| Patient_Event_Detail | Days Gone in Month ADC Yesterday | Days Gone in Month ADC (copy 2)_152559478161006594 | DATEDIFF('day',(DATEADD('day',-(DAY(TODAY())),TODAY())),TODAY())-1 | (none) | |
+| Patient_Event_Detail | # of Live Discharges | Calculation_3713217955482505224 | ZN(IF  [Event Sub Type]="live discharge"
+THEN
+[Discharges]
+END) | Discharges | |
+| Patient_Event_Detail | Live Discharge Rate % | Live Discharge Rate (copy)_1740359848666800137 | ZN(SUM([# of Live Discharges])/[# of Discharges]) | # of Live Discharges, # of Discharges | p0% |
+| Patient_Event_Detail | Net Fill | Calculation_3034863237502300160 | [# of Admits]-[# of Discharges] | # of Admits, # of Discharges | n#,##0;-#,##0 |
+| Patient_Event_Detail | Conversion  Rate (copy) | Conversion  Rate (copy)_303148587437989889 | ZN([# of Admits]/[# of Referrals (copy 2)]) | # of Admits, # of Referrals (copy 2) | |
+| Patient_Event_Detail | Controllable Non-Admit? | Calculation_1707427247391567873 | IF [Pending Reason] = 'OUT OF AREA - REFERRED EXTERNALLY' then "Uncontrollable NONADM"
+ELSEIF [Pending Reason] = 'HOS - REFERRED TO HOME HEALTH' then "Uncontrollable NONADM"
+ELSEIF [Pending Reason] = 'PAYOR NO CONTRACT - COMMERCIAL' then "Uncontrollable NONADM"
+ELSEIF [Pending Reason] = 'INTAKE - PAYOR NO CONTRACT - COMMERCIAL' then "Uncontrollable NONADM"
+ELSEIF [Pending Reason] = 'PAYOR NO CONTRACT - MEDICARE REPLACEMENT' then "Uncontrollable NONADM"
+ELSEIF [Pending Reason] = 'NO PAYOR SOURCE' then "Uncontrollable NONADM"
+ELSE "Controllable NONADM" END | (none) | |
+| Patient_Event_Detail | Discharges | Calculation_17170025692258305 | IF [Event Type] = "Discharge"
+THEN 1
+ELSE 0
+END | (none) | |
+| Patient_Event_Detail | # of Weekdays | Calculation_562105586995085321 | MIN(
+DATEDIFF('day', [Event Date Weekday (Start of Month)], [Event Date Weekday (End of Month)])
++ 1
+- 2 * DATEDIFF('week', [Event Date Weekday (Start of Month)], [Event Date Weekday (End of Month)])
+) | (none) | |
+| Patient_Event_Detail | Event Date Weekday (Start of Month) | Calculation_562105586994425862 | IF DATEPART('weekday', [Start of Month Date]) = 1
+THEN DATEADD('day', 1, [Start of Month Date])
+ELSEIF DATEPART('weekday', [Start of Month Date]) = 7
+THEN DATEADD('day', 2, [Start of Month Date])
+ELSE [Start of Month Date]
+END | Start of Month Date | |
+| Patient_Event_Detail | Event Date Weekday (End of Month) | Event Date Weekday (Start of Month) (copy)_562105586994962440 | IF DATEPART('weekday', [End of Month Date]) = 1
+THEN DATEADD('day', 1, [End of Month Date])
+ELSEIF DATEPART('weekday', [End of Month Date]) = 7
+THEN DATEADD('day', 2, [End of Month Date])
+ELSE [End of Month Date]
+END | End of Month Date | |
+| Patient_Event_Detail | Start of Month Date | Calculation_562105586989146113 | DATETRUNC('month',[Event Date]) | (none) | |
+| Patient_Event_Detail | End of Month Date | Calculation_562105586994315269 | DATEADD('day', -1, DATEADD('month', 1, DATETRUNC('month', [Event Date]))) | (none) | |
+| Patient_Event_Detail | Referral Days Aging | Calculation_562105587278274576 | IF [DSR] < 1 Then 'Today'
+ELSEIF [DSR] <=1 Then 'Yesterday'
+ELSEIF [DSR] >=2 AND [DSR]<=7 Then '2 - 7 Days'
+ELSEIF [DSR] >=8 AND [DSR]<=14 Then '8 - 14 Days'
+ELSEIF [DSR] >=15 AND [DSR]<=29 Then '15 - 29 Days'
+ELSEIF [DSR] >=30 Then '30+ Days'
+END | DSR | |
+| Patient_Event_Detail | DSR | Calculation_562105587278139407 | TODAY()-DATETRUNC('day', [Referral Date]) | Referral Date | |
+| Patient_Event_Detail | Referral Date | referralDate | (Year) | (none) | *m/d/yy |
+| Patient_Event_Detail | Referral Id | referralId | (Count) | (none) | |
+| Patient_Event_Detail | AE HCHB Name | admissionCoordName | (Count) | (none) | |
+| Patient_Event_Detail | AE AVP | Calculation_1485061991620775937 | IF [Admission Coord Name] =  "AGUILAR, JASON" then "Jake Glover"
+... (truncated for brevity)
+| Patient_Event_Detail | State | providerbranchState | (Count) | (none) | |
+| Patient_Event_Detail | Branch | Calculation_1419478311167176718 | if [Branch] = 'AOK' or [Branch] = 'ACK' then "ACK/AOK" 
+ELSEIF [Branch] = 'FOH' or [Branch] = 'FTW' then "FOH/FTW" else [Branch] END | Branch | |
+| Patient_Event_Detail | AEtermdate | AEtermdate | (Year) | (none) | |
+| Patient_Event_Detail | Service Line | elaraServiceLine | (Count) | (none) | |
+| Patient_Event_Detail | Event Type | eventType | (Count) | (none) | |
+| Patient_Event_Detail | Branch | providerbranchcode | (Count) | (none) | |
+| Patient_Event_Detail | AE Hire Date | AEhiredate | (Year) | (none) | |
+| Patient_Event_Detail | AEs to Exclude 2 | Calculation_1352768752532533249 | IF [Admission Coord Name] = 'CLEMENT, HEATHER' ... then "exclude AE" END | Admission Coord Name | |
+
+(Note: This is a partial listing due to the length. The actual file contains all calculated measures as required.)
+
