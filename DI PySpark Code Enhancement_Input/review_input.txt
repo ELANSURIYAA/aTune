@@ -1,0 +1,50 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that the output includes a fully self-contained PySpark ETL script named with the suffix "_Pipeline.py" as instructed.
+- Confirm that all transformation rules, schema updates, and mapping logic from the "Technical_Specifications (1).txt" are implemented in the generated code.
+- Ensure that all source and target tables (CUSTOMER, BRANCH, ACCOUNT, TRANSACTION, BRANCH_OPERATIONAL_DETAILS, BRANCH_SUMMARY_REPORT) from the DDL are referenced and processed as required.
+- Check that the join logic between BRANCH_OPERATIONAL_DETAILS and BRANCH_SUMMARY_REPORT using BRANCH_ID is present and correctly implemented.
+- Confirm that conditional population of REGION and LAST_AUDIT_DATE columns based on IS_ACTIVE = 'Y' is included.
+- Validate that all columns specified in the source-to-target mapping are present in the output.
+- Ensure that all impacted modules and logic changes described in the technical specification are addressed in the code.
+- Verify that the output includes proper logging, validations, and documentation as per the agent instructions.
+- Confirm that the output includes a markdown report showing the result of the Python-based test script execution, with details of the input provided and the output result.
+- Check that all required metadata headers are updated in the code as per the specified format, preserving relevant description content.
+- Ensure that all modifications, insertions, and deprecations are clearly annotated in the code with the required tags (# [MODIFIED], # [ADDED], # [DEPRECATED]).
+- Confirm that a summary of updates in each version is included in the output.
+- Verify that cost estimation and justification are present in the output as required.
+- Ensure that no required section, table, or mapping from the input files is omitted.
+- Confirm that all special PySpark constraints and Databricks table handling mandates are followed.
+
+Accuracy Checks
+
+- Validate that the output aligns precisely with the transformation logic, schema rules, and mapping instructions from the technical specification.
+- Ensure that the join and conditional logic for REGION and LAST_AUDIT_DATE are implemented exactly as described, with no unsupported assumptions.
+- Confirm that all data model updates and DDL changes are reflected accurately in the generated code.
+- Check that all annotations, comments, and tags are applied to the correct lines and sections in the code.
+- Verify that the output does not introduce any hallucinated content or unsupported features (e.g., Azure or GCP references).
+- Ensure that all business rules and dependencies from both the instructions and the input files are interpreted and implemented correctly.
+- Confirm that the markdown report accurately represents the input and output of the test script execution.
+- Validate that all terminology, column names, and data types match those specified in the input files.
+- Check that all deprecated or outdated code blocks are commented out, not deleted, and that new code follows project conventions.
+- Ensure that all findings, mappings, and transformations are traceable to the instructions or input files.
+- Confirm that the output is syntactically correct and ready for execution, with no breaking changes unless explicitly commented.
+- Verify that no false-positive gaps or false-negative omissions occur in the mapping or transformation logic.
+- Ensure that the output does not contradict any requirements or constraints specified in the input files or instructions.
+- Confirm that the cost estimation and justification are based on the actual changes and logic implemented.
+
+Efficiency Checks
+
+- Verify that duplicate analysis, redundant explanations, and repeated gap entries are avoided in the output.
+- Ensure that the output remains concise, well-structured, and free from unnecessary sections or verbosity.
+- Confirm that similar findings, annotations, and modifications are logically grouped and not repeated.
+- Check that tables, mappings, and validation checks are not unnecessarily repeated in the output.
+- Ensure that the code and markdown report are token-efficient while maintaining completeness and clarity.
+- Validate that redundant classifications, tags, or validations are eliminated from the output.
+- Confirm that large sections are summarized efficiently where allowed, without omitting required details.
+- Ensure that the output structure improves readability and review efficiency for the reviewer.
+- Verify that all code modifications are annotated only once per relevant section, avoiding annotation clutter.
+- Confirm that the output does not include any unnecessary simulation or test data beyond what is required for demonstration.
+- Ensure that the markdown report is clear, direct, and free from redundant content.
