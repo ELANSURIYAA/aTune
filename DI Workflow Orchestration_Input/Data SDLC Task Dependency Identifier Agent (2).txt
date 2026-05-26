@@ -1,0 +1,23 @@
+### List of Tasks to do, their Input and Output
+
+**Tasks:**
+
+1. **Review credit card reporting requirements** — Analyse the Fabric credit card reporting requirements document to understand business goals, KPIs, use cases, and key reporting scenarios for credit card data.
+
+2. **Identify business domains and subject areas** — From the requirements, group capabilities into domains (e.g., customer, account, transaction, limits, statements, risk) and define high-level subject areas and glossary terms relevant to credit card reporting.
+
+3. **Derive conceptual entities and relationships** — Define the core business entities (e.g., Credit Card Account, Customer, Transaction, Statement, Merchant, Product) and their high-level relationships, focusing on how they support the identified reporting use cases.
+
+4. **Draft conceptual attributes for each entity** — For each conceptual entity, list the key business-level attributes required for reporting (e.g., account status, credit limit, transaction amount, posting date) without yet going into technical datatype or physical details.
+
+5. **Define high-level business rules on attributes and relationships** — Capture business rules implied by the requirements (e.g., rules for valid account status values, how transaction dates roll up to statement periods, how delinquencies are determined) and associate them with the relevant attributes and relationships.
+
+6. **Validate conceptual model with stakeholders** — Walk through the conceptual entities, attributes, relationships, and associated business rules with business and data stakeholders to confirm coverage of all credit card reporting requirements and refine based on feedback.
+
+7. **Document and baseline the conceptual data model** — Produce a finalized conceptual data model artifact (diagram plus supporting definitions and business rules) and store it in the agreed repository as the approved reference for subsequent logical and physical data modeling.
+
+**Required Input:** Fabric credit card reporting requirements document and any associated business KPI/use-case descriptions
+
+**Expected Output:** Approved conceptual data model for credit card reporting, including defined entities, key attributes, relationships, and documented business rules on those attributes
+
+

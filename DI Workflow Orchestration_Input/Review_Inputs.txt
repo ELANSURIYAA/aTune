@@ -1,0 +1,53 @@
+Reviewer Validation Checklist
+ 
+Completeness Checks
+ 
+- Verify that all seven tasks listed in the Data SDLC Task Dependency Identifier Agent instructions are addressed in the output.
+- Confirm that each business domain and subject area mentioned in the requirements is included and grouped appropriately.
+- Ensure that all conceptual entities (e.g., Credit Card Account, Customer, Transaction, Statement, Merchant, Product) are defined and described.
+- Check that key business-level attributes for each conceptual entity are listed without technical or physical details.
+- Validate that all high-level business rules on attributes and relationships are captured and associated with the relevant entities.
+- Confirm that the conceptual model is validated with stakeholders, including feedback and refinement steps.
+- Ensure that the finalized conceptual data model artifact (diagram, definitions, business rules) is documented and referenced as required.
+- Verify that all required mappings between tasks and agents, as shown in Table 1, are included and justified.
+- Check that any unmapped tasks are identified and recommendations for new agents are provided as in Table 2.
+- Ensure that all required input documents (e.g., Fabric credit card reporting requirements) are referenced and analyzed.
+- Confirm that all expected outputs (approved conceptual data model, defined entities, attributes, relationships, business rules) are present.
+- Verify that all business rules, KPIs, and use cases from the requirements are covered in the model.
+- Ensure that all glossary terms and subject areas relevant to credit card reporting are defined.
+- Confirm that all dependencies and integrations between tasks and agents are captured.
+- Check that all required validation and review steps are included, including stakeholder sign-off and change log tracking if specified.
+ 
+Accuracy Checks
+ 
+- Validate that the output aligns precisely with the instructions for each task and agent mapping.
+- Confirm that the conceptual entities, attributes, and relationships accurately reflect the requirements and input content.
+- Ensure that no hallucinated entities, attributes, or business rules are introduced.
+- Check that all mappings between tasks and agents are logically justified and supported by the agent descriptions.
+- Verify that business rules are interpreted and applied correctly to the relevant attributes and relationships.
+- Confirm that all gap identifications and unmapped tasks are justified by the input content.
+- Ensure that terminology used for entities, attributes, and business rules is consistent with the requirements and agent descriptions.
+- Check that all findings, recommendations, and mappings are traceable to either the instructions or the input file content.
+- Validate that no unsupported assumptions or contradictions are present in the output.
+- Ensure that all required formatting standards (e.g., tables, diagrams, lists) are followed as per the instructions.
+- Confirm that all values, tables, and classifications match the source content accurately.
+- Check that all relationships between entities and components are correctly interpreted and represented.
+- Ensure that status, resolution tracking, and stakeholder validation steps are accurately described if required.
+- Validate that recommendations for new agents in Table 2 align with the identified gaps and requirements.
+- Confirm that no instruction is misinterpreted or only partially implemented.
+ 
+Efficiency Checks
+ 
+- Ensure that duplicate analysis of tasks, entities, or business rules is avoided.
+- Check that redundant explanations or repeated gap entries are not present in the output.
+- Confirm that the output is concise, well-structured, and free from unnecessary sections.
+- Verify that duplicate dependency mappings and repeated risks or recommendations are eliminated.
+- Ensure that formatting is clean, optimized, and supports efficient review.
+- Confirm that excessive verbosity is avoided and large sections are summarized efficiently where allowed.
+- Check that overlapping findings are consolidated and similar findings are logically grouped.
+- Ensure that tables and diagrams are not unnecessarily repeated.
+- Confirm that output is token-efficient while maintaining completeness and accuracy.
+- Verify that repeated content from the input file is minimized unless necessary for clarity.
+- Ensure that redundant classifications, tags, or validations are avoided.
+- Check that the output structure improves readability and supports systematic review.
+- Confirm that all content is presented in a manner that facilitates efficient validation by reviewers.
