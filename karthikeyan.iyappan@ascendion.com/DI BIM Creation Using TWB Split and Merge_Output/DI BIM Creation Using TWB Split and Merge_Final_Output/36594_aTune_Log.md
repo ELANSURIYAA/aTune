@@ -35,3 +35,8 @@ Step 5:
 
 Step 6:
 - Retrying the Updater agent to apply the recommended changes to the instruction.
+
+[ERROR] Attempt 2 of 3 — Updater agent workflow execution failed or returned no output.
+
+Step 6:
+- Retrying the Updater agent to apply the recommended changes to the instruction (final attempt).
