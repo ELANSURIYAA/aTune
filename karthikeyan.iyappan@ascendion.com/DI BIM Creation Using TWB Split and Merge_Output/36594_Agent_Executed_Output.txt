@@ -387,6 +387,17 @@
             "formatString": "Long Date",
             "lineageTag": "col-visitdate-028",
             "summarizeBy": "none",
+            "variations": [
+              {
+                "name": "Variation",
+                "relationship": "rel-visitdate-localdate-001",
+                "defaultHierarchy": {
+                  "table": "LocalDateTable_VisitDate",
+                  "hierarchy": "Date Hierarchy"
+                },
+                "isDefault": true
+              }
+            ],
             "annotations": [
               {
                 "name": "SummarizationSetBy",
@@ -404,7 +415,7 @@
             "sourceColumn": "admissionCoordId",
             "formatString": "0",
             "lineageTag": "col-admissioncoordid-029",
-            "summarizeBy": "sum",
+            "summarizeBy": "none",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
@@ -432,6 +443,17 @@
             "formatString": "Long Date",
             "lineageTag": "col-admissiondate-031",
             "summarizeBy": "none",
+            "variations": [
+              {
+                "name": "Variation",
+                "relationship": "rel-admissiondate-localdate-002",
+                "defaultHierarchy": {
+                  "table": "LocalDateTable_AdmissionDate",
+                  "hierarchy": "Date Hierarchy"
+                },
+                "isDefault": true
+              }
+            ],
             "annotations": [
               {
                 "name": "SummarizationSetBy",
@@ -518,7 +540,7 @@
             "name": "callcount",
             "dataType": "int64",
             "sourceColumn": "callcount",
-            "formatString": "0",
+            "formatString": "#,##0",
             "lineageTag": "col-callcount-037",
             "summarizeBy": "sum",
             "annotations": [
@@ -545,7 +567,7 @@
             "name": "census",
             "dataType": "int64",
             "sourceColumn": "census",
-            "formatString": "0",
+            "formatString": "#,##0",
             "lineageTag": "col-census-039",
             "summarizeBy": "sum",
             "annotations": [
@@ -572,17 +594,13 @@
             "name": "collectedRevenue",
             "dataType": "double",
             "sourceColumn": "collectedRevenue",
-            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "formatString": "#,##0.00",
             "lineageTag": "col-collectedrevenue-041",
             "summarizeBy": "sum",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
-              },
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"currencyCulture\":\"en-US\"}"
               }
             ]
           },
@@ -858,9 +876,9 @@
             "variations": [
               {
                 "name": "Variation",
-                "relationship": "rel-eventdate-localdatetable",
+                "relationship": "rel-eventdate-localdate-003",
                 "defaultHierarchy": {
-                  "table": "LocalDateTable_eventDate",
+                  "table": "LocalDateTable_EventDate",
                   "hierarchy": "Date Hierarchy"
                 },
                 "isDefault": true
@@ -907,17 +925,13 @@
             "name": "expectedRevenue",
             "dataType": "double",
             "sourceColumn": "expectedRevenue",
-            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "formatString": "#,##0.00",
             "lineageTag": "col-expectedrevenue-064",
             "summarizeBy": "sum",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
-              },
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"currencyCulture\":\"en-US\"}"
               }
             ]
           },
@@ -1217,17 +1231,13 @@
             "name": "open_AR",
             "dataType": "double",
             "sourceColumn": "open_AR",
-            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "formatString": "#,##0.00",
             "lineageTag": "col-openar-086",
             "summarizeBy": "sum",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
-              },
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"currencyCulture\":\"en-US\"}"
               }
             ]
           },
@@ -1302,7 +1312,7 @@
             "sourceColumn": "payorDimKey",
             "formatString": "0",
             "lineageTag": "col-payordimkey-092",
-            "summarizeBy": "sum",
+            "summarizeBy": "none",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
@@ -1438,7 +1448,7 @@
             "sourceColumn": "providerBranchDimKey",
             "formatString": "0",
             "lineageTag": "col-providerbranchdimkey-102",
-            "summarizeBy": "sum",
+            "summarizeBy": "none",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
@@ -1586,7 +1596,7 @@
             "name": "referralDate",
             "dataType": "dateTime",
             "sourceColumn": "referralDate",
-            "formatString": "General Date",
+            "formatString": "m/d/yy",
             "lineageTag": "col-referraldate-113",
             "summarizeBy": "none",
             "annotations": [
@@ -2240,20 +2250,25 @@
             "mode": "import",
             "source": {
               "type": "m",
-              "expression": "let\n    Source = Sql.Database(\"sqlproxy\", \"PatientEventDB\"),\n    Patient_Event_Detail = Source{[Schema=\"dbo\",Item=\"Patient_Event_Detail\"]}[Data]\nin\n    Patient_Event_Detail"
+              "expression": [
+                "let",
+                "    Source = Sql.Database(\"sqlproxy\", \"Patient_Event_Detail\")",
+                "in",
+                "    Source"
+              ]
             }
           }
         ]
       },
       {
         "name": "HOS_Budget_2024",
-        "lineageTag": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+        "lineageTag": "hos-budget-2024-table-001",
         "columns": [
           {
             "name": "AVPO",
             "dataType": "string",
             "sourceColumn": "AVPO",
-            "lineageTag": "col-avpo-201",
+            "lineageTag": "col-avpo-001",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2266,7 +2281,7 @@
             "name": "AVPS",
             "dataType": "string",
             "sourceColumn": "AVPS",
-            "lineageTag": "col-avps-202",
+            "lineageTag": "col-avps-002",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2279,7 +2294,7 @@
             "name": "Metric",
             "dataType": "string",
             "sourceColumn": "Metric",
-            "lineageTag": "col-metric-203",
+            "lineageTag": "col-metric-003",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2292,7 +2307,7 @@
             "name": "Cost Center",
             "dataType": "string",
             "sourceColumn": "Cost Center",
-            "lineageTag": "col-costcenter-204",
+            "lineageTag": "col-costcenter-004",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2305,7 +2320,7 @@
             "name": "Branch",
             "dataType": "string",
             "sourceColumn": "Branch",
-            "lineageTag": "col-branch-205",
+            "lineageTag": "col-branch-005",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2318,7 +2333,7 @@
             "name": "State",
             "dataType": "string",
             "sourceColumn": "State",
-            "lineageTag": "col-state-206",
+            "lineageTag": "col-state-006",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2332,7 +2347,7 @@
             "dataType": "dateTime",
             "sourceColumn": "Attribute",
             "formatString": "Long Date",
-            "lineageTag": "col-attribute-207",
+            "lineageTag": "col-attribute-007",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2349,16 +2364,13 @@
             "name": "Value",
             "dataType": "double",
             "sourceColumn": "Value",
-            "lineageTag": "col-value-208",
+            "formatString": "#,##0.00",
+            "lineageTag": "col-value-008",
             "summarizeBy": "sum",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
-              },
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"isGeneralNumber\":true}"
               }
             ]
           }
@@ -2369,21 +2381,33 @@
             "mode": "import",
             "source": {
               "type": "m",
-              "expression": "let\n    Source = Excel.Workbook(File.Contents(\"HOS Budget 2024.xlsx\"), null, true),\n    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],\n    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])\nin\n    #\"Promoted Headers\""
+              "expression": [
+                "let",
+                "    Source = Excel.Workbook(File.Contents(\"HOS Budget 2024.xlsx\"), null, true),",
+                "    Sheet1 = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data]",
+                "in",
+                "    Sheet1"
+              ]
             }
           }
         ]
       },
       {
         "name": "MeasureTable",
-        "lineageTag": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+        "lineageTag": "measuretable-001",
         "partitions": [
           {
             "name": "MeasureTable",
             "mode": "import",
             "source": {
               "type": "m",
-              "expression": "let Source = #table(type table [Dummy = text], {{\"X\"}}), Result = Table.RemoveColumns(Source,{\"Dummy\"}) in Result"
+              "expression": [
+                "let",
+                "    Source = #table(type table [Dummy = text], {{\"X\"}}),",
+                "    Result = Table.RemoveColumns(Source,{\"Dummy\"})",
+                "in",
+                "    Result"
+              ]
             }
           }
         ],
@@ -2391,274 +2415,281 @@
           {
             "name": "# of Admits (no unsynced)",
             "description": "SOURCE_TABLEAU_CALC: IF [Event Type] = 'ADMISSION' THEN 1 ELSE 0 END | STATUS: OK",
-            "expression": "SUMX(Patient_Event_Detail, IF(Patient_Event_Detail[eventType] = \"ADMISSION\", 1, 0))",
+            "expression": "IF('Patient_Event_Detail'[eventType] = \"ADMISSION\", 1, 0)",
             "formatString": "#,##0",
-            "lineageTag": "meas-admitsnosync-301"
+            "lineageTag": "measure-admitsnosync-001"
           },
           {
             "name": "HCHB Quota",
             "description": "SOURCE_TABLEAU_CALC: ZN(SUM([Budget Admits])) | STATUS: OK",
-            "expression": "IF(ISBLANK(SUM(Patient_Event_Detail[budgetAdmits])), 0, SUM(Patient_Event_Detail[budgetAdmits]))",
-            "formatString": "#,##0",
-            "lineageTag": "meas-hchbquota-302"
+            "expression": "IF(ISBLANK(SUM('Patient_Event_Detail'[budgetAdmits])), 0, SUM('Patient_Event_Detail'[budgetAdmits]))",
+            "lineageTag": "measure-hchbquota-002"
           },
           {
             "name": "AE Tenure",
             "description": "SOURCE_TABLEAU_CALC: DATEDIFF('month',[AE Hire Date], [Today]) | STATUS: OK",
-            "expression": "DATEDIFF(Patient_Event_Detail[AEhiredate], [Today], MONTH)",
-            "formatString": "#,##0",
-            "lineageTag": "meas-aetenure-303"
+            "expression": "DATEDIFF('Patient_Event_Detail'[admissionDate], [Today], MONTH)",
+            "lineageTag": "measure-aetenure-003"
           },
           {
             "name": "# of Referrals",
-            "description": "SOURCE_TABLEAU_CALC: IF [Event Type] = \"Referrals\" THEN 1 ELSE 0 END | STATUS: OK",
-            "expression": "SUMX(Patient_Event_Detail, IF(Patient_Event_Detail[eventType] = \"Referrals\", 1, 0))",
+            "description": "SOURCE_TABLEAU_CALC: IF [Event Type] = 'Referrals' THEN 1 ELSE 0 END | STATUS: OK",
+            "expression": "IF('Patient_Event_Detail'[eventType] = \"Referrals\", 1, 0)",
             "formatString": "#,##0",
-            "lineageTag": "meas-referrals-304"
+            "lineageTag": "measure-referrals-004"
           },
           {
             "name": "Today",
             "description": "SOURCE_TABLEAU_CALC: TODAY() | STATUS: OK",
             "expression": "TODAY()",
-            "formatString": "General Date",
-            "lineageTag": "meas-today-305"
+            "lineageTag": "measure-today-005"
           },
           {
             "name": "Calls/Business Day",
             "description": "SOURCE_TABLEAU_CALC: SUM([Callcount])/[# of Weekdays] | STATUS: OK",
-            "expression": "DIVIDE(SUM(Patient_Event_Detail[callcount]), [# of Weekdays], 0)",
-            "formatString": "#,##0.00",
-            "lineageTag": "meas-callsbusday-306"
+            "expression": "DIVIDE(SUM('Patient_Event_Detail'[callcount]), [# of Weekdays])",
+            "lineageTag": "measure-callsbusinessday-006"
           },
           {
             "name": "# of Admits",
             "description": "SOURCE_TABLEAU_CALC: SUM([Unsynced Admits])+SUM([# of Admits (no unsynced)]) | STATUS: OK",
             "expression": "[Unsynced Admits] + [# of Admits (no unsynced)]",
             "formatString": "#,##0",
-            "lineageTag": "meas-admits-307"
+            "lineageTag": "measure-admits-007"
           },
           {
             "name": "Unsynced Admits",
             "description": "SOURCE_TABLEAU_CALC: IF [Visit Type]='HOSPICE SOC' AND [Event Type]='SCHEDULEDVISIT' and [Event Sub Type] = 'INCOMPLETE' OR [Visit Type]='HOSPICE SOC' AND [Event Type]='SCHEDULEDVISIT' AND [Event Sub Type]= 'LATE' THEN 1 ELSE 0 END | STATUS: OK",
-            "expression": "SUMX(Patient_Event_Detail, IF((Patient_Event_Detail[visitType] = \"HOSPICE SOC\" && Patient_Event_Detail[eventType] = \"SCHEDULEDVISIT\" && Patient_Event_Detail[eventSubType] = \"INCOMPLETE\") || (Patient_Event_Detail[visitType] = \"HOSPICE SOC\" && Patient_Event_Detail[eventType] = \"SCHEDULEDVISIT\" && Patient_Event_Detail[eventSubType] = \"LATE\"), 1, 0))",
-            "formatString": "#,##0",
-            "lineageTag": "meas-unsyncedadmits-308"
+            "expression": "IF(('Patient_Event_Detail'[visitType] = \"HOSPICE SOC\" && 'Patient_Event_Detail'[eventType] = \"SCHEDULEDVISIT\" && 'Patient_Event_Detail'[eventSubType] = \"INCOMPLETE\") || ('Patient_Event_Detail'[visitType] = \"HOSPICE SOC\" && 'Patient_Event_Detail'[eventType] = \"SCHEDULEDVISIT\" && 'Patient_Event_Detail'[eventSubType] = \"LATE\"), 1, 0)",
+            "lineageTag": "measure-unsyncedadmits-008"
           },
           {
             "name": "% to Quota",
             "description": "SOURCE_TABLEAU_CALC: ZN([# of Admits]/[HCHB Quota]) | STATUS: OK",
-            "expression": "IF([HCHB Quota] = 0, 0, DIVIDE([# of Admits], [HCHB Quota], 0))",
+            "expression": "IF(ISBLANK(DIVIDE([# of Admits], [HCHB Quota])), 0, DIVIDE([# of Admits], [HCHB Quota]))",
             "formatString": "0%",
-            "lineageTag": "meas-pctquota-309"
+            "lineageTag": "measure-toquota-009"
           },
           {
             "name": "ADC",
             "description": "SOURCE_TABLEAU_CALC: [Census]/[Gone in month ADC] | STATUS: OK",
-            "expression": "DIVIDE(SUM(Patient_Event_Detail[census]), [Gone in month ADC], 0)",
+            "expression": "DIVIDE(SUM('Patient_Event_Detail'[census]), [Gone in month ADC])",
             "formatString": "#,##0",
-            "lineageTag": "meas-adc-310"
+            "lineageTag": "measure-adc-010"
           },
           {
             "name": "Gone in month ADC",
             "description": "SOURCE_TABLEAU_CALC: If MONTH([Event Date])=MONTH([Till Date Selector]) then [Days Gone in Month ADC] else [Days in Month RR] END | STATUS: OK",
-            "expression": "IF(MONTH(Patient_Event_Detail[eventDate]) = MONTH([Till Date Selector]), [Days Gone in Month ADC], [Days in Month RR])",
-            "formatString": "#,##0",
-            "lineageTag": "meas-goneinmonthadc-311"
+            "expression": "IF(MONTH('Patient_Event_Detail'[eventDate]) = MONTH([Till Date Selector]), [Days Gone in Month ADC], [Days in Month RR])",
+            "lineageTag": "measure-goneinmonthadc-011"
           },
           {
             "name": "Days Gone in Month ADC",
             "description": "SOURCE_TABLEAU_CALC: DATEDIFF('day',(DATEADD('day',-(DAY(TODAY())),TODAY())),TODAY()) | STATUS: OK",
-            "expression": "DATEDIFF(DATE(YEAR(TODAY()), MONTH(TODAY()), 1), TODAY(), DAY)",
-            "formatString": "#,##0",
-            "lineageTag": "meas-daysgoneinmonthadc-312"
+            "expression": "DATEDIFF(DATEADD(TODAY(), -DAY(TODAY()), DAY), TODAY(), DAY)",
+            "lineageTag": "measure-daysgoneinmonthadc-012"
           },
           {
             "name": "Days in Month RR",
-            "description": "SOURCE_TABLEAU_CALC: DATEPART('day', DATEADD('day', -1, DATEADD('month', 1, DATETRUNC('month', [Event Date])))) | STATUS: OK",
-            "expression": "DAY(EOMONTH(Patient_Event_Detail[eventDate], 0))",
-            "formatString": "#,##0",
-            "lineageTag": "meas-daysinmonthrr-313"
+            "description": "SOURCE_TABLEAU_CALC: DATEPART('day', DATEADD('day', -1, DATEADD('month', 1, DATETRUNC('month', [Event Date] )  ) ) ) | STATUS: OK",
+            "expression": "DAY(DATEADD(DATEADD(STARTOFMONTH('Patient_Event_Detail'[eventDate]), 1, MONTH), -1, DAY))",
+            "lineageTag": "measure-daysinmonthrr-013"
           },
           {
             "name": "ADC Container",
             "description": "SOURCE_TABLEAU_CALC: 1 | STATUS: OK",
             "expression": "1",
-            "formatString": "#,##0",
-            "lineageTag": "meas-adccontainer-314"
+            "lineageTag": "measure-adccontainer-014"
           },
           {
             "name": "% to ADC Container",
             "description": "SOURCE_TABLEAU_CALC: 1 | STATUS: OK",
             "expression": "1",
-            "formatString": "0%",
-            "lineageTag": "meas-pctadccontainer-315"
+            "lineageTag": "measure-toadccontainer-015"
+          },
+          {
+            "name": "ADC Variance to Budget",
+            "description": "SOURCE_TABLEAU_CALC: (SUM([ADC])-SUM([ADC Budget])) | STATUS: OK",
+            "expression": "[ADC] - [ADC Budget]",
+            "lineageTag": "measure-adcvariancetobudget-016"
           },
           {
             "name": "ADC Budget",
             "description": "SOURCE_TABLEAU_CALC: IF [Metric] = '6 - ADC' then [Value] END | STATUS: OK",
-            "expression": "CALCULATE(SUM(HOS_Budget_2024[Value]), HOS_Budget_2024[Metric] = \"6 - ADC\")",
-            "formatString": "#,##0",
-            "lineageTag": "meas-adcbudget-316"
-          },
-          {
-            "name": "Budget",
-            "description": "Variance calculation base",
-            "expression": "[ADC Budget]",
-            "formatString": "#,##0",
-            "lineageTag": "meas-budget-317"
-          },
-          {
-            "name": "Variance",
-            "description": "ADC Variance to Budget",
-            "expression": "[ADC] - [Budget]",
-            "formatString": "#,##0",
-            "lineageTag": "meas-variance-318"
-          },
-          {
-            "name": "% to Budget",
-            "description": "Percentage to Budget",
-            "expression": "IF([Budget] = 0, 0, DIVIDE([ADC], [Budget], 0) - 1)",
-            "formatString": "0.0%",
-            "lineageTag": "meas-pctbudget-319"
+            "expression": "IF('HOS_Budget_2024'[Metric] = \"6 - ADC\", SUM('HOS_Budget_2024'[Value]), BLANK())",
+            "lineageTag": "measure-adcbudget-017"
           },
           {
             "name": "ADC to Budget Up Down",
-            "description": "SOURCE_TABLEAU_CALC: IF [ADC % to Budget] < 0 THEN \"Down\" elseif [ADC % to Budget] >= 0 then \"Up\" END | STATUS: OK",
-            "expression": "IF([% to Budget] < 0, \"Down\", \"Up\")",
-            "lineageTag": "meas-adctobudgetupdown-320"
+            "description": "SOURCE_TABLEAU_CALC: IF [ADC % to Budget (copy)_1209779515523956740] < 0 THEN 'Down' elseif  [ADC % to Budget (copy)_1209779515523956740] >= 0 then 'Up' END | STATUS: OK",
+            "expression": "IF([ADC Variance to Budget] < 0, \"Down\", IF([ADC Variance to Budget] >= 0, \"Up\", BLANK()))",
+            "lineageTag": "measure-adctobudgetupdown-018"
+          },
+          {
+            "name": "Referrals % to Budget",
+            "description": "SOURCE_TABLEAU_CALC: (SUM([ADC]) / SUM([ADC Budget]))-1 | STATUS: OK",
+            "expression": "DIVIDE([ADC], [ADC Budget]) - 1",
+            "lineageTag": "measure-referralstobudget-019"
           },
           {
             "name": "Countd Referrals",
             "description": "SOURCE_TABLEAU_CALC: COUNTD([Referral Id]) | STATUS: OK",
-            "expression": "DISTINCTCOUNT(Patient_Event_Detail[referralId])",
-            "formatString": "#,##0",
-            "lineageTag": "meas-countdreferrals-321"
+            "expression": "DISTINCTCOUNT('Patient_Event_Detail'[referralId])",
+            "lineageTag": "measure-countdreferrals-020"
           },
           {
             "name": "# of Referrals (copy 2)",
-            "description": "SOURCE_TABLEAU_CALC: COUNTD(IF [Event Type] = \"Referrals\" THEN [Referral Id] END) | STATUS: OK",
-            "expression": "CALCULATE(DISTINCTCOUNT(Patient_Event_Detail[referralId]), Patient_Event_Detail[eventType] = \"Referrals\")",
+            "description": "SOURCE_TABLEAU_CALC: COUNTD(IF  [Event Type] = 'Referrals' THEN [Referral Id] END) | STATUS: OK",
+            "expression": "CALCULATE(DISTINCTCOUNT('Patient_Event_Detail'[referralId]), 'Patient_Event_Detail'[eventType] = \"Referrals\")",
             "formatString": "#,##0",
-            "lineageTag": "meas-referralscopy2-322"
+            "lineageTag": "measure-referralscopy2-021"
           },
           {
             "name": "# of Discharges",
             "description": "SOURCE_TABLEAU_CALC: SUM(IF [Event Type] = 'Discharge' THEN 1 ELSE 0 END) | STATUS: OK",
-            "expression": "SUMX(Patient_Event_Detail, IF(Patient_Event_Detail[eventType] = \"Discharge\", 1, 0))",
+            "expression": "CALCULATE(COUNTROWS('Patient_Event_Detail'), 'Patient_Event_Detail'[eventType] = \"Discharge\")",
             "formatString": "#,##0",
-            "lineageTag": "meas-discharges-323"
+            "lineageTag": "measure-discharges-022"
           },
           {
             "name": "ALOS 2",
             "description": "SOURCE_TABLEAU_CALC: SUM([ADC])*(AVG([Days Gone in Month ADC Yesterday])/[# of Discharges]) | STATUS: OK",
-            "expression": "DIVIDE([ADC] * AVERAGE([Days Gone in Month ADC Yesterday]), [# of Discharges], 0)",
-            "formatString": "#,##0.00",
-            "lineageTag": "meas-alos2-324"
+            "expression": "[ADC] * (AVERAGE([Days Gone in Month ADC Yesterday]) / [# of Discharges])",
+            "lineageTag": "measure-alos2-023"
           },
           {
             "name": "Days Gone in Month ADC Yesterday",
             "description": "SOURCE_TABLEAU_CALC: DATEDIFF('day',(DATEADD('day',-(DAY(TODAY())),TODAY())),TODAY())-1 | STATUS: OK",
-            "expression": "[Days Gone in Month ADC] - 1",
-            "formatString": "#,##0",
-            "lineageTag": "meas-daysgoneinmonthadcyesterday-325"
+            "expression": "DATEDIFF(DATEADD(TODAY(), -DAY(TODAY()), DAY), TODAY(), DAY) - 1",
+            "lineageTag": "measure-daysgoneinmonthadcyesterday-024"
           },
           {
             "name": "# of Live Discharges",
-            "description": "SOURCE_TABLEAU_CALC: ZN(IF [Event Sub Type]=\"live discharge\" THEN [Discharges] END) | STATUS: OK",
-            "expression": "CALCULATE([Discharges], Patient_Event_Detail[eventSubType] = \"live discharge\")",
-            "formatString": "#,##0",
-            "lineageTag": "meas-liveDischarges-326"
-          },
-          {
-            "name": "Discharges",
-            "description": "SOURCE_TABLEAU_CALC: IF [Event Type] = \"Discharge\" THEN 1 ELSE 0 END | STATUS: OK",
-            "expression": "SUMX(Patient_Event_Detail, IF(Patient_Event_Detail[eventType] = \"Discharge\", 1, 0))",
-            "formatString": "#,##0",
-            "lineageTag": "meas-discharges2-327"
+            "description": "SOURCE_TABLEAU_CALC: ZN(IF  [Event Sub Type]='live discharge' THEN [Discharges] END) | STATUS: OK",
+            "expression": "IF(ISBLANK(CALCULATE([# of Discharges], 'Patient_Event_Detail'[eventSubType] = \"live discharge\")), 0, CALCULATE([# of Discharges], 'Patient_Event_Detail'[eventSubType] = \"live discharge\"))",
+            "lineageTag": "measure-liveDischarges-025"
           },
           {
             "name": "Live Discharge Rate %",
             "description": "SOURCE_TABLEAU_CALC: ZN(SUM([# of Live Discharges])/[# of Discharges]) | STATUS: OK",
-            "expression": "IF([# of Discharges] = 0, 0, DIVIDE([# of Live Discharges], [# of Discharges], 0))",
+            "expression": "IF(ISBLANK(DIVIDE([# of Live Discharges], [# of Discharges])), 0, DIVIDE([# of Live Discharges], [# of Discharges]))",
             "formatString": "0%",
-            "lineageTag": "meas-livedischargerate-328"
+            "lineageTag": "measure-livedischargerate-026"
           },
           {
             "name": "Net Fill",
             "description": "SOURCE_TABLEAU_CALC: [# of Admits]-[# of Discharges] | STATUS: OK",
             "expression": "[# of Admits] - [# of Discharges]",
             "formatString": "#,##0",
-            "lineageTag": "meas-netfill-329"
+            "lineageTag": "measure-netfill-027"
           },
           {
             "name": "Conversion Rate",
             "description": "SOURCE_TABLEAU_CALC: ZN([# of Admits]/[# of Referrals (copy 2)]) | STATUS: OK",
-            "expression": "IF([# of Referrals (copy 2)] = 0, 0, DIVIDE([# of Admits], [# of Referrals (copy 2)], 0))",
-            "formatString": "0.0%",
-            "lineageTag": "meas-conversionrate-330"
+            "expression": "IF(ISBLANK(DIVIDE([# of Admits], [# of Referrals (copy 2)])), 0, DIVIDE([# of Admits], [# of Referrals (copy 2)]))",
+            "lineageTag": "measure-conversionrate-028"
           },
           {
             "name": "# of Weekdays",
             "description": "SOURCE_TABLEAU_CALC: MIN(DATEDIFF('day', [Event Date Weekday (Start of Month)], [Event Date Weekday (End of Month)]) + 1 - 2 * DATEDIFF('week', [Event Date Weekday (Start of Month)], [Event Date Weekday (End of Month)])) | STATUS: OK",
-            "expression": "VAR StartOfMonth = DATE(YEAR(MIN(Patient_Event_Detail[eventDate])), MONTH(MIN(Patient_Event_Detail[eventDate])), 1)\nVAR EndOfMonth = EOMONTH(MIN(Patient_Event_Detail[eventDate]), 0)\nVAR AdjustedStart = IF(WEEKDAY(StartOfMonth, 1) = 1, StartOfMonth + 1, IF(WEEKDAY(StartOfMonth, 1) = 7, StartOfMonth + 2, StartOfMonth))\nVAR AdjustedEnd = IF(WEEKDAY(EndOfMonth, 1) = 1, EndOfMonth + 1, IF(WEEKDAY(EndOfMonth, 1) = 7, EndOfMonth + 2, EndOfMonth))\nVAR TotalDays = DATEDIFF(AdjustedStart, AdjustedEnd, DAY) + 1\nVAR WeekendDays = 2 * INT(TotalDays / 7)\nRETURN TotalDays - WeekendDays",
-            "formatString": "#,##0",
-            "lineageTag": "meas-weekdays-331"
+            "expression": "MIN(DATEDIFF([Event Date Weekday (Start of Month)], [Event Date Weekday (End of Month)], DAY) + 1 - 2 * INT(DATEDIFF([Event Date Weekday (Start of Month)], [Event Date Weekday (End of Month)], DAY) / 7))",
+            "lineageTag": "measure-weekdays-029"
+          },
+          {
+            "name": "Event Date Weekday (Start of Month)",
+            "description": "SOURCE_TABLEAU_CALC: IF DATEPART('weekday', [Start of Month Date]) = 1 THEN DATEADD('day', 1, [Start of Month Date]) ELSEIF DATEPART('weekday', [Start of Month Date]) = 7 THEN DATEADD('day', 2, [Start of Month Date]) ELSE [Start of Month Date] END | STATUS: OK",
+            "expression": "VAR StartMonth = STARTOFMONTH('Patient_Event_Detail'[eventDate]) RETURN IF(WEEKDAY(StartMonth) = 1, DATEADD(StartMonth, 1, DAY), IF(WEEKDAY(StartMonth) = 7, DATEADD(StartMonth, 2, DAY), StartMonth))",
+            "lineageTag": "measure-eventdateweekdaystart-030"
+          },
+          {
+            "name": "Event Date Weekday (End of Month)",
+            "description": "SOURCE_TABLEAU_CALC: IF DATEPART('weekday', [End of Month Date]) = 1 THEN DATEADD('day', 1, [End of Month Date]) ELSEIF DATEPART('weekday', [End of Month Date]) = 7 THEN DATEADD('day', 2, [End of Month Date]) ELSE [End of Month Date] END | STATUS: OK",
+            "expression": "VAR EndMonth = EOMONTH('Patient_Event_Detail'[eventDate], 0) RETURN IF(WEEKDAY(EndMonth) = 1, DATEADD(EndMonth, 1, DAY), IF(WEEKDAY(EndMonth) = 7, DATEADD(EndMonth, 2, DAY), EndMonth))",
+            "lineageTag": "measure-eventdateweekdayend-031"
+          },
+          {
+            "name": "Start of Month Date",
+            "description": "SOURCE_TABLEAU_CALC: DATETRUNC('month',[Event Date]) | STATUS: OK",
+            "expression": "STARTOFMONTH('Patient_Event_Detail'[eventDate])",
+            "lineageTag": "measure-startofmonthdate-032"
+          },
+          {
+            "name": "End of Month Date",
+            "description": "SOURCE_TABLEAU_CALC: DATEADD('day', -1, DATEADD('month', 1, DATETRUNC('month', [Event Date]))) | STATUS: OK",
+            "expression": "EOMONTH('Patient_Event_Detail'[eventDate], 0)",
+            "lineageTag": "measure-endofmonthdate-033"
           },
           {
             "name": "Referral Days Aging",
             "description": "SOURCE_TABLEAU_CALC: IF [DSR] < 1 Then 'Today' ELSEIF [DSR] <=1 Then 'Yesterday' ELSEIF [DSR] >=2 AND [DSR]<=7 Then '2 - 7 Days' ELSEIF [DSR] >=8 AND [DSR]<=14 Then '8 - 14 Days' ELSEIF [DSR] >=15 AND [DSR]<=29 Then '15 - 29 Days' ELSEIF [DSR] >=30 Then '30+ Days' END | STATUS: OK",
-            "expression": "VAR DSR = [DSR]\nRETURN\nIF(DSR < 1, \"Today\",\nIF(DSR <= 1, \"Yesterday\",\nIF(DSR >= 2 && DSR <= 7, \"2 - 7 Days\",\nIF(DSR >= 8 && DSR <= 14, \"8 - 14 Days\",\nIF(DSR >= 15 && DSR <= 29, \"15 - 29 Days\",\nIF(DSR >= 30, \"30+ Days\", BLANK()))))))",
-            "lineageTag": "meas-referraldaysaging-332"
+            "expression": "VAR DSR = [DSR] RETURN IF(DSR < 1, \"Today\", IF(DSR <= 1, \"Yesterday\", IF(DSR >= 2 && DSR <= 7, \"2 - 7 Days\", IF(DSR >= 8 && DSR <= 14, \"8 - 14 Days\", IF(DSR >= 15 && DSR <= 29, \"15 - 29 Days\", IF(DSR >= 30, \"30+ Days\", BLANK()))))))",
+            "lineageTag": "measure-referraldaysaging-034"
           },
           {
             "name": "DSR",
             "description": "SOURCE_TABLEAU_CALC: TODAY()-DATETRUNC('day', [Referral Date]) | STATUS: OK",
-            "expression": "DATEDIFF(Patient_Event_Detail[referralDate], TODAY(), DAY)",
-            "formatString": "#,##0",
-            "lineageTag": "meas-dsr-333"
+            "expression": "DATEDIFF(DATEVALUE('Patient_Event_Detail'[referralDate]), TODAY(), DAY)",
+            "lineageTag": "measure-dsr-035"
           },
           {
             "name": "Till Date Selector",
-            "description": "Date selector for calculations",
+            "description": "Placeholder for date selector parameter",
             "expression": "TODAY()",
-            "formatString": "General Date",
-            "lineageTag": "meas-tilldateselector-334"
+            "lineageTag": "measure-tilldateselector-036"
           },
           {
             "name": "Admits MTD",
-            "description": "Month-to-date admits",
-            "expression": "CALCULATE([# of Admits], DATESMTD(Patient_Event_Detail[eventDate]))",
+            "description": "Month-to-date admits calculation",
+            "expression": "CALCULATE([# of Admits], DATESMTD('Patient_Event_Detail'[eventDate]))",
             "formatString": "#,##0",
-            "lineageTag": "meas-admitsmtd-335"
+            "lineageTag": "measure-admitsmtd-037"
           },
           {
             "name": "Admits Budget MTD",
             "description": "Month-to-date budget admits",
-            "expression": "CALCULATE([HCHB Quota], DATESMTD(Patient_Event_Detail[eventDate]))",
-            "formatString": "#,##0",
-            "lineageTag": "meas-admitsbudgetmtd-336"
+            "expression": "CALCULATE([HCHB Quota], DATESMTD('Patient_Event_Detail'[eventDate]))",
+            "lineageTag": "measure-admitsbudgetmtd-038"
           },
           {
             "name": "Admits Run Rate (Projection)",
-            "description": "Projected admits for full month",
-            "expression": "VAR DaysInMonth = DAY(EOMONTH(TODAY(), 0))\nVAR DaysGone = DAY(TODAY())\nRETURN IF(DaysGone > 0, ([Admits MTD] / DaysGone) * DaysInMonth, 0)",
+            "description": "Projected admits based on run rate",
+            "expression": "VAR DaysInMonth = [Days in Month RR] VAR DaysGone = [Days Gone in Month ADC] RETURN IF(DaysGone > 0, [Admits MTD] * (DaysInMonth / DaysGone), BLANK())",
             "formatString": "#,##0",
-            "lineageTag": "meas-admitsrunrate-337"
+            "lineageTag": "measure-admitsrunrate-039"
           },
           {
             "name": "Admits Run Rate to Budget %",
-            "description": "Run rate percentage to budget",
-            "expression": "IF([Admits Budget MTD] = 0, 0, DIVIDE([Admits Run Rate (Projection)], [Admits Budget MTD], 0) - 1)",
+            "description": "Run rate to budget percentage",
+            "expression": "DIVIDE([Admits Run Rate (Projection)], [Admits Budget MTD]) - 1",
             "formatString": "0.0%",
-            "lineageTag": "meas-admitsrunratetobudgetpct-338"
+            "lineageTag": "measure-admitsrunratetobudget-040"
+          },
+          {
+            "name": "Budget",
+            "description": "General budget measure",
+            "expression": "[ADC Budget]",
+            "lineageTag": "measure-budget-041"
+          },
+          {
+            "name": "Variance",
+            "description": "Variance calculation",
+            "expression": "[ADC Variance to Budget]",
+            "lineageTag": "measure-variance-042"
+          },
+          {
+            "name": "% to Budget",
+            "description": "Percentage to budget",
+            "expression": "DIVIDE([ADC], [ADC Budget])",
+            "formatString": "0.0%",
+            "lineageTag": "measure-tobudget-043"
           }
         ]
       },
       {
-        "name": "LocalDateTable_eventDate",
+        "name": "LocalDateTable_VisitDate",
         "isHidden": true,
         "showAsVariationsOnly": true,
-        "lineageTag": "d4e5f6a7-b8c9-0123-def0-234567890123",
+        "lineageTag": "localdatetable-visitdate-001",
         "columns": [
           {
             "type": "calculatedTableColumn",
@@ -2667,7 +2698,7 @@
             "isHidden": true,
             "sourceColumn": "[Date]",
             "formatString": "General Date",
-            "lineageTag": "ldtcol-date-401",
+            "lineageTag": "localdatecol-visitdate-date-001",
             "dataCategory": "PaddedDateTableDates",
             "summarizeBy": "none",
             "annotations": [
@@ -2684,8 +2715,7 @@
             "isHidden": true,
             "expression": "YEAR([Date])",
             "formatString": "0",
-            "lineageTag": "ldtcol-year-402",
-            "dataCategory": "Years",
+            "lineageTag": "localdatecol-visitdate-year-002",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2705,8 +2735,7 @@
             "isHidden": true,
             "expression": "MONTH([Date])",
             "formatString": "0",
-            "lineageTag": "ldtcol-monthno-403",
-            "dataCategory": "MonthOfYear",
+            "lineageTag": "localdatecol-visitdate-monthno-003",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2726,8 +2755,7 @@
             "isHidden": true,
             "expression": "FORMAT([Date], \"MMMM\")",
             "sortByColumn": "MonthNo",
-            "lineageTag": "ldtcol-month-404",
-            "dataCategory": "Months",
+            "lineageTag": "localdatecol-visitdate-month-004",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2747,8 +2775,7 @@
             "isHidden": true,
             "expression": "INT(([MonthNo] + 2) / 3)",
             "formatString": "0",
-            "lineageTag": "ldtcol-quarterno-405",
-            "dataCategory": "QuarterOfYear",
+            "lineageTag": "localdatecol-visitdate-quarterno-005",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2768,8 +2795,7 @@
             "isHidden": true,
             "expression": "\"Qtr \" & [QuarterNo]",
             "sortByColumn": "QuarterNo",
-            "lineageTag": "ldtcol-quarter-406",
-            "dataCategory": "Quarters",
+            "lineageTag": "localdatecol-visitdate-quarter-006",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2789,8 +2815,7 @@
             "isHidden": true,
             "expression": "DAY([Date])",
             "formatString": "0",
-            "lineageTag": "ldtcol-day-407",
-            "dataCategory": "DayOfMonth",
+            "lineageTag": "localdatecol-visitdate-day-007",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -2806,42 +2831,428 @@
         ],
         "partitions": [
           {
-            "name": "LocalDateTable_eventDate",
+            "name": "LocalDateTable_VisitDate",
             "mode": "import",
             "source": {
               "type": "calculated",
-              "expression": "CALENDAR(DATE(YEAR(MIN(Patient_Event_Detail[eventDate])), 1, 1), DATE(YEAR(MAX(Patient_Event_Detail[eventDate])), 12, 31))"
+              "expression": "CALENDAR(DATE(YEAR(MIN('Patient_Event_Detail'[VisitDate])), 1, 1), DATE(YEAR(MAX('Patient_Event_Detail'[VisitDate])), 12, 31))"
             }
           }
         ],
         "hierarchies": [
           {
             "name": "Date Hierarchy",
-            "lineageTag": "ldthier-datehier-501",
+            "lineageTag": "localdatehier-visitdate-001",
             "levels": [
               {
                 "name": "Year",
                 "ordinal": 0,
                 "column": "Year",
-                "lineageTag": "ldthierlvl-year-601"
+                "lineageTag": "localdatehierlevel-visitdate-year-001"
               },
               {
                 "name": "Quarter",
                 "ordinal": 1,
                 "column": "Quarter",
-                "lineageTag": "ldthierlvl-quarter-602"
+                "lineageTag": "localdatehierlevel-visitdate-quarter-002"
               },
               {
                 "name": "Month",
                 "ordinal": 2,
                 "column": "Month",
-                "lineageTag": "ldthierlvl-month-603"
+                "lineageTag": "localdatehierlevel-visitdate-month-003"
               },
               {
                 "name": "Day",
                 "ordinal": 3,
                 "column": "Day",
-                "lineageTag": "ldthierlvl-day-604"
+                "lineageTag": "localdatehierlevel-visitdate-day-004"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "__PBI_LocalDateTable",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "name": "LocalDateTable_AdmissionDate",
+        "isHidden": true,
+        "showAsVariationsOnly": true,
+        "lineageTag": "localdatetable-admissiondate-001",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Date",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "[Date]",
+            "formatString": "General Date",
+            "lineageTag": "localdatecol-admissiondate-date-001",
+            "dataCategory": "PaddedDateTableDates",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Year",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "YEAR([Date])",
+            "formatString": "0",
+            "lineageTag": "localdatecol-admissiondate-year-002",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Year"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "MonthNo",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "MONTH([Date])",
+            "formatString": "0",
+            "lineageTag": "localdatecol-admissiondate-monthno-003",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Month",
+            "dataType": "string",
+            "isHidden": true,
+            "expression": "FORMAT([Date], \"MMMM\")",
+            "sortByColumn": "MonthNo",
+            "lineageTag": "localdatecol-admissiondate-month-004",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Month"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "QuarterNo",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "INT(([MonthNo] + 2) / 3)",
+            "formatString": "0",
+            "lineageTag": "localdatecol-admissiondate-quarterno-005",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "QuarterNumber"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Quarter",
+            "dataType": "string",
+            "isHidden": true,
+            "expression": "\"Qtr \" & [QuarterNo]",
+            "sortByColumn": "QuarterNo",
+            "lineageTag": "localdatecol-admissiondate-quarter-006",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Quarter"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Day",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "DAY([Date])",
+            "formatString": "0",
+            "lineageTag": "localdatecol-admissiondate-day-007",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Day"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "LocalDateTable_AdmissionDate",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "CALENDAR(DATE(YEAR(MIN('Patient_Event_Detail'[admissionDate])), 1, 1), DATE(YEAR(MAX('Patient_Event_Detail'[admissionDate])), 12, 31))"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "lineageTag": "localdatehier-admissiondate-001",
+            "levels": [
+              {
+                "name": "Year",
+                "ordinal": 0,
+                "column": "Year",
+                "lineageTag": "localdatehierlevel-admissiondate-year-001"
+              },
+              {
+                "name": "Quarter",
+                "ordinal": 1,
+                "column": "Quarter",
+                "lineageTag": "localdatehierlevel-admissiondate-quarter-002"
+              },
+              {
+                "name": "Month",
+                "ordinal": 2,
+                "column": "Month",
+                "lineageTag": "localdatehierlevel-admissiondate-month-003"
+              },
+              {
+                "name": "Day",
+                "ordinal": 3,
+                "column": "Day",
+                "lineageTag": "localdatehierlevel-admissiondate-day-004"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "__PBI_LocalDateTable",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "name": "LocalDateTable_EventDate",
+        "isHidden": true,
+        "showAsVariationsOnly": true,
+        "lineageTag": "localdatetable-eventdate-001",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Date",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "[Date]",
+            "formatString": "General Date",
+            "lineageTag": "localdatecol-eventdate-date-001",
+            "dataCategory": "PaddedDateTableDates",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Year",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "YEAR([Date])",
+            "formatString": "0",
+            "lineageTag": "localdatecol-eventdate-year-002",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Year"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "MonthNo",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "MONTH([Date])",
+            "formatString": "0",
+            "lineageTag": "localdatecol-eventdate-monthno-003",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Month",
+            "dataType": "string",
+            "isHidden": true,
+            "expression": "FORMAT([Date], \"MMMM\")",
+            "sortByColumn": "MonthNo",
+            "lineageTag": "localdatecol-eventdate-month-004",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Month"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "QuarterNo",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "INT(([MonthNo] + 2) / 3)",
+            "formatString": "0",
+            "lineageTag": "localdatecol-eventdate-quarterno-005",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "QuarterNumber"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Quarter",
+            "dataType": "string",
+            "isHidden": true,
+            "expression": "\"Qtr \" & [QuarterNo]",
+            "sortByColumn": "QuarterNo",
+            "lineageTag": "localdatecol-eventdate-quarter-006",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Quarter"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Day",
+            "dataType": "int64",
+            "isHidden": true,
+            "expression": "DAY([Date])",
+            "formatString": "0",
+            "lineageTag": "localdatecol-eventdate-day-007",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Day"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "LocalDateTable_EventDate",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "CALENDAR(DATE(YEAR(MIN('Patient_Event_Detail'[eventDate])), 1, 1), DATE(YEAR(MAX('Patient_Event_Detail'[eventDate])), 12, 31))"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "lineageTag": "localdatehier-eventdate-001",
+            "levels": [
+              {
+                "name": "Year",
+                "ordinal": 0,
+                "column": "Year",
+                "lineageTag": "localdatehierlevel-eventdate-year-001"
+              },
+              {
+                "name": "Quarter",
+                "ordinal": 1,
+                "column": "Quarter",
+                "lineageTag": "localdatehierlevel-eventdate-quarter-002"
+              },
+              {
+                "name": "Month",
+                "ordinal": 2,
+                "column": "Month",
+                "lineageTag": "localdatehierlevel-eventdate-month-003"
+              },
+              {
+                "name": "Day",
+                "ordinal": 3,
+                "column": "Day",
+                "lineageTag": "localdatehierlevel-eventdate-day-004"
               }
             ]
           }
@@ -2856,13 +3267,31 @@
     ],
     "relationships": [
       {
-        "name": "rel-eventdate-localdatetable",
+        "name": "rel-visitdate-localdate-001",
+        "fromTable": "Patient_Event_Detail",
+        "fromColumn": "VisitDate",
+        "toTable": "LocalDateTable_VisitDate",
+        "toColumn": "Date",
+        "isActive": true,
+        "joinOnDateBehavior": "datePartOnly"
+      },
+      {
+        "name": "rel-admissiondate-localdate-002",
+        "fromTable": "Patient_Event_Detail",
+        "fromColumn": "admissionDate",
+        "toTable": "LocalDateTable_AdmissionDate",
+        "toColumn": "Date",
+        "isActive": false,
+        "joinOnDateBehavior": "datePartOnly"
+      },
+      {
+        "name": "rel-eventdate-localdate-003",
         "fromTable": "Patient_Event_Detail",
         "fromColumn": "eventDate",
-        "toTable": "LocalDateTable_eventDate",
+        "toTable": "LocalDateTable_EventDate",
         "toColumn": "Date",
-        "joinOnDateBehavior": "datePartOnly",
-        "securityFilteringBehavior": "bothDirections"
+        "isActive": false,
+        "joinOnDateBehavior": "datePartOnly"
       }
     ],
     "annotations": [
