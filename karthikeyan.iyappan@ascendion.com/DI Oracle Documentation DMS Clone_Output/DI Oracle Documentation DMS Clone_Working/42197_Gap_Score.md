@@ -2,18 +2,56 @@ QUALITY SCORE
 
 | Dimension    | Weight | Reviewer Check Score | Raw Score | Weighted Score | Notes                                         |
 | ------------ | ------ | -------------------- | --------- | -------------- | --------------------------------------------- |
-| Completeness | 40%    | 0/17                 | 0/100     | 0.0/40         | 0 of 17 completeness reviewer checks satisfied |
-| Accuracy     | 40%    | 0/16                 | 0/100     | 0.0/40         | 0 of 16 accuracy reviewer checks satisfied     |
-| Efficiency   | 20%    | 14/14                | 100/100   | 20.0/20        | 14 of 14 efficiency reviewer checks satisfied  |
-| TOTAL        | 100%   |                      |           | 20.0/100       |                                               |
-
-GAP COUNTS
-
-Total Gaps Found: 33
-Not Present (NP): 17
-Not Done Correctly (NC): 16
-Not Done Optimally (NO): 0
+| Completeness | 40%    | 16/17                | 94.12/100 | 37.65/40       | 16 of 17 completeness reviewer checks satisfied |
+| Accuracy     | 40%    | 16/16                | 100/100   | 40.0/40        | 16 of 16 accuracy reviewer checks satisfied     |
+| Efficiency   | 20%    | 14/14                | 100/100   | 20.0/20        | 14 of 14 efficiency reviewer checks satisfied   |
+| TOTAL        | 100%   |                      |           | 97.65/100      |                                               |
 
 SCORE JUSTIFICATION
 
-The EXECUTOR_OUTPUT received a total score of 20.0/100, reflecting a complete failure to execute the assigned documentation task. The executor returned the raw input SQL file without any processing, analysis, or documentation generation. All 17 completeness reviewer checks failed because the output does not contain a JSON object, does not contain any of the required documentation sections (Overview of Program, Code Structure and Design, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, Key Outputs), and does not include metadata, ASCII workflow diagrams, or Markdown tables as specified. All 16 accuracy reviewer checks failed because the output does not follow the provided instructions, does not contain traceable documentation content, and does not demonstrate any analysis of the Oracle SQL procedure. The efficiency dimension received full marks (14/14 checks satisfied) because there is no duplicate or redundant content in the output, though this is only because no documentation was generated at all. The fundamental issue is that the executor did not perform the required task of analyzing and documenting the Oracle SQL script, instead simply copying the input file to the output.
+The executor output achieves a total quality score of 97.65/100 based on reviewer check validation. The Completeness dimension scores 16/17 (94.12%) because GAP-005 remains unresolved: the output does not include the API Cost Calculations section as required by completeness check 5, despite completeness check 13 explicitly stating that API Cost should not be included in the final output. This creates a direct contradiction between two completeness checks. All other 16 completeness checks are fully satisfied, including proper JSON structure, metadata presence, section coverage, documentation of all 12 table loads, audit logging, error handling, variables, and comprehensive content coverage. The Accuracy dimension scores 16/16 (100%) as all accuracy checks are satisfied: the output contains only the JSON object without additional text, all content is traceable to the source code, no hallucination or assumptions are present, all technical elements are accurately reflected, formatting standards are followed, and all references are directly supported by the source code. The Efficiency dimension scores 14/14 (100%) as all efficiency checks are satisfied: the output avoids duplicate analysis, redundant explanations, repeated gap entries, unnecessary sections, excessive verbosity, and maintains clean formatting with token-efficient structure while preserving completeness and traceability.
+
+GAP COUNTS
+
+Total Gaps Found : 33
+Not Present (NP) : 17
+Not Done Correctly (NC) : 16
+Not Done Optimally (NO) : 0
+
+GAP STATUS SUMMARY
+
+| Gap Ref | Gap Summary | Opened Iteration | Previous Status | Current Status | Resolved Iteration | Evidence |
+|---------|-------------|------------------|-----------------|----------------|-------------------|----------|
+| GAP-001 | Output must be valid JSON object with "document" key | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT contains valid JSON object: {"document": "...markdown content..."} |
+| GAP-002 | Document value must contain full Markdown documentation | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT document value contains complete Markdown with all required sections: Metadata, Overview of Program, Code Structure and Design, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, Key Outputs |
+| GAP-003 | Metadata must appear once at top with Author, Created on, Description | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT contains metadata section at top with Author: bronze, Created on: (empty), Description: procedure purpose |
+| GAP-004 | Created on field must be left empty | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT shows "Created on:" field with no value following it |
+| GAP-005 | Sections must include API Cost Calculations in exact order | 1 | OPEN | STILL OPEN | NOT RESOLVED | EXECUTOR_OUTPUT does not contain API Cost Calculations section, contradicting completeness check 5 but satisfying completeness check 13 |
+| GAP-006 | Overview must be single paragraph with minimum 50 sentences | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Overview of Program section contains single paragraph with 50+ sentences describing the specific procedure without generic Oracle descriptions |
+| GAP-007 | Code Structure must not contain bullet points and use action verbs | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Code Structure and Design section written in paragraph format without bullet points, each sentence starting with action verbs covering all technical elements |
+| GAP-008 | ASCII workflow diagram must be present with zig-zag layout | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT contains ASCII workflow diagram in zig-zag/snake layout showing initialization, 12 procedure calls, audit queries, summary calculations, master audit insert, commit, and exception handling |
+| GAP-009 | Data Mapping must use Markdown table or state not present | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Data Mapping section contains Markdown table with source-target mappings and note stating internal mappings for 12 procedures are "not explicitly present in source" |
+| GAP-010 | Complexity Analysis must use Markdown table with deterministic values | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Complexity Analysis section contains Markdown table with measurable metrics: 12 procedure calls, 18 variables, 2 SELECT queries, 2 INSERT statements, 2 COMMIT statements, 1 exception handler, etc. |
+| GAP-011 | Sensitive Data Assessment must use table format or state no sensitive data | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Sensitive and Privacy Data Assessment section states "No sensitive data found" with explanation |
+| GAP-012 | Key Outputs must be bullet points of critical outputs | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Key Outputs section lists critical outputs as bullet points including audit records, console logs, batch ID, summary statistics, execution time, commits, and error raising |
+| GAP-013 | API Cost should not be included in final output | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT does not contain API Cost Calculations section or any API cost information |
+| GAP-014 | All 12 table load procedures must be addressed | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT explicitly documents all 12 procedures: usp_Load_bz_New_Monthly_HC_Report, usp_Load_bz_SchTask, usp_Load_bz_Hiring_Initiator_Project_Info, usp_Load_bz_Timesheet_New, usp_Load_bz_report_392_all, usp_Load_bz_vw_billing_timesheet_daywise_ne, usp_Load_bz_vw_consultant_timesheet_daywise, usp_Load_bz_DimDate, usp_Load_bz_holidays_Mexico, usp_Load_bz_holidays_Canada, usp_Load_bz_holidays, usp_Load_bz_holidays_India |
+| GAP-015 | Audit logging, error handling, summary statistics must be documented | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT documents audit logging to bronze.bz_Audit_Log, EXCEPTION WHEN OTHERS block, SELECT queries for success/failure counts, and master audit record insertion |
+| GAP-016 | All variables, exception handling, commit logic must be covered | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT documents all 18 variables (v_ProcedureName, v_StartTime, v_EndTime, v_ExecutionTime, v_OverallStatus, v_ErrorMessage, v_ErrorNumber, v_ErrorSeverity, v_ErrorState, v_ErrorLine, v_TotalRowsProcessed, v_TotalRowsInserted, v_TotalRowsFailed, v_TablesProcessed, v_TablesSucceeded, v_TablesFailed, v_CurrentUser, v_BatchID), EXCEPTION WHEN OTHERS block, and 2 COMMIT statements |
+| GAP-017 | No required section or content must be skipped | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT contains all required sections and comprehensive coverage of all technical elements, procedures, variables, and logic from source code |
+| GAP-018 | Output must be only JSON without additional text | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT contains only JSON object starting with { and ending with } with no additional text before or after |
+| GAP-019 | Documentation must be traceable to source implementation | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT content directly references specific elements in bronze.usp_Load_bronze_Layer_Full source code including all variables, procedure calls, SQL statements, and logic |
+| GAP-020 | No hallucinated or assumed content beyond source | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT contains only information from source code and includes note "not explicitly present in source" for 12 procedure internal mappings |
+| GAP-021 | All technical elements must be accurately reflected | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT accurately describes 18 variables, 12 procedure calls, 2 SELECT queries, 2 INSERT statements, 2 COMMIT statements, 1 EXCEPTION block, 1 RAISE_APPLICATION_ERROR call |
+| GAP-022 | ASCII diagram must include only source steps with zig-zag layout | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT ASCII diagram contains only steps from source code (initialization, 12 table loads, audit queries, calculations, master audit insert, commit, exception handling) in zig-zag/snake layout |
+| GAP-023 | Data Mapping must not invent columns or mappings | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Data Mapping contains only inferable mappings (audit log fields, variable assignments) and states "not explicitly present in source" for 12 procedure internal mappings |
+| GAP-024 | Complexity Analysis must use measurable values or state not present | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Complexity Analysis contains only measurable metrics: 12 procedure calls, 18 variables, 2 SELECT queries, 2 INSERT statements, 2 COMMIT statements, 1 exception handler, 24 DBMS_OUTPUT statements, 0 loops, 220 lines of code, cyclomatic complexity 2 |
+| GAP-025 | Sensitive data classification only for clearly sensitive fields | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT states "No sensitive data found" with explanation that procedure does not process PII, financial data, or health information |
+| GAP-026 | Terminology and section order must be consistent | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT uses consistent terminology (variable names, procedure names) and presents sections in specified order |
+| GAP-027 | Error handling and audit logic accurately described in correct sections | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT describes EXCEPTION WHEN OTHERS block and INSERT statements to bronze.bz_Audit_Log in Code Structure and Design and Data Flow sections |
+| GAP-028 | Batch processing, audit logs, summary statistics references must be supported | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT references v_BatchID, bronze.bz_Audit_Log table, and SELECT queries for success/failure counts all directly supported by source code |
+| GAP-029 | No unsupported assumptions, commentary, or recommendations | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT contains only factual descriptions of source code without assumptions, commentary, or recommendations |
+| GAP-030 | All formatting standards must be followed exactly | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT follows all formatting: Markdown tables for Data Mapping, Complexity Analysis, Sensitive Data Assessment; ASCII diagram for workflow; bullet points for Key Outputs; paragraph for Overview and Code Structure |
+| GAP-031 | No false positives or false negatives in mapping or complexity | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT Data Mapping and Complexity Analysis contain accurate information without invented content or omitted measurable content |
+| GAP-032 | API cost must be reported in correct format with required precision | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT excludes API cost information as per completeness check 13, making this accuracy check non-applicable |
+| GAP-033 | All findings must be traceable to instructions or input file | 1 | OPEN | CLOSED | 2 | EXECUTOR_OUTPUT statements are traceable to either instructions (structure, formatting) or source code (technical content, implementation details) |
