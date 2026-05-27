@@ -1,0 +1,40 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that all five tasks listed in the input file are addressed in the agent’s output, including their respective input and output artifacts.
+- Confirm that the agent’s output includes both the “With available agents” and “With available and new agents” sections, as required by the orchestration instructions.
+- Ensure that the agent cross-references every agent in the Agent Mapper Table for each workflow step, as mandated by the orchestration instructions.
+- Check that all required workflow options (minimum one, maximum two if meaningfully different) are generated for both available-only and extended agent scenarios.
+- Validate that the KB, Tools, Guardrails & Models table is present and fully populated with specific, actionable entries for each column and agent.
+- Confirm that the Improvements & Optimisations section contains at least three lines of substantive, specific detail for each sub-section: Efficiency Gains, Agent Accuracy Improvements, and Cost Reduction.
+- Ensure that the Run Metrics section is present, with Model Used, Tokens Used, and API Cost fields completed.
+- Verify that all agent selection, exclusion, and gap identification decisions are logged and justified as per the orchestration instructions.
+- Confirm that all dependencies and task lineage (Task 1 → Task 2 → Task 3 → Task 4 → Task 5) are respected in the agent execution order.
+- Ensure that all mandatory headers, section titles, and formatting requirements from the orchestration instructions are followed.
+
+Accuracy Checks
+
+- Confirm that the agent only selects available agents from the explicit Agent Mapper Table for the “With available agents” section, without inventing or deriving agent names from requirements.
+- Verify that new agents in the extended section are clearly labeled as [NEW], fill specific identified gaps, and do not duplicate available agent functions.
+- Ensure that the mapping between tasks and agents in the output matches the mappings and scores provided in the Agent Mapper Table.
+- Check that the agent’s workflow options accurately reflect the task dependencies and input/output relationships specified in the input file.
+- Validate that all gap identifications and recommendations for new agents are justified by the absence of coverage in the available agent list.
+- Confirm that all findings, mappings, and recommendations are traceable to either the instructions or the input file, with no unsupported assumptions or hallucinated content.
+- Ensure that terminology, agent names, and task descriptions are used consistently and align with the source content.
+- Verify that the KB, Tools, Guardrails & Models table contains only relevant and correctly mapped entries for each agent and workflow step.
+- Check that all required outputs, limitations, and missing capabilities are accurately described for each workflow option.
+- Ensure that the agent does not misinterpret, partially implement, or contradict any instruction or input file content.
+
+Efficiency Checks
+
+- Confirm that duplicate analysis, redundant explanations, and repeated gap entries are avoided across all sections.
+- Ensure that the output remains concise, well-structured, and free from unnecessary sections or excessive verbosity.
+- Verify that overlapping findings, recommendations, or agent functions are consolidated and not repeated.
+- Check that tables, agent lists, and workflow descriptions are not unnecessarily repeated or verbose.
+- Ensure that similar findings or recommendations are logically grouped where appropriate to improve readability.
+- Confirm that redundant classifications, tags, or validations are eliminated from the output.
+- Validate that large sections are summarized efficiently where allowed, without omitting required detail.
+- Ensure that the output structure is optimized for reviewer readability and systematic validation.
+- Verify that the agent avoids unnecessary agent activations, redundant pipeline steps, and excessive hand-offs in workflow recommendations.
+- Confirm that the output is token-efficient while maintaining all required completeness and accuracy.
