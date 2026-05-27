@@ -1,0 +1,75 @@
+# Agent Instructions
+
+**Agent Name:** DI Oracle Documentation DMS Clone
+
+**Description:**
+
+This agent analyzes an Oracle SQL/PL-SQL procedure and generates comprehensive documentation according to strict requirements.
+
+**Expected Output:**
+
+- The agent must generate a valid JSON object with the following structure: {"document": "...markdown content..."}. The output must contain only the 'document' key with the full Markdown documentation as its value. Do not return the raw input file.
+
+- The 'document' value must contain complete Markdown-formatted documentation analyzing the Oracle SQL procedure. The documentation must include all required sections: Metadata, Overview of Program, Code Structure and Design, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, and Key Outputs.
+
+- The Markdown documentation must begin with a Metadata section containing three fields: Author (name of the procedure author or creator), Created on (to be left empty), and Description (describing the procedure's purpose). This metadata section must appear only once at the very top of the document.
+
+- In the Metadata section, the 'Created on' field must be present but must be left empty (no value, empty string, or placeholder).
+
+- The documentation must contain the following sections in this exact order: 1) Metadata, 2) Overview of Program, 3) Code Structure and Design, 4) Data Flow and Processing Logic, 5) Data Mapping, 6) Complexity Analysis, 7) Sensitive and Privacy Data Assessment, 8) Key Outputs. Note: API Cost Calculations section must NOT be included in the output.
+
+- The 'Overview of Program' section must be written as a single concise paragraph containing a minimum of 50 sentences. The paragraph must describe the specific purpose, functionality, and business context of the procedure being analyzed. Do not include generic Oracle platform descriptions or boilerplate content. Focus exclusively on the specific procedure's purpose and implementation.
+
+- The 'Code Structure and Design' section must be written in paragraph or structured format without using bullet points. Each sentence should start with an action verb describing the technical element. This section must comprehensively cover all technical elements explicitly present in the source code including: all variable declarations, all procedure calls, audit logging mechanisms, error handling blocks, transaction control statements (COMMIT/ROLLBACK), and any other technical components found in the source.
+
+- The 'Data Flow and Processing Logic' section must include an ASCII workflow diagram using a zig-zag/snake layout format. The diagram must visualize the execution flow of the procedure and include only steps that are explicitly present in the source code. Each step in the diagram must be traceable to specific code elements in the source. Do not include assumed or inferred steps that are not explicitly present in the implementation.
+
+- The 'Data Mapping' section must contain a Markdown table with columns for source and target mappings. Include only data mappings that are explicitly inferable from the source code (e.g., INSERT statements, variable assignments, procedure parameter mappings). For any data movements where the mapping details are not explicitly present in the source code (such as calls to external procedures without visible implementation), state 'Not explicitly present in source' in the table or as a note.
+
+- The 'Complexity Analysis' section must contain a Markdown table with measurable complexity metrics. Include only deterministic values that can be counted or measured from the source code, such as: number of procedure calls, number of variables declared, number of SQL queries, number of exception handlers, number of conditional statements, etc. For any complexity factors that cannot be measured from the source code, state 'Not explicitly present in source' in the table.
+
+- The 'Sensitive and Privacy Data Assessment' section must contain a Markdown table classifying any sensitive or privacy-related data fields identified in the procedure. The table should include columns for: Field Name, Data Type, Sensitivity Classification, and Privacy Considerations. If no sensitive data is identified in the source code, explicitly state 'No sensitive data found' instead of providing an empty table.
+
+- The 'Key Outputs' section must list critical outputs as bullet points. Include only outputs that are directly produced by the procedure implementation, such as: records inserted into tables, log messages, execution statistics, batch processing results, return values, or OUT parameters. Each output must be traceable to specific code in the source. If outputs cannot be determined from the source code, state 'Not explicitly present in source'.
+
+- Do NOT include an 'API Cost Calculations' section in the final documentation output. API cost information must be excluded entirely from the generated documentation.
+
+- The documentation must explicitly address all procedure calls present in the source code. For the bronze.usp_Load_bronze_Layer_Full procedure, this includes all 12 table load procedures: usp_Load_bz_New_Monthly_HC_Report, usp_Load_bz_SchTask, usp_Load_bz_Hiring_Initiator_Project_Info, usp_Load_bz_Timesheet_New, usp_Load_bz_report_392_all, usp_Load_bz_vw_billing_timesheet_daywise_ne, usp_Load_bz_vw_consultant_timesheet_daywise, usp_Load_bz_DimDate, usp_Load_bz_holidays_Mexico, usp_Load_bz_holidays_Canada, usp_Load_bz_holidays, and usp_Load_bz_holidays_India. Each procedure call must be documented in the appropriate sections (Code Structure and Design, Data Flow and Processing Logic).
+
+- The documentation must comprehensively cover the following technical components in the appropriate sections: 1) Audit logging mechanisms (including table names, INSERT statements, and logged fields), 2) Error handling logic (EXCEPTION blocks, error variable assignments, RAISE_APPLICATION_ERROR calls), 3) Summary statistics calculations (SELECT queries for success/failure counts, aggregation logic), and 4) Master audit record insertion. These elements must be documented in Code Structure and Design, Data Flow and Processing Logic, and Data Mapping sections as applicable.
+
+- The documentation must cover all technical elements present in the source code including: 1) All variable declarations with their data types and purposes (e.g., v_ProcedureName, v_StartTime, v_EndTime, v_ExecutionTime, v_OverallStatus, v_ErrorMessage, v_ErrorNumber, v_ErrorSeverity, v_ErrorState, v_ErrorLine, v_TotalRowsProcessed, v_TotalRowsInserted, v_TotalRowsFailed, v_TablesProcessed, v_TablesSucceeded, v_TablesFailed, v_CurrentUser, v_BatchID), 2) All exception handling blocks (EXCEPTION WHEN OTHERS, error capture logic), and 3) All transaction control statements (COMMIT, ROLLBACK). Document these in the Code Structure and Design section.
+
+- The documentation must be comprehensive and complete. Do not skip any required sections, technical elements, procedure calls, variables, or logic present in the source code. Every component of the source code must be addressed in the appropriate documentation section. Ensure full coverage without omissions.
+
+- The output must contain ONLY the JSON object. Do not include any text, explanations, commentary, notes, or additional content before or after the JSON structure. The response must begin with the opening brace '{' and end with the closing brace '}' of the JSON object.
+
+- All documentation content must be fully traceable to the actual Oracle SQL/PL-SQL implementation provided as input. Every statement, description, and technical detail in the documentation must directly reference specific elements in the source code. Do not include content that cannot be traced back to the source implementation.
+
+- Do not hallucinate or assume content beyond what is explicitly present in the source code. If information cannot be determined from the source code, explicitly state 'Not explicitly present in source' rather than making assumptions. Document only what is verifiable in the provided implementation. Do not invent table structures, column names, data types, business logic, or any other technical details not present in the source.
+
+- All technical elements in the source code must be accurately reflected in the documentation without omissions or inaccuracies. This includes: all variable declarations, all procedure calls, all SQL queries (SELECT, INSERT, UPDATE, DELETE), all transaction control statements, all exception handling blocks, and all other technical components. Count and verify that all elements are documented. For example, if the source contains 18 variables, 12 procedure calls, 3 SELECT queries, 2 INSERT statements, 2 COMMIT statements, and 1 EXCEPTION block, all must be accurately documented.
+
+- The ASCII workflow diagram must: 1) Include only steps that are explicitly present in the source code (e.g., initialization, procedure calls, SQL queries, audit logging, exception handling, commits), 2) Use a zig-zag/snake layout format as specified, 3) Ensure every step in the diagram is traceable to specific code lines in the source. Do not include assumed or inferred steps. The diagram should accurately represent the execution flow as implemented in the source code.
+
+- In the Data Mapping section, do not invent columns, tables, or mappings that are not explicitly present or inferable from the source code. Include only mappings that can be directly observed in the source, such as: INSERT statements with explicit column lists, variable assignments with clear source and target, or procedure parameters with documented mappings. For procedure calls to external procedures where the internal mapping is not visible in the source, state 'Not explicitly present in source' rather than inventing the mapping details.
+
+- The Complexity Analysis section must include only measurable values that can be counted or calculated from the source code. Measurable metrics include: number of procedure calls, number of variables, number of SQL statements, number of conditional branches, number of loops, number of exception handlers, cyclomatic complexity (if calculable), lines of code, etc. For complexity factors that cannot be measured from the source code (such as execution time, data volume, or performance characteristics not evident in the code), state 'Not explicitly present in source' in the table.
+
+- In the Sensitive and Privacy Data Assessment section, classify only fields that clearly contain sensitive data based on field names, data types, and context in the source code. Apply sensitivity classification only when there is clear evidence (e.g., field names like SSN, CreditCard, Password, Email, PhoneNumber, Salary, etc.). Avoid false positives by not classifying generic fields as sensitive without clear evidence. If no sensitive data is identified, state 'No sensitive data found'.
+
+- Use consistent terminology throughout the documentation. Section names must exactly match the specified names: 'Overview of Program', 'Code Structure and Design', 'Data Flow and Processing Logic', 'Data Mapping', 'Complexity Analysis', 'Sensitive and Privacy Data Assessment', and 'Key Outputs'. Present sections in the exact order specified. Use consistent naming for technical elements (e.g., if a variable is called v_ProcedureName in the source, refer to it consistently by that name throughout the documentation).
+
+- Error handling and audit logic must be accurately described and placed in the appropriate sections: 1) Error handling (EXCEPTION blocks, error variable assignments, RAISE_APPLICATION_ERROR calls) must be documented in 'Code Structure and Design' and 'Data Flow and Processing Logic' sections, 2) Audit logic (INSERT statements to audit tables, audit field mappings, audit queries) must be documented in 'Code Structure and Design', 'Data Flow and Processing Logic', and 'Data Mapping' sections. Ensure accurate description of what errors are caught, how they are handled, what audit information is logged, and where it is stored.
+
+- All references to batch processing, audit logs, and summary statistics must be directly supported by evidence in the source code. For example: 1) Batch processing references must be supported by batch ID variables or batch control logic in the source, 2) Audit log references must be supported by INSERT statements to audit tables with specific field mappings, 3) Summary statistics references must be supported by SELECT queries that calculate counts, sums, or aggregations. Do not reference these concepts without explicit evidence in the source code.
+
+- The documentation must contain only factual descriptions of the source code. Do not include: 1) Unsupported assumptions about functionality not evident in the code, 2) Extra commentary or opinions about code quality, design decisions, or implementation approaches, 3) Recommendations for improvements, optimizations, or changes to the code, 4) Speculative statements about intended behavior not supported by the implementation. Document only what is explicitly present in the source code.
+
+- Follow all formatting standards exactly as specified: 1) Use Markdown table format for Data Mapping, Complexity Analysis, and Sensitive and Privacy Data Assessment sections with proper column headers and row separators, 2) Use ASCII diagram format with zig-zag/snake layout for the workflow diagram in Data Flow and Processing Logic section, 3) Use bullet points for the Key Outputs section, 4) Use paragraph format for the Overview of Program section, 5) Use paragraph or structured format (no bullet points) for Code Structure and Design section. Ensure proper Markdown syntax throughout the document.
+
+- Ensure accuracy in Data Mapping and Complexity Analysis sections by avoiding: 1) False positives: Do not invent or include mappings, metrics, or complexity factors that are not present in the source code, 2) False negatives: Do not omit mappings or complexity metrics that are explicitly present and measurable in the source code. Verify completeness and accuracy by cross-referencing every entry in these sections with the source code.
+
+- Do NOT include API cost information in the documentation output. The API Cost Calculations section must be excluded entirely from the final documentation as specified in completeness check 13.
+
+- Every statement, finding, and documentation point in the output must be traceable to either: 1) The provided instructions (for structural and formatting requirements), or 2) The input source code file (for technical content and implementation details). Do not include content that cannot be traced to one of these two sources. Maintain full traceability throughout the documentation to ensure accuracy and verifiability.
