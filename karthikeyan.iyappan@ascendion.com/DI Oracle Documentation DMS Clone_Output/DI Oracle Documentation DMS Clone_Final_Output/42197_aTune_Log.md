@@ -24,3 +24,5 @@ Step 4:
 
 [ERROR] Attempt 1 of 3 — Recommender agent execution failed with GitHub authentication error (401 Unauthorized). The agent was unable to retrieve the instruction and gap report files from GitHub.
 
+[ERROR] Attempt 2 of 3 — Recommender agent execution failed with GitHub authentication error (401 Unauthorized). The agent was unable to retrieve the instruction and gap report files from GitHub.
+
