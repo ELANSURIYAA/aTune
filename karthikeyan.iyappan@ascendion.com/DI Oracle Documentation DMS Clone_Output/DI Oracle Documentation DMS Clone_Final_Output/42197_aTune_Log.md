@@ -12,3 +12,10 @@ Step 2:
 - Validation: I checked that 42197_Agent_Executed_Output.txt exists in the correct location with content present. File verified.
 - Decision: All outputs verified so I am proceeding to Step 3.
 
+Step 3:
+- Created an empty Gap Report file in GitHub to initialise the review cycle.
+- Triggered the Reviewer agent to compare the executed output against the goal and instruction.
+- The Gap Report and Gap Score files were written to GitHub at karthikeyan.iyappan@ascendion.com/DI Oracle Documentation DMS Clone_Output/DI Oracle Documentation DMS Clone_Working/.
+- Validation: I checked that 42197_Gap_Report.md and 42197_Gap_Score.md exist in the correct location with content present. Both files verified.
+- Decision: All outputs verified so I am proceeding to Step 4.
+
