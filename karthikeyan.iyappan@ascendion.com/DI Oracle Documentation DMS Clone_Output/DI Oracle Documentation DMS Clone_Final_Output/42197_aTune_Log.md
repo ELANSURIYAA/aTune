@@ -19,3 +19,6 @@ Step 3:
 - Validation: I checked that 42197_Gap_Report.md and 42197_Gap_Score.md exist in the correct location with content present. Both files verified.
 - Decision: All outputs verified so I am proceeding to Step 4.
 
+Step 4:
+- Gap score is 20. Threshold is 90. 20 is less than 90, so I am continuing to Step 5.
+
