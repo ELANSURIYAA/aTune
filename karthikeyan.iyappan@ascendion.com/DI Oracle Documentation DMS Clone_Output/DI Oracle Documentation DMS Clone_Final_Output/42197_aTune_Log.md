@@ -22,3 +22,5 @@ Step 3:
 Step 4:
 - Gap score is 20. Threshold is 90. 20 is less than 90, so I am continuing to Step 5.
 
+[ERROR] Attempt 1 of 3 — Recommender agent execution failed with GitHub authentication error (401 Unauthorized). The agent was unable to retrieve the instruction and gap report files from GitHub.
+
