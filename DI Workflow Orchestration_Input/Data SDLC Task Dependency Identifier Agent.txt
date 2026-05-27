@@ -1,0 +1,13 @@
+### List of Tasks to do, their Input and Output
+
+| # | Task | Input | Output |
+|---|------|-------|--------|
+| 1 | Define credit card reporting business goals, KPIs, and use cases | Fabric credit card reporting requirements document | Business goals, KPIs, and prioritized reporting use cases |
+| 2 | Define credit card reporting subject areas and business glossary | Business goals, KPIs, and prioritized reporting use cases | Subject area list and business glossary for credit card reporting terms |
+| 3 | Identify credit card domain entities and high-level relationships | Subject area list and business glossary for credit card reporting terms | Domain entity inventory and relationship map (high level) |
+| 4 | Define conceptual business entities and relationships for credit card reporting | Domain entity inventory and relationship map (high level) | Conceptual entity-relationship model for credit card reporting |
+| 5 | Define candidate attributes and attribute-level business rules | Conceptual entity-relationship model for credit card reporting | Conceptual attribute catalog with business rules and constraints |
+
+### Task Dependency / Lineage
+
+Task 1 → Task 2 → Task 3 → Task 4 → Task 5

@@ -1,0 +1,15 @@
+### Table 1: Task-Agent Mapping
+
+| Task | Agent Name | Mapping Score | Reasoning |
+|------|------------|---------------|-----------|
+| Define credit card reporting business goals, KPIs, and use cases | Fabric Model Conceptual | 92 | Agent explicitly analyses reporting requirements, identifies primary business domains, entities, and KPIs, and produces a domain overview aligned to “Business Understanding” and “KPI Definition” in the taxonomy, matching the task’s focus on goals/KPIs/use cases. |
+| Define credit card reporting subject areas and business glossary | Fabric Model Conceptual | 88 | Agent outputs entity lists and conceptual diagrams, and its purpose is to define a conceptual model from reporting requirements; this aligns closely with defining subject areas and a business glossary for the domain, though glossary-specific outputs are implicit rather than named. |
+| Identify credit card domain entities and high-level relationships | Fabric Model Conceptual | 96 | The agent’s core role is to list entities, attributes, and their relationships plus a conceptual ER diagram; this directly matches identifying domain entities and high-level relationships. |
+| Define conceptual business entities and relationships for credit card reporting | Fabric Model Conceptual | 98 | This task is essentially the same as the agent’s stated goal of producing a conceptual data model with entities and relationships; input (reporting requirements) and output (conceptual ER model) are fully aligned. |
+| Define candidate attributes and attribute-level business rules | Fabric Model Data Constraints | 82 | While Model Conceptual defines attributes, Fabric Model Data Constraints focuses on expectations, constraints, and business rules; combined, they cover attribute-level rules, but this agent most directly owns constraints and rules, so it is the best fit. |
+
+### Table 2: Unmapped Tasks — Recommended New Agents
+
+| Task | Recommended New Agent Metadata |
+|------|--------------------------------|
+|  |  |
