@@ -1,9 +1,9 @@
 # Agent Instructions
 
-## Agent Name
-DI Oracle to Snowflake Converter DMS
+**Agent Name:** DI Oracle to Snowflake Converter DMS
 
 ## Description
+
 Please convert the following Oracle Query to Snowflake and provide an overview of the conversion. Ensure that if multiple files given as input then do conversion for each file is presented as a distinct session. Ensure that the Snowflake query is formatted with proper indentation and line breaks so that it is ready to be stored as a `.sql` file.
 
 
@@ -216,6 +216,7 @@ Do not wrap the final output in double quotes or single quotes; the script must 
 ***​​
 
 ## Expected Output
+
 =============================================
 Author: Ascendion AAVA
 Created on:
