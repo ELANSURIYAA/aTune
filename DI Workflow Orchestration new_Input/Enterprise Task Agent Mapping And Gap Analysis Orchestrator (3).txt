@@ -1,0 +1,16 @@
+### Table 1: Task-Agent Mapping
+
+| Task | Agent Name | Mapping Score | Reasoning | Manual Intervention |
+|------|------------|---------------|-----------|---------------------|
+| Define credit card reporting business goals and use cases | Fabric Model Conceptual | 95 | Agent’s goal and instructions explicitly cover analysing reporting requirements to define business goals, KPIs and use cases, matching the DI-Tasks “Business Understanding” activity. | Business stakeholder validation of goals, KPIs and priority use cases |
+| Identify credit card reporting domains, entities, and relationships | Fabric Model Conceptual | 80 | Agent derives entities and relationships from reporting requirements, which aligns with “Domain Modeling”, but its primary focus is conceptual entities rather than explicit domain-bounded context modeling. | Enterprise/domain architect review of domains and relationships |
+| Define subject areas and business glossary for credit card reporting | Fabric Model Conceptual | 70 | Agent lists entities, attributes and common data elements; this partially supports “Information Architecture” but it does not explicitly produce subject-area catalogues or a formal glossary. | Information architect to structure subject areas and finalize glossary definitions |
+| Define business entities and relationships for the conceptual model | Fabric Model Conceptual | 98 | Directly aligned: agent is designed to produce conceptual entities, attributes, relationships and a conceptual ER view from reporting requirements. | Data architect sign-off on conceptual ER model |
+| Define attributes and business rules for entities in the conceptual model | Fabric Model Data Constraints | 90 | Agent is focused on data expectations, constraints and business rules, which aligns to defining conceptual attributes’ rules (logical constraints) as per “Logical Model” tasks; attributes themselves are mostly sourced from the conceptual agent. | Joint review by data owner and governance to approve business rules and constraints |
+
+
+### Table 2: Unmapped Tasks — Recommended New Agents
+
+| Task | Recommended New Agent Metadata | Manual Intervention |
+|------|--------------------------------|---------------------|
+|  |  |  |
