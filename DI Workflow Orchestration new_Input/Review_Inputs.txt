@@ -1,0 +1,53 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that all four agent roles (Requirements Parsing & Validation, Entity & Attribute Modeling, Business Rules & Compliance, Model Synthesis & Integration) are addressed in the output.
+- Confirm that all deduplicated tasks (16 total) from the Task Deduplication & Merge Register are included and mapped to the correct agent.
+- Ensure that all mandatory sections from each Agent Definition Card (Tasks, Trigger & Scope, Business Justification, Technical Profile, Behavioural Profile, Human-in-Loop Design, Explainability & Audit, Restrictions & Boundaries, Gaps & Open Items, Classification Summary) are present in the output.
+- Check that all required fields for each task (Task Name, Sources, Trigger, Input, Output, Decision Type, Business Justification, Technical Profile, Behavioural Profile, Success Criteria, Restrictions, Classification) are included.
+- Validate that all clusters and their tasks from the Agent Cluster Map are represented and grouped as specified.
+- Confirm that all business rules, compliance requirements, and audit trail specifications are extracted and documented as required.
+- Ensure that all gap/open item handling requirements (escalation criteria, thresholds, token/entity constraints, handoff package format) are covered.
+- Verify that all classification tags ([INPUT], [INFERRED], [RECOMMENDED]) are included and used as specified.
+- Confirm that all referenced dependencies, tools, APIs, and integration points are included where required.
+- Ensure that all success criteria, KPIs, and failure modes are documented for each agent.
+- Check that all required outputs (parsed requirements, entity list, attribute specifications, relationship diagram, business rules catalog, conceptual data model, validation reports, escalation logs) are present.
+- Validate that all edge cases and fallback behaviors are addressed as per the agent cards.
+- Confirm that all audit log schemas and explainability formats are included for each agent.
+- Ensure that all handoff and boundary requirements between agents are documented.
+- Verify that all open items listed in the Gaps & Open Items sections are included and flagged for validation.
+- Confirm that all mandatory mappings between tasks and agents are present and correct.
+
+Accuracy Checks
+
+- Validate that the output aligns precisely with the agent instructions and the provided input content.
+- Ensure that all task-to-agent mappings match those specified in the Task-Agent Mapping table.
+- Confirm that no hallucinated agents, tasks, or outputs are introduced beyond those in the input files.
+- Check that all deduplication and merging of tasks are performed as specified in the Task Deduplication & Merge Register.
+- Verify that all classifications ([INPUT], [INFERRED], [RECOMMENDED]) are applied correctly and only where justified by the input.
+- Ensure that all dependencies, technical mappings, and escalation paths are logically correct and traceable to the input.
+- Confirm that all business rules, compliance requirements, and audit specifications are extracted exactly as described in the input.
+- Validate that all gap identifications and escalations are justified by the input content and not invented.
+- Check that all terminology, section headers, and field names are used consistently with the input files.
+- Ensure that all relationships between entities, attributes, and rules are interpreted as per the input.
+- Confirm that all success criteria, KPIs, and failure modes are accurately reflected from the agent cards.
+- Validate that all edge cases, fallback behaviors, and human-in-loop triggers are implemented as described.
+- Ensure that all audit log schemas, explainability formats, and retention/access controls match the input.
+- Confirm that no unsupported assumptions or contradictions are introduced in the output.
+- Check that all required outputs are represented correctly and match the source content.
+- Validate that all open items and recommendations are traceable to the input files.
+
+Efficiency Checks
+
+- Verify that duplicate analysis of tasks, agents, or requirements is avoided in the output.
+- Ensure that redundant explanations, repeated gap entries, and repeated risk/recommendation statements are eliminated.
+- Confirm that the output remains concise, structured, and free of unnecessary sections.
+- Check that duplicate dependency mappings and repeated tables are avoided.
+- Ensure that excessive verbosity is avoided and that similar findings are logically grouped where appropriate.
+- Validate that the output is token-efficient while maintaining completeness and does not repeat content from the input files unless necessary.
+- Confirm that redundant classifications, tags, and validations are not present.
+- Ensure that large sections are summarized efficiently where allowed by the instructions.
+- Check that the output structure improves readability and review efficiency.
+- Verify that all findings, recommendations, and validations are consolidated and not fragmented across multiple sections.
+- Confirm that only required mappings, relationships, and outputs are generated, with no unnecessary elaboration.
