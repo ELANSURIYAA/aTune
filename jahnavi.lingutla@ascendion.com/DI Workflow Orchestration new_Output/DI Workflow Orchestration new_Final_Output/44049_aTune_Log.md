@@ -40,3 +40,23 @@ Step 1:
 - Extraction is not required for this iteration. Skipping Step 1.
 
 [ERROR] Attempt 1 of 3 — Executer agent execution failed or produced no output. The workflow did not complete successfully or polling failed.
+
+[ERROR] Attempt 2 of 3 — Executer agent execution failed or produced no output. The workflow did not complete successfully or polling failed.
+
+[ERROR] All 3 attempts failed for Step 2 (Executer). Stopping aTune process. Reason: The Executer agent workflow did not complete successfully after 3 consecutive attempts. This may be due to workflow timeout, API failure, or invalid input configuration.
+
+---
+
+Tuning Outcome:
+- Status: STOPPED — Step Failure After 3 Attempts
+- Agent ID tuned: 44049
+- Agent Name: DI Workflow Orchestration new
+- Threshold set: 90
+- Final Gap Score achieved: 67.5
+- Total iterations run: 1
+
+Iteration Summary:
+
+| Iteration | Gap Score | Decision        |
+|-----------|-----------|-----------------|
+| 1         | 67.5      | CONTINUE        |
