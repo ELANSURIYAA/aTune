@@ -2,140 +2,757 @@
         ORCHESTRATION AGENT OUTPUT
 ================================================================
 
-INPUT ANALYSIS SUMMARY
-----------------------
-User Requirements Source: Consolidated Thinking Document.txt
-Agent Mapper Source: Enterprise Task Agent Mapping And Gap Analysis Orchestrator (3).txt
-
-Requirements Overview:
-- Task: Automate credit card reporting conceptual data model development
-- Role: Data Modeler
-- Objective: Define entities, attributes, relationships, business rules, and compliance requirements for credit card reporting
-- Expectations: Complete conceptual data model with 100% coverage, validated requirements, compliance adherence, audit trail
-
-Available Agents from Mapper Table:
-1. Fabric Model Conceptual (Score: 95-98 for entity/relationship/domain modeling)
-2. Fabric Model Data Constraints (Score: 90 for attributes and business rules)
-
-================================================================
 SECTION 1 — WITH AVAILABLE AGENTS
-================================================================
 
-Option 1: Sequential Conceptual Modeling Workflow
---------------------------------------------------
+Option 1: Conceptual Data Model Development Pipeline
 
 1. Agents to consider:
-   Fabric Model Conceptual → Fabric Model Data Constraints
+   - Fabric Model Conceptual (Score: 95-98 for entity/relationship/domain modeling)
+   - Fabric Model Data Constraints (Score: 90 for attributes and business rules)
 
 2. What we will get:
-   • A comprehensive conceptual data model covering all core credit card reporting entities (Application, Campaign, Credit Risk, Fraud Screening, Transaction) with their primary keys, attributes, and inter-entity relationships, derived directly from the reporting requirements document and validated against business goals and use cases.
-   
-   • Complete entity-relationship diagrams and conceptual ER views that map the business domain structure, including funnel stage relationships (application → approval → activation), campaign attribution flows, and transaction-to-account linkages, enabling downstream logical and physical model development.
-   
-   • Documented business rules, data constraints, and validation logic for each entity and attribute, including calculation rules (e.g., approval rates, activation rates), data retention policies, security access rules, and audit trail requirements, ensuring compliance with regulatory and governance standards.
-   
-   • Structured documentation of all conceptual modeling decisions, including entity definitions, attribute specifications, relationship cardinality, and business rule rationale, providing full traceability from requirements to model artifacts for stakeholder review and sign-off.
+   • A complete conceptual entity-relationship model for credit card reporting, including all core business entities (Application, Campaign, Credit Risk, Fraud Screening, Transaction) with their primary keys, attributes, and relationships, derived directly from the requirements document and validated against the five reporting objectives (Application Funnel Analysis, Campaign Performance, Credit Risk Assessment, Fraud Detection, Transaction Analysis).
+   • A comprehensive set of business rules and data constraints for each entity, covering calculation logic (e.g., approval rates, conversion rates, fraud scores), security access rules (PII protection, role-based access), data retention policies (7-year retention for compliance), and audit trail requirements, ensuring regulatory compliance and data governance alignment.
+   • A structured conceptual model artifact that defines subject areas, business glossary terms, and entity definitions with clear relationships (e.g., Application → Customer, Campaign → Application, Transaction → Account), providing a foundation for logical and physical data model development and supporting all downstream reporting and analytics requirements.
 
 3. What we will miss:
-   • Automated requirements parsing and validation capabilities to extract, structure, and validate the completeness of the input requirements document before modeling begins, requiring manual pre-processing to identify missing sections, ambiguous definitions, or conflicting requirements that could compromise model accuracy.
-   
-   • Systematic gap detection and escalation mechanisms to identify and flag missing entities, undefined attributes, ambiguous relationships, or incomplete business rules during the modeling process, necessitating manual cross-referencing between requirements and model outputs to ensure 100% coverage and completeness.
-   
-   • Formal subject area cataloging and business glossary generation to organize entities into domain-bounded contexts (e.g., Customer, Product, Transaction, Risk) and produce standardized term definitions, requiring information architects to manually structure subject areas and create glossary entries post-modeling.
-   
-   • Integrated data governance validation and handoff packaging to automatically verify model compliance with enterprise data standards, naming conventions, and governance policies, and to assemble a complete handoff package (model artifacts, validation reports, integration logs) for downstream implementation teams, requiring manual governance review and package preparation.
+   • Requirements parsing and validation capabilities to systematically extract, structure, and validate the completeness of the input requirements document before modeling begins, leading to potential gaps or ambiguities in the conceptual model if the requirements are incomplete, unclear, or contain missing sections that are not identified upfront.
+   • Automated gap detection and escalation mechanisms to identify missing entities, attributes, relationships, or business rules during the modeling process, requiring manual review and validation by data architects and business stakeholders to ensure 100% coverage of all reporting requirements and compliance obligations.
+   • Model synthesis and integration capabilities to assemble the outputs from both agents (conceptual entities from Fabric Model Conceptual and constraints from Fabric Model Data Constraints) into a single, validated, and governance-approved conceptual data model package ready for handoff to logical/physical modeling teams, necessitating manual integration, cross-validation, and governance review steps.
 
-================================================================
+----------------------------------------------------------------
+
 SECTION 2 — WITH AVAILABLE AND NEW AGENTS
-================================================================
 
-Option 1: End-to-End Automated Conceptual Modeling Pipeline
-------------------------------------------------------------
+Option 1: End-to-End Conceptual Data Model Development Pipeline
 
 1. Agents to consider:
-   Requirements Parsing & Validation Agent [NEW - extracts, validates, and structures requirements document before modeling] → Fabric Model Conceptual → Fabric Model Data Constraints → Entity & Attribute Modeling Agent [NEW - resolves ambiguity and ensures 100% entity/attribute coverage] → Business Rules & Compliance Agent [NEW - extracts and validates all compliance, audit, and security requirements] → Model Synthesis & Integration Agent [NEW - assembles complete model, validates against governance, and prepares handoff package]
+   - Requirements Parsing & Validation Agent [NEW — extracts, validates, and prepares credit card reporting requirements for downstream modeling]
+   - Fabric Model Conceptual (Score: 95-98 for entity/relationship/domain modeling)
+   - Fabric Model Data Constraints (Score: 90 for attributes and business rules)
+   - Entity & Attribute Modeling Agent [NEW — defines, documents, and validates all entities, attributes, and relationships with ambiguity resolution]
+   - Business Rules & Compliance Agent [NEW — extracts, documents, and validates business rules, compliance requirements, and audit trail specifications]
+   - Model Synthesis & Integration Agent [NEW — assembles, validates, and prepares the complete conceptual data model for handoff]
 
 2. What we will get:
-   • A fully automated requirements-to-model pipeline that begins with validated, parsed, and structured requirements (via Requirements Parsing & Validation Agent), ensuring all downstream modeling tasks start from complete, unambiguous inputs with documented gaps escalated to stakeholders, eliminating manual pre-processing and reducing requirements-related rework by an estimated 40%.
-   
-   • A comprehensive, validated conceptual data model with 100% entity, attribute, and relationship coverage (via Fabric Model Conceptual, Fabric Model Data Constraints, and Entity & Attribute Modeling Agent), including automated ambiguity resolution, completeness validation, and traceability from requirements to model artifacts, ensuring no missing or undefined elements and providing full audit trail for compliance and governance review.
-   
-   • Complete business rules, compliance, security, and audit trail documentation (via Business Rules & Compliance Agent) extracted directly from requirements and validated against regulatory standards, including data retention policies, PII access controls, calculation logic, and audit log specifications, ensuring the model meets all compliance and governance requirements without manual extraction or validation.
-   
-   • A production-ready handoff package (via Model Synthesis & Integration Agent) that includes the complete conceptual data model, validation reports, integration logs, governance compliance certificates, and all supporting documentation, automatically validated against enterprise data standards and prepared for seamless handoff to logical/physical modeling teams, eliminating manual package assembly and governance review cycles.
+   • A fully validated and structured requirements document with 100% coverage of all required sections (business goals, entities, attributes, relationships, business rules, compliance requirements), systematic gap identification and escalation for any missing or ambiguous requirements, and complete traceability from source requirements to modeling outputs, ensuring all downstream agents operate on complete, unambiguous, and validated inputs.
+   • A comprehensive conceptual entity-relationship model with all 16 deduplicated tasks executed in sequence (requirements parsing → entity identification → attribute definition → relationship establishment → business rules extraction → model assembly), covering all five credit card reporting domains (Application, Campaign, Credit Risk, Fraud, Transaction) with complete entity definitions, attribute specifications, relationship mappings, business rules, compliance constraints, security access rules, data retention policies, and audit trail requirements, validated against all reporting objectives and governance standards.
+   • A governance-approved, integration-ready conceptual data model package with complete documentation (entity definitions, attribute specifications, relationship diagrams, business rules catalog, compliance validation report, audit log specifications), human-in-the-loop validation at all critical decision points (requirements gaps, entity ambiguity, compliance uncertainty, integration failures), and a structured handoff package to logical/physical modeling teams, ensuring zero gaps, 100% traceability, and full regulatory compliance for all credit card reporting requirements.
 
-Option 2: Parallel Modeling with Governance-First Approach
------------------------------------------------------------
+----------------------------------------------------------------
 
-1. Agents to consider:
-   Requirements Parsing & Validation Agent [NEW - extracts and validates requirements] → Business Rules & Compliance Agent [NEW - extracts compliance and governance requirements first] → Fabric Model Conceptual (parallel execution) + Fabric Model Data Constraints (parallel execution) → Entity & Attribute Modeling Agent [NEW - consolidates and validates parallel outputs] → Model Synthesis & Integration Agent [NEW - assembles and validates final model]
+SECTION 2A — TASK-TO-AGENT MAPPING TABLE
 
-2. What we will get:
-   • A governance-first modeling approach where compliance, security, audit, and regulatory requirements are extracted and validated upfront (via Business Rules & Compliance Agent) before entity modeling begins, ensuring all subsequent modeling decisions are compliance-aware from the start and reducing the risk of late-stage compliance failures or model rework due to missed regulatory constraints.
-   
-   • Accelerated modeling throughput via parallel execution of conceptual entity modeling (Fabric Model Conceptual) and data constraints definition (Fabric Model Data Constraints) after requirements and compliance baselines are established, reducing overall modeling cycle time by an estimated 25-30% compared to sequential workflows while maintaining model quality and completeness.
-   
-   • Consolidated, validated model outputs (via Entity & Attribute Modeling Agent) that reconcile parallel modeling streams, resolve any conflicts or overlaps between entity definitions and constraint specifications, and ensure 100% coverage and consistency across all model artifacts, providing a single source of truth for downstream implementation teams and eliminating ambiguity or duplication in the final model.
+| Task ID | Task Name | Assigned Agent | Execution Sequence | Input | Output |
+|---------|-----------|----------------|---------------------|-------|--------|
+| T01 | Parse Business Requirements | Requirements Parsing & Validation Agent | 1 | Credit card reporting requirements document | Parsed requirements, validation report |
+| T02 | Validate Document Completeness | Requirements Parsing & Validation Agent | 2 | Parsed requirements | Validation report, escalation log |
+| T03 | Handle Missing Requirements | Requirements Parsing & Validation Agent | 3 | Validation report | Gap resolution log, updated requirements |
+| T04 | Escalate Critical Gaps | Requirements Parsing & Validation Agent | 4 | Gap resolution log | Escalation report, stakeholder input |
+| T05 | Identify Core Entities | Entity & Attribute Modeling Agent | 5 | Validated requirements | Core entity list with definitions |
+| T06 | Define Application Entity Structure | Entity & Attribute Modeling Agent | 6 | Core entity list, requirements | Application entity specification |
+| T07 | Define Campaign Entity Structure | Entity & Attribute Modeling Agent | 7 | Core entity list, requirements | Campaign entity specification |
+| T08 | Define Credit Risk Attributes | Entity & Attribute Modeling Agent | 8 | Core entity list, requirements | Credit Risk entity specification |
+| T09 | Define Fraud Screening Entity | Entity & Attribute Modeling Agent | 9 | Core entity list, requirements | Fraud Screening entity specification |
+| T10 | Define Transaction Entity Structure | Entity & Attribute Modeling Agent | 10 | Core entity list, requirements | Transaction entity specification |
+| T11 | Define Entity Attributes | Entity & Attribute Modeling Agent | 11 | Entity specifications | Attribute specifications for all entities |
+| T12 | Establish Entity Relationships | Entity & Attribute Modeling Agent | 12 | Entity and attribute specifications | Entity relationship diagram |
+| T13 | Establish Funnel Stage Relationships | Entity & Attribute Modeling Agent | 13 | Entity relationship diagram | Funnel stage relationship mappings |
+| T14 | Resolve Entity Ambiguity | Entity & Attribute Modeling Agent | 14 | Entity/attribute specifications | Ambiguity resolution log |
+| T15 | Extract Business Rules | Business Rules & Compliance Agent | 15 | Requirements document | Business rules catalog |
+| T16 | Define Calculation Business Rules | Business Rules & Compliance Agent | 16 | Requirements document | Calculation rules specification |
+| T17 | Create Security Access Rules | Business Rules & Compliance Agent | 17 | Requirements document | Security access policy |
+| T18 | Establish Data Retention Policies | Business Rules & Compliance Agent | 18 | Requirements document | Data retention policy |
+| T19 | Create Audit Trail Requirements | Business Rules & Compliance Agent | 19 | Requirements document | Audit trail specification |
+| T20 | Validate Model Completeness | Model Synthesis & Integration Agent | 20 | All entity, attribute, rule specifications | Model validation report |
+| T21 | Document Model Rationale | Model Synthesis & Integration Agent | 21 | Validated model components | Model documentation package |
+| T22 | Integrate with Data Governance | Model Synthesis & Integration Agent | 22 | Validated model, governance standards | Governance integration report |
 
-================================================================
+Total Tasks Mapped: 22
+Total Agents Assigned: 4 (2 available + 4 new)
+Coverage: 100% (all tasks mapped)
+
+----------------------------------------------------------------
+
+SECTION 2B — AGENT DEFINITION CARDS
+
+─────────────────────────────────────────────────────
+AGENT DEFINITION CARD
+─────────────────────────────────────────────────────
+Agent Name: Requirements Parsing & Validation Agent
+
+1. Tasks
+   - T01: Parse Business Requirements — Extract structured data requirements from the credit card reporting requirements document, organizing by business function (Application Funnel, Campaign Performance, Credit Risk, Fraud Detection, Transaction Analysis)
+   - T02: Validate Document Completeness — Cross-reference parsed requirements against a completeness checklist covering all mandatory sections (business goals, entities, attributes, relationships, business rules, compliance requirements, reporting objectives)
+   - T03: Handle Missing Requirements — Identify gaps in the requirements document, document assumptions for minor gaps, and prepare escalation packages for critical missing sections
+   - T04: Escalate Critical Gaps — Trigger human-in-the-loop review for any missing critical sections (e.g., compliance requirements, primary key definitions, mandatory relationships) and obtain stakeholder input for resolution
+
+2. Trigger & Scope
+   - [INPUT] Trigger: Receipt of credit card reporting requirements document uploaded by user or provided via API
+   - [INPUT] Scope Start: On receipt of requirements document
+   - [INPUT] Scope End: When requirements are validated, all gaps are documented or escalated, and parsed requirements are ready for downstream modeling agents
+   - [INFERRED] Scope Boundary: Does not perform entity modeling, attribute definition, or relationship mapping — only validates and structures the input requirements
+
+3. Business Justification
+   - [INPUT] Purpose: Ensure all downstream modeling tasks start from validated, complete, and unambiguous requirements, preventing rework and model gaps
+   - [INPUT] Success Criteria: 100% of required sections present and parsed; all missing/ambiguous items escalated or resolved with documented assumptions
+   - [INFERRED] KPIs: Requirements Coverage Rate (target: 100%), Escalation Response Time (target: < 24 hours), Gap Resolution Rate (target: > 95%)
+   - [INFERRED] Cost of Inaction: Incomplete or inaccurate conceptual data model, project delays due to rework, compliance failures, reporting gaps
+
+4. Technical Profile
+   - [INPUT] Recommended Model: GPT-4o (for complex document parsing and validation logic requiring high accuracy)
+   - [RECOMMENDED] Estimated Token Consumption: 15,000-25,000 tokens per execution (10,000-15,000 input for requirements document + 5,000-10,000 output for parsed requirements and validation report)
+   - [INPUT] Required Integrations: Document parsing API, validation tool, escalation workflow system
+   - [INPUT] Dependencies: Availability of requirements document, stakeholder input for gap resolution
+
+5. Behavioural Profile
+   - [INPUT] Decision-Making Approach: Rule-based deterministic — follows predefined validation checklist and escalation criteria
+   - [INPUT] Error Handling Strategy: Never alter source requirements; escalate any ambiguity or missing critical section; document all assumptions
+   - [INPUT] Output Format: Structured JSON containing parsed requirements by section, validation report with pass/fail status per section, escalation log with gap details and severity classification
+
+6. Human-in-Loop Design
+   - [RECOMMENDED] Escalation Criteria: Missing critical sections (> 3 sections), ambiguous requirements (> 5 ambiguities), confidence score < 0.8 for any parsed section
+   - [RECOMMENDED] Escalation Threshold: Any critical section missing (business goals, compliance requirements, primary entities) or unresolvable ambiguity detected
+   - [INFERRED] Information Presented: Requirement text excerpt, identified gap or ambiguity, proposed resolution or clarification question, severity classification (Critical/High/Medium/Low)
+   - [INPUT] Human Role: Business Analyst, Domain Expert, Stakeholder
+   - [RECOMMENDED] Feedback Loop: Update parsing patterns and validation rules based on stakeholder feedback; maintain a knowledge base of common requirement patterns
+
+7. Explainability & Audit
+
+Audit Log Schema:
+| Field Name | Data Type | Description | Required | Classification Tag |
+|------------|-----------|-------------|----------|--------------------|
+| Timestamp | DateTime | Execution timestamp | Yes | [RECOMMENDED] |
+| Agent Name | String | Requirements Parsing & Validation Agent | Yes | [RECOMMENDED] |
+| Execution ID | String | Unique execution identifier (UUID) | Yes | [RECOMMENDED] |
+| Input Summary | Text | Document name, size, section count | Yes | [RECOMMENDED] |
+| Output Summary | Text | Parsed sections count, validation status | Yes | [RECOMMENDED] |
+| Status | Enum | Success/Failure/Escalated | Yes | [RECOMMENDED] |
+| Error Details | Text | Error message if parsing failed | No | [RECOMMENDED] |
+| User ID | String | Requesting user identifier | Yes | [RECOMMENDED] |
+| Section | String | Requirements section being parsed | Yes | [RECOMMENDED] |
+| Gap Type | Enum | Missing/Ambiguous/Incomplete | No | [RECOMMENDED] |
+| Resolution Status | Enum | Resolved/Escalated/Pending | Yes | [RECOMMENDED] |
+
+Audit Log Retention & Access Control:
+- [RECOMMENDED] Retention Period: All audit logs must be retained for 7 years from the date of creation in immutable storage with versioning enabled; archival strategy moves logs to cold storage after 1 year while maintaining accessibility
+- [RECOMMENDED] Access Control Specifications:
+  - Data Governance Team: Full read access to all logs
+  - Compliance Officers: Full read access to all logs
+  - Project Leads: Read access to logs for their projects only
+  - Audit Team: Full read access with export capabilities
+  - System Administrators: Read access for troubleshooting only
+- [RECOMMENDED] Access Logging: All access to audit logs must itself be logged with accessor ID, timestamp, records accessed, and purpose
+- [RECOMMENDED] Security Requirements: Encryption at rest (AES-256) and in transit (TLS 1.3), role-based access control (RBAC) enforcement, multi-factor authentication required for access
+
+8. Restrictions & Boundaries
+   - [INPUT] What this agent must NOT do: Never alter or invent requirements; never proceed with modeling if critical sections are missing; never assume business rules or compliance requirements without explicit documentation
+   - [INFERRED] Out-of-scope activities: Entity modeling, attribute definition, relationship mapping, business rule extraction (these are handled by downstream agents)
+   - [RECOMMENDED] Constraint limits: Maximum document size 50,000 tokens; maximum processing time 10 minutes; escalate if thresholds exceeded
+
+9. Gaps & Open Items
+
+Gap & Open Item Handling:
+- [RECOMMENDED] Escalation Criteria Thresholds:
+  - Confidence score threshold for escalation: < 0.8
+  - Missing critical sections threshold: > 3 sections
+  - Ambiguous requirements threshold: > 5 ambiguities
+  - Processing time threshold: > 10 minutes
+- [RECOMMENDED] Token & Entity Constraints:
+  - Maximum document size in tokens: 50,000 tokens
+  - Maximum sections to process: 50 sections
+  - Maximum escalations per document: 20 escalations
+- [RECOMMENDED] Handoff Package Format:
+  1. Summary of work completed (sections parsed, validation results)
+  2. List of identified gaps with severity classification (Critical/High/Medium/Low)
+  3. Specific questions requiring clarification (with context and proposed resolutions)
+  4. Partial outputs or work-in-progress artifacts (parsed sections, validation checklist)
+  5. Recommended next steps (resolve gaps, proceed with modeling, re-submit requirements)
+  6. Risk assessment if gaps remain unresolved (impact on model completeness, compliance risk)
+
+Open Items List:
+| Item ID | Description | Classification Tag | Risk if Unvalidated | Clarification Needed |
+|---------|-------------|---------------------|----------------------|----------------------|
+| OI-01 | Document size/token constraints | [RECOMMENDED] | Process failure if exceeded | What is the expected maximum document size? |
+| OI-02 | Escalation criteria for gaps | [RECOMMENDED] | Unresolved requirements | What are the escalation thresholds and approval process? |
+| OI-03 | Validation checklist completeness | [RECOMMENDED] | Missing requirements not detected | Is the validation checklist comprehensive for all credit card reporting domains? |
+
+10. Classification Summary
+
+| Characteristic Category | Characteristic Name | Value | Classification Tag |
+|------------------------|---------------------|-------|-------------------|
+| Trigger | Trigger event | Receipt of requirements document | [INPUT] |
+| Trigger | Scope start | On receipt of requirements document | [INPUT] |
+| Trigger | Scope end | When requirements validated and parsed | [INPUT] |
+| Trigger | Scope boundary | Does not perform entity modeling | [INFERRED] |
+| Business Justification | Purpose | Ensure validated, complete requirements | [INPUT] |
+| Business Justification | Success criteria | 100% section coverage, all gaps escalated | [INPUT] |
+| Business Justification | KPIs | Coverage Rate, Escalation Response Time | [INFERRED] |
+| Business Justification | Cost of inaction | Incomplete model, project delays | [INFERRED] |
+| Technical Profile | Recommended model | GPT-4o | [INPUT] |
+| Technical Profile | Token consumption | 15,000-25,000 tokens per execution | [RECOMMENDED] |
+| Technical Profile | Required integrations | Document parsing API, validation tool | [INPUT] |
+| Technical Profile | Dependencies | Requirements document, stakeholder input | [INPUT] |
+| Behavioural Profile | Decision-making approach | Rule-based deterministic | [INPUT] |
+| Behavioural Profile | Error handling strategy | Never alter requirements, escalate ambiguity | [INPUT] |
+| Behavioural Profile | Output format | Structured JSON with validation report | [INPUT] |
+| Human-in-Loop | Escalation criteria | Missing sections > 3, ambiguities > 5 | [RECOMMENDED] |
+| Human-in-Loop | Escalation threshold | Any critical section missing | [RECOMMENDED] |
+| Human-in-Loop | Information presented | Requirement text, gap, proposed resolution | [INFERRED] |
+| Human-in-Loop | Human role | Business Analyst, Domain Expert | [INPUT] |
+| Human-in-Loop | Feedback loop | Update parsing patterns based on feedback | [RECOMMENDED] |
+| Explainability & Audit | Audit log schema | Timestamp, Agent Name, Execution ID, etc. | [RECOMMENDED] |
+| Explainability & Audit | Retention period | 7 years | [RECOMMENDED] |
+| Explainability & Audit | Access control | Data Governance Team, Compliance Officers | [RECOMMENDED] |
+| Explainability & Audit | Access logging | All access logged with accessor ID | [RECOMMENDED] |
+| Explainability & Audit | Security requirements | AES-256, TLS 1.3, RBAC, MFA | [RECOMMENDED] |
+| Restrictions | Must NOT do | Never alter or invent requirements | [INPUT] |
+| Restrictions | Out-of-scope | Entity modeling, attribute definition | [INFERRED] |
+| Restrictions | Constraint limits | Max 50,000 tokens, 10 min processing | [RECOMMENDED] |
+| Gaps & Open Items | Confidence threshold | < 0.8 | [RECOMMENDED] |
+| Gaps & Open Items | Missing sections threshold | > 3 sections | [RECOMMENDED] |
+| Gaps & Open Items | Ambiguity threshold | > 5 ambiguities | [RECOMMENDED] |
+| Gaps & Open Items | Processing time threshold | > 10 minutes | [RECOMMENDED] |
+| Gaps & Open Items | Max document size | 50,000 tokens | [RECOMMENDED] |
+| Gaps & Open Items | Max sections | 50 sections | [RECOMMENDED] |
+| Gaps & Open Items | Max escalations | 20 escalations | [RECOMMENDED] |
+| Gaps & Open Items | Handoff package format | 6-component structured package | [RECOMMENDED] |
+
+Summary Statistics:
+- Total [INPUT] characteristics: 15
+- Total [INFERRED] characteristics: 6
+- Total [RECOMMENDED] characteristics: 23
+- Total characteristics: 44
+
+─────────────────────────────────────────────────────
+AGENT DEFINITION CARD
+─────────────────────────────────────────────────────
+Agent Name: Entity & Attribute Modeling Agent
+
+1. Tasks
+   - T05: Identify Core Entities — Extract and define all core business entities (Application, Campaign, Credit Risk, Fraud Screening, Transaction, Customer, Account) from validated requirements
+   - T06-T10: Define Entity Structures — Specify complete entity structures for Application, Campaign, Credit Risk, Fraud Screening, and Transaction entities including primary keys, mandatory attributes, and entity-specific business logic
+   - T11: Define Entity Attributes — Map all attributes for each entity including data types, nullability, default values, and attribute-level business rules
+   - T12: Establish Entity Relationships — Define all relationships between entities (one-to-one, one-to-many, many-to-many) with cardinality, optionality, and referential integrity rules
+   - T13: Establish Funnel Stage Relationships — Map funnel stage progression relationships (Application → Approval → Activation) with stage transition rules
+   - T14: Resolve Entity Ambiguity — Identify and escalate any ambiguous entity definitions, unclear relationships, or conflicting attribute specifications for expert review
+
+2. Trigger & Scope
+   - [INPUT] Trigger: Validated, parsed requirements document from Requirements Parsing & Validation Agent
+   - [INPUT] Scope Start: On receipt of parsed requirements
+   - [INPUT] Scope End: When complete entity-relationship model is defined, validated, and all ambiguities are resolved or escalated
+   - [INFERRED] Scope Boundary: Does not extract business rules or compliance requirements (handled by Business Rules & Compliance Agent); does not perform model synthesis (handled by Model Synthesis & Integration Agent)
+
+3. Business Justification
+   - [INPUT] Purpose: Ensure all business requirements are represented by entities, attributes, and relationships for accurate credit card reporting and analytics
+   - [INPUT] Success Criteria: 100% entity and attribute coverage, all relationships defined, zero unresolved ambiguity
+   - [INFERRED] KPIs: Entity Coverage Rate (target: 100%), Attribute Completeness (target: 100%), Ambiguity Resolution Time (target: < 48 hours)
+   - [INFERRED] Cost of Inaction: Incomplete data model, reporting gaps, inability to support all five reporting objectives, compliance failures
+
+4. Technical Profile
+   - [INPUT] Recommended Model: GPT-4o (for complex entity and relationship modeling requiring high accuracy and reasoning)
+   - [RECOMMENDED] Estimated Token Consumption: 20,000-35,000 tokens per execution (12,000-20,000 input for parsed requirements + 8,000-15,000 output for entity specifications and relationship diagrams)
+   - [INPUT] Required Integrations: Entity modeling tool, diagramming tool (e.g., ERD generator), ambiguity tracker
+   - [INPUT] Dependencies: Complete parsed requirements, stakeholder input for ambiguity resolution, data modeling standards
+
+5. Behavioural Profile
+   - [INPUT] Decision-Making Approach: Rule-based deterministic with expert validation — follows data modeling standards and escalates ambiguity
+   - [INPUT] Error Handling Strategy: Never invent entities without evidence; never omit required attributes; never assume relationships without explicit requirements; escalate all ambiguity
+   - [INPUT] Output Format: Structured entity specifications (JSON/YAML), entity-relationship diagram (ERD), ambiguity log with resolution recommendations
+
+6. Human-in-Loop Design
+   - [RECOMMENDED] Escalation Criteria: Ambiguous entity definitions (> 3 ambiguities), missing mandatory attributes (> 5 attributes), unclear relationships (> 3 relationships), confidence score < 0.8 for any entity or relationship
+   - [RECOMMENDED] Escalation Threshold: Any core entity or mandatory attribute ambiguous or missing; any relationship with unclear cardinality or optionality
+   - [INFERRED] Information Presented: Entity/attribute definition, ambiguity description, proposed resolution options, impact on downstream modeling
+   - [INPUT] Human Role: Data Modeler, Domain Expert, Data Architect
+   - [RECOMMENDED] Feedback Loop: Update entity modeling patterns based on expert feedback; maintain a knowledge base of resolved ambiguities and modeling decisions
+
+7. Explainability & Audit
+
+Audit Log Schema:
+| Field Name | Data Type | Description | Required | Classification Tag |
+|------------|-----------|-------------|----------|--------------------|
+| Timestamp | DateTime | Execution timestamp | Yes | [RECOMMENDED] |
+| Agent Name | String | Entity & Attribute Modeling Agent | Yes | [RECOMMENDED] |
+| Execution ID | String | Unique execution identifier (UUID) | Yes | [RECOMMENDED] |
+| Input Summary | Text | Parsed requirements summary | Yes | [RECOMMENDED] |
+| Output Summary | Text | Entities defined, attributes mapped | Yes | [RECOMMENDED] |
+| Status | Enum | Success/Failure/Escalated | Yes | [RECOMMENDED] |
+| Error Details | Text | Error message if modeling failed | No | [RECOMMENDED] |
+| User ID | String | Requesting user identifier | Yes | [RECOMMENDED] |
+| Entity | String | Entity being modeled | Yes | [RECOMMENDED] |
+| Attribute | String | Attribute being defined | No | [RECOMMENDED] |
+| Rationale | Text | Modeling decision rationale | Yes | [RECOMMENDED] |
+| Ambiguity | Text | Ambiguity description if escalated | No | [RECOMMENDED] |
+
+Audit Log Retention & Access Control:
+- [RECOMMENDED] Retention Period: All audit logs must be retained for 7 years from the date of creation in immutable storage with versioning enabled; archival strategy moves logs to cold storage after 1 year while maintaining accessibility
+- [RECOMMENDED] Access Control Specifications:
+  - Data Governance Team: Full read access to all logs
+  - Compliance Officers: Full read access to all logs
+  - Project Leads: Read access to logs for their projects only
+  - Audit Team: Full read access with export capabilities
+  - System Administrators: Read access for troubleshooting only
+- [RECOMMENDED] Access Logging: All access to audit logs must itself be logged with accessor ID, timestamp, records accessed, and purpose
+- [RECOMMENDED] Security Requirements: Encryption at rest (AES-256) and in transit (TLS 1.3), role-based access control (RBAC) enforcement, multi-factor authentication required for access
+
+8. Restrictions & Boundaries
+   - [INPUT] What this agent must NOT do: Never invent entities without evidence in requirements; never omit mandatory attributes; never assume relationships without explicit requirements; never proceed with incomplete entity definitions
+   - [INFERRED] Out-of-scope activities: Business rule extraction, compliance validation, model synthesis and integration (handled by other agents)
+   - [RECOMMENDED] Constraint limits: Maximum 200 entities, maximum 50 attributes per entity, maximum 100 relationships, maximum processing time 15 minutes
+
+9. Gaps & Open Items
+
+Gap & Open Item Handling:
+- [RECOMMENDED] Escalation Criteria Thresholds:
+  - Confidence score threshold for escalation: < 0.8
+  - Ambiguous entity definitions threshold: > 3 ambiguities
+  - Missing mandatory attributes threshold: > 5 attributes
+  - Unclear relationships threshold: > 3 relationships
+  - Processing time threshold: > 15 minutes
+- [RECOMMENDED] Token & Entity Constraints:
+  - Maximum entities to process: 200 entities
+  - Maximum attributes per entity: 50 attributes
+  - Maximum relationships to map: 100 relationships
+  - Maximum document size in tokens: 50,000 tokens
+- [RECOMMENDED] Handoff Package Format:
+  1. Summary of work completed (entities defined, attributes mapped, relationships established)
+  2. List of identified ambiguities with severity classification (Critical/High/Medium/Low)
+  3. Specific questions requiring clarification (with context and proposed resolutions)
+  4. Partial outputs or work-in-progress artifacts (entity specifications, ERD, ambiguity log)
+  5. Recommended next steps (resolve ambiguities, validate with domain experts, proceed to business rules)
+  6. Risk assessment if ambiguities remain unresolved (impact on model accuracy, reporting gaps)
+
+Open Items List:
+| Item ID | Description | Classification Tag | Risk if Unvalidated | Clarification Needed |
+|---------|-------------|---------------------|----------------------|----------------------|
+| OI-04 | Entity ambiguity escalation thresholds | [RECOMMENDED] | Incomplete model | What is the escalation threshold for entity ambiguity? |
+| OI-05 | Entity/attribute max constraints | [RECOMMENDED] | Model truncation | What is the expected entity/attribute count for credit card reporting? |
+| OI-06 | Relationship cardinality validation | [RECOMMENDED] | Incorrect relationships | How should relationship cardinality be validated? |
+
+10. Classification Summary
+
+| Characteristic Category | Characteristic Name | Value | Classification Tag |
+|------------------------|---------------------|-------|-------------------|
+| Trigger | Trigger event | Validated parsed requirements | [INPUT] |
+| Trigger | Scope start | On receipt of parsed requirements | [INPUT] |
+| Trigger | Scope end | When entity-relationship model complete | [INPUT] |
+| Trigger | Scope boundary | Does not extract business rules | [INFERRED] |
+| Business Justification | Purpose | Represent all requirements as entities/attributes | [INPUT] |
+| Business Justification | Success criteria | 100% coverage, zero ambiguity | [INPUT] |
+| Business Justification | KPIs | Entity Coverage, Attribute Completeness | [INFERRED] |
+| Business Justification | Cost of inaction | Incomplete model, reporting gaps | [INFERRED] |
+| Technical Profile | Recommended model | GPT-4o | [INPUT] |
+| Technical Profile | Token consumption | 20,000-35,000 tokens per execution | [RECOMMENDED] |
+| Technical Profile | Required integrations | Entity modeling tool, ERD generator | [INPUT] |
+| Technical Profile | Dependencies | Parsed requirements, stakeholder input | [INPUT] |
+| Behavioural Profile | Decision-making approach | Rule-based with expert validation | [INPUT] |
+| Behavioural Profile | Error handling strategy | Never invent entities, escalate ambiguity | [INPUT] |
+| Behavioural Profile | Output format | Entity specs, ERD, ambiguity log | [INPUT] |
+| Human-in-Loop | Escalation criteria | Ambiguities > 3, missing attributes > 5 | [RECOMMENDED] |
+| Human-in-Loop | Escalation threshold | Any core entity or attribute ambiguous | [RECOMMENDED] |
+| Human-in-Loop | Information presented | Entity definition, ambiguity, resolution | [INFERRED] |
+| Human-in-Loop | Human role | Data Modeler, Domain Expert | [INPUT] |
+| Human-in-Loop | Feedback loop | Update modeling patterns from feedback | [RECOMMENDED] |
+| Explainability & Audit | Audit log schema | Timestamp, Entity, Attribute, Rationale | [RECOMMENDED] |
+| Explainability & Audit | Retention period | 7 years | [RECOMMENDED] |
+| Explainability & Audit | Access control | Data Governance, Compliance Officers | [RECOMMENDED] |
+| Explainability & Audit | Access logging | All access logged | [RECOMMENDED] |
+| Explainability & Audit | Security requirements | AES-256, TLS 1.3, RBAC, MFA | [RECOMMENDED] |
+| Restrictions | Must NOT do | Never invent entities, never omit attributes | [INPUT] |
+| Restrictions | Out-of-scope | Business rule extraction, model synthesis | [INFERRED] |
+| Restrictions | Constraint limits | Max 200 entities, 50 attributes/entity | [RECOMMENDED] |
+| Gaps & Open Items | Confidence threshold | < 0.8 | [RECOMMENDED] |
+| Gaps & Open Items | Ambiguity threshold | > 3 ambiguities | [RECOMMENDED] |
+| Gaps & Open Items | Missing attributes threshold | > 5 attributes | [RECOMMENDED] |
+| Gaps & Open Items | Unclear relationships threshold | > 3 relationships | [RECOMMENDED] |
+| Gaps & Open Items | Processing time threshold | > 15 minutes | [RECOMMENDED] |
+| Gaps & Open Items | Max entities | 200 entities | [RECOMMENDED] |
+| Gaps & Open Items | Max attributes per entity | 50 attributes | [RECOMMENDED] |
+| Gaps & Open Items | Max relationships | 100 relationships | [RECOMMENDED] |
+| Gaps & Open Items | Max document size | 50,000 tokens | [RECOMMENDED] |
+| Gaps & Open Items | Handoff package format | 6-component structured package | [RECOMMENDED] |
+
+Summary Statistics:
+- Total [INPUT] characteristics: 15
+- Total [INFERRED] characteristics: 6
+- Total [RECOMMENDED] characteristics: 23
+- Total characteristics: 44
+
+─────────────────────────────────────────────────────
+AGENT DEFINITION CARD
+─────────────────────────────────────────────────────
+Agent Name: Business Rules & Compliance Agent
+
+1. Tasks
+   - T15: Extract Business Rules — Identify and document all business rules from requirements including calculation logic, validation rules, and business constraints
+   - T16: Define Calculation Business Rules — Specify calculation formulas for all metrics (approval rates, conversion rates, fraud scores, transaction volumes, campaign ROI)
+   - T17: Create Security Access Rules — Define role-based access control (RBAC) rules, PII protection requirements, and data masking policies
+   - T18: Establish Data Retention Policies — Document retention periods (7-year compliance requirement), archival strategies, and data purging rules
+   - T19: Create Audit Trail Requirements — Specify audit log schema, retention requirements, access control for audit logs, and compliance reporting requirements
+
+2. Trigger & Scope
+   - [INPUT] Trigger: Receipt of requirements document (parallel execution with entity modeling)
+   - [INPUT] Scope Start: On receipt of requirements document
+   - [INPUT] Scope End: When all rules, policies, and audit requirements are documented, validated, and approved by compliance officers
+   - [INFERRED] Scope Boundary: Does not perform entity modeling or model synthesis; focuses exclusively on business logic, compliance, and audit requirements
+
+3. Business Justification
+   - [INPUT] Purpose: Ensure all compliance and business logic requirements are captured for model accuracy and regulatory adherence
+   - [INPUT] Success Criteria: 100% of rules, policies, and audit requirements captured and validated; compliance officer approval obtained
+   - [INFERRED] KPIs: Rule Coverage Rate (target: 100%), Compliance Validation Rate (target: 100%), Audit Requirement Completeness (target: 100%)
+   - [INFERRED] Cost of Inaction: Compliance failures, regulatory penalties, audit risk, inaccurate reporting, data security breaches
+
+4. Technical Profile
+   - [INPUT] Recommended Model: GPT-4o (for complex business rule extraction and compliance validation requiring high accuracy)
+   - [RECOMMENDED] Estimated Token Consumption: 18,000-30,000 tokens per execution (10,000-18,000 input for requirements document + 8,000-12,000 output for rules catalog and compliance documentation)
+   - [INPUT] Required Integrations: Documentation tool, compliance checklist, audit log generator, governance validation API
+   - [INPUT] Dependencies: Complete requirements, compliance officer input, regulatory standards documentation
+
+5. Behavioural Profile
+   - [INPUT] Decision-Making Approach: Rule-based deterministic with compliance validation — follows regulatory standards and escalates uncertainty
+   - [INPUT] Error Handling Strategy: Never omit compliance requirements; never invent rules; never approve incomplete documentation; escalate all compliance uncertainty
+   - [INPUT] Output Format: Business rules catalog (structured JSON/YAML), security access policy document, data retention policy document, audit trail specification
+
+6. Human-in-Loop Design
+   - [RECOMMENDED] Escalation Criteria: Missing compliance requirements (> 2 requirements), conflicting rules (> 2 conflicts), incomplete audit specifications, confidence score < 0.85 for any compliance requirement
+   - [RECOMMENDED] Escalation Threshold: Any missing compliance requirement, any conflicting business rule, any incomplete audit trail specification
+   - [INFERRED] Information Presented: Rule text, compliance reference, conflict or gap description, proposed resolution, regulatory impact assessment
+   - [INPUT] Human Role: Compliance Officer, Auditor, Legal Counsel
+   - [RECOMMENDED] Feedback Loop: Update extraction logic based on compliance feedback; maintain a knowledge base of regulatory standards and compliance patterns
+
+7. Explainability & Audit
+
+Audit Log Schema:
+| Field Name | Data Type | Description | Required | Classification Tag |
+|------------|-----------|-------------|----------|--------------------|
+| Timestamp | DateTime | Execution timestamp | Yes | [RECOMMENDED] |
+| Agent Name | String | Business Rules & Compliance Agent | Yes | [RECOMMENDED] |
+| Execution ID | String | Unique execution identifier (UUID) | Yes | [RECOMMENDED] |
+| Input Summary | Text | Requirements document summary | Yes | [RECOMMENDED] |
+| Output Summary | Text | Rules extracted, policies defined | Yes | [RECOMMENDED] |
+| Status | Enum | Success/Failure/Escalated | Yes | [RECOMMENDED] |
+| Error Details | Text | Error message if extraction failed | No | [RECOMMENDED] |
+| User ID | String | Requesting user identifier | Yes | [RECOMMENDED] |
+| Rule | String | Business rule being extracted | Yes | [RECOMMENDED] |
+| Compliance Reference | String | Regulatory standard reference | Yes | [RECOMMENDED] |
+| Validation Result | Enum | Compliant/Non-Compliant/Uncertain | Yes | [RECOMMENDED] |
+
+Audit Log Retention & Access Control:
+- [RECOMMENDED] Retention Period: All audit logs must be retained for 7 years from the date of creation in immutable storage with versioning enabled; archival strategy moves logs to cold storage after 1 year while maintaining accessibility
+- [RECOMMENDED] Access Control Specifications:
+  - Compliance Team: Full read access to all logs
+  - Audit Officers: Full read access with export capabilities
+  - Legal Counsel: Full read access to all logs
+  - Project Leads: Read access to logs for their projects only
+  - System Administrators: Read access for troubleshooting only
+- [RECOMMENDED] Access Logging: All access to audit logs must itself be logged with accessor ID, timestamp, records accessed, and purpose
+- [RECOMMENDED] Security Requirements: Encryption at rest (AES-256) and in transit (TLS 1.3), role-based access control (RBAC) enforcement, multi-factor authentication required for access
+
+8. Restrictions & Boundaries
+   - [INPUT] What this agent must NOT do: Never omit compliance requirements; never invent business rules; never approve incomplete documentation; never bypass compliance validation
+   - [INFERRED] Out-of-scope activities: Entity modeling, attribute definition, model synthesis (handled by other agents)
+   - [RECOMMENDED] Constraint limits: Maximum 100 business rules, maximum 50 compliance requirements, maximum processing time 12 minutes
+
+9. Gaps & Open Items
+
+Gap & Open Item Handling:
+- [RECOMMENDED] Escalation Criteria Thresholds:
+  - Confidence score threshold for escalation: < 0.85
+  - Missing compliance requirements threshold: > 2 requirements
+  - Conflicting rules threshold: > 2 conflicts
+  - Processing time threshold: > 12 minutes
+- [RECOMMENDED] Token & Entity Constraints:
+  - Maximum business rules to extract: 100 rules
+  - Maximum compliance requirements: 50 requirements
+  - Maximum document size in tokens: 50,000 tokens
+- [RECOMMENDED] Handoff Package Format:
+  1. Summary of work completed (rules extracted, policies defined, audit specs created)
+  2. List of identified gaps or conflicts with severity classification (Critical/High/Medium/Low)
+  3. Specific questions requiring clarification (with regulatory context and proposed resolutions)
+  4. Partial outputs or work-in-progress artifacts (rules catalog, policy drafts, audit specifications)
+  5. Recommended next steps (resolve conflicts, obtain compliance approval, integrate with model)
+  6. Risk assessment if gaps remain unresolved (regulatory penalties, audit failures, compliance violations)
+
+Open Items List:
+| Item ID | Description | Classification Tag | Risk if Unvalidated | Clarification Needed |
+|---------|-------------|---------------------|----------------------|----------------------|
+| OI-07 | Compliance escalation thresholds | [RECOMMENDED] | Compliance failure | What are escalation criteria for compliance ambiguity? |
+| OI-08 | Regulatory standards completeness | [RECOMMENDED] | Missing compliance requirements | Are all applicable regulatory standards included? |
+| OI-09 | Audit log retention enforcement | [RECOMMENDED] | Non-compliance with retention | How is 7-year retention enforced and monitored? |
+
+10. Classification Summary
+
+| Characteristic Category | Characteristic Name | Value | Classification Tag |
+|------------------------|---------------------|-------|-------------------|
+| Trigger | Trigger event | Receipt of requirements document | [INPUT] |
+| Trigger | Scope start | On receipt of requirements document | [INPUT] |
+| Trigger | Scope end | When rules/policies validated and approved | [INPUT] |
+| Trigger | Scope boundary | Does not perform entity modeling | [INFERRED] |
+| Business Justification | Purpose | Capture compliance and business logic | [INPUT] |
+| Business Justification | Success criteria | 100% rule/policy coverage, approval obtained | [INPUT] |
+| Business Justification | KPIs | Rule Coverage, Compliance Validation Rate | [INFERRED] |
+| Business Justification | Cost of inaction | Compliance failures, regulatory penalties | [INFERRED] |
+| Technical Profile | Recommended model | GPT-4o | [INPUT] |
+| Technical Profile | Token consumption | 18,000-30,000 tokens per execution | [RECOMMENDED] |
+| Technical Profile | Required integrations | Documentation tool, compliance checklist | [INPUT] |
+| Technical Profile | Dependencies | Requirements, compliance officer input | [INPUT] |
+| Behavioural Profile | Decision-making approach | Rule-based with compliance validation | [INPUT] |
+| Behavioural Profile | Error handling strategy | Never omit compliance, escalate uncertainty | [INPUT] |
+| Behavioural Profile | Output format | Rules catalog, policies, audit specs | [INPUT] |
+| Human-in-Loop | Escalation criteria | Missing requirements > 2, conflicts > 2 | [RECOMMENDED] |
+| Human-in-Loop | Escalation threshold | Any missing compliance requirement | [RECOMMENDED] |
+| Human-in-Loop | Information presented | Rule text, compliance reference, resolution | [INFERRED] |
+| Human-in-Loop | Human role | Compliance Officer, Auditor | [INPUT] |
+| Human-in-Loop | Feedback loop | Update extraction logic from feedback | [RECOMMENDED] |
+| Explainability & Audit | Audit log schema | Timestamp, Rule, Compliance Reference | [RECOMMENDED] |
+| Explainability & Audit | Retention period | 7 years | [RECOMMENDED] |
+| Explainability & Audit | Access control | Compliance Team, Audit Officers | [RECOMMENDED] |
+| Explainability & Audit | Access logging | All access logged | [RECOMMENDED] |
+| Explainability & Audit | Security requirements | AES-256, TLS 1.3, RBAC, MFA | [RECOMMENDED] |
+| Restrictions | Must NOT do | Never omit compliance, never invent rules | [INPUT] |
+| Restrictions | Out-of-scope | Entity modeling, model synthesis | [INFERRED] |
+| Restrictions | Constraint limits | Max 100 rules, 50 compliance requirements | [RECOMMENDED] |
+| Gaps & Open Items | Confidence threshold | < 0.85 | [RECOMMENDED] |
+| Gaps & Open Items | Missing compliance threshold | > 2 requirements | [RECOMMENDED] |
+| Gaps & Open Items | Conflicting rules threshold | > 2 conflicts | [RECOMMENDED] |
+| Gaps & Open Items | Processing time threshold | > 12 minutes | [RECOMMENDED] |
+| Gaps & Open Items | Max business rules | 100 rules | [RECOMMENDED] |
+| Gaps & Open Items | Max compliance requirements | 50 requirements | [RECOMMENDED] |
+| Gaps & Open Items | Max document size | 50,000 tokens | [RECOMMENDED] |
+| Gaps & Open Items | Handoff package format | 6-component structured package | [RECOMMENDED] |
+
+Summary Statistics:
+- Total [INPUT] characteristics: 15
+- Total [INFERRED] characteristics: 6
+- Total [RECOMMENDED] characteristics: 23
+- Total characteristics: 44
+
+─────────────────────────────────────────────────────
+AGENT DEFINITION CARD
+─────────────────────────────────────────────────────
+Agent Name: Model Synthesis & Integration Agent
+
+1. Tasks
+   - T20: Validate Model Completeness — Cross-reference all entity, attribute, relationship, and rule specifications against requirements to ensure 100% coverage
+   - T21: Document Model Rationale — Create comprehensive documentation explaining all modeling decisions, assumptions, and rationale for entity/attribute/relationship definitions
+   - T22: Integrate with Data Governance — Validate the conceptual model against data governance standards, obtain governance approval, and register the model in the governance repository
+
+2. Trigger & Scope
+   - [INFERRED] Trigger: Complete entity, attribute, relationship, and rule definitions from all upstream agents
+   - [INFERRED] Scope Start: On completion of all prior modeling tasks (requirements parsing, entity modeling, business rules extraction)
+   - [INFERRED] Scope End: When conceptual data model is validated, documented, governance-approved, and handed off to logical/physical modeling teams
+   - [INFERRED] Scope Boundary: Does not perform logical or physical modeling; focuses exclusively on assembling, validating, and integrating the conceptual model
+
+3. Business Justification
+   - [INPUT] Purpose: Deliver a complete, validated conceptual data model to support all credit card reporting requirements
+   - [INPUT] Success Criteria: Model supports all five reports (Application Funnel, Campaign Performance, Credit Risk, Fraud Detection, Transaction Analysis), 100% coverage of required entities/attributes/rules, governance approval obtained
+   - [INFERRED] KPIs: Model Coverage Rate (target: 100%), Validation Success Rate (target: 100%), Governance Approval Time (target: < 72 hours)
+   - [INFERRED] Cost of Inaction: Incomplete model, reporting failures, rework, inability to proceed to logical/physical modeling
+
+4. Technical Profile
+   - [INPUT] Recommended Model: GPT-4o (for complex model validation and integration requiring high accuracy)
+   - [RECOMMENDED] Estimated Token Consumption: 25,000-40,000 tokens per execution (15,000-25,000 input for all model components + 10,000-15,000 output for validation report and documentation)
+   - [INPUT] Required Integrations: Data modeling tool, integration API, governance validation tool, documentation generator
+   - [INPUT] Dependencies: Complete and validated prior outputs (entity specs, rules catalog, compliance documentation), governance system availability
+
+5. Behavioural Profile
+   - [INPUT] Decision-Making Approach: Rule-based deterministic with governance validation — follows data governance standards and escalates integration failures
+   - [INPUT] Error Handling Strategy: Never hand off incomplete model; never bypass validation; never omit integration steps; escalate all integration/validation failures
+   - [INPUT] Output Format: Conceptual data model package (ERD, entity specifications, rules catalog, compliance documentation), integration report, handoff package for logical modeling teams
+
+6. Human-in-Loop Design
+   - [RECOMMENDED] Escalation Criteria: Integration failures (> 2 failures), validation errors (> 5 errors), incomplete model components (> 3 missing components), confidence score < 0.9 for model completeness
+   - [RECOMMENDED] Escalation Threshold: Any failed validation, any missing model component, any integration failure with governance system
+   - [INFERRED] Information Presented: Model artifacts (ERD, specifications), validation errors, integration log, gap analysis, proposed resolution
+   - [INPUT] Human Role: Data Modeler, Governance Lead, Data Architect
+   - [RECOMMENDED] Feedback Loop: Update integration logic based on governance feedback; maintain a knowledge base of validation patterns and integration requirements
+
+7. Explainability & Audit
+
+Audit Log Schema:
+| Field Name | Data Type | Description | Required | Classification Tag |
+|------------|-----------|-------------|----------|--------------------|
+| Timestamp | DateTime | Execution timestamp | Yes | [RECOMMENDED] |
+| Agent Name | String | Model Synthesis & Integration Agent | Yes | [RECOMMENDED] |
+| Execution ID | String | Unique execution identifier (UUID) | Yes | [RECOMMENDED] |
+| Input Summary | Text | Model components summary | Yes | [RECOMMENDED] |
+| Output Summary | Text | Validation results, integration status | Yes | [RECOMMENDED] |
+| Status | Enum | Success/Failure/Escalated | Yes | [RECOMMENDED] |
+| Error Details | Text | Error message if validation/integration failed | No | [RECOMMENDED] |
+| User ID | String | Requesting user identifier | Yes | [RECOMMENDED] |
+| Model Component | String | Component being validated/integrated | Yes | [RECOMMENDED] |
+| Validation Status | Enum | Pass/Fail/Warning | Yes | [RECOMMENDED] |
+| Errors | Text | Validation or integration errors | No | [RECOMMENDED] |
+
+Audit Log Retention & Access Control:
+- [RECOMMENDED] Retention Period: All audit logs must be retained for 7 years from the date of creation in immutable storage with versioning enabled; archival strategy moves logs to cold storage after 1 year while maintaining accessibility
+- [RECOMMENDED] Access Control Specifications:
+  - Data Governance Team: Full read access to all logs
+  - Project Leads: Full read access to logs for their projects
+  - Audit Team: Full read access with export capabilities
+  - Data Architects: Read access to logs for their models
+  - System Administrators: Read access for troubleshooting only
+- [RECOMMENDED] Access Logging: All access to audit logs must itself be logged with accessor ID, timestamp, records accessed, and purpose
+- [RECOMMENDED] Security Requirements: Encryption at rest (AES-256) and in transit (TLS 1.3), role-based access control (RBAC) enforcement, multi-factor authentication required for access
+
+8. Restrictions & Boundaries
+   - [INPUT] What this agent must NOT do: Never hand off incomplete model; never bypass validation; never omit integration steps; never proceed without governance approval
+   - [INFERRED] Out-of-scope activities: Logical modeling, physical modeling, database implementation (handled by downstream teams)
+   - [RECOMMENDED] Constraint limits: Maximum 50,000 tokens, maximum processing time 20 minutes, maximum 10 integration retry attempts
+
+9. Gaps & Open Items
+
+Gap & Open Item Handling:
+- [RECOMMENDED] Escalation Criteria Thresholds:
+  - Confidence score threshold for escalation: < 0.9
+  - Integration failures threshold: > 2 failures
+  - Validation errors threshold: > 5 errors
+  - Missing model components threshold: > 3 components
+  - Processing time threshold: > 20 minutes
+- [RECOMMENDED] Token & Entity Constraints:
+  - Maximum document size in tokens: 50,000 tokens
+  - Maximum integration retry attempts: 10 attempts
+  - Maximum validation cycles: 5 cycles
+- [RECOMMENDED] Handoff Package Format:
+  1. Summary of work completed (model assembled, validated, integrated)
+  2. List of validation results with pass/fail status for each component
+  3. Integration report with governance approval status
+  4. Complete model artifacts (ERD, entity specifications, rules catalog, compliance documentation)
+  5. Recommended next steps (proceed to logical modeling, address validation warnings)
+  6. Risk assessment if warnings remain unresolved (impact on logical/physical modeling)
+
+Open Items List:
+| Item ID | Description | Classification Tag | Risk if Unvalidated | Clarification Needed |
+|---------|-------------|---------------------|----------------------|----------------------|
+| OI-10 | Integration failure escalation path | [RECOMMENDED] | Model not accepted by governance | What is the escalation path for integration failure? |
+| OI-11 | Handoff package format and content | [RECOMMENDED] | Incomplete handoff to logical modeling | What are the required components of the handoff package? |
+| OI-12 | Governance approval process | [RECOMMENDED] | Delayed approval | What is the governance approval process and timeline? |
+
+10. Classification Summary
+
+| Characteristic Category | Characteristic Name | Value | Classification Tag |
+|------------------------|---------------------|-------|-------------------|
+| Trigger | Trigger event | Complete model definitions from upstream | [INFERRED] |
+| Trigger | Scope start | On completion of all prior modeling tasks | [INFERRED] |
+| Trigger | Scope end | When model validated and handed off | [INFERRED] |
+| Trigger | Scope boundary | Does not perform logical/physical modeling | [INFERRED] |
+| Business Justification | Purpose | Deliver complete validated conceptual model | [INPUT] |
+| Business Justification | Success criteria | 100% coverage, governance approval | [INPUT] |
+| Business Justification | KPIs | Model Coverage, Validation Success Rate | [INFERRED] |
+| Business Justification | Cost of inaction | Incomplete model, reporting failures | [INFERRED] |
+| Technical Profile | Recommended model | GPT-4o | [INPUT] |
+| Technical Profile | Token consumption | 25,000-40,000 tokens per execution | [RECOMMENDED] |
+| Technical Profile | Required integrations | Modeling tool, governance validation API | [INPUT] |
+| Technical Profile | Dependencies | Complete prior outputs, governance system | [INPUT] |
+| Behavioural Profile | Decision-making approach | Rule-based with governance validation | [INPUT] |
+| Behavioural Profile | Error handling strategy | Never hand off incomplete, escalate failures | [INPUT] |
+| Behavioural Profile | Output format | Model package, integration report, handoff | [INPUT] |
+| Human-in-Loop | Escalation criteria | Failures > 2, errors > 5, components > 3 | [RECOMMENDED] |
+| Human-in-Loop | Escalation threshold | Any failed validation or integration | [RECOMMENDED] |
+| Human-in-Loop | Information presented | Model artifacts, errors, integration log | [INFERRED] |
+| Human-in-Loop | Human role | Data Modeler, Governance Lead | [INPUT] |
+| Human-in-Loop | Feedback loop | Update integration logic from feedback | [RECOMMENDED] |
+| Explainability & Audit | Audit log schema | Timestamp, Model Component, Validation Status | [RECOMMENDED] |
+| Explainability & Audit | Retention period | 7 years | [RECOMMENDED] |
+| Explainability & Audit | Access control | Data Governance, Project Leads | [RECOMMENDED] |
+| Explainability & Audit | Access logging | All access logged | [RECOMMENDED] |
+| Explainability & Audit | Security requirements | AES-256, TLS 1.3, RBAC, MFA | [RECOMMENDED] |
+| Restrictions | Must NOT do | Never hand off incomplete, never bypass validation | [INPUT] |
+| Restrictions | Out-of-scope | Logical/physical modeling | [INFERRED] |
+| Restrictions | Constraint limits | Max 50,000 tokens, 20 min processing | [RECOMMENDED] |
+| Gaps & Open Items | Confidence threshold | < 0.9 | [RECOMMENDED] |
+| Gaps & Open Items | Integration failures threshold | > 2 failures | [RECOMMENDED] |
+| Gaps & Open Items | Validation errors threshold | > 5 errors | [RECOMMENDED] |
+| Gaps & Open Items | Missing components threshold | > 3 components | [RECOMMENDED] |
+| Gaps & Open Items | Processing time threshold | > 20 minutes | [RECOMMENDED] |
+| Gaps & Open Items | Max document size | 50,000 tokens | [RECOMMENDED] |
+| Gaps & Open Items | Max integration retries | 10 attempts | [RECOMMENDED] |
+| Gaps & Open Items | Max validation cycles | 5 cycles | [RECOMMENDED] |
+| Gaps & Open Items | Handoff package format | 6-component structured package | [RECOMMENDED] |
+
+Summary Statistics:
+- Total [INPUT] characteristics: 13
+- Total [INFERRED] characteristics: 8
+- Total [RECOMMENDED] characteristics: 23
+- Total characteristics: 44
+
+----------------------------------------------------------------
+
+SECTION 2C — PIPELINE SUMMARY
+
+Pipeline Overview:
+- Total Tasks: 22 (from Task-to-Agent Mapping Table)
+- Total Agents: 6 (2 available + 4 new)
+- Total Execution Steps: 22 (sequential with some parallel execution)
+- Estimated End-to-End Duration: 8-12 hours (depending on escalation frequency and human review time)
+
+Agent Summary Table:
+| Agent Name | Type | Purpose | Decision Type | Tasks Assigned | Human-in-Loop | Estimated Cost |
+|------------|------|---------|---------------|----------------|---------------|----------------|
+| Requirements Parsing & Validation Agent | New | Extract and validate requirements | Rule-based | 4 (T01-T04) | Yes (gaps/escalation) | $0.08-$0.13 per execution |
+| Fabric Model Conceptual | Available | Define conceptual entities and relationships | Rule-based | Supports entity modeling | No (used as reference) | N/A (integrated into Entity & Attribute Modeling Agent) |
+| Fabric Model Data Constraints | Available | Define data constraints and business rules | Rule-based | Supports business rules | No (used as reference) | N/A (integrated into Business Rules & Compliance Agent) |
+| Entity & Attribute Modeling Agent | New | Define entities, attributes, relationships | Rule-based | 10 (T05-T14) | Yes (ambiguity) | $0.10-$0.18 per execution |
+| Business Rules & Compliance Agent | New | Extract rules, compliance, audit requirements | Rule-based | 5 (T15-T19) | Yes (compliance/gaps) | $0.09-$0.15 per execution |
+| Model Synthesis & Integration Agent | New | Assemble and validate complete model | Rule-based | 3 (T20-T22) | Yes (integration failure) | $0.13-$0.20 per execution |
+
+Pipeline Flow Diagram (Text-based):
+START → Requirements Parsing & Validation Agent (T01-T04) → [Parallel: Entity & Attribute Modeling Agent (T05-T14) + Business Rules & Compliance Agent (T15-T19)] → Model Synthesis & Integration Agent (T20-T22) → END
+
+Execution Notes:
+- Requirements Parsing & Validation Agent must complete before any downstream agents execute
+- Entity & Attribute Modeling Agent and Business Rules & Compliance Agent can execute in parallel after requirements are validated
+- Model Synthesis & Integration Agent executes only after both Entity & Attribute Modeling Agent and Business Rules & Compliance Agent complete
+- Human-in-the-loop reviews may extend execution time at each escalation point
+- Total estimated cost per complete pipeline execution: $0.40-$0.66
+
+----------------------------------------------------------------
+
 SECTION 3 — KB, TOOLS, GUARDRAILS & MODELS
-================================================================
 
 | KB (Knowledge Base) | Tools | Guardrails | Models |
 |---------------------|-------|------------|--------|
-| **Credit Card Reporting Standards Repository** - Contains industry-standard reporting frameworks (e.g., Basel III, CFPB guidelines) and credit card business process documentation. Required by Requirements Parsing & Validation Agent and Business Rules & Compliance Agent to validate requirements against regulatory standards and extract compliance rules. | **Document Parsing API** - NLP-based document extraction tool (e.g., Azure Form Recognizer, AWS Textract) to parse unstructured requirements documents into structured sections. Required by Requirements Parsing & Validation Agent to extract requirements text, identify sections, and detect missing content. | **Requirements Completeness Validation** - Rule-based validation that checks for presence of all mandatory sections (entities, attributes, relationships, business rules, compliance) in requirements document. Applied by Requirements Parsing & Validation Agent to prevent downstream modeling from incomplete inputs; escalates if any critical section is missing. | **GPT-4o** - Recommended for Requirements Parsing & Validation Agent and Entity & Attribute Modeling Agent due to high complexity of requirements interpretation, ambiguity resolution, and entity relationship inference; requires strong reasoning and context handling (128k token window). |
-| **Enterprise Data Modeling Standards** - Internal data modeling conventions, naming standards, entity templates, and relationship patterns used across the organization. Required by Fabric Model Conceptual, Entity & Attribute Modeling Agent, and Model Synthesis & Integration Agent to ensure model consistency with enterprise architecture. | **Entity Modeling Tool** - Data modeling platform (e.g., erwin, ER/Studio, Lucidchart) with API integration to programmatically create entities, attributes, and relationships. Required by Fabric Model Conceptual and Entity & Attribute Modeling Agent to generate conceptual ER diagrams and export model artifacts. | **Entity Invention Prevention** - Hard constraint that prevents agents from creating entities, attributes, or relationships not explicitly stated or derivable from requirements. Applied to Fabric Model Conceptual and Entity & Attribute Modeling Agent to prevent hallucination and ensure all model elements are traceable to source requirements. | **Claude Sonnet 3.5** - Recommended for Fabric Model Data Constraints and Business Rules & Compliance Agent due to strong structured output generation, rule extraction accuracy, and compliance reasoning; cost-effective for constraint and rule documentation tasks. |
-| **Compliance and Audit Guidelines Repository** - Regulatory compliance frameworks (e.g., GDPR, PCI-DSS, SOX), audit trail requirements, data retention policies, and PII handling standards. Required by Business Rules & Compliance Agent to validate security access rules, retention policies, and audit requirements against regulatory mandates. | **Compliance Checklist Tool** - Automated compliance validation tool that cross-references model artifacts against regulatory checklists (e.g., PII identification, retention period validation, access control verification). Required by Business Rules & Compliance Agent to ensure all compliance requirements are documented and validated. | **Compliance Omission Prevention** - Hard constraint that prevents Business Rules & Compliance Agent from approving model or documentation if any compliance requirement is missing or unvalidated; forces escalation to compliance officer if gaps detected. | **GPT-4o-mini** - Recommended for Model Synthesis & Integration Agent for final model assembly, validation report generation, and handoff package preparation; sufficient reasoning capability for integration tasks at lower cost than GPT-4o. |
-| **Credit Card Business Process Documentation** - Detailed process flows for credit card application funnel, campaign management, fraud screening, transaction processing, and risk assessment. Required by Fabric Model Conceptual to understand business context and derive accurate entity relationships and funnel stage mappings. | **Governance Validation API** - Integration with enterprise data governance platform (e.g., Collibra, Alation, Informatica) to validate model against governance policies, naming conventions, and data lineage requirements. Required by Model Synthesis & Integration Agent to ensure model compliance with enterprise governance before handoff. | **Ambiguity Escalation Gate** - Human-in-the-loop trigger that halts Entity & Attribute Modeling Agent if confidence score for any entity definition, attribute mapping, or relationship falls below 0.8; presents ambiguity details to data modeler or domain expert for resolution before proceeding. | **Gemini Pro 1.5** - Alternative model for Fabric Model Conceptual if cost optimization is priority; strong entity extraction and relationship inference at lower cost than GPT-4o, with 1M token context window for large requirements documents. |
-| **Historical Model Patterns Repository** - Archive of previously developed conceptual models for similar domains (e.g., banking, payments, lending) with documented entity patterns, attribute standards, and relationship templates. Required by Entity & Attribute Modeling Agent to leverage proven patterns and reduce ambiguity in entity definition. | **Audit Log Generator** - Structured logging tool that captures all agent decisions, reasoning steps, escalations, and model changes with timestamps and user attribution. Required by all agents to maintain full audit trail for compliance, governance review, and explainability. | **Model Completeness Validation** - Rule-based validation that verifies 100% coverage of all requirements by model artifacts (entities, attributes, relationships, rules) before handoff; applied by Model Synthesis & Integration Agent to prevent incomplete model delivery. | **Hybrid Routing (GPT-4o + GPT-4o-mini)** - Recommended routing strategy: use GPT-4o for high-complexity tasks (requirements parsing, entity ambiguity resolution, compliance reasoning) and GPT-4o-mini for structured output generation (documentation, validation reports, handoff packages) to optimize cost-performance ratio. |
+| **Credit Card Reporting Standards Repository** — Contains industry-standard definitions for credit card entities (Application, Campaign, Transaction, Account, Customer), attributes, and relationships; supports Requirements Parsing & Validation Agent and Entity & Attribute Modeling Agent by providing reference definitions and validation patterns to ensure consistency with industry standards and reduce ambiguity in entity identification. | **Document Parsing API** — Automated extraction tool for parsing structured and unstructured requirements documents (PDF, Word, text); supports Requirements Parsing & Validation Agent by converting raw requirements into structured JSON format with section identification, enabling systematic validation and gap detection. | **Requirements Completeness Checklist** — Mandatory validation rule requiring all critical sections (business goals, entities, attributes, relationships, business rules, compliance requirements) to be present before proceeding to modeling; prevents Requirements Parsing & Validation Agent from passing incomplete requirements to downstream agents, ensuring 100% coverage and reducing rework. | **GPT-4o for Requirements Parsing & Validation Agent** — Selected for high accuracy in document parsing, validation logic, and gap detection; handles complex requirements documents up to 50,000 tokens with confidence scoring for escalation decisions; cost-effective for critical validation tasks requiring deterministic output. |
+| **Data Modeling Standards Knowledge Base** — Contains conceptual, logical, and physical data modeling best practices, entity naming conventions, relationship cardinality rules, and attribute definition standards; supports Entity & Attribute Modeling Agent by providing modeling patterns and validation rules to ensure consistent, high-quality entity-relationship models aligned with enterprise data architecture standards. | **Entity Relationship Diagram (ERD) Generator** — Automated diagramming tool that converts entity specifications and relationship definitions into visual ERD artifacts; supports Entity & Attribute Modeling Agent by producing standardized ERD outputs for stakeholder review, documentation, and handoff to logical modeling teams. | **Entity Invention Prevention Rule** — Hard constraint preventing Entity & Attribute Modeling Agent from creating entities, attributes, or relationships not explicitly supported by requirements; requires escalation to domain experts for any ambiguous or inferred entity definitions, ensuring model accuracy and preventing hallucination. | **GPT-4o for Entity & Attribute Modeling Agent** — Selected for complex entity and relationship modeling requiring high reasoning capability and accuracy; handles up to 200 entities and 50 attributes per entity with ambiguity detection and escalation logic; supports parallel execution with Business Rules & Compliance Agent for efficiency. |
+| **Regulatory Compliance Standards Repository** — Contains credit card industry regulations (PCI-DSS, GDPR, CCPA), data retention requirements (7-year compliance), PII protection standards, and audit trail specifications; supports Business Rules & Compliance Agent by providing compliance validation rules and regulatory reference documentation to ensure all compliance requirements are captured and validated. | **Compliance Validation Checklist Tool** — Automated compliance validation tool that cross-references extracted business rules and policies against regulatory standards; supports Business Rules & Compliance Agent by identifying missing compliance requirements, conflicting rules, and incomplete audit specifications, triggering escalation to compliance officers when necessary. | **Compliance Omission Prevention Rule** — Hard constraint preventing Business Rules & Compliance Agent from omitting any compliance requirement or approving incomplete documentation; requires compliance officer approval for all extracted rules and policies, ensuring regulatory adherence and preventing compliance failures. | **GPT-4o for Business Rules & Compliance Agent** — Selected for high accuracy in business rule extraction and compliance validation; handles complex regulatory requirements with confidence scoring (threshold 0.85) for escalation decisions; supports parallel execution with Entity & Attribute Modeling Agent for efficiency. |
+| **Data Governance Standards Repository** — Contains enterprise data governance policies, data quality standards, metadata management requirements, and model approval workflows; supports Model Synthesis & Integration Agent by providing governance validation rules and integration requirements to ensure conceptual model aligns with enterprise governance standards before handoff. | **Governance Validation API** — Integration tool that validates conceptual model against enterprise governance standards and registers approved models in the governance repository; supports Model Synthesis & Integration Agent by automating governance validation, approval workflow, and model registration, ensuring seamless integration with enterprise data governance systems. | **Incomplete Model Handoff Prevention Rule** — Hard constraint preventing Model Synthesis & Integration Agent from handing off incomplete or unvalidated models to logical modeling teams; requires 100% validation pass rate and governance approval before handoff, ensuring model quality and preventing downstream rework. | **GPT-4o for Model Synthesis & Integration Agent** — Selected for complex model validation and integration requiring high accuracy and reasoning; handles large model artifacts (up to 50,000 tokens) with comprehensive validation logic and governance integration; ensures complete, validated, governance-approved conceptual model handoff. |
 
-================================================================
+----------------------------------------------------------------
+
 SECTION 4 — IMPROVEMENTS & OPTIMISATIONS
-================================================================
 
 ─────────────────────────────────────────────────────────────
-ACCURACY — How well the agent produces correct, on-target
-outputs and avoids errors.
-─────────────────────────────────────────────────────────────
+ACCURACY — How well the agent produces correct, on-target outputs and avoids errors.
 
 | Criteria            | Description                          |
 |---------------------|--------------------------------------|
-| Self-validation     | Requirements Parsing & Validation Agent must cross-reference extracted requirements against a mandatory section checklist (entities, attributes, relationships, business rules, compliance, audit) and re-validate that all sections are present and non-empty before marking requirements as complete. Fabric Model Conceptual must verify that every entity in the output model is traceable to at least one requirement statement and that all stated requirements are represented by at least one entity or relationship. Entity & Attribute Modeling Agent must validate that every attribute has a defined data type, business definition, and source requirement reference, and that all relationships have documented cardinality and business justification. Business Rules & Compliance Agent must verify that every extracted rule maps to a specific compliance standard or regulatory reference and that all mandatory compliance categories (PII, retention, access control, audit) are documented. Model Synthesis & Integration Agent must validate that the final model passes all governance policy checks (naming conventions, lineage, metadata completeness) and that the handoff package includes all required artifacts (ER diagram, validation report, compliance certificate, integration log) before marking the workflow as complete. |
-| Boundary definition | Requirements Parsing & Validation Agent must NOT alter, paraphrase, or interpret the source requirements text; it must extract verbatim and flag ambiguity for human review. Fabric Model Conceptual must NOT create entities that are not explicitly mentioned or clearly derivable from the requirements; it must NOT infer business processes or use cases beyond what is stated. Fabric Model Data Constraints must NOT invent business rules or constraints that are not documented in the requirements; it must escalate if constraints are ambiguous or missing. Entity & Attribute Modeling Agent must NOT proceed with modeling if any core entity or mandatory attribute is undefined or ambiguous; it must halt and escalate for domain expert input. Business Rules & Compliance Agent must NOT approve any model or documentation if a compliance requirement is missing, incomplete, or unvalidated; it must escalate to compliance officer. Model Synthesis & Integration Agent must NOT hand off the model if governance validation fails or if any required artifact is missing; it must document gaps and escalate to project lead. |
-| Known issues log    | Requirements Parsing & Validation Agent: Log all instances of missing sections, ambiguous requirement statements, conflicting definitions, and unresolvable gaps; track escalation response time and resolution status. Fabric Model Conceptual: Log all cases where entity definitions are ambiguous, where multiple entities could represent the same concept, where relationship cardinality is unclear, or where business context is insufficient to determine entity scope. Fabric Model Data Constraints: Log all instances of missing business rules, conflicting constraints, undefined validation logic, or incomplete data type specifications. Entity & Attribute Modeling Agent: Log all ambiguity escalations, all cases where confidence score falls below 0.8, all missing attributes detected during validation, and all relationship conflicts identified during consolidation. Business Rules & Compliance Agent: Log all missing compliance requirements, all conflicts between business rules and regulatory standards, all PII classification uncertainties, and all audit trail specification gaps. Model Synthesis & Integration Agent: Log all governance validation failures, all integration errors with governance platform, all missing handoff artifacts, and all model completeness validation failures. |
+| Self-validation     | **Requirements Parsing & Validation Agent**: Measure completeness coverage rate (target: 100%) by cross-referencing parsed sections against a predefined checklist of mandatory sections (business goals, entities, attributes, relationships, business rules, compliance requirements); re-validate parsed output against source document to detect parsing errors before handoff. **Entity & Attribute Modeling Agent**: Measure entity coverage rate (target: 100%) by cross-referencing defined entities against requirements; validate all relationships for correct cardinality and optionality; re-check attribute completeness (all mandatory attributes defined) before handoff. **Business Rules & Compliance Agent**: Measure rule coverage rate (target: 100%) by cross-referencing extracted rules against requirements; validate all compliance requirements against regulatory standards checklist; re-check audit trail specifications for completeness before handoff. **Model Synthesis & Integration Agent**: Measure model completeness (target: 100%) by validating all entities, attributes, relationships, and rules are integrated; cross-reference final model against all five reporting objectives to ensure full coverage; re-validate governance approval status before handoff. |
+| Boundary definition | **Requirements Parsing & Validation Agent**: Must NOT alter or invent requirements; must NOT proceed with modeling if critical sections are missing; must NOT assume business rules or compliance requirements without explicit documentation; must escalate any ambiguity or missing section. **Entity & Attribute Modeling Agent**: Must NOT invent entities without evidence in requirements; must NOT omit mandatory attributes; must NOT assume relationships without explicit requirements; must NOT proceed with incomplete entity definitions; must escalate all ambiguity. **Business Rules & Compliance Agent**: Must NOT omit compliance requirements; must NOT invent business rules; must NOT approve incomplete documentation; must NOT bypass compliance validation; must escalate all compliance uncertainty. **Model Synthesis & Integration Agent**: Must NOT hand off incomplete model; must NOT bypass validation; must NOT omit integration steps; must NOT proceed without governance approval; must escalate all integration/validation failures. |
+| Known issues log    | **Requirements Parsing & Validation Agent**: Log parsing failures (document format not supported, section headers not recognized), false positives in gap detection (section present but not detected), escalation delays (stakeholder unavailable for gap resolution), token limit exceeded (document too large). **Entity & Attribute Modeling Agent**: Log entity ambiguity patterns (unclear entity boundaries, overlapping entity definitions), relationship cardinality errors (incorrect one-to-many vs many-to-many), attribute completeness failures (mandatory attributes missing), escalation delays (domain expert unavailable). **Business Rules & Compliance Agent**: Log compliance requirement omissions (regulatory standard not checked), conflicting business rules (contradictory calculation logic), incomplete audit specifications (missing audit log fields), escalation delays (compliance officer unavailable). **Model Synthesis & Integration Agent**: Log integration failures (governance API unavailable, validation errors not resolved), incomplete model components (missing entity specifications, missing rules catalog), validation cycle timeouts (validation taking too long), governance approval delays (approval workflow stuck). |
 
 ─────────────────────────────────────────────────────────────
-EFFICIENCY — How well the agent produces output that is most
-optimised — same correctness in fewer steps or words.
-─────────────────────────────────────────────────────────────
+EFFICIENCY — How well the agent produces output that is most optimised — same correctness in fewer steps or words.
 
 | Criteria                  | Description                    |
 |---------------------------|--------------------------------|
-| Best practices (sample outputs) | Requirements Parsing & Validation Agent: Provide 3-5 examples of correctly parsed requirements with all sections identified, labeled, and validated, plus 2-3 counter-examples showing incomplete parsing (e.g., missing compliance section, ambiguous entity definition) that should trigger escalation. Fabric Model Conceptual: Provide 3-5 examples of well-formed conceptual entity definitions with complete attributes, clear relationships, documented cardinality, and business justification, plus 2-3 counter-examples showing incomplete entities (e.g., missing primary key, undefined relationship, no business context) that should be rejected. Fabric Model Data Constraints: Provide 3-5 examples of complete business rule documentation with rule name, logic, validation criteria, compliance reference, and affected entities, plus 2-3 counter-examples showing incomplete rules (e.g., missing validation logic, no compliance reference) that should trigger escalation. Entity & Attribute Modeling Agent: Provide 3-5 examples of complete entity-relationship diagrams with all entities, attributes, relationships, and cardinality documented, plus 2-3 counter-examples showing incomplete models (e.g., orphaned entities, missing attributes, ambiguous relationships) that should halt the workflow. Business Rules & Compliance Agent: Provide 3-5 examples of complete compliance documentation with all mandatory categories covered (PII, retention, access, audit), plus 2-3 counter-examples showing incomplete compliance (e.g., missing PII classification, undefined retention period) that should prevent approval. Model Synthesis & Integration Agent: Provide 3-5 examples of complete handoff packages with all required artifacts (ER diagram, validation report, compliance certificate, integration log, governance approval), plus 2-3 counter-examples showing incomplete packages (e.g., missing validation report, failed governance check) that should prevent handoff. |
-| Defined output structure  | Requirements Parsing & Validation Agent: Output must follow JSON schema with fixed sections: {requirements_text, sections_identified: [entities, attributes, relationships, business_rules, compliance, audit], missing_sections: [], ambiguities: [], escalations: [], validation_status}. Fabric Model Conceptual: Output must follow ER diagram template with fixed structure: {entity_name, primary_key, attributes: [{name, type, definition, source_requirement}], relationships: [{target_entity, cardinality, business_justification}], business_context}. Fabric Model Data Constraints: Output must follow business rule catalog schema: {rule_id, rule_name, rule_logic, validation_criteria, affected_entities, compliance_reference, source_requirement}. Entity & Attribute Modeling Agent: Output must follow consolidated model schema: {entities: [], attributes: [], relationships: [], ambiguity_log: [], validation_report: {coverage_rate, missing_elements, confidence_scores}}. Business Rules & Compliance Agent: Output must follow compliance documentation schema: {compliance_category: [PII, retention, access, audit], requirements: [], validation_status, escalations: [], compliance_certificate}. Model Synthesis & Integration Agent: Output must follow handoff package schema: {conceptual_model, validation_report, compliance_certificate, integration_log, governance_approval, handoff_status}. |
-| Define task breakdown     | Requirements Parsing & Validation Agent: Break down into (1) document ingestion and section identification, (2) requirements extraction per section, (3) completeness validation against checklist, (4) ambiguity detection and escalation, (5) final validation report generation. Fabric Model Conceptual: Break down into (1) entity candidate identification from requirements, (2) attribute extraction per entity, (3) relationship mapping between entities, (4) cardinality and business context documentation, (5) conceptual ER diagram generation. Fabric Model Data Constraints: Break down into (1) business rule extraction from requirements, (2) constraint specification per rule, (3) compliance reference mapping, (4) validation logic documentation, (5) business rule catalog generation. Entity & Attribute Modeling Agent: Break down into (1) entity consolidation from multiple sources, (2) attribute completeness validation, (3) relationship conflict resolution, (4) ambiguity escalation, (5) final model validation report. Business Rules & Compliance Agent: Break down into (1) compliance requirement extraction per category (PII, retention, access, audit), (2) regulatory reference mapping, (3) compliance validation against standards, (4) gap identification and escalation, (5) compliance certificate generation. Model Synthesis & Integration Agent: Break down into (1) model artifact assembly, (2) governance validation via API, (3) handoff package preparation, (4) integration log generation, (5) final handoff approval. |
+| Best practices (sample outputs) | **Requirements Parsing & Validation Agent**: Provide labeled examples of ideal parsed requirements output (structured JSON with all sections present, validation report with clear pass/fail status, escalation log with severity classification) and counter-examples showing what to avoid (unstructured text output, missing validation status, vague gap descriptions). **Entity & Attribute Modeling Agent**: Provide labeled examples of ideal entity specifications (complete entity definition with primary key, all mandatory attributes, clear relationships with cardinality) and counter-examples showing what to avoid (incomplete entity definitions, missing attributes, unclear relationships). **Business Rules & Compliance Agent**: Provide labeled examples of ideal business rules catalog (structured rules with clear logic, compliance references, validation status) and counter-examples showing what to avoid (vague rule descriptions, missing compliance references, incomplete audit specifications). **Model Synthesis & Integration Agent**: Provide labeled examples of ideal conceptual model package (complete ERD, all entity specifications, rules catalog, compliance documentation, governance approval) and counter-examples showing what to avoid (incomplete model artifacts, missing documentation, no governance approval). |
+| Defined output structure  | **Requirements Parsing & Validation Agent**: Enforce structured JSON output schema with mandatory fields (parsed_sections: array, validation_report: object with pass/fail per section, escalation_log: array with gap details and severity); reject any output not conforming to schema. **Entity & Attribute Modeling Agent**: Enforce structured entity specification schema (entity_name: string, primary_key: string, attributes: array of objects with name/type/nullability, relationships: array with target_entity/cardinality/optionality); enforce ERD output in standard notation (Crow's Foot or UML). **Business Rules & Compliance Agent**: Enforce structured business rules catalog schema (rule_id: string, rule_description: string, compliance_reference: string, validation_status: enum); enforce policy document templates for security access rules, data retention policies, and audit trail specifications. **Model Synthesis & Integration Agent**: Enforce structured handoff package schema (conceptual_model: object with ERD/entity_specs/rules_catalog, validation_report: object with pass/fail per component, integration_report: object with governance_approval_status, documentation: object with model_rationale); reject any handoff not conforming to schema. |
+| Define task breakdown     | **Requirements Parsing & Validation Agent**: Decompose into 4 discrete subtasks executed sequentially: (1) Parse document into sections, (2) Validate each section against completeness checklist, (3) Identify and document gaps, (4) Escalate critical gaps to stakeholders. **Entity & Attribute Modeling Agent**: Decompose into 10 discrete subtasks executed sequentially: (1) Identify core entities, (2-6) Define entity structures for Application/Campaign/Credit Risk/Fraud/Transaction, (7) Define all entity attributes, (8) Establish entity relationships, (9) Establish funnel stage relationships, (10) Resolve entity ambiguity. **Business Rules & Compliance Agent**: Decompose into 5 discrete subtasks executed sequentially: (1) Extract business rules, (2) Define calculation business rules, (3) Create security access rules, (4) Establish data retention policies, (5) Create audit trail requirements. **Model Synthesis & Integration Agent**: Decompose into 3 discrete subtasks executed sequentially: (1) Validate model completeness, (2) Document model rationale, (3) Integrate with data governance and obtain approval. |
 
 ─────────────────────────────────────────────────────────────
-COST EFFECTIVE — How to minimise cost per agent without
-sacrificing quality.
-─────────────────────────────────────────────────────────────
+COST EFFECTIVE — How to minimise cost per agent without sacrificing quality.
 
 | Criteria                       | Description               |
 |--------------------------------|---------------------------|
-| Low cost model routing         | Requirements Parsing & Validation Agent: Use GPT-4o for initial requirements interpretation and ambiguity detection (high complexity), then route to GPT-4o-mini for validation report generation and escalation log formatting (low complexity). Fabric Model Conceptual: Use GPT-4o for entity identification and relationship inference (high complexity), then route to GPT-4o-mini for ER diagram formatting and documentation generation (low complexity). Fabric Model Data Constraints: Use Claude Sonnet 3.5 for business rule extraction and constraint specification (medium complexity, cost-effective), then route to GPT-4o-mini for rule catalog formatting (low complexity). Entity & Attribute Modeling Agent: Use GPT-4o for ambiguity resolution and entity consolidation (high complexity), then route to GPT-4o-mini for validation report generation (low complexity). Business Rules & Compliance Agent: Use Claude Sonnet 3.5 for compliance requirement extraction and regulatory mapping (medium complexity, cost-effective), then route to GPT-4o-mini for compliance certificate generation (low complexity). Model Synthesis & Integration Agent: Use GPT-4o-mini for all tasks (model assembly, validation, handoff package preparation) as these are primarily structured output generation tasks with low reasoning complexity. |
-| Token size reduction           | Requirements Parsing & Validation Agent: Summarize requirements document into structured sections before passing to downstream agents; cache the full document and pass only section references to reduce redundant context loading. Fabric Model Conceptual: Remove verbose requirement text from context after entity extraction; retain only entity names, attribute lists, and relationship mappings in downstream context. Fabric Model Data Constraints: Extract only business rule statements from requirements; remove all descriptive text, examples, and background context to reduce input token count by an estimated 40-50%. Entity & Attribute Modeling Agent: Receive only entity/attribute/relationship definitions from upstream agents, not full requirements document; use entity IDs and references instead of repeating full entity definitions in context. Business Rules & Compliance Agent: Extract only compliance-related sections from requirements; remove all non-compliance content to reduce input token count by an estimated 60-70%. Model Synthesis & Integration Agent: Receive only final model artifacts (entity list, attribute list, relationship list, rule catalog) from upstream agents, not intermediate outputs or full requirements; use artifact references instead of full content to reduce context size. |
-| Hybrid model (agent + non-agentic) | Requirements Parsing & Validation Agent: Use regex and rule-based parsing to identify section headers, extract entity names, and detect missing sections before invoking LLM for ambiguity detection and escalation logic. Fabric Model Conceptual: Use deterministic lookup tables to map common entity patterns (e.g., "Application" → standard attributes: application_id, application_date, status) before invoking LLM for relationship inference and business context documentation. Fabric Model Data Constraints: Use rule-based extraction to identify constraint keywords (e.g., "must", "required", "cannot exceed") and extract constraint logic before invoking LLM for compliance reference mapping and validation logic documentation. Entity & Attribute Modeling Agent: Use deterministic validation rules to check attribute completeness (e.g., every attribute must have name, type, definition) and relationship cardinality (e.g., 1:1, 1:N, M:N) before invoking LLM for ambiguity resolution and consolidation logic. Business Rules & Compliance Agent: Use rule-based classification to categorize compliance requirements (PII, retention, access, audit) and extract regulatory references before invoking LLM for compliance validation and gap identification. Model Synthesis & Integration Agent: Use deterministic validation rules to check handoff package completeness (e.g., all required artifacts present, all validation checks passed) before invoking LLM for integration log generation and final approval documentation. |
+| Low cost model routing         | **Requirements Parsing & Validation Agent**: Route document parsing (subtask 1) to GPT-4o-mini for cost savings (simple extraction task); route validation and gap detection (subtasks 2-4) to GPT-4o for accuracy (complex reasoning required). **Entity & Attribute Modeling Agent**: Route entity identification (subtask 1) to GPT-4o-mini for initial candidate extraction; route entity structure definition and relationship establishment (subtasks 2-9) to GPT-4o for accuracy (complex modeling decisions); route ambiguity resolution (subtask 10) to GPT-4o for high-confidence escalation decisions. **Business Rules & Compliance Agent**: Route business rule extraction (subtask 1) to GPT-4o-mini for initial extraction; route compliance validation and audit specifications (subtasks 2-5) to GPT-4o for accuracy (regulatory compliance requires high accuracy). **Model Synthesis & Integration Agent**: Route model completeness validation (subtask 1) to GPT-4o for comprehensive validation; route documentation generation (subtask 2) to GPT-4o-mini for cost savings (template-based output); route governance integration (subtask 3) to GPT-4o for accuracy (critical approval step). |
+| Token size reduction           | **Requirements Parsing & Validation Agent**: Trim input context by removing boilerplate sections (cover pages, table of contents, appendices) before parsing; summarize long requirement descriptions to key points; cache validation checklist to avoid re-sending in every call. **Entity & Attribute Modeling Agent**: Trim input context by passing only relevant requirement sections (entity definitions, attribute lists) instead of full document; summarize relationship descriptions to key cardinality/optionality rules; cache data modeling standards to avoid re-sending. **Business Rules & Compliance Agent**: Trim input context by passing only business rules and compliance sections instead of full document; summarize regulatory standards to key requirements; cache compliance checklist to avoid re-sending. **Model Synthesis & Integration Agent**: Trim input context by passing only entity specifications, rules catalog, and compliance documentation (not full requirements document); summarize validation results to pass/fail status per component; cache governance standards to avoid re-sending. |
+| Hybrid model (agent + non-agentic) | **Requirements Parsing & Validation Agent**: Use regex-based extraction for section headers and document structure (non-agentic); use LLM only for content validation and gap detection (agentic). **Entity & Attribute Modeling Agent**: Use rule-based lookup for standard entity definitions (Application, Transaction, Account) from knowledge base (non-agentic); use LLM only for custom entity definitions and ambiguity resolution (agentic). **Business Rules & Compliance Agent**: Use rule-based compliance checklist validation for standard requirements (PCI-DSS, GDPR) (non-agentic); use LLM only for complex business rule extraction and conflict resolution (agentic). **Model Synthesis & Integration Agent**: Use rule-based validation for model completeness checks (all entities present, all attributes defined) (non-agentic); use LLM only for model rationale documentation and governance integration (agentic). |
 
-================================================================
+----------------------------------------------------------------
+
 SECTION 5 — RUN METRICS
-================================================================
 
 Model Used  : gpt-4o
-
-Tokens Used : Estimated 22,500 tokens (Input: ~18,500 tokens including system instructions, requirements document, agent mapper table, and instruction prompt; Output: ~4,000 tokens for complete orchestration output with all sections)
-
-API Cost    : ~$0.135
-
-================================================================
-END OF ORCHESTRATION OUTPUT
-================================================================
+Tokens Used : ~38,500 tokens (input: ~21,000 tokens for instruction prompt + requirements document + agent mapper table + thinking document; output: ~17,500 tokens for complete orchestration output)
+API Cost    : ~$0.23
