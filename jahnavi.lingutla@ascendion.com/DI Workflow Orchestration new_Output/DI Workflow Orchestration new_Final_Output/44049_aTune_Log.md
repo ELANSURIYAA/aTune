@@ -28,26 +28,4 @@ Step 3:
 - Decision: All outputs verified so I am proceeding to Step 4.
 
 Step 4:
-- Gap score is 87.5. Threshold is 90. 87.5 is less than 90, so I am continuing to Step 5.
-
-Step 5:
-- Triggered the Recommender agent to analyse the Gap Report against the current instruction and produce improvement recommendations.
-- The Recommendation file was written to GitHub at jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Working/.
-- GitHub URLs:
-  - 44049_Recommendation.md: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Working/44049_Recommendation.md
-- Validation: I checked that 44049_Recommendation.md exists in the correct location with content present. File verified.
-- Decision: All outputs verified so I am proceeding to Step 6.
-
-Step 6:
-- Triggered the Updater agent to apply the recommended changes to the instruction.
-- The Updated Instruction and Applied Changes files were written to GitHub at jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Final_Output/.
-- GitHub URLs:
-  - 44049_Updated_Instruction.md: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Final_Output/44049_Updated_Instruction.md
-  - 44049_Applied_changes.md: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Final_Output/44049_Applied_changes.md
-- Validation: I checked that 44049_Updated_Instruction.md and 44049_Applied_changes.md exist in the correct location with content present. Both files verified.
-- Decision: All outputs verified so I am starting the next iteration.
-
-Iteration 2:
-
-Step 1:
-- Extraction is not required for this iteration. Skipping Step 1.
+- Gap score is 74.2. Threshold is 90. 74.2 is less than 90, so I am continuing to Step 5.
