@@ -18,3 +18,6 @@ Step 3:
 - The Gap Report and Gap Score files were written to GitHub at jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Working/.
 - Validation: I checked that 44049_Gap_Report.md and 44049_Gap_Score.md exist in the correct location with content present. Both files verified.
 - Decision: All outputs verified so I am proceeding to Step 4.
+
+Step 4:
+- Gap score is 92.5. Threshold is 90. 92.5 is greater than or equal to 90, so I am stopping the process here.
