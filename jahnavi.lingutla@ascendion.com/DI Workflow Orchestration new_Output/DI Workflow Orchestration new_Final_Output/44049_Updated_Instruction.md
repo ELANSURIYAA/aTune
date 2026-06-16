@@ -225,19 +225,25 @@ Coverage: 100% (all tasks mapped)
 ----------------------------------------------------------------
 
 SECTION 2B — AGENT DEFINITION CARDS
-For each new agent proposed in Section 2, provide a complete Agent Definition Card containing the following mandatory sections:
 
 Classification Tag Requirements:
+
 Apply one of the following classification tags to every characteristic, input, output, trigger, failure mode, escalation criterion, token constraint, and audit log schema field defined for each agent:
+
 - [INPUT]: Characteristics carried forward directly from thinking outputs, requirements document, or agent mapper table
 - [INFERRED]: Characteristics derived by reconciling findings, analyzing dependencies, or logical deduction from available information
 - [RECOMMENDED]: Characteristics proposed by this orchestration agent based on best practices, gap analysis, or optimization opportunities
+
 Format: Present tagged characteristics as: [TAG] Characteristic description or value
+
 Example:
 - [INPUT] Trigger: User uploads requirements document
 - [INFERRED] Token constraint: Maximum 50,000 tokens per document
 - [RECOMMENDED] Escalation threshold: Confidence score < 0.8
+
 Ensure all characteristics in sections 1-9 of each Agent Definition Card include appropriate classification tags.
+
+For each new agent proposed in Section 2, provide a complete Agent Definition Card containing the following mandatory sections:
 
 Agent Name: [Name of new agent]
 
@@ -276,9 +282,12 @@ Agent Name: [Name of new agent]
    - Traceability requirements
 
 Audit Log Schema:
+
 Define the exact fields to be logged for this agent:
+
 | Field Name | Data Type | Description | Required | Classification Tag |
 |------------|-----------|-------------|----------|--------------------|
+
 Minimum required fields:
 - Timestamp: DateTime, Execution timestamp, Yes
 - Agent Name: String, Name of executing agent, Yes
@@ -288,18 +297,22 @@ Minimum required fields:
 - Status: Enum, Success/Failure/Escalated, Yes
 - Error Details: Text, Error message if applicable, No
 - User ID: String, Requesting user identifier, Yes
+
 Agent-specific fields (add based on agent function):
 - For validation agents: Section, Gap Type, Resolution Status
 - For modeling agents: Entity, Attribute, Rationale, Ambiguity
 - For compliance agents: Rule, Compliance Reference, Validation Result
 - For synthesis agents: Model Component, Validation Status, Errors
+
 Specify all fields with their data types and whether they are required or optional.
 
 Audit Log Retention & Access Control:
+
 Retention Period:
 - All audit logs must be retained for 7 years from the date of creation
 - Logs must be stored in immutable storage with versioning enabled
 - Archival strategy: Move to cold storage after 1 year, maintain accessibility
+
 Access Control Specifications:
 Define who can access audit logs for this agent:
 - Data Governance Team: Full read access to all logs
@@ -307,9 +320,11 @@ Define who can access audit logs for this agent:
 - Project Leads: Read access to logs for their projects only
 - Audit Team: Full read access with export capabilities
 - System Administrators: Read access for troubleshooting only
+
 Access Logging:
 - All access to audit logs must itself be logged
 - Access logs must include: accessor ID, timestamp, records accessed, purpose
+
 Security Requirements:
 - Encryption at rest and in transit
 - Role-based access control (RBAC) enforcement
@@ -324,17 +339,21 @@ Security Requirements:
    - List all open items with classification tags
    - Risk if unvalidated
    - Clarification needed
+
 Gap & Open Item Handling:
+
 Escalation Criteria Thresholds:
 - [Specify threshold] Confidence score threshold for escalation (e.g., < 0.8)
 - [Specify threshold] Missing critical sections threshold (e.g., > 3 sections)
 - [Specify threshold] Ambiguous requirements threshold (e.g., > 5 ambiguities)
 - [Specify threshold] Processing time threshold (e.g., > 10 minutes)
+
 Token & Entity Constraints:
 - [Specify limit] Maximum document size in tokens (e.g., 50,000 tokens)
 - [Specify limit] Maximum entities to process (e.g., 200 entities)
 - [Specify limit] Maximum attributes per entity (e.g., 50 attributes)
 - [Specify limit] Maximum relationships to map (e.g., 100 relationships)
+
 Handoff Package Format:
 When escalating or handing off to human review or next agent, include:
 1. Summary of work completed
@@ -343,6 +362,7 @@ When escalating or handing off to human review or next agent, include:
 4. Partial outputs or work-in-progress artifacts
 5. Recommended next steps
 6. Risk assessment if gaps remain unresolved
+
 Open Items List:
 | Item ID | Description | Classification Tag | Risk if Unvalidated | Clarification Needed |
 |---------|-------------|---------------------|----------------------|----------------------|
@@ -548,3 +568,4 @@ CORE RULES
 
 ## Expected Output
 An ordered list of selected agents with a concise justification for their inclusion and sequence, ready for workflow automation.
+----------------------------------------
