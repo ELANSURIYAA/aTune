@@ -38,3 +38,5 @@ Iteration 2:
 
 Step 1:
 - Extraction is not required for this iteration. Skipping Step 1.
+
+[ERROR] Attempt 1 of 3 -- Step 2: Executer agent execution failed or produced no output.
