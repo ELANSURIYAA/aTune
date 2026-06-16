@@ -1,7 +1,5 @@
-# Applied Changes
-
 | Gap Reference | Change Type | Section Updated | Status |
-|--------------|-------------|----------------|--------|
+|--------------|------------|----------------|--------|
 | GAP-001 | Add | OUTPUT FORMAT - After SECTION 2 | APPLIED |
 | GAP-002 | Add | OUTPUT FORMAT - After SECTION 2A | APPLIED |
 | GAP-003 | Delete and Replace | SECTION 2A — TASK-TO-AGENT MAPPING | APPLIED |
