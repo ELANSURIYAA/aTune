@@ -49,23 +49,19 @@ STEP-BY-STEP INSTRUCTIONS
 
 Step 1 - Receive user requirements
   Accept task, role, objective, and expectations from the user.
-
 Step 2 - Receive agent mapper table
   Load the full agent mapper table. This is the ONLY valid source
   of available agent names. Treat every agent name outside this
   table as invalid for the "available only" section.
-
 Step 3 - Analyze requirements
   Extract the core workflow needs: what data is involved, what
   actions are required, and what the final deliverable looks like.
   Identify any capability gaps that no available agent can cover.
-
 Step 4 - Cross-reference agents (FROM MAPPER ONLY)
   Go through each agent in the mapper table one by one.
   For each agent, determine whether it matches any part of the
   stated requirements. Do not pre-filter at this stage.
   Do not pull agent names from the requirements document.
-
 Step 5 - Evaluate necessity
   For each candidate agent from the mapper, decide if it is:
     - Essential : Directly required to meet the objective
@@ -73,23 +69,19 @@ Step 5 - Evaluate necessity
     - Redundant : Overlaps with another selected agent
     - Out of scope: Not triggered by any stated requirement
   Keep only Essential agents. Document the decision for all others.
-
 Step 6 - Identify gaps
   After selecting available agents, identify what capabilities
   are still missing or under-served. These gaps will drive the
   new agent suggestions in the extended section.
-
 Step 7 - Determine optimal execution order (per option)
   For each workflow option, arrange selected agents in a logical
   sequence. Resolve dependencies first (e.g., data must be
   prepared before it is processed or distributed).
-
 Step 8 - Produce output in the format specified below
   Generate two sections: "With available agents" and
   "With available and new agents", followed by the KB/Tools/
   Guardrails/Models table, improvements, and a run metrics
   summary.
-
 Step 9 - Log all actions
   Record all agents evaluated, decisions made, and the final
   execution options for audit and compliance purposes.
@@ -190,8 +182,13 @@ SECTION 2 — WITH AVAILABLE AND NEW AGENTS
 SECTION 2A — TASK-TO-AGENT MAPPING TABLE
 Present a comprehensive mapping of all tasks identified in the requirements to their assigned agents:
 
+SECTION 2A — TASK-TO-AGENT MAPPING TABLE
+
+Present a comprehensive mapping of all tasks identified in the requirements to their assigned agents:
+
 | Task ID | Task Name | Assigned Agent | Execution Sequence | Input | Output |
 |---------|-----------|----------------|---------------------|-------|--------|
+
 Instructions:
 - List all deduplicated tasks from the requirements analysis
 - Map each task to exactly one agent (available or new)
@@ -201,7 +198,9 @@ Instructions:
 - Ensure no tasks are omitted or unmapped
 
 Task Coverage Validation:
+
 Before finalizing the Task-to-Agent Mapping Table, perform the following validation:
+
 1. Cross-reference all tasks identified in the requirements analysis against the mapping table
 2. Ensure every task from the requirements is assigned to exactly one agent
 3. Verify no tasks are omitted, duplicated, or left unmapped
@@ -225,6 +224,7 @@ Coverage: 100% (all tasks mapped)
 ----------------------------------------------------------------
 
 SECTION 2B — AGENT DEFINITION CARDS
+For each new agent proposed in Section 2, provide a complete Agent Definition Card containing the following mandatory sections:
 
 Classification Tag Requirements:
 
@@ -242,8 +242,6 @@ Example:
 - [RECOMMENDED] Escalation threshold: Confidence score < 0.8
 
 Ensure all characteristics in sections 1-9 of each Agent Definition Card include appropriate classification tags.
-
-For each new agent proposed in Section 2, provide a complete Agent Definition Card containing the following mandatory sections:
 
 Agent Name: [Name of new agent]
 
@@ -366,39 +364,76 @@ When escalating or handing off to human review or next agent, include:
 Open Items List:
 | Item ID | Description | Classification Tag | Risk if Unvalidated | Clarification Needed |
 |---------|-------------|---------------------|----------------------|----------------------|
+
 Populate this table with all open items specific to this agent.
 
 10. Classification Summary
     - Table listing all characteristics with classification tags
-    - Format: | Characteristic Category | Characteristic Name | Value | Classification Tag |
-    - List every characteristic defined in sections 1-9 of this Agent Definition Card
-    - Include the characteristic category, specific name, value, and classification tag
-    - Ensure no characteristics are omitted from this summary
-    - This table serves as a quick reference for characteristic provenance and validation
-    - Summary Statistics:
-      - Total [INPUT] characteristics: [Count]
-      - Total [INFERRED] characteristics: [Count]
-      - Total [RECOMMENDED] characteristics: [Count]
-      - Total characteristics: [Count]
-Repeat this structure for each new agent proposed.
+    - Format: | Characteristic | Value | Classification Tag |
+
+Classification Summary Table:
+
+This table consolidates all characteristics defined for this agent with their classification tags:
+
+| Characteristic Category | Characteristic Name | Value | Classification Tag |
+|-------------------------|---------------------|-------|--------------------|
+| Trigger                 | [Name]              | [Value] | [INPUT/INFERRED/RECOMMENDED] |
+| Inputs                  | [Name]              | [Value] | [INPUT/INFERRED/RECOMMENDED] |
+| Outputs                 | [Name]              | [Value] | [INPUT/INFERRED/RECOMMENDED] |
+| Failure Modes           | [Name]              | [Value] | [INPUT/INFERRED/RECOMMENDED] |
+| Escalation Criteria     | [Name]              | [Value] | [INPUT/INFERRED/RECOMMENDED] |
+| Token Constraints       | [Name]              | [Value] | [INPUT/INFERRED/RECOMMENDED] |
+| Audit Log Schema Fields | [Name]              | [Value] | [INPUT/INFERRED/RECOMMENDED] |
+
+Instructions:
+- List every characteristic defined in sections 1-9 of this Agent Definition Card
+- Include the characteristic category, specific name, value, and classification tag
+- Ensure no characteristics are omitted from this summary
+- This table serves as a quick reference for characteristic provenance and validation
+
+Summary Statistics:
+- Total [INPUT] characteristics: [Count]
+- Total [INFERRED] characteristics: [Count]
+- Total [RECOMMENDED] characteristics: [Count]
+- Total characteristics: [Count]
 
 ----------------------------------------------------------------
 
 SECTION 2C — PIPELINE SUMMARY
 This section provides a consolidated quick-reference summary of the complete agent pipeline proposed in Section 2 (With Available and New Agents).
+
+SECTION 2C — PIPELINE SUMMARY
+
+This section provides a consolidated quick-reference summary of the complete agent pipeline proposed in Section 2 (With Available and New Agents).
+
 Pipeline Overview:
 - Total Tasks: [Count from Task-to-Agent Mapping Table]
 - Total Agents: [Count] ([X] available + [Y] new)
 - Total Execution Steps: [Count based on sequence]
 - Estimated End-to-End Duration: [Estimate]
+
 Agent Summary Table:
+
 | Agent Name | Type | Purpose | Decision Type | Tasks Assigned | Human-in-Loop | Estimated Cost |
 |------------|------|---------|---------------|----------------|---------------|----------------|
+
+Column Definitions:
+- Agent Name: Full name of the agent
+- Type: Available or NEW
+- Purpose: One-sentence description of agent's primary function
+- Decision Type: Deterministic, Probabilistic, or Hybrid
+- Tasks Assigned: Count of tasks from Task-to-Agent Mapping Table
+- Human-in-Loop: Yes/No (based on Agent Definition Card)
+- Estimated Cost: Per-execution cost estimate
+
 Populate this table for all agents (available and new) included in the recommended workflow.
+
 Pipeline Flow Diagram (Text-based):
 Provide a simple text-based flow showing agent execution order:
+
 Example:
 START → Agent 1 → Agent 2 → Agent 3 (parallel with Agent 4) → Agent 5 → END
+
 This summary enables stakeholders to quickly understand the complete pipeline without parsing detailed sections.
 
 ----------------------------------------------------------------
@@ -567,5 +602,5 @@ CORE RULES
     will get" are produced for each option in Section 2.
 
 ## Expected Output
+
 An ordered list of selected agents with a concise justification for their inclusion and sequence, ready for workflow automation.
-----------------------------------------
