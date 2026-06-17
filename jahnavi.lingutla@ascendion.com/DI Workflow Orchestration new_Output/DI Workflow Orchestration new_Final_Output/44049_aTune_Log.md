@@ -16,3 +16,16 @@ Step 2:
   - 44049_Agent_Executed_Output.txt: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/44049_Agent_Executed_Output.txt
 - Validation: I checked that 44049_Agent_Executed_Output.txt exists in the correct location with content present. File verified.
 - Decision: All outputs verified so I am proceeding to Step 3.
+
+Step 3:
+- Created an empty Gap Report file in GitHub to initialise the review cycle.
+- Triggered the Reviewer agent to compare the executed output against the goal and instruction.
+- The Gap Report and Gap Score files were written to GitHub at jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Working/.
+- GitHub URLs:
+  - 44049_Gap_Report.md: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Working/44049_Gap_Report.md
+  - 44049_Gap_Score.md: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Working/44049_Gap_Score.md
+- Validation: I checked that 44049_Gap_Report.md and 44049_Gap_Score.md exist in the correct location with content present. Both files verified.
+- Decision: All outputs verified so I am proceeding to Step 4.
+
+Step 4:
+- Gap score is 85. Threshold is 90. 85 is less than 90, so I am continuing to Step 5.
