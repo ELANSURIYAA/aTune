@@ -55,3 +55,25 @@ Step 1:
 Step 2:
 [ERROR] Attempt 1 of 3 — Executer agent execution failed or produced no output. The workflow did not complete successfully or polling failed.
 [ERROR] Attempt 2 of 3 — Executer agent execution failed or produced no output. The workflow did not complete successfully or polling failed.
+[ERROR] Attempt 3 of 3 — Executer agent execution failed or produced no output. The workflow did not complete successfully or polling failed.
+[ERROR] All 3 attempts failed for Step 2 (Executer). Stopping aTune process. Reason: The Executer agent workflow did not complete successfully or polling failed after 3 consecutive attempts. This may be due to the updated instruction file being too large, malformed, or incompatible with the Executer agent's processing capabilities.
+
+---
+
+Tuning Outcome:
+- Status: STOPPED — Step Failure After 3 Attempts
+- Agent ID tuned: 44049
+- Agent Name: DI Workflow Orchestration new
+- Threshold set: 90
+- Final Gap Score achieved: 85
+- Total iterations run: 1
+
+Iteration Summary:
+
+| Iteration | Gap Score | Decision        |
+|-----------|-----------|-----------------|
+| 1         | 85        | CONTINUE        |
+
+The complete aTune log file — containing all per-step entries written during execution plus this final summary — is located at:
+
+`jahnavi.lingutla@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Final_Output/44049_aTune_Log.md`
