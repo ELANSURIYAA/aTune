@@ -1,56 +1,62 @@
-Requirement
+Requirement 
 
-Tune the instructions for the following Agent
+Tune the instructions for the following Agent 
 
-Agent Name : ‘DI Workflow Orchestration new’ Agent ID : 44049
+Agent Name : ‘DI Workflow Orchestration new’ 
+           Agent ID : 44049 
 
+ 
 
-Threshold value - 90
+Threshold value - 90 
 
+ 
 
-Following are the key folders in the GitHub:
+Following are the key folders in the GitHub: 
 
+ 
 
-1. Agent Folder : User email id/<<AgentName>>_Instructions
+Agent Folder : User email id/<<AgentName>>_Instructions 
 
-a. Agent Instruction
+Agent Instruction 
 
-b. Goal file
+Goal file 
 
-c. Updated Instruction
+Updated Instruction 
 
-2. Agent Input Folder : <<AgentName>>_Input
+Agent Input Folder : <<AgentName>>_Input 
 
-a. Input file 1 to run the Agent - ‘Consolidated Thinking Document.txt’
+Input file 1 to run the Agent - ‘Consolidated Thinking Document.txt’ 
 
-b. Input file 2 to run the Agent - ‘Enterprise Task Agent Mapping And Gap Analysis Orchestrator (3).txt’
+Input file 2 to run the Agent - ‘Enterprise Task Agent Mapping And Gap Analysis Orchestrator (3).txt’ 
 
-c. Agent Review Input - ‘Review_Input.txt’
+Agent Review Input - ‘Review_Input.txt’ 
 
-3. Working folder : User email id/<<AgentName>>_Working
+Working folder : User email id/<<AgentName>>_Working 
 
-a. Gap Report
+Gap Report 
 
-b. Gap Score
+Gap Score 
 
-c. Updates to instructions
+Updates to instructions 
 
-4. Output folder : User email id/<<AgentName>>_Final_Output
+Output folder : User email id/<<AgentName>>_Final_Output 
 
-a. Updated Instruction
+Updated Instruction 
 
-b. Applied Changes
+Applied Changes 
 
+ 
 
-GitHub
+GitHub   
 
-· repo: ELANSURIYAA/aTune
+repo: ELANSURIYAA/aTune 
 
-· branch: main
+branch: main 
 
-· token: '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 '
+token: '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' 
 
+ 
 
-User Details
+User Details 
 
-· jahnavi.lingutla@ascendion.com
+mahak.mudgal@ascendion.com 
