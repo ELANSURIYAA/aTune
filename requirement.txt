@@ -1,0 +1,62 @@
+Requirement 
+
+Tune the instructions for the following Agent 
+
+Agent Name : ‘DI Workflow Orchestration new’ 
+           Agent ID : 44049 
+
+ 
+
+Threshold value - 90 
+
+ 
+
+Following are the key folders in the GitHub: 
+
+ 
+
+Agent Folder : User email id/<<AgentName>>_Instructions 
+
+Agent Instruction 
+
+Goal file 
+
+Updated Instruction 
+
+Agent Input Folder : <<AgentName>>_Input 
+
+Input file 1 to run the Agent - ‘Consolidated Thinking Document.txt’ 
+
+Input file 2 to run the Agent - ‘Enterprise Task Agent Mapping And Gap Analysis Orchestrator (3).txt’ 
+
+Agent Review Input - ‘Review_Input.txt’ 
+
+Working folder : User email id/<<AgentName>>_Working 
+
+Gap Report 
+
+Gap Score 
+
+Updates to instructions 
+
+Output folder : User email id/<<AgentName>>_Final_Output 
+
+Updated Instruction 
+
+Applied Changes 
+
+ 
+
+GitHub   
+
+repo: ELANSURIYAA/aTune 
+
+branch: main 
+
+token: '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' 
+
+ 
+
+User Details 
+
+jahnavi.lingutla@ascendion.com 
