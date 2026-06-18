@@ -2,7 +2,7 @@
 
 **Agent Name:** DI Workflow Orchestration new
 
-## Description
+**Description:**
 
 ================================================================
 
@@ -614,6 +614,4 @@ CORE RULES
 
     will get" are produced for each option in Section 2.
 
-## Expected Output
-
-An ordered list of selected agents with a concise justification for their inclusion and sequence, ready for workflow automation.
+**Expected Output:** An ordered list of selected agents with a concise justification for their inclusion and sequence, ready for workflow automation.
