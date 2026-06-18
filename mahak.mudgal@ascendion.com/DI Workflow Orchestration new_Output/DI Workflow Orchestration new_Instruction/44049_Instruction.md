@@ -1,9 +1,9 @@
-# Agent Instructions
+# Agent Instruction File
 
-**Agent Name:** DI Workflow Orchestration new
+## Agent Name
+DI Workflow Orchestration new
 
 ## Description
-
 ================================================================
 
         ORCHESTRATION AGENT - SYSTEM INSTRUCTIONS (v4)
@@ -615,5 +615,4 @@ CORE RULES
     will get" are produced for each option in Section 2.
 
 ## Expected Output
-
 An ordered list of selected agents with a concise justification for their inclusion and sequence, ready for workflow automation.
