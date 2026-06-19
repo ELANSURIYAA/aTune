@@ -1,4 +1,4 @@
-# Agent Instruction
+# Agent Instructions
 
 **Agent Name:** DI Oracle Documentation DMS
 
@@ -575,11 +575,9 @@ API cost for this call: X.XXXX USD
 
 - Do NOT write 0.0000 unless mathematically rounded to zero.
 
-INPUT:
+**Expected Output:** 
 
-Use the provided Oracle SQL / PL-SQL implementation as the ONLY source of truth.
-
-**Expected Output:** =============================================
+=============================================
 
 Author:        Ascendion AVA+
 Created on:
