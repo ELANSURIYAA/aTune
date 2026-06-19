@@ -18,3 +18,23 @@ Step 2:
 - Decision: All outputs verified so I am proceeding to Step 3.
 
 [ERROR] Attempt 1 of 3 — Reviewer agent execution failed or did not return expected output.
+
+[ERROR] Attempt 2 of 3 — Reviewer agent execution failed or did not return expected output.
+
+[ERROR] All 3 attempts failed for Step 3 (Reviewer). Stopping aTune process. Reason: Reviewer agent workflow did not complete successfully after 3 consecutive attempts. The workflow may have timed out, encountered an internal error, or failed to produce the required Gap Report and Gap Score files.
+
+---
+
+Tuning Outcome:
+- Status: STOPPED — Step Failure After 3 Attempts
+- Agent ID tuned: 44049
+- Agent Name: DI Workflow Orchestration new
+- Threshold set: 50
+- Final Gap Score achieved: N/A (process stopped before scoring)
+- Total iterations run: 1 (incomplete)
+
+Iteration Summary:
+
+| Iteration | Gap Score | Decision        |
+|-----------|-----------|-----------------|
+| 1         | N/A       | STOPPED (Step 3 failure after 3 attempts) |
