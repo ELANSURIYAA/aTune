@@ -557,7 +557,22 @@ API cost for this call: X.XXXX USD
 
 INPUT:
 
-Use the provided Oracle SQL / PL-SQL implementation as the ONLY source of truth.
+Use the provided Oracle SQL / PL-SQL implementation as the ONLY source of truth. 
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      {{input_string_true}}
 
 **Expected Output:** =============================================
 
