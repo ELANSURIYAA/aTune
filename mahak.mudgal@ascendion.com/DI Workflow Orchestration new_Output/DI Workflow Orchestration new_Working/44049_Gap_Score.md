@@ -2,35 +2,37 @@ QUALITY SCORE
 
 | Dimension    | Weight | Reviewer Check Score | Raw Score | Weighted Score | Notes                                         |
 |--------------|--------|----------------------|-----------|----------------|-----------------------------------------------|
-| Completeness | 40%    | 16/16                | 100/100   | 40.0/40        | 16 of 16 completeness reviewer checks satisfied |
-| Accuracy     | 40%    | 16/16                | 100/100   | 40.0/40        | 16 of 16 accuracy reviewer checks satisfied     |
-| Efficiency   | 20%    | 6/6                  | 100/100   | 20.0/20        | 6 of 6 efficiency reviewer checks satisfied     |
-| TOTAL        | 100%   |                      |           | 100.0/100      |                                               |
-
-GAP COUNTS
-
-Total Gaps Found: 37
-Not Present (NP): 16
-Not Done Correctly (NC): 15
-Not Done Optimally (NO): 6
-
-DIMENSION BREAKDOWN
-
-Completeness Checks:
-- Total Reviewer Checks: 16
-- Passed Reviewer Checks: 16
-- Failed Reviewer Checks: 0
-
-Accuracy Checks:
-- Total Reviewer Checks: 16
-- Passed Reviewer Checks: 16
-- Failed Reviewer Checks: 0
-
-Efficiency Checks:
-- Total Reviewer Checks: 6
-- Passed Reviewer Checks: 6
-- Failed Reviewer Checks: 0
+| Completeness | 40%    | 9/16                 | 56.25/100 | 22.5/40        | 9 of 16 completeness reviewer checks satisfied |
+| Accuracy     | 40%    | 16/16                | 100/100   | 40.0/40        | 16 of 16 accuracy reviewer checks satisfied    |
+| Efficiency   | 20%    | 6/6                  | 100/100   | 20.0/20        | 6 of 6 efficiency reviewer checks satisfied    |
+| TOTAL        | 100%   |                      |           | 82.5/100       |                                               |
 
 SCORE JUSTIFICATION
 
-The EXECUTOR_OUTPUT achieves a perfect score of 100/100 across all three dimensions. All 16 completeness reviewer checks are satisfied: all four agent roles are present with complete task mappings, all 16 deduplicated tasks are mapped correctly, all mandatory sections from Agent Definition Cards are represented, all required fields are included, all clusters and tasks are grouped as specified, all business rules/compliance requirements/audit specifications are documented, all gap/open item handling requirements are covered, all classification tags are used correctly, all dependencies/tools/APIs/integration points are included, all success criteria/KPIs/failure modes are documented, all required outputs are present, all edge cases/fallback behaviors are addressed, all audit log schemas/explainability formats are included, all handoff/boundary requirements are documented, all open items are flagged for validation, and all task-agent mappings are correct. All 16 accuracy reviewer checks are satisfied: the output aligns precisely with instructions and input content without hallucinated elements, all task-to-agent mappings match the input specifications, all deduplication/merging is performed correctly, all classifications are applied correctly, all dependencies/technical mappings/escalation paths are logically correct and traceable, all business rules/compliance requirements/audit specifications are extracted exactly as described, all gap identifications/escalations are justified by input content, all terminology/section headers/field names are used consistently, all relationships are interpreted correctly, all success criteria/KPIs/failure modes are accurately reflected, all edge cases/fallback behaviors/human-in-loop triggers are implemented as described, all audit log schemas/explainability formats/retention controls match the input, no unsupported assumptions or contradictions are introduced, all required outputs are represented correctly, and all open items/recommendations are traceable to input files. All 6 efficiency reviewer checks are satisfied: duplicate analysis is avoided, redundant explanations/gap entries/risk statements are eliminated, the output remains concise and structured without unnecessary sections, duplicate dependency mappings and repeated tables are avoided, excessive verbosity is avoided with logical grouping of findings, and the output is token-efficient while maintaining completeness without unnecessary repetition of input content.
+The executor output achieves a total quality score of 82.5/100. The Completeness dimension scores 22.5/40 (9 of 16 checks satisfied) due to seven missing structural elements: the output does not include all mandatory sections from the Agent Definition Card template (GAP-003), does not provide structured task profiles with all required fields (GAP-004), does not include classification tags (GAP-008), does not document success criteria/KPIs/failure modes in structured form (GAP-010), does not include dedicated edge case and fallback behavior sections (GAP-012), does not provide structured audit log schemas and explainability formats (GAP-013), does not document handoff and boundary requirements in structured form (GAP-014), and does not include a structured list of open items (GAP-015). The Accuracy dimension scores 40.0/40 (16 of 16 checks satisfied) as all task-to-agent mappings, deduplication logic, dependencies, business rules, compliance requirements, gap identifications, terminology, relationships, and outputs align precisely with the input files without introducing unsupported assumptions or contradictions. The Efficiency dimension scores 20.0/20 (6 of 6 checks satisfied) as the output avoids duplicate analysis, eliminates redundant explanations, remains concise and structured, avoids duplicate dependency mappings, logically groups similar findings, and maintains token efficiency while synthesizing input content rather than reproducing it verbatim.
+
+GAP COUNTS
+
+Total Gaps Found: 36
+Not Present (NP): 16
+Not Done Correctly (NC): 14
+Not Done Optimally (NO): 6
+
+GAPS RESOLVED IN CURRENT ITERATION
+
+Total Gaps Resolved: 29
+Previously Open Gaps Now Closed: 0
+Baseline Gaps Closed: 29
+
+GAPS REMAINING OPEN
+
+Total Open Gaps: 7
+GAP-003: All mandatory sections from each Agent Definition Card must be present in the output
+GAP-004: All required fields for each task must be included in the output
+GAP-008: All classification tags must be included and used as specified
+GAP-010: All success criteria, KPIs, and failure modes must be documented for each agent
+GAP-012: All edge cases and fallback behaviors must be addressed as per the agent cards
+GAP-013: All audit log schemas and explainability formats must be included for each agent
+GAP-014: All handoff and boundary requirements between agents must be documented
+GAP-015: All open items listed in the Gaps & Open Items sections must be included and flagged for validation
+GAP-026: All success criteria, KPIs, and failure modes must be accurately reflected from the agent cards
