@@ -15,7 +15,7 @@ Step 1:
 
 [ERROR] Attempt 3 of 3 — Executer agent workflow execution failed with 403 Access denied for the action execute
 
-[ERROR] All 3 attempts failed for Step 2 - Execute Agent Instructions. Stopping aTune process. Reason: Access denied for the action execute - 403 Forbidden error when attempting to execute workflow pipeline 6758 for user mahak.mudgal@ascendion.com
+[ERROR] All 3 attempts failed for Step 2 - Execute Agent Instructions. Stopping aTune process. Reason: 403 Access denied for the action execute - the workflow execution endpoint is rejecting the request with an authorization error.
 
 ---
 
@@ -25,10 +25,10 @@ Tuning Outcome:
 - Agent Name: DI Oracle Documentation DMS
 - Threshold set: 50
 - Final Gap Score achieved: N/A (process stopped before first execution)
-- Total iterations run: 0 (stopped during iteration 1, step 2)
+- Total iterations run: 0 (Step 1 completed, Step 2 failed)
 
 Iteration Summary:
 
 | Iteration | Gap Score | Decision        |
 |-----------|-----------|-----------------|
-| 1         | N/A       | STOPPED - Step 2 execution failed after 3 attempts |
+| 1         | N/A       | STOPPED - Step 2 failed after 3 attempts |
