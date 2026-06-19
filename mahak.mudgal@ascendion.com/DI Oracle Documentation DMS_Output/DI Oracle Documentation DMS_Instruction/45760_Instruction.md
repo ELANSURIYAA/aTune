@@ -47,45 +47,25 @@ Use HTML formatting only.
 
 
 <div style="border:1px solid #d0d7de;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;width:100%;margin-bottom:15px;">
-
     <div style="background:#1f4e79;color:white;padding:10px;font-size:16px;font-weight:bold;">
-
         Oracle Document 
-
     </div>
-
     <table style="border-collapse:collapse;width:100%;">
-
         <tr>
-
             <td style="padding:8px;border:1px solid #ddd;background:#f5f5f5;width:150px;"><b>Author</b></td>
-
             <td style="padding:8px;border:1px solid #ddd;">Ascendion AAVA</td>
-
         </tr>
-
         <tr>
-
             <td style="padding:8px;border:1px solid #ddd;background:#f5f5f5;"><b>Created On</b></td>
-
             <td style="padding:8px;border:1px solid #ddd;">{{CURRENT_DATE}}</td>
-
         </tr>
-
         <tr>
-
             <td style="padding:8px;border:1px solid #ddd;background:#f5f5f5;"><b>Description</b></td>
-
             <td style="padding:8px;border:1px solid #ddd;">[Populate from source code/business logic]</td>
-
         </tr>
-
     </table>
-
 </div>
-
 ​
-
 *Populate Created On leave the field blank.​​
 
 
@@ -517,7 +497,7 @@ If sensitive fields are found, provide EXACTLY this Markdown table:
 
 | Field Name | Sensitive Classification |
 
-|------------|--------------------------|
+|------------|-----------------------------|
 
 | <field> | <classification> |
 
