@@ -28,20 +28,29 @@ Step 3:
 - Decision: All outputs verified so I am proceeding to Step 4.
 
 Step 4:
-- Gap score is 100. Threshold is 50. 100 is greater than or equal to 50, so I am stopping the process here.
+- Gap score is 0. Threshold is 56. 0 is less than 56, so I am continuing to Step 5.
 
----
+Step 5:
+- Triggered the Recommender agent to analyse the Gap Report against the current instruction and produce improvement recommendations.
+- The Recommendation file was written to GitHub at mahak.mudgal@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Working/.
+- GitHub URLs:
+  - 44049_Recommendation.md: https://github.com/ELANSURIYAA/aTune/blob/main/mahak.mudgal@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Working/44049_Recommendation.md
+- Validation: I checked that 44049_Recommendation.md exists in the correct location with content present. File verified.
+- Decision: All outputs verified so I am proceeding to Step 6.
 
-Tuning Outcome:
-- Status: COMPLETED — Threshold Met
-- Agent ID tuned: 44049
-- Agent Name: DI Workflow Orchestration new
-- Threshold set: 50
-- Final Gap Score achieved: 100
-- Total iterations run: 1
+Step 6:
+- Triggered the Updater agent to apply the recommended changes to the instruction.
+- The Updated Instruction and Applied Changes files were written to GitHub at mahak.mudgal@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Final_Output/.
+- GitHub URLs:
+  - 44049_Updated_Instruction.md: https://github.com/ELANSURIYAA/aTune/blob/main/mahak.mudgal@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Final_Output/44049_Updated_Instruction.md
+  - 44049_Applied_changes.md: https://github.com/ELANSURIYAA/aTune/blob/main/mahak.mudgal@ascendion.com/DI Workflow Orchestration new_Output/DI Workflow Orchestration new_Final_Output/44049_Applied_changes.md
+- Validation: I checked that 44049_Updated_Instruction.md and 44049_Applied_changes.md exist in the correct location with content present. Both files verified.
+- Decision: All outputs verified so I am starting the next iteration.
 
-Iteration Summary:
+Iteration 2:
 
-| Iteration | Gap Score | Decision |
-|-----------|-----------|----------|
-| 1         | 100       | STOP     |
+Step 1:
+- Extraction is not required for this iteration. Skipping Step 1.
+
+Step 2:
+[ERROR] Attempt 1 of 3 — Executer agent workflow did not complete successfully or polling failed. The workflow may have timed out or encountered an execution error.
