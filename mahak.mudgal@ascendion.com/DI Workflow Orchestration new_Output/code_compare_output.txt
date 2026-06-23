@@ -1,0 +1,160 @@
+- CREATE OR REPLACE PROCEDURE Gold.usp_Load_All_Gold_Dimensions (
+-     p_RunId IN RAW DEFAULT NULL
+- )
+- AS
+-     v_MasterRunId RAW(16);
++ CREATE OR REPLACE PROCEDURE Gold.usp_Load_All_Gold_Dimensions (
++     p_RunId VARCHAR DEFAULT NULL
++ )
++ RETURNS VARCHAR
++ LANGUAGE JAVASCRIPT
++ AS
++ $$
++     var v_MasterRunId;
+-     v_ErrorMessage VARCHAR2(4000);
++     var v_ErrorMessage;
++     var result = '';
+-     
+- BEGIN
+-     -- Generate master RunId if not provided
+-     IF p_RunId IS NULL THEN
+-         v_MasterRunId := SYS_GUID();
+-     ELSE
+-         v_MasterRunId := p_RunId;
+-     END IF;
++     try {
++         // Generate master RunId if not provided
++         if (p_RunId == null || p_RunId == '') {
++             var stmt = snowflake.createStatement({sqlText: "SELECT UUID_STRING()"});
++             var rs = stmt.execute();
++             rs.next();
++             v_MasterRunId = rs.getColumnValue(1);
++         } else {
++             v_MasterRunId = p_RunId;
++         }
+-     -- Enable output for debugging (equivalent to PRINT)
+-     DBMS_OUTPUT.PUT_LINE('Starting Gold Layer Dimension Load Process...');
+-     DBMS_OUTPUT.PUT_LINE('Master Run ID: ' || RAWTOHEX(v_MasterRunId));
+-     DBMS_OUTPUT.PUT_LINE('');
++         // Enable output for debugging
++         result += 'Starting Gold Layer Dimension Load Process...
++ ';
++         result += 'Master Run ID: ' + v_MasterRunId + '
++ ';
++         result += '
++ ';
+-     -- Step 1: Load Date Dimension (no dependencies)
+-     DBMS_OUTPUT.PUT_LINE('Step 1/5: Loading Go_Dim_Date...');
+-     usp_Load_Gold_Dim_Date(p_RunId => v_MasterRunId);
+-     DBMS_OUTPUT.PUT_LINE('Go_Dim_Date loaded successfully.');
+-     DBMS_OUTPUT.PUT_LINE('');
++         // Step 1: Load Date Dimension (no dependencies)
++         result += 'Step 1/5: Loading Go_Dim_Date...
++ ';
++         var stmt1 = snowflake.createStatement({
++             sqlText: "CALL usp_Load_Gold_Dim_Date(:1)",
++             binds: [v_MasterRunId]
++         });
++         stmt1.execute();
++         result += 'Go_Dim_Date loaded successfully.
++ ';
++         result += '
++ ';
+-     -- Step 2: Load Holiday Dimension (depends on Date)
+-     DBMS_OUTPUT.PUT_LINE('Step 2/5: Loading Go_Dim_Holiday...');
+-     usp_Load_Gold_Dim_Holiday(p_RunId => v_MasterRunId);
+-     DBMS_OUTPUT.PUT_LINE('Go_Dim_Holiday loaded successfully.');
+-     DBMS_OUTPUT.PUT_LINE('');
++         // Step 2: Load Holiday Dimension (depends on Date)
++         result += 'Step 2/5: Loading Go_Dim_Holiday...
++ ';
++         var stmt2 = snowflake.createStatement({
++             sqlText: "CALL usp_Load_Gold_Dim_Holiday(:1)",
++             binds: [v_MasterRunId]
++         });
++         stmt2.execute();
++         result += 'Go_Dim_Holiday loaded successfully.
++ ';
++         result += '
++ ';
+-     -- Step 3: Load Resource Dimension (no dependencies)
+-     DBMS_OUTPUT.PUT_LINE('Step 3/5: Loading Go_Dim_Resource...');
+-     usp_Load_Gold_Dim_Resource(p_RunId => v_MasterRunId);
+-     DBMS_OUTPUT.PUT_LINE('Go_Dim_Resource loaded successfully.');
+-     DBMS_OUTPUT.PUT_LINE('');
++         // Step 3: Load Resource Dimension (no dependencies)
++         result += 'Step 3/5: Loading Go_Dim_Resource...
++ ';
++         var stmt3 = snowflake.createStatement({
++             sqlText: "CALL usp_Load_Gold_Dim_Resource(:1)",
++             binds: [v_MasterRunId]
++         });
++         stmt3.execute();
++         result += 'Go_Dim_Resource loaded successfully.
++ ';
++         result += '
++ ';
+-     -- Step 4: Load Project Dimension (no dependencies)
+-     DBMS_OUTPUT.PUT_LINE('Step 4/5: Loading Go_Dim_Project...');
+-     usp_Load_Gold_Dim_Project(p_RunId => v_MasterRunId);
+-     DBMS_OUTPUT.PUT_LINE('Go_Dim_Project loaded successfully.');
+-     DBMS_OUTPUT.PUT_LINE('');
++         // Step 4: Load Project Dimension (no dependencies)
++         result += 'Step 4/5: Loading Go_Dim_Project...
++ ';
++         var stmt4 = snowflake.createStatement({
++             sqlText: "CALL usp_Load_Gold_Dim_Project(:1)",
++             binds: [v_MasterRunId]
++         });
++         stmt4.execute();
++         result += 'Go_Dim_Project loaded successfully.
++ ';
++         result += '
++ ';
+-     -- Step 5: Load Workflow Task Dimension (depends on Resource)
+-     DBMS_OUTPUT.PUT_LINE('Step 5/5: Loading Go_Dim_Workflow_Task...');
+-     usp_Load_Gold_Dim_Workflow_Task(p_RunId => v_MasterRunId);
+-     DBMS_OUTPUT.PUT_LINE('Go_Dim_Workflow_Task loaded successfully.');
+-     DBMS_OUTPUT.PUT_LINE('');
++         // Step 5: Load Workflow Task Dimension (depends on Resource)
++         result += 'Step 5/5: Loading Go_Dim_Workflow_Task...
++ ';
++         var stmt5 = snowflake.createStatement({
++             sqlText: "CALL usp_Load_Gold_Dim_Workflow_Task(:1)",
++             binds: [v_MasterRunId]
++         });
++         stmt5.execute();
++         result += 'Go_Dim_Workflow_Task loaded successfully.
++ ';
++         result += '
++ ';
+-     DBMS_OUTPUT.PUT_LINE('Gold Layer Dimension Load Process completed successfully!');
+-     DBMS_OUTPUT.PUT_LINE('Master Run ID: ' || RAWTOHEX(v_MasterRunId));
++         result += 'Gold Layer Dimension Load Process completed successfully!
++ ';
++         result += 'Master Run ID: ' + v_MasterRunId + '
++ ';
+-     
+- EXCEPTION
+-     WHEN OTHERS THEN
+-         v_ErrorMessage := SQLERRM;
+-         DBMS_OUTPUT.PUT_LINE('ERROR: Gold Layer Dimension Load Process failed!');
+-         DBMS_OUTPUT.PUT_LINE('Error Message: ' || v_ErrorMessage);
+-         DBMS_OUTPUT.PUT_LINE('Master Run ID: ' || RAWTOHEX(v_MasterRunId));
++         return result;
+-         -- Re-throw error
+-         RAISE;
++     } catch (err) {
++         v_ErrorMessage = err.message;
++         result += 'ERROR: Gold Layer Dimension Load Process failed!
++ ';
++         result += 'Error Message: ' + v_ErrorMessage + '
++ ';
++         result += 'Master Run ID: ' + v_MasterRunId + '
++ ';
+-         
+- END usp_Load_All_Gold_Dimensions;
++         // Re-throw error
++         throw err;
++     }
++ $$;
