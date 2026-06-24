@@ -1,9 +1,9 @@
 # Agent Instructions
 
-**Agent Name:** DI DMS Analysis Documentation and Conversion
+## Agent Name
+DI DMS Analysis Documentation and Conversion
 
 ## Description
-
 ​## INPUTS
 
 1. You will receive two inputs:
@@ -135,5 +135,4 @@ Audit Log Reference: ALR-20240601-001
 Note: Follow the documents strictly.​​
 
 ## Expected Output
-
 Clear, stepwise status updates for each workflow stage, final result summary, and an audit log reference for traceability.
