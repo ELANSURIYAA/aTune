@@ -2,56 +2,47 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that all mandatory workflow sections from the agent instructions are present in the output, including both "With available agents" and "With available and new agents" sections.
-- Confirm that every required field, table, and header specified in the instructions is included, such as the KB/Tools/Guardrails/Models table and the Improvements & Optimisations section.
-- Ensure that all tasks, entities, and agent roles listed in the Consolidated Thinking Document and Task-Agent Mapping are addressed in the workflow analysis.
-- Check that all deduplicated and merged tasks from the input are mapped to an agent or explicitly marked as a gap.
-- Validate that all dependencies, triggers, and handoff points described in the agent definition cards are captured in the workflow sequence.
+- Verify that all mandatory workflow sections specified in the instructions (Section 1: With available agents, Section 2: With available and new agents, Section 3: KB/Tools/Guardrails/Models, Section 4: Improvements & Optimisations, Section 5: Run Metrics) are present in the output.
+- Confirm that every required field, table, and header from the instructions is included in the output (e.g., agent lists, bullet points, structured tables, run metrics block).
+- Check that all tasks, entities, and agent roles described in the Consolidated Thinking Document and Agent Mapping file are addressed in the workflow analysis and agent selection.
+- Ensure that all deduplicated and merged tasks from the input are mapped to an agent or explicitly justified as unmapped.
+- Validate that all dependencies, triggers, and handoffs between agents (as described in the input files) are captured and sequenced correctly in the workflow.
 - Confirm that all business rules, compliance requirements, and audit trail specifications from the input are included in the workflow recommendations.
-- Ensure that all gap/missing item handling requirements, including escalation and ambiguity resolution, are covered as per both the instructions and input files.
-- Verify that all required classifications ([INPUT], [INFERRED], [RECOMMENDED]) are included or referenced where applicable.
-- Confirm that all referenced files, tables, and agent mapping relationships are analyzed and integrated where required.
-- Ensure that all open items and gaps listed in the input are either addressed or explicitly tracked in the output.
-- Check that all required validations, success criteria, and KPIs from the agent cards are included in the workflow or recommendations.
-- Validate that all use cases, scenarios, and manual intervention points from the Task-Agent Mapping are covered.
-- Confirm that all formatting and structural requirements from the instructions are followed, including bullet point minimums and section ordering.
-- Ensure that no relevant section or entity from the input files is omitted or ignored.
-- Verify that all required tables, mappings, and relationships are generated as specified.
+- Check that all gap/missing item handling requirements (escalation, ambiguity, compliance, integration failure) are addressed as per the agent definition cards.
+- Ensure that all required classifications ([INPUT], [INFERRED], [RECOMMENDED]) are reflected or referenced where relevant in the workflow or gap analysis.
+- Verify that all referenced files, tables, and content from the input documents are analyzed and incorporated where required.
+- Confirm that all required validations, success criteria, and KPIs from the input are included in the workflow output.
+- Ensure that all open items and recommendations for manual intervention or human-in-the-loop are included as per the input files.
+- Check that all formatting and structural requirements (minimum bullet length, table structure, section order) are followed as per the instructions.
+- Validate that no mandatory section or relevant input content is skipped or omitted.
 
 Accuracy Checks
 
-- Confirm that the output aligns strictly with the agent instructions and does not introduce unsupported assumptions or agent names.
-- Validate that all agent selections and workflow steps are justified by the input Task-Agent Mapping and Consolidated Thinking Document.
-- Ensure that all dependency mappings and technical relationships are logically correct and traceable to the input content.
-- Check that all gap identifications and recommendations are justified by the actual gaps in the input files.
-- Verify that all classifications ([INPUT], [INFERRED], [RECOMMENDED]) are used accurately and only where supported by the input.
-- Confirm that all business rule interpretations and compliance requirements are represented as per the input, with no omissions or hallucinations.
-- Ensure that all findings, recommendations, and escalation points are traceable to either the instructions or the input files.
-- Validate that all terminology, agent names, and workflow steps are used consistently and match those in the Agent Mapper Table and input documents.
-- Check that all required formatting standards, such as bullet point length and section structure, are followed exactly.
-- Ensure that no false-positive gaps or unsupported new agents are introduced.
-- Confirm that no false-negative omissions occur for any required task, agent, or rule.
-- Validate that all values, tables, and classifications accurately match the source content and are not invented or altered.
-- Ensure that all relationships between entities, agents, and workflow steps are correctly interpreted and represented.
-- Confirm that all status, resolution, and escalation tracking is accurate and instruction-aligned.
-- Validate that recommendations and improvements align with the identified findings and input requirements.
-- Ensure that no instruction is misinterpreted or partially implemented.
+- Confirm that the output strictly aligns with the agent instructions and does not introduce unsupported assumptions or agent names not present in the Agent Mapper Table.
+- Verify that all agent selections, workflow steps, and mappings are justified by the input content and agent mapping scores.
+- Ensure that all deduplication, merging, and gap identification steps are traceable to the input files and are logically correct.
+- Check that all technical and dependency mappings between tasks and agents are valid and consistent with the input documents.
+- Validate that all classifications ([INPUT], [INFERRED], [RECOMMENDED]) are used accurately and only where justified by the input.
+- Confirm that all business rule interpretations, compliance requirements, and audit specifications are represented correctly and without contradiction.
+- Ensure that all escalation, ambiguity, and gap handling logic is consistent with the agent definition cards and input requirements.
+- Check that all terminology, task names, and agent names are used consistently and match those in the input files.
+- Validate that all output formatting, table structures, and bullet points follow the explicit standards in the instructions.
+- Confirm that no hallucinated content, false-positive gaps, or unsupported recommendations are present in the output.
+- Ensure that all values, tables, and classifications accurately match the source content and are not omitted or altered.
+- Check that all relationships between entities, agents, and workflow steps are correctly interpreted and represented.
+- Validate that all status, resolution, and manual intervention tracking is accurate and instruction-aligned.
+- Confirm that all recommendations and improvements are directly supported by the findings in the input files.
+- Ensure that no instruction is misinterpreted, partially implemented, or contradicted by the output.
 
 Efficiency Checks
 
-- Verify that duplicate analysis, redundant explanations, and repeated gap entries are avoided throughout the output.
-- Confirm that the output remains concise, well-structured, and free of unnecessary sections or verbosity.
-- Ensure that duplicate dependency mappings, agent listings, and recommendations are eliminated.
-- Check that similar findings and recommendations are logically grouped and not repeated across sections.
-- Validate that tables, mappings, and workflow steps are not unnecessarily repeated or verbose.
-- Confirm that the output is token-efficient while maintaining all required detail and completeness.
+- Verify that duplicate analysis, redundant explanations, and repeated gap entries are avoided in the output.
+- Ensure that the output remains concise, logically structured, and free of unnecessary sections or verbosity.
+- Check that duplicate dependency mappings, repeated risks, and redundant recommendations are eliminated.
+- Confirm that all tables, bullet points, and workflow steps are not unnecessarily repeated and are grouped logically where appropriate.
+- Validate that the output is token-efficient, summarizing large sections only where allowed and grouping similar findings.
 - Ensure that repeated content from the input files is minimized unless explicitly required by the instructions.
-- Validate that all findings, recommendations, and classifications are presented only once per relevant context.
-- Confirm that large sections are summarized efficiently where allowed, without loss of required detail.
-- Ensure that the output structure improves readability and enables efficient review by section and topic.
-- Check that redundant validations, checks, or classifications are not generated.
-- Validate that output formatting remains clean, optimized, and instruction-compliant throughout.
-
-Agent Goal: Analyze requirements and agent mapping to recommend an optimal, justified agent execution flow for workflow automation.
-
-Agent Backstory: With over a decade of experience in enterprise automation and workflow orchestration, this agent is certified in process optimization, compliance, and secure automation practices.
+- Check that redundant classifications, tags, and validations are avoided and only included where necessary.
+- Confirm that the output structure improves readability and review efficiency, following the prescribed section and formatting order.
+- Validate that all findings, recommendations, and validations are consolidated where overlap exists and not split across multiple sections.
+- Ensure that the output does not generate unnecessary or filler content to meet minimum length requirements, but instead remains focused on instruction and input coverage.
