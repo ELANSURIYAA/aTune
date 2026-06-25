@@ -1,0 +1,522 @@
+CLASSIFICATION DEFINITIONS
+  [INPUT]         Carried forward unchanged from one or more thinking 
+                  outputs. Treat as confirmed fact.
+  [INFERRED]      Derived by reconciling or connecting findings across 
+                  thinking layers. Must be validated before development.
+  [RECOMMENDED]   Not present in any thinking output; agent has proposed 
+                  a reasoned default. Must be approved before development.
+
+OUTPUT 1 — TASK DEDUPLICATION & MERGE REGISTER
+
+Canonical       | Trigger | Sources          | Duplicate | Merged
+Task Name       |         | (Bu / Sy / De)   | (Y/N)     | Profile
+----------------|---------|------------------|-----------|--------
+Define Application Entity Structure | Receipt of requirements document | Bu + Sy | Y | See below
+Define Campaign Entity Structure | Receipt of requirements document | Bu | N | As-is
+Define Credit Risk Attributes | Receipt of requirements document | Bu | N | As-is
+Define Fraud Screening Entity | Receipt of requirements document | Bu | N | As-is
+Define Transaction Entity Structure | Receipt of requirements document | Bu | N | As-is
+Establish Funnel Stage Relationships | Receipt of requirements document | Bu | N | As-is
+Create Security Access Rules | Receipt of requirements document | Bu | N | As-is
+Define Calculation Business Rules | Receipt of requirements document | Bu | N | As-is
+Establish Data Retention Policies | Receipt of requirements document | Bu | N | As-is
+Create Audit Trail Requirements | Receipt of requirements document | Bu | N | As-is
+Parse Business Requirements / Parse Requirements Document | Receipt of requirements document | Sy + De | Y | See below
+Identify Core Entities / Extract Entity Candidates | Parsed requirements | Sy + De | Y | See below
+Define Entity Attributes | Entity candidates identified | Sy + De | Y | See below
+Establish Entity Relationships | Entities and attributes identified | Sy + De | Y | See below
+Extract Business Rules | Requirements document | Bu + Sy + De | Y | See below
+Validate Model Completeness / Validate Document Completeness | Model completion | Sy + De | Y | See below
+Document Model Rationale | Modeling decisions | De | N | As-is
+Integrate with Data Governance | Model validation | Sy | N | As-is
+Handle Missing Requirements | Validation gaps | Sy | N | As-is
+Resolve Entity Ambiguity | Ambiguous entity definitions | Sy | N | As-is
+Escalate Critical Gaps | Critical missing information | Sy | N | As-is
+
+MERGED TASK PROFILES (EXAMPLES):
+
+Define Application Entity Structure
+- Task Name: Define Application Entity Structure
+- Sources: Business, Systems
+- Trigger: Receipt of requirements document
+- Input: Credit card reporting requirements document
+- Output: Application entity with primary key, attributes, relationships
+- Decision Type: RULE-BASED
+- Business Justification: Support application funnel analysis and track customer journey from application to activation
+- Technical Profile: Entity definition, attribute mapping, relationship to other entities, compliance with access and security rules
+- Behavioural Profile: Must not omit regulatory or compliance-related data elements; escalate PII classification uncertainty
+- Success Criteria: 100% coverage of required attributes and relationships for applications
+- Restrictions: Must follow PII and regulatory compliance
+- Classification: [INPUT]
+
+Parse Business Requirements / Parse Requirements Document
+- Task Name: Parse Business Requirements
+- Sources: Systems, Design
+- Trigger: Receipt of requirements document
+- Input: Credit card reporting requirements document
+- Output: Structured list of data requirements by business function
+- Decision Type: RULE-BASED
+- Business Justification: Extract structured data requirements for all downstream modeling tasks
+- Technical Profile: Document parsing, extraction logic
+- Behavioural Profile: Must provide traceability, log assumptions
+- Success Criteria: All requirements parsed with no missing sections
+- Restrictions: Must not alter source requirements
+- Classification: [INPUT]
+
+Identify Core Entities / Extract Entity Candidates
+- Task Name: Identify Core Entities
+- Sources: Systems, Design
+- Trigger: Parsed requirements
+- Input: Parsed business requirements
+- Output: List of core entities with definitions
+- Decision Type: RULE-BASED
+- Business Justification: Define primary business objects for data model
+- Technical Profile: Entity identification logic
+- Behavioural Profile: Document all assumptions, escalate ambiguity
+- Success Criteria: 100% of required entities identified
+- Restrictions: Must follow business process and not create unsupported entities
+- Classification: [INFERRED]
+
+Define Entity Attributes
+- Task Name: Define Entity Attributes
+- Sources: Systems, Design
+- Trigger: Entity candidates identified
+- Input: Core entities and requirements data
+- Output: Attribute specifications for each entity
+- Decision Type: RULE-BASED
+- Business Justification: Specify data elements for each entity
+- Technical Profile: Attribute mapping, data types
+- Behavioural Profile: Must follow data governance, escalate missing attributes
+- Success Criteria: All attributes defined, zero missing mandatory attributes
+- Restrictions: Must not invent attributes without justification
+- Classification: [INFERRED]
+
+Establish Entity Relationships
+- Task Name: Establish Entity Relationships
+- Sources: Systems, Design
+- Trigger: Entities and attributes identified
+- Input: Entities, attributes
+- Output: Entity relationship diagram
+- Decision Type: RULE-BASED
+- Business Justification: Define relationships for analytics and reporting
+- Technical Profile: Relationship mapping
+- Behavioural Profile: Escalate unclear relationships
+- Success Criteria: All required relationships defined
+- Restrictions: Must not assume unsupported relationships
+- Classification: [INFERRED]
+
+Extract Business Rules
+- Task Name: Extract Business Rules
+- Sources: Business, Systems, Design
+- Trigger: Requirements document
+- Input: Requirements document
+- Output: Business rules and constraints
+- Decision Type: RULE-BASED
+- Business Justification: Document business logic for calculations and validation
+- Technical Profile: Extraction logic
+- Behavioural Profile: Document all rules, escalate conflicts
+- Success Criteria: All required business rules extracted
+- Restrictions: Must follow business requirements
+- Classification: [INPUT]
+
+Validate Model Completeness / Validate Document Completeness
+- Task Name: Validate Model Completeness
+- Sources: Systems, Design
+- Trigger: Model completion
+- Input: Conceptual model, requirements
+- Output: Validation report
+- Decision Type: RULE-BASED
+- Business Justification: Ensure all requirements are covered
+- Technical Profile: Cross-reference logic
+- Behavioural Profile: Escalate gaps
+- Success Criteria: 100% coverage
+- Restrictions: Must not approve incomplete models
+- Classification: [INFERRED]
+
+OUTPUT 2 — AGENT CLUSTER MAP
+
+Cluster Name | Tasks in Cluster | Grouping Rationale | Decision Type | Boundary
+-------------|------------------|--------------------|---------------|----------
+Requirements Parsing & Validation | Parse Business Requirements, Validate Document Completeness, Handle Missing Requirements, Escalate Critical Gaps | All tasks triggered by receipt of requirements document, focus on extracting and validating requirements as the first step | RULE-BASED | Ends at validated, parsed requirements document
+Entity & Attribute Modeling | Identify Core Entities, Define Entity Attributes, Establish Entity Relationships, Resolve Entity Ambiguity | All tasks triggered by parsed requirements, focus on entity/attribute/relationship definition | RULE-BASED | Ends at complete entity-relationship model
+Business Rules & Compliance | Extract Business Rules, Create Security Access Rules, Establish Data Retention Policies, Create Audit Trail Requirements | All tasks triggered by requirements document, focus on business logic, compliance, and audit | RULE-BASED | Ends at business rules and compliance artifacts
+Model Synthesis & Integration | Define Application Entity Structure, Define Campaign Entity Structure, Define Credit Risk Attributes, Define Fraud Screening Entity, Define Transaction Entity Structure, Establish Funnel Stage Relationships, Integrate with Data Governance | All tasks triggered by complete model, focus on assembling and validating the final conceptual model | RULE-BASED | Ends at approved conceptual model ready for handoff
+
+OUTPUT 3 — AGENT DEFINITION CARDS
+
+─────────────────────────────────────────────────────
+AGENT DEFINITION CARD
+─────────────────────────────────────────────────────
+Agent Name          | Requirements Parsing & Validation Agent
+Agent Purpose       | To extract, validate, and prepare credit card reporting requirements for downstream data modeling.
+Human Role Simulated| Data Modeler (requirements analysis phase)
+─────────────────────────────────────────────────────
+TASKS
+─────────────────────────────────────────────────────
+Task Name                       | Decision Type   | Source Thinking Layer
+─────────────────────────────────────────────────────
+Parse Business Requirements     | RULE-BASED      | Systems, Design
+Validate Document Completeness  | RULE-BASED      | Systems, Design
+Handle Missing Requirements     | RULE-BASED      | Systems
+Escalate Critical Gaps          | RULE-BASED      | Systems
+─────────────────────────────────────────────────────
+TRIGGER & SCOPE
+─────────────────────────────────────────────────────
+Trigger             | Receipt of credit card reporting requirements document
+Scope Start         | On receipt of requirements document
+Scope End           | When requirements are validated and parsed for modeling
+─────────────────────────────────────────────────────
+BUSINESS JUSTIFICATION
+─────────────────────────────────────────────────────
+Purpose             | Ensure all downstream modeling tasks start from validated, complete, and unambiguous requirements.
+Success Criteria    | 100% of required sections present and parsed; all missing/ambiguous items escalated or resolved
+KPIs                | Requirements Coverage Rate, Escalation Response Time
+Cost of Inaction    | Incomplete or inaccurate data model, project delays, rework
+─────────────────────────────────────────────────────
+TECHNICAL PROFILE
+─────────────────────────────────────────────────────
+Inputs              | Credit card reporting requirements document
+Outputs             | Parsed requirements, validation report, escalation log
+Tools & APIs        | Document parsing API, validation tool, escalation workflow system
+Dependencies        | Availability of requirements document, stakeholder input for gap resolution
+Token Constraints   | Document size up to 50,000 tokens
+Failure Modes       | Missing sections, ambiguous requirements, unresolvable gaps
+Fallback Behaviour  | Escalate to stakeholders, document assumptions
+─────────────────────────────────────────────────────
+BEHAVIOURAL PROFILE
+─────────────────────────────────────────────────────
+Guardrails          | Never alter source requirements, never proceed with missing critical sections
+DO Examples         | DO parse all sections, DO escalate gaps, DO document assumptions
+DON'T Examples      | DON'T ignore missing information, DON'T invent requirements
+Edge Cases          | If requirements are ambiguous, escalate for clarification
+Knowledge Base      | Credit card reporting standards, business process documentation
+Retrieval Method    | RAG for standards, in-context for business rules
+Autonomy Threshold  | Escalate any ambiguity or missing section
+─────────────────────────────────────────────────────
+HUMAN-IN-LOOP DESIGN
+─────────────────────────────────────────────────────
+Trigger Condition   | Missing/ambiguous requirements, confidence < 0.8
+Threshold           | Any critical section missing, or ambiguity detected
+Information Presented| Requirement text, identified gap, proposed resolution
+Human Role          | Stakeholder, Business Analyst
+Feedback Loop       | Update parsing and validation logic based on feedback
+─────────────────────────────────────────────────────
+EXPLAINABILITY & AUDIT
+─────────────────────────────────────────────────────
+Reasoning Steps     | Parsing logic, gap detection, escalation rationale
+Audit Log Schema    | Timestamp, section, gap type, escalation details, resolution status
+Retention Period    | 7 years
+Access Control      | Data governance team only
+Explainability Format| Inline annotations, escalation log, validation report
+─────────────────────────────────────────────────────
+RESTRICTIONS & BOUNDARIES
+─────────────────────────────────────────────────────
+Hard Constraints    | Must not alter or invent requirements, must escalate unresolvable gaps
+Handoff To          | Entity & Attribute Modeling Agent
+─────────────────────────────────────────────────────
+GAPS & OPEN ITEMS
+─────────────────────────────────────────────────────
+Item                               | Classification | Risk if Unvalidated | Clarification Needed
+─────────────────────────────────────────────────────
+Document size/token constraints     | [RECOMMENDED]  | Process failure if exceeded | What is the expected document size?
+Escalation criteria for gaps        | [RECOMMENDED]  | Unresolved requirements | What are the escalation thresholds?
+─────────────────────────────────────────────────────
+CLASSIFICATION SUMMARY
+─────────────────────────────────────────────────────
+Characteristic         | Value                         | Classification
+─────────────────────────────────────────────────────
+Trigger                | Receipt of requirements doc   | [INPUT]
+Inputs                 | Requirements doc              | [INPUT]
+Outputs                | Parsed requirements           | [INPUT]
+Failure Modes          | Missing/ambiguous sections    | [INFERRED]
+Escalation             | Stakeholder consultation      | [RECOMMENDED]
+Token Constraints      | 50,000 tokens                 | [RECOMMENDED]
+Audit Log Schema       | Timestamp, section, etc.      | [RECOMMENDED]
+
+─────────────────────────────────────────────────────
+AGENT DEFINITION CARD
+─────────────────────────────────────────────────────
+Agent Name          | Entity & Attribute Modeling Agent
+Agent Purpose       | To define, document, and validate all entities, attributes, and relationships required for the credit card conceptual data model.
+Human Role Simulated| Data Modeler (entity/attribute/relationship modeling phase)
+─────────────────────────────────────────────────────
+TASKS
+─────────────────────────────────────────────────────
+Task Name                       | Decision Type   | Source Thinking Layer
+─────────────────────────────────────────────────────
+Identify Core Entities          | RULE-BASED      | Systems, Design
+Define Entity Attributes        | RULE-BASED      | Systems, Design
+Establish Entity Relationships  | RULE-BASED      | Systems, Design
+Resolve Entity Ambiguity        | RULE-BASED      | Systems
+─────────────────────────────────────────────────────
+TRIGGER & SCOPE
+─────────────────────────────────────────────────────
+Trigger             | Validated, parsed requirements document
+Scope Start         | On receipt of parsed requirements
+Scope End           | When complete entity-relationship model is defined and validated
+─────────────────────────────────────────────────────
+BUSINESS JUSTIFICATION
+─────────────────────────────────────────────────────
+Purpose             | Ensure all business requirements are represented by entities, attributes, and relationships for accurate reporting
+Success Criteria    | 100% entity and attribute coverage, all relationships defined, zero ambiguity
+KPIs                | Entity Coverage Rate, Attribute Completeness, Ambiguity Resolution Time
+Cost of Inaction    | Incomplete data model, reporting gaps, compliance failures
+─────────────────────────────────────────────────────
+TECHNICAL PROFILE
+─────────────────────────────────────────────────────
+Inputs              | Parsed requirements
+Outputs             | Entity list, attribute specifications, relationship diagram, ambiguity log
+Tools & APIs        | Entity modeling tool, diagramming tool, ambiguity tracker
+Dependencies        | Complete requirements, stakeholder input for ambiguity resolution
+Token Constraints   | Up to 200 entities, 50,000 tokens
+Failure Modes       | Missing entities, ambiguous relationships, incomplete attributes
+Fallback Behaviour  | Escalate ambiguity, document assumptions
+─────────────────────────────────────────────────────
+BEHAVIOURAL PROFILE
+─────────────────────────────────────────────────────
+Guardrails          | Never invent entities, never omit required attributes, never assume relationships without evidence
+DO Examples         | DO document all entities, DO escalate ambiguity, DO validate completeness
+DON'T Examples      | DON'T create unsupported entities, DON'T skip attributes
+Edge Cases          | Ambiguous entity definitions—escalate for expert review
+Knowledge Base      | Data modeling standards, credit card business processes
+Retrieval Method    | RAG for standards, in-context for business processes
+Autonomy Threshold  | Escalate confidence < 0.8, ambiguity, or missing attributes
+─────────────────────────────────────────────────────
+HUMAN-IN-LOOP DESIGN
+─────────────────────────────────────────────────────
+Trigger Condition   | Ambiguity, missing attributes, confidence < 0.8
+Threshold           | Any core entity or attribute ambiguous or missing
+Information Presented| Entity/attribute definition, ambiguity, proposed resolution
+Human Role          | Data Modeler, Domain Expert
+Feedback Loop       | Update modeling patterns based on feedback
+─────────────────────────────────────────────────────
+EXPLAINABILITY & AUDIT
+─────────────────────────────────────────────────────
+Reasoning Steps     | Entity identification, attribute mapping, relationship logic
+Audit Log Schema    | Entity, attribute, rationale, ambiguity, resolution
+Retention Period    | 7 years
+Access Control      | Data governance team, compliance officers
+Explainability Format| Inline annotations, ambiguity log, relationship diagram
+─────────────────────────────────────────────────────
+RESTRICTIONS & BOUNDARIES
+─────────────────────────────────────────────────────
+Hard Constraints    | Must not invent entities, must escalate ambiguity
+Handoff To          | Model Synthesis & Integration Agent
+─────────────────────────────────────────────────────
+GAPS & OPEN ITEMS
+─────────────────────────────────────────────────────
+Item                               | Classification | Risk if Unvalidated | Clarification Needed
+─────────────────────────────────────────────────────
+Entity ambiguity escalation        | [RECOMMENDED]  | Incomplete model    | What is the escalation threshold for ambiguity?
+Entity/attribute max constraints   | [RECOMMENDED]  | Model truncation    | What is the expected entity/attribute count?
+─────────────────────────────────────────────────────
+CLASSIFICATION SUMMARY
+─────────────────────────────────────────────────────
+Characteristic         | Value                         | Classification
+─────────────────────────────────────────────────────
+Trigger                | Parsed requirements           | [INPUT]
+Inputs                 | Parsed requirements           | [INPUT]
+Outputs                | Entity, attribute specs       | [INPUT]
+Ambiguity escalation   | Stakeholder/domain expert     | [RECOMMENDED]
+Token Constraints      | 200 entities, 50,000 tokens   | [RECOMMENDED]
+
+─────────────────────────────────────────────────────
+AGENT DEFINITION CARD
+─────────────────────────────────────────────────────
+Agent Name          | Business Rules & Compliance Agent
+Agent Purpose       | To extract, document, and validate all business rules, compliance requirements, and audit trail specifications for the conceptual data model.
+Human Role Simulated| Data Modeler (business rules & compliance phase)
+─────────────────────────────────────────────────────
+TASKS
+─────────────────────────────────────────────────────
+Task Name                       | Decision Type   | Source Thinking Layer
+─────────────────────────────────────────────────────
+Extract Business Rules          | RULE-BASED      | Business, Systems, Design
+Create Security Access Rules    | RULE-BASED      | Business
+Establish Data Retention Policies| RULE-BASED     | Business
+Create Audit Trail Requirements | RULE-BASED      | Business
+─────────────────────────────────────────────────────
+TRIGGER & SCOPE
+─────────────────────────────────────────────────────
+Trigger             | Receipt of requirements document
+Scope Start         | On receipt of requirements document
+Scope End           | When all rules, policies, and audit requirements are documented and validated
+─────────────────────────────────────────────────────
+BUSINESS JUSTIFICATION
+─────────────────────────────────────────────────────
+Purpose             | Ensure all compliance and business logic requirements are captured for model accuracy and regulatory adherence
+Success Criteria    | 100% of rules, policies, and audit requirements captured and validated
+KPIs                | Rule Coverage Rate, Compliance Validation Rate
+Cost of Inaction    | Compliance failures, audit risk, inaccurate reporting
+─────────────────────────────────────────────────────
+TECHNICAL PROFILE
+─────────────────────────────────────────────────────
+Inputs              | Requirements document
+Outputs             | Business rules catalog, access policy, retention policy, audit trail specification
+Tools & APIs        | Documentation tool, compliance checklist, audit log generator
+Dependencies        | Complete requirements, compliance officer input
+Token Constraints   | 50,000 tokens
+Failure Modes       | Missing rules, incomplete compliance documentation
+Fallback Behaviour  | Escalate to compliance officer, document assumptions
+─────────────────────────────────────────────────────
+BEHAVIOURAL PROFILE
+─────────────────────────────────────────────────────
+Guardrails          | Never omit compliance requirements, never invent rules, never approve incomplete documentation
+DO Examples         | DO extract all rules, DO validate compliance, DO document audit requirements
+DON'T Examples      | DON'T skip compliance sections, DON'T invent business logic
+Edge Cases          | Conflicting requirements—escalate for resolution
+Knowledge Base      | Compliance standards, audit guidelines
+Retrieval Method    | RAG for compliance, in-context for audit
+Autonomy Threshold  | Escalate missing/conflicting requirements, compliance uncertainty
+─────────────────────────────────────────────────────
+HUMAN-IN-LOOP DESIGN
+─────────────────────────────────────────────────────
+Trigger Condition   | Missing/conflicting requirements, compliance uncertainty
+Threshold           | Any missing rule or compliance requirement
+Information Presented| Rule text, compliance reference, ambiguity, proposed resolution
+Human Role          | Compliance Officer, Auditor
+Feedback Loop       | Update extraction logic based on feedback
+─────────────────────────────────────────────────────
+EXPLAINABILITY & AUDIT
+─────────────────────────────────────────────────────
+Reasoning Steps     | Rule extraction, compliance validation, audit log specification
+Audit Log Schema    | Rule, compliance reference, rationale, ambiguity, resolution
+Retention Period    | 7 years
+Access Control      | Compliance team, audit officers
+Explainability Format| Inline annotations, compliance log
+─────────────────────────────────────────────────────
+RESTRICTIONS & BOUNDARIES
+─────────────────────────────────────────────────────
+Hard Constraints    | Must not omit compliance, must escalate ambiguity
+Handoff To          | Model Synthesis & Integration Agent
+─────────────────────────────────────────────────────
+GAPS & OPEN ITEMS
+─────────────────────────────────────────────────────
+Item                               | Classification | Risk if Unvalidated | Clarification Needed
+─────────────────────────────────────────────────────
+Compliance escalation thresholds   | [RECOMMENDED]  | Compliance failure  | What are escalation criteria for compliance ambiguity?
+─────────────────────────────────────────────────────
+CLASSIFICATION SUMMARY
+─────────────────────────────────────────────────────
+Characteristic         | Value                         | Classification
+─────────────────────────────────────────────────────
+Trigger                | Requirements doc              | [INPUT]
+Inputs                 | Requirements doc              | [INPUT]
+Outputs                | Rules catalog, policies       | [INPUT]
+Compliance escalation  | Compliance officer            | [RECOMMENDED]
+Token Constraints      | 50,000 tokens                 | [RECOMMENDED]
+
+─────────────────────────────────────────────────────
+AGENT DEFINITION CARD
+─────────────────────────────────────────────────────
+Agent Name          | Model Synthesis & Integration Agent
+Agent Purpose       | To assemble, validate, and prepare the complete conceptual data model for handoff to downstream implementation teams.
+Human Role Simulated| Data Modeler (model assembly & integration phase)
+─────────────────────────────────────────────────────
+TASKS
+─────────────────────────────────────────────────────
+Task Name                       | Decision Type   | Source Thinking Layer
+─────────────────────────────────────────────────────
+Define Application Entity Structure | RULE-BASED      | Business, Systems
+Define Campaign Entity Structure    | RULE-BASED      | Business
+Define Credit Risk Attributes       | RULE-BASED      | Business
+Define Fraud Screening Entity       | RULE-BASED      | Business
+Define Transaction Entity Structure | RULE-BASED      | Business
+Establish Funnel Stage Relationships| RULE-BASED      | Business
+Integrate with Data Governance      | RULE-BASED      | Systems
+─────────────────────────────────────────────────────
+TRIGGER & SCOPE
+─────────────────────────────────────────────────────
+Trigger             | Complete entity, attribute, and rules definitions
+Scope Start         | On completion of all prior modeling tasks
+Scope End           | When conceptual data model is validated and handed off
+─────────────────────────────────────────────────────
+BUSINESS JUSTIFICATION
+─────────────────────────────────────────────────────
+Purpose             | Deliver a complete, validated conceptual data model to support all reporting requirements
+Success Criteria    | Model supports all five reports, 100% coverage of required entities, attributes, and rules
+KPIs                | Model Coverage Rate, Validation Success Rate
+Cost of Inaction    | Incomplete model, reporting failures, rework
+─────────────────────────────────────────────────────
+TECHNICAL PROFILE
+─────────────────────────────────────────────────────
+Inputs              | Entity/attribute/rule definitions
+Outputs             | Conceptual data model, integration report, handoff package
+Tools & APIs        | Data modeling tool, integration API, governance validation tool
+Dependencies        | Complete and validated prior outputs, governance system availability
+Token Constraints   | 50,000 tokens
+Failure Modes       | Integration errors, incomplete model, failed validation
+Fallback Behaviour  | Document gaps, escalate to stakeholders
+─────────────────────────────────────────────────────
+BEHAVIOURAL PROFILE
+─────────────────────────────────────────────────────
+Guardrails          | Never hand off incomplete model, never bypass validation, never omit integration steps
+DO Examples         | DO assemble all components, DO validate model, DO integrate with governance
+DON'T Examples      | DON'T skip validation, DON'T hand off incomplete package
+Edge Cases          | Integration failure—escalate to governance team
+Knowledge Base      | Data modeling standards, governance requirements
+Retrieval Method    | In-context for modeling, API for governance
+Autonomy Threshold  | Escalate integration/validation failures
+─────────────────────────────────────────────────────
+HUMAN-IN-LOOP DESIGN
+─────────────────────────────────────────────────────
+Trigger Condition   | Integration/validation failure, incomplete model
+Threshold           | Any failed validation or missing component
+Information Presented| Model artifacts, validation errors, integration log
+Human Role          | Data Modeler, Governance Lead
+Feedback Loop       | Update integration logic based on feedback
+─────────────────────────────────────────────────────
+EXPLAINABILITY & AUDIT
+─────────────────────────────────────────────────────
+Reasoning Steps     | Model assembly, validation, integration
+Audit Log Schema    | Model component, validation status, rationale, errors
+Retention Period    | 7 years
+Access Control      | Data governance, project leads
+Explainability Format| Integration log, validation report
+─────────────────────────────────────────────────────
+RESTRICTIONS & BOUNDARIES
+─────────────────────────────────────────────────────
+Hard Constraints    | Must validate model, must escalate failed integration
+Handoff To          | Logical/physical data model implementation teams
+─────────────────────────────────────────────────────
+GAPS & OPEN ITEMS
+─────────────────────────────────────────────────────
+Item                               | Classification | Risk if Unvalidated | Clarification Needed
+─────────────────────────────────────────────────────
+Integration failure escalation     | [RECOMMENDED]  | Model not accepted  | What is the escalation path for integration failure?
+─────────────────────────────────────────────────────
+CLASSIFICATION SUMMARY
+─────────────────────────────────────────────────────
+Characteristic         | Value                         | Classification
+─────────────────────────────────────────────────────
+Trigger                | Complete model definitions    | [INFERRED]
+Inputs                 | Model definitions             | [INFERRED]
+Outputs                | Conceptual data model         | [INPUT]
+Integration escalation | Governance lead               | [RECOMMENDED]
+Token Constraints      | 50,000 tokens                 | [RECOMMENDED]
+
+OUTPUT 4 — PIPELINE SUMMARY
+
+Total tasks across all thinking layers    | 24
+Total tasks after deduplication           | 16
+Total agents defined                      | 4
+─────────────────────────────────────────────────────
+Agent Name | Purpose | Decision Type | Human-in-Loop
+─────────────────────────────────────────────────────
+Requirements Parsing & Validation Agent | Extract and validate requirements | RULE-BASED | Yes (gap/escalation)
+Entity & Attribute Modeling Agent        | Define entities, attributes, relationships | RULE-BASED | Yes (ambiguity)
+Business Rules & Compliance Agent        | Extract rules, compliance, audit | RULE-BASED | Yes (compliance/gaps)
+Model Synthesis & Integration Agent      | Assemble and validate complete model | RULE-BASED | Yes (integration failure)
+─────────────────────────────────────────────────────
+Open items requiring validation           |
+- Escalation criteria and thresholds for gaps, ambiguity, compliance, and integration failures [RECOMMENDED]
+- Document/entity/token size constraints [RECOMMENDED]
+- Handoff package format and content [RECOMMENDED]
+
+Recommended development sequence          |
+1. Requirements Parsing & Validation Agent
+2. Entity & Attribute Modeling Agent
+3. Business Rules & Compliance Agent
+4. Model Synthesis & Integration Agent
+
+All [INFERRED] and [RECOMMENDED] items are listed in the Gaps & Open Items section of each agent card and must be validated before development.
