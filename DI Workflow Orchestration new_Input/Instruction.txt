@@ -310,5 +310,4 @@ CORE RULES
     from Section 2. Only "Agents to consider" and "What we
     will get" are produced for each option in Section 2.
 ================================================================
-Sample Expected Output:
-An ordered list of selected agents with a concise justification for their inclusion and sequence, ready for workflow automation.
+Expected Output: An ordered list of selected agents with a concise justification for their inclusion and sequence, ready for workflow automation.
