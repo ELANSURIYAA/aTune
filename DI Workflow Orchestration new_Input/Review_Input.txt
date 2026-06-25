@@ -1,0 +1,40 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that all mandatory sections specified in the agent instructions (Section 1, Section 2, Section 3, Section 4, Section 5) are present in the output.
+- Confirm that all required fields, such as “Agents to consider,” “What we will get,” and “What we will miss” (where applicable), are included for each workflow option.
+- Ensure that every agent listed in the Agent Mapper Table is evaluated for inclusion, with decisions documented for each.
+- Check that all user requirements (task, role, objective, expectations) are analyzed and addressed in the workflow recommendations.
+- Validate that all identified gaps in available agent capabilities are explicitly covered by new agent suggestions in Section 2.
+- Confirm that all dependencies and execution orders among agents are captured and logically sequenced.
+- Ensure that the KB/Tools/Guardrails/Models table is fully populated with actionable, specific entries for each column.
+- Verify that the improvements and optimizations section includes actionable recommendations for Accuracy, Efficiency, and Cost Effectiveness, referencing actual agents and tasks.
+- Confirm that the run metrics section (Model Used, Tokens Used, API Cost) is present and completed for the orchestration agent call.
+- Ensure that no required section, field, or analysis step from the instructions or input content is omitted.
+
+Accuracy Checks
+
+- Validate that the output strictly uses only agents from the Agent Mapper Table in the “With available agents” section, with no invented or inferred agent names.
+- Confirm that new agents in Section 2 are clearly labeled as [NEW], fill specific identified gaps, and do not duplicate available agent functions.
+- Check that all workflow options and agent selections are justified with concise, instruction-aligned reasoning.
+- Ensure that all gap identifications and new agent proposals are directly traceable to missing capabilities in the available agent set.
+- Verify that dependency and execution order among agents are logically correct and reflect actual workflow requirements.
+- Confirm that all findings, recommendations, and mappings are supported by either the user requirements or the agent mapper input.
+- Ensure that no unsupported assumptions, hallucinated content, or contradictions are present in the output.
+- Check that all terminology, formatting, and output structures match the standards and templates specified in the instructions.
+- Validate that the KB/Tools/Guardrails/Models table contains only relevant, justified entries, with clear linkage to supported agents.
+- Confirm that all actionable recommendations in the improvements and optimizations section are specific, relevant, and instruction-compliant.
+
+Efficiency Checks
+
+- Ensure that duplicate analysis of agents, workflow steps, or gaps is avoided throughout the output.
+- Confirm that redundant explanations, repeated gap entries, and unnecessary sections are not present.
+- Check that the output is concise, well-structured, and free from excessive verbosity or filler content.
+- Validate that similar findings, recommendations, or classifications are logically grouped and not unnecessarily repeated.
+- Ensure that the output structure (sections, tables, bullet points) is optimized for readability and review efficiency.
+- Confirm that the run metrics section is produced only once per orchestration agent call and not repeated for individual workflow agents.
+- Check that the KB/Tools/Guardrails/Models table and improvements section avoid redundant or overlapping entries.
+- Validate that large sections are summarized efficiently where allowed, without loss of required detail.
+- Ensure that the output is token-efficient, with minimized repetition of content from the input file or instructions.
+- Confirm that all validations and checks are atomic, non-redundant, and directly support efficient reviewer assessment.
