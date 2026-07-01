@@ -1,19 +1,19 @@
 QUALITY SCORE
 
 | Dimension    | Weight | Reviewer Check Score | Raw Score | Weighted Score | Notes                                         |
-| ------------ | ------ | -------------------- | --------- | -------------- | --------------------------------------------- |
-| Completeness | 40%    | 0/17                 | 0/100     | 0.0/40         | 0 of 17 completeness reviewer checks satisfied |
-| Accuracy     | 40%    | 0/16                 | 0/100     | 0.0/40         | 0 of 16 accuracy reviewer checks satisfied     |
-| Efficiency   | 20%    | 14/14                | 100/100   | 20.0/20        | 14 of 14 efficiency reviewer checks satisfied  |
-| TOTAL        | 100%   |                      |           | 20.0/100       |                                                |
+|--------------|--------|----------------------|-----------|----------------|-----------------------------------------------|
+| Completeness | 40%    | 8/17                 | 47/100    | 18.8/40        | 8 of 17 completeness reviewer checks satisfied |
+| Accuracy     | 40%    | 13/16                | 81/100    | 32.4/40        | 13 of 16 accuracy reviewer checks satisfied    |
+| Efficiency   | 20%    | 13/14                | 93/100    | 18.6/20        | 13 of 14 efficiency reviewer checks satisfied  |
+| TOTAL        | 100%   |                      |           | 69.8/100       |                                               |
 
 GAP COUNTS
 
-Total Gaps Found: 33
-Not Present (NP): 17
-Not Done Correctly (NC): 16
-Not Done Optimally (NO): 0
+Total Gaps Found: 13
+Not Present (NP): 9
+Not Done Correctly (NC): 3
+Not Done Optimally (NO): 1
 
 SCORE JUSTIFICATION
 
-The EXECUTOR_OUTPUT receives a total quality score of 20.0/100 due to complete failure in completeness and accuracy dimensions. All 17 completeness checks failed because the output contains only the raw PL/SQL code without any documentation structure, JSON wrapper, metadata, or required sections (GAP-001 through GAP-017). All 16 accuracy checks failed because the output does not follow the instructions to produce JSON-formatted Markdown documentation and contains no analysis or transformation of the input (GAP-018 through GAP-033). The efficiency dimension scores 100% because the output contains no redundancy or duplication, though this is only because no documentation was produced at all. The EXECUTOR_OUTPUT is identical to the EXECUTOR_INPUT and does not fulfill the GOAL of creating comprehensive documentation for business and technical teams.
+The EXECUTOR_OUTPUT achieves a total quality score of 69.8/100. The Completeness dimension scores 18.8/40 due to 9 failed completeness checks: the output is not formatted as a JSON object (GAP-001), metadata fields are missing (GAP-002), and 7 required sections are completely absent (GAP-003 through GAP-009). The Accuracy dimension scores 32.4/40 due to 3 failed accuracy checks: the output does not follow the JSON structure requirement (GAP-011), sections are not in the required order (GAP-010), and the ASCII workflow diagram does not follow the zig-zag/snake layout (GAP-012). The Efficiency dimension scores 18.6/20 due to 1 failed efficiency check: the output includes 7 extraneous sections not specified in the instructions (GAP-013). While the documentation content is technically accurate and traceable to the source code, the fundamental structural requirements and required sections from the instructions are not satisfied.
