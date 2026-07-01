@@ -35,7 +35,6 @@ Gap RefChange TypeSection UpdatedWhat Was RemovedWhat Was Added / KeptStatusGAP-
 
 YOUR OBJECTIVES
 You must perform TWO major validations:
-
 Validate whether all requested/applied changes are correctly implemented in the Updated Instructions File.
 Validate whether the Updated Instructions File complies with the 14 Dimensions of Agent Quality.
 
@@ -373,7 +372,7 @@ OUTPUT FILE — REVIEW REPORT FILE
 Content Rules:
 Include the full Instruction Update Validation Report exactly as generated, following the OUTPUT FORMAT defined above
 Include the Applied Change Verification table
-Include the 14 Dimensions Compliance Review table (only for the user-provided dimensions)
+Include the 14 Dimensions Compliance Review table
 Do not include extra commentary outside the defined report structure
 Do not include markdown wrappers around the file content
 Do not omit any required table or column
