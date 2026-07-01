@@ -26,3 +26,6 @@ Step 3:
   - 42197_Gap_Score.md: https://github.com/ELANSURIYAA/aTune/blob/main/mahak.mudgal@ascendion.com/DI Oracle Documentation DMS Clone_Output/DI Oracle Documentation DMS Clone_Working/42197_Gap_Score.md
 - Validation: I checked that 42197_Gap_Report.md and 42197_Gap_Score.md exist in the correct location with content present. Both files verified.
 - Decision: All outputs verified so I am proceeding to Step 4.
+
+Step 4:
+- Gap score is 20. Threshold is 50. 20 is less than 50, so I am continuing to Step 5.
