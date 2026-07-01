@@ -1,0 +1,503 @@
+<div style="border:1px solid #d0d7de;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;width:100%;margin-bottom:15px;">
+    <div style="background:#1f4e79;color:white;padding:10px;font-size:16px;font-weight:bold;">
+Data Migration Recon Test Report
+</div>
+    <table style="border-collapse:collapse;width:100%;">
+        <tr>
+<td style="padding:8px;border:1px solid #ddd;background:#f5f5f5;width:150px;"><b>Author</b></td>
+<td style="padding:8px;border:1px solid #ddd;">Ascendion AAVA</td>
+</tr>
+        <tr>
+<td style="padding:8px;border:1px solid #ddd;background:#f5f5f5;"><b>Created On</b></td>
+<td style="padding:8px;border:1px solid #ddd;"></td>
+</tr>
+        <tr>
+<td style="padding:8px;border:1px solid #ddd;background:#f5f5f5;"><b>Description</b></td>
+<td style="padding:8px;border:1px solid #ddd;">End-to-end reconciliation and validation script for Teradata to Microsoft Fabric migration. Executes source workflows, extracts datasets, transfers data, executes converted workflows, and generates comprehensive validation reports.</td>
+</tr>
+    </table>
+</div>
+
+import os
+import sys
+import pandas as pd
+import teradatasql
+import pyodbc
+import pyarrow.parquet as pq
+import pyarrow as pa
+import hashlib
+import json
+import logging
+from datetime import datetime
+from multiprocessing import Pool, cpu_count
+from pathlib import Path
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('migration_validation.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+class TeradataFabricReconciliation:
+    def __init__(self):
+        self.teradata_conn = None
+        self.fabric_conn = None
+        self.staging_path = Path('./staging')
+        self.staging_path.mkdir(exist_ok=True)
+        self.validation_results = []
+        self.timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        
+    def connect_teradata(self):
+        try:
+            host = os.environ.get('TERADATA_HOST')
+            user = os.environ.get('TERADATA_USER')
+            password = os.environ.get('TERADATA_PASSWORD')
+            
+            if not all([host, user, password]):
+                raise ValueError("Missing Teradata connection credentials in environment variables")
+            
+            self.teradata_conn = teradatasql.connect(
+                host=host,
+                user=user,
+                password=password,
+                logmech='TD2'
+            )
+            logger.info("Successfully connected to Teradata")
+            return True
+        except Exception as e:
+            logger.error(f"Teradata connection failed: {str(e)}")
+            return False
+    
+    def connect_fabric(self):
+        try:
+            server = os.environ.get('FABRIC_SERVER')
+            database = os.environ.get('FABRIC_DATABASE')
+            user = os.environ.get('FABRIC_USER')
+            password = os.environ.get('FABRIC_PASSWORD')
+            driver = os.environ.get('FABRIC_DRIVER', '{ODBC Driver 18 for SQL Server}')
+            
+            if not all([server, database, user, password]):
+                raise ValueError("Missing Fabric connection credentials in environment variables")
+            
+            conn_string = f'DRIVER={driver};SERVER={server};DATABASE={database};UID={user};PWD={password}'
+            self.fabric_conn = pyodbc.connect(conn_string)
+            logger.info("Successfully connected to Microsoft Fabric")
+            return True
+        except Exception as e:
+            logger.error(f"Microsoft Fabric connection failed: {str(e)}")
+            return False
+    
+    def execute_teradata_workflow(self, sql_script):
+        try:
+            logger.info("Executing Teradata source workflow")
+            cursor = self.teradata_conn.cursor()
+            
+            statements = [stmt.strip() for stmt in sql_script.split(';') if stmt.strip()]
+            
+            for idx, statement in enumerate(statements):
+                progress = ((idx + 1) / len(statements)) * 100
+                logger.info(f"Executing Teradata statement {idx + 1}/{len(statements)}: {progress:.0f}%")
+                cursor.execute(statement)
+                
+            self.teradata_conn.commit()
+            cursor.close()
+            logger.info("Teradata workflow execution completed successfully")
+            return True
+        except Exception as e:
+            logger.error(f"Teradata workflow execution failed: {str(e)}")
+            return False
+    
+    def extract_teradata_dataset(self, table_name, chunk_size=10000):
+        try:
+            logger.info(f"Extracting dataset: {table_name}")
+            cursor = self.teradata_conn.cursor()
+            
+            count_query = f"SELECT COUNT(*) FROM {table_name}"
+            cursor.execute(count_query)
+            total_rows = cursor.fetchone()[0]
+            logger.info(f"Total rows in {table_name}: {total_rows}")
+            
+            query = f"SELECT * FROM {table_name}"
+            cursor.execute(query)
+            
+            columns = [desc[0] for desc in cursor.description]
+            all_data = []
+            rows_fetched = 0
+            
+            while True:
+                rows = cursor.fetchmany(chunk_size)
+                if not rows:
+                    break
+                all_data.extend(rows)
+                rows_fetched += len(rows)
+                progress = (rows_fetched / total_rows) * 100
+                logger.info(f"Extracting dataset {table_name}: {progress:.0f}%")
+            
+            df = pd.DataFrame(all_data, columns=columns)
+            
+            csv_path = self.staging_path / f"{table_name}_{self.timestamp}.csv"
+            df.to_csv(csv_path, index=False)
+            logger.info(f"Exported {table_name} to CSV: {csv_path}")
+            
+            parquet_path = self.staging_path / f"{table_name}_{self.timestamp}.parquet"
+            table = pa.Table.from_pandas(df)
+            pq.write_table(table, parquet_path)
+            logger.info(f"Converted {table_name} to Parquet: {parquet_path}")
+            
+            cursor.close()
+            return parquet_path, df.shape[0]
+        except Exception as e:
+            logger.error(f"Failed to extract dataset {table_name}: {str(e)}")
+            return None, 0
+    
+    def get_teradata_schema(self, table_name):
+        try:
+            cursor = self.teradata_conn.cursor()
+            query = f"""
+            SELECT ColumnName, ColumnType, ColumnLength, Nullable
+            FROM DBC.ColumnsV
+            WHERE TableName = '{table_name}'
+            ORDER BY ColumnId
+            """
+            cursor.execute(query)
+            schema = cursor.fetchall()
+            cursor.close()
+            return schema
+        except Exception as e:
+            logger.error(f"Failed to get schema for {table_name}: {str(e)}")
+            return []
+    
+    def map_teradata_to_fabric_type(self, td_type):
+        type_mapping = {
+            'VARCHAR': 'VARCHAR',
+            'CHAR': 'CHAR',
+            'INTEGER': 'INT',
+            'BIGINT': 'BIGINT',
+            'DECIMAL': 'DECIMAL',
+            'FLOAT': 'FLOAT',
+            'DATE': 'DATE',
+            'TIMESTAMP': 'DATETIME2',
+            'BYTEINT': 'SMALLINT',
+            'BOOLEAN': 'BIT',
+            'SMALLINT': 'SMALLINT',
+            'NUMBER': 'NUMERIC',
+            'DOUBLE': 'FLOAT',
+            'TIME': 'TIME'
+        }
+        
+        for td_key, fabric_val in type_mapping.items():
+            if td_key in td_type.upper():
+                return fabric_val
+        return 'VARCHAR(MAX)'
+    
+    def create_fabric_staging_table(self, table_name, schema):
+        try:
+            logger.info(f"Creating Microsoft Fabric staging table: {table_name}")
+            cursor = self.fabric_conn.cursor()
+            
+            drop_query = f"IF OBJECT_ID('{table_name}_staging', 'U') IS NOT NULL DROP TABLE {table_name}_staging"
+            cursor.execute(drop_query)
+            
+            columns_def = []
+            for col in schema:
+                col_name = col[0]
+                col_type = col[1]
+                nullable = 'NULL' if col[3] == 'Y' else 'NOT NULL'
+                fabric_type = self.map_teradata_to_fabric_type(col_type)
+                columns_def.append(f"[{col_name}] {fabric_type} {nullable}")
+            
+            create_query = f"CREATE TABLE {table_name}_staging ({', '.join(columns_def)})"
+            cursor.execute(create_query)
+            self.fabric_conn.commit()
+            cursor.close()
+            logger.info(f"Successfully created staging table: {table_name}_staging")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to create staging table {table_name}: {str(e)}")
+            return False
+    
+    def load_data_to_fabric(self, table_name, parquet_path):
+        try:
+            logger.info(f"Loading data into Microsoft Fabric: {table_name}")
+            
+            df = pd.read_parquet(parquet_path)
+            total_rows = len(df)
+            batch_size = 1000
+            
+            cursor = self.fabric_conn.cursor()
+            
+            for i in range(0, total_rows, batch_size):
+                batch = df.iloc[i:i+batch_size]
+                progress = ((i + len(batch)) / total_rows) * 100
+                logger.info(f"Uploading table {table_name}: {progress:.0f}%")
+                
+                placeholders = ','.join(['?' for _ in range(len(batch.columns))])
+                insert_query = f"INSERT INTO {table_name}_staging VALUES ({placeholders})"
+                
+                for _, row in batch.iterrows():
+                    cursor.execute(insert_query, tuple(row))
+            
+            self.fabric_conn.commit()
+            cursor.close()
+            logger.info(f"Successfully loaded {total_rows} rows into {table_name}_staging")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to load data to Fabric table {table_name}: {str(e)}")
+            return False
+    
+    def execute_fabric_workflow(self, sql_script):
+        try:
+            logger.info("Executing Microsoft Fabric converted workflow")
+            cursor = self.fabric_conn.cursor()
+            
+            statements = [stmt.strip() for stmt in sql_script.split(';') if stmt.strip()]
+            
+            for idx, statement in enumerate(statements):
+                progress = ((idx + 1) / len(statements)) * 100
+                logger.info(f"Executing Fabric statement {idx + 1}/{len(statements)}: {progress:.0f}%")
+                cursor.execute(statement)
+                affected_rows = cursor.rowcount
+                logger.info(f"Statement affected {affected_rows} rows")
+                
+            self.fabric_conn.commit()
+            cursor.close()
+            logger.info("Microsoft Fabric workflow execution completed successfully")
+            return True
+        except Exception as e:
+            logger.error(f"Microsoft Fabric workflow execution failed: {str(e)}")
+            return False
+    
+    def compare_row_counts(self, table_name, source_table, target_table):
+        try:
+            td_cursor = self.teradata_conn.cursor()
+            td_cursor.execute(f"SELECT COUNT(*) FROM {source_table}")
+            source_count = td_cursor.fetchone()[0]
+            td_cursor.close()
+            
+            fabric_cursor = self.fabric_conn.cursor()
+            fabric_cursor.execute(f"SELECT COUNT(*) FROM {target_table}")
+            target_count = fabric_cursor.fetchone()[0]
+            fabric_cursor.close()
+            
+            match_percentage = (min(source_count, target_count) / max(source_count, target_count) * 100) if max(source_count, target_count) > 0 else 100
+            
+            status = 'MATCH' if source_count == target_count else 'PARTIAL MATCH' if match_percentage > 90 else 'NO MATCH'
+            
+            return {
+                'table_name': table_name,
+                'source_rows': source_count,
+                'target_rows': target_count,
+                'match_percentage': round(match_percentage, 2),
+                'validation_status': status
+            }
+        except Exception as e:
+            logger.error(f"Row count comparison failed for {table_name}: {str(e)}")
+            return None
+    
+    def compare_column_structure(self, table_name, source_table, target_table):
+        try:
+            td_cursor = self.teradata_conn.cursor()
+            td_cursor.execute(f"SELECT * FROM {source_table} WHERE 1=0")
+            source_columns = [desc[0] for desc in td_cursor.description]
+            td_cursor.close()
+            
+            fabric_cursor = self.fabric_conn.cursor()
+            fabric_cursor.execute(f"SELECT * FROM {target_table} WHERE 1=0")
+            target_columns = [desc[0] for desc in fabric_cursor.description]
+            fabric_cursor.close()
+            
+            missing_in_target = set(source_columns) - set(target_columns)
+            extra_in_target = set(target_columns) - set(source_columns)
+            
+            structure_match = len(missing_in_target) == 0 and len(extra_in_target) == 0
+            
+            return {
+                'table_name': table_name,
+                'source_columns': len(source_columns),
+                'target_columns': len(target_columns),
+                'missing_in_target': list(missing_in_target),
+                'extra_in_target': list(extra_in_target),
+                'structure_match': structure_match
+            }
+        except Exception as e:
+            logger.error(f"Column structure comparison failed for {table_name}: {str(e)}")
+            return None
+    
+    def hash_row(self, row):
+        row_str = '|'.join([str(v) if v is not None else 'NULL' for v in row])
+        return hashlib.md5(row_str.encode()).hexdigest()
+    
+    def compare_data_content(self, table_name, source_table, target_table, sample_size=10000):
+        try:
+            logger.info(f"Performing data content comparison for {table_name}")
+            
+            td_cursor = self.teradata_conn.cursor()
+            td_cursor.execute(f"SELECT * FROM {source_table} ORDER BY 1 FETCH FIRST {sample_size} ROWS ONLY")
+            source_data = td_cursor.fetchall()
+            td_cursor.close()
+            
+            fabric_cursor = self.fabric_conn.cursor()
+            fabric_cursor.execute(f"SELECT TOP {sample_size} * FROM {target_table} ORDER BY 1")
+            target_data = fabric_cursor.fetchall()
+            fabric_cursor.close()
+            
+            source_hashes = {self.hash_row(row) for row in source_data}
+            target_hashes = {self.hash_row(row) for row in target_data}
+            
+            matching_rows = len(source_hashes & target_hashes)
+            total_rows = len(source_hashes)
+            
+            match_percentage = (matching_rows / total_rows * 100) if total_rows > 0 else 100
+            
+            progress = 90
+            logger.info(f"Validating table {table_name}: {progress}%")
+            
+            return {
+                'table_name': table_name,
+                'sample_size': sample_size,
+                'matching_rows': matching_rows,
+                'total_rows': total_rows,
+                'match_percentage': round(match_percentage, 2)
+            }
+        except Exception as e:
+            logger.error(f"Data content comparison failed for {table_name}: {str(e)}")
+            return None
+    
+    def validate_table(self, table_name, source_table, target_table):
+        try:
+            logger.info(f"Starting validation for table: {table_name}")
+            
+            row_count_result = self.compare_row_counts(table_name, source_table, target_table)
+            structure_result = self.compare_column_structure(table_name, source_table, target_table)
+            content_result = self.compare_data_content(table_name, source_table, target_table)
+            
+            validation_result = {
+                'table_name': table_name,
+                'source_rows': row_count_result['source_rows'] if row_count_result else 0,
+                'target_rows': row_count_result['target_rows'] if row_count_result else 0,
+                'match_percentage': row_count_result['match_percentage'] if row_count_result else 0,
+                'validation_status': row_count_result['validation_status'] if row_count_result else 'ERROR',
+                'structure_match': structure_result['structure_match'] if structure_result else False,
+                'content_match_percentage': content_result['match_percentage'] if content_result else 0,
+                'timestamp': datetime.now().isoformat()
+            }
+            
+            self.validation_results.append(validation_result)
+            logger.info(f"Validation completed for {table_name}: {validation_result['validation_status']}")
+            
+            return validation_result
+        except Exception as e:
+            logger.error(f"Validation failed for {table_name}: {str(e)}")
+            return None
+    
+    def generate_reports(self):
+        try:
+            logger.info("Generating validation reports")
+            
+            json_report_path = f'validation_report_{self.timestamp}.json'
+            with open(json_report_path, 'w') as f:
+                json.dump(self.validation_results, f, indent=4)
+            logger.info(f"JSON report generated: {json_report_path}")
+            
+            csv_report_path = f'validation_report_{self.timestamp}.csv'
+            df = pd.DataFrame(self.validation_results)
+            df.to_csv(csv_report_path, index=False)
+            logger.info(f"CSV report generated: {csv_report_path}")
+            
+            return json_report_path, csv_report_path
+        except Exception as e:
+            logger.error(f"Report generation failed: {str(e)}")
+            return None, None
+    
+    def run_reconciliation(self, teradata_workflow, fabric_workflow, table_mappings):
+        try:
+            logger.info("Starting Teradata to Fabric reconciliation process")
+            
+            if not self.connect_teradata():
+                raise Exception("Failed to connect to Teradata")
+            
+            if not self.connect_fabric():
+                raise Exception("Failed to connect to Microsoft Fabric")
+            
+            if teradata_workflow:
+                self.execute_teradata_workflow(teradata_workflow)
+            
+            for table_mapping in table_mappings:
+                table_name = table_mapping['name']
+                source_table = table_mapping['source']
+                target_table = table_mapping['target']
+                
+                parquet_path, row_count = self.extract_teradata_dataset(source_table)
+                
+                if parquet_path:
+                    schema = self.get_teradata_schema(source_table)
+                    self.create_fabric_staging_table(table_name, schema)
+                    self.load_data_to_fabric(table_name, parquet_path)
+            
+            if fabric_workflow:
+                self.execute_fabric_workflow(fabric_workflow)
+            
+            for table_mapping in table_mappings:
+                self.validate_table(
+                    table_mapping['name'],
+                    table_mapping['source'],
+                    table_mapping['target']
+                )
+            
+            json_report, csv_report = self.generate_reports()
+            
+            logger.info("Reconciliation process completed successfully")
+            
+            return True
+        except Exception as e:
+            logger.error(f"Reconciliation process failed: {str(e)}")
+            return False
+        finally:
+            if self.teradata_conn:
+                self.teradata_conn.close()
+            if self.fabric_conn:
+                self.fabric_conn.close()
+
+def main():
+    reconciliation = TeradataFabricReconciliation()
+    
+    teradata_workflow = """
+    -- Teradata source workflow placeholder
+    -- Replace with actual Teradata SQL scripts, stored procedures, or BTEQ scripts
+    """
+    
+    fabric_workflow = """
+    -- Microsoft Fabric converted workflow placeholder
+    -- Replace with actual converted SQL scripts
+    """
+    
+    table_mappings = [
+        {
+            'name': 'SAMPLE_TABLE',
+            'source': 'SOURCE_DB.SAMPLE_TABLE',
+            'target': 'TARGET_SCHEMA.SAMPLE_TABLE'
+        }
+    ]
+    
+    success = reconciliation.run_reconciliation(
+        teradata_workflow,
+        fabric_workflow,
+        table_mappings
+    )
+    
+    if success:
+        logger.info("Migration validation completed successfully")
+        sys.exit(0)
+    else:
+        logger.error("Migration validation failed")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
+
+**API Cost**
+API Cost: 0.0000 USD
