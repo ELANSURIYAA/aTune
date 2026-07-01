@@ -29,13 +29,11 @@ Explains what modifications were expected to be added, removed, updated, or reta
 
 
 
-
 Updated Instructions File
 
 
 
 Contains the latest full instruction set of the target agent after modifications
-
 
 
 
@@ -123,7 +121,6 @@ Identify the expected updated behavior from:
 
 
 
-
 Compare against the Updated Instructions File.
 
 Validate:
@@ -143,7 +140,6 @@ Whether conflicting instructions still exist
 Whether old behavior unintentionally remains active
 
 Whether formatting or structure consistency was maintained
-
 
 
 
@@ -259,7 +255,6 @@ NOT APPLICABLE
 
 
 
-
 Identify:
 
 
@@ -297,7 +292,6 @@ Config/security violations
 
 
 
-
 Verify alignment with:
 
 
@@ -321,8 +315,6 @@ Executive summary requirements
 Correct config handling
 
 Lifecycle/versioning practices
-
-
 
 
 
@@ -353,7 +345,6 @@ Detect excessive prompt complexity indicating missing KB decomposition
 
 
 
-
 Prompt Hygiene
 
 
@@ -367,7 +358,6 @@ Detect hardcoded client names, project names, or environment-specific logic
 Detect non-reusable prompt structures
 
 Validate proper runtime variable usage
-
 
 
 
@@ -389,7 +379,6 @@ Detect absence of tiered KB architecture concepts
 
 
 
-
 Guardrail Coverage
 
 
@@ -401,7 +390,6 @@ Detect absence of enterprise guardrails
 Detect missing domain guardrails where applicable
 
 Detect reliance solely on model-native safety behavior
-
 
 
 
@@ -423,7 +411,6 @@ Detect unsafe or non-portable tool instructions
 
 
 
-
 Reusability
 
 
@@ -435,7 +422,6 @@ Detect client-specific implementations that should be KB-driven
 Detect non-generic architecture
 
 Detect unnecessary workflow specialization
-
 
 
 
@@ -457,7 +443,6 @@ Detect orchestration ambiguity
 
 
 
-
 Model Selection
 
 
@@ -469,7 +454,6 @@ Detect missing model-role separation
 Detect same-model generation/review patterns
 
 Validate whether model choices align with responsibilities
-
 
 
 
@@ -491,7 +475,6 @@ Detect lack of structured quality gate patterns
 
 
 
-
 HITL Design
 
 
@@ -507,7 +490,6 @@ Detect missing escalation handling for low confidence scenarios
 
 
 
-
 Lifecycle
 
 
@@ -517,7 +499,6 @@ Lifecycle
 Detect absence of production approval/versioning guidance
 
 Detect missing workflow lineage/version tracking references
-
 
 
 
@@ -537,7 +518,6 @@ Detect insecure config practices
 
 
 
-
 Executive Summary Agent
 
 
@@ -549,7 +529,6 @@ Detect absence of workflow summary responsibilities
 Detect missing deliverables reporting expectations
 
 Detect lack of downstream recommendations/output visibility
-
 
 
 
@@ -649,7 +628,6 @@ New instructions violate any of the 14 dimensions
 Removed instructions create functional regressions
 
 Multi-file handling logic is inconsistently implemented
-
 
 
 
@@ -821,9 +799,6 @@ If file path is provided but does NOT match the directory structure implied by f
 Use folder_name + /Review_report.md as the authoritative path (folder_name reflects the actual existing directory structure used by the input files).
 
 Flag this inconsistency explicitly in the final output to the user — do not silently resolve it without reporting it.
-
-
-
 
 
 
@@ -1053,7 +1028,6 @@ Do NOT append suffixes such as _new, _updated, _v2, (1).
 
 
 
-
 If the file does NOT exist:
 
 
@@ -1061,7 +1035,6 @@ If the file does NOT exist:
 Use a CREATE operation to write the file for the first time at the resolved output path.
 
 This is the expected and normal outcome on a first run and is not an error.
-
 
 
 
@@ -1077,7 +1050,6 @@ file path (as resolved per the PATH RESOLUTION RULE and VERBATIM PATH COPY RULE)
 extension (.md)
 
 capitalization
-
 
 
 
