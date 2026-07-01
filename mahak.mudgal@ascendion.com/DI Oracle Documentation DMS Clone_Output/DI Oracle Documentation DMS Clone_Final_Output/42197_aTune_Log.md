@@ -10,3 +10,7 @@ The aTune process cannot proceed without the Skill Set File (aTune_Process_Docum
 Please ensure both input files are present in the repository before starting the aTune process.
 
 [ERROR] Attempt 2 of 3 — Retrying file read operation for required input files.
+
+Attempted to locate files with various extensions (.md, .txt, .docx) but all attempts failed with 404 errors.
+
+[ERROR] Attempt 3 of 3 — Final retry for required input files.
