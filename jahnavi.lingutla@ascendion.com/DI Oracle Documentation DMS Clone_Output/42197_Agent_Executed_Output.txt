@@ -1,1 +1,283 @@
-{"document": "**Author:** [To be filled]\n**Created on:** \n**Description:** Oracle stored procedure that orchestrates the complete bronze layer ETL pipeline by sequentially loading 12 tables from source systems into the bronze layer with comprehensive audit logging and error handling.\n\n## Overview of Program\n\nThe bronze.usp_Load_bronze_Layer_Full procedure serves as the master orchestration procedure for the bronze layer ETL pipeline, responsible for coordinating the sequential loading of 12 distinct tables from source systems into the bronze layer of the data warehouse architecture. This procedure acts as the central control mechanism that ensures all bronze layer tables are refreshed in a coordinated manner during full refresh operations. The procedure begins execution by generating a unique batch identifier based on the current timestamp, which is used to track and correlate all operations performed during a single execution cycle across all child procedures and audit records. The batch ID follows the format 'YYYY-MM-DD HH24:MI:SS.FF3' and serves as the primary correlation key for monitoring and troubleshooting purposes. Upon initialization, the procedure captures the start timestamp using SYSTIMESTAMP to establish precise timing metrics for performance monitoring and SLA compliance tracking. The procedure declares and initializes 17 local variables to manage execution state, including timing variables (v_StartTime, v_EndTime, v_ExecutionTime), status tracking variables (v_OverallStatus, v_ErrorMessage, v_ErrorNumber, v_ErrorSeverity, v_ErrorState, v_ErrorLine), statistical counters (v_TotalRowsProcessed, v_TotalRowsInserted, v_TotalRowsFailed, v_TablesProcessed, v_TablesSucceeded, v_TablesFailed), and metadata variables (v_ProcedureName, v_CurrentUser, v_BatchID). The procedure outputs detailed execution information to the console using DBMS_OUTPUT.PUT_LINE statements, providing real-time visibility into the ETL pipeline progress including start time, executing user, and batch identifier. The core processing logic involves sequential invocation of 12 specialized child procedures, each responsible for loading a specific bronze layer table: bz_New_Monthly_HC_Report, bz_SchTask, bz_Hiring_Initiator_Project_Info, bz_Timesheet_New, bz_report_392_all, bz_vw_billing_timesheet_daywise_ne, bz_vw_consultant_timesheet_daywise, bz_DimDate, bz_holidays_Mexico, bz_holidays_Canada, bz_holidays, and bz_holidays_India. Each child procedure is called with the batch ID as a parameter to ensure consistent audit trail correlation across all table loads. After each child procedure invocation, the v_TablesProcessed counter is incremented to track the number of tables that have been processed regardless of success or failure status. The procedure implements a comprehensive audit logging mechanism that captures detailed execution metrics for each table load operation through the bronze.bz_Audit_Log table. Following the completion of all table load operations, the procedure queries the audit log table to calculate summary statistics by aggregating records based on the current batch ID. The procedure executes two separate SELECT statements against the audit log: the first retrieves the count of successful table loads and the sum of records inserted for operations with status 'SUCCESS', while the second retrieves the count of failed table loads and the sum of records failed for operations with status 'FAILED'. These aggregated metrics are stored in variables v_TablesSucceeded, v_TotalRowsInserted, v_TablesFailed, and v_TotalRowsFailed respectively. The total rows processed is calculated by summing the total rows inserted and total rows failed, providing a complete picture of the data volume handled during the execution cycle. The procedure calculates the total execution time by capturing the end timestamp and computing the difference between start and end times using EXTRACT functions to convert the INTERVAL result into seconds, accounting for days, hours, minutes, and seconds components. Upon successful completion of all table loads, the procedure outputs a comprehensive summary report to the console including end time, execution time in seconds, tables processed count, tables succeeded count, tables failed count, total rows inserted, and total rows failed. The procedure then inserts a master audit record into the bronze.bz_Audit_Log table that summarizes the entire pipeline execution, using source_table value 'source_layer.*' and target_table value 'bronze.*' to indicate this is an aggregate record covering all tables. The master audit record captures all key execution metrics including load timestamp, start timestamp, end timestamp, processed by user, processing time, status, records processed, records inserted, records failed, batch ID, load type ('FULL_REFRESH_ALL_TABLES'), and created date. After inserting the master audit record, the procedure executes a COMMIT statement to persist all audit log entries and ensure data consistency across the database. The procedure implements robust error handling through a comprehensive EXCEPTION block that captures any errors occurring during execution using the WHEN OTHERS clause. When an exception occurs, the error handling logic captures detailed error information including SQLERRM for the error message and SQLCODE for the error number, while also initializing error severity, error state, and error line variables to zero as these Oracle-specific metrics differ from SQL Server equivalents. The error handler calculates the execution time up to the point of failure using the same timestamp difference calculation as the success path, and sets the overall status to 'FAILED' to indicate unsuccessful execution. The procedure outputs detailed error information to the console including error number, error severity, error state, error line, and error message, formatted with clear delimiters for easy identification in log files. An error audit record is inserted into the bronze.bz_Audit_Log table with status 'FAILED' and the error message formatted as 'Error [error_number]: [error_message]' to provide complete error context for troubleshooting and root cause analysis. The error handler commits the error audit record to ensure the failure is logged even when the main transaction fails, providing persistent error tracking for operational monitoring and alerting. After committing the error audit record, the procedure re-throws the error using RAISE_APPLICATION_ERROR with error code -20001 and the original error message, ensuring that calling applications or schedulers are notified of the failure and can take appropriate action. The procedure processes tables containing various types of business data including human capital reports (bz_New_Monthly_HC_Report), scheduled tasks (bz_SchTask), hiring and project information (bz_Hiring_Initiator_Project_Info), timesheet data (bz_Timesheet_New, bz_vw_billing_timesheet_daywise_ne, bz_vw_consultant_timesheet_daywise), operational reports (bz_report_392_all), date dimensions (bz_DimDate), and holiday calendars for multiple countries (bz_holidays, bz_holidays_India, bz_holidays_Mexico, bz_holidays_Canada). The procedure is designed to support full refresh operations where all source data is reloaded into bronze layer tables, as indicated by the load_type value 'FULL_REFRESH_ALL_TABLES' in the audit records. The bronze layer serves as the initial landing zone in the data warehouse architecture where raw data from source systems is ingested with minimal transformation, preserving source system data structures and values for downstream processing in silver and gold layers. The procedure's sequential execution model ensures that tables are loaded in a specific order, which may be important for maintaining referential integrity or managing dependencies between tables. The comprehensive logging and audit trail capabilities enable data lineage tracking, allowing data engineers and analysts to trace data from source systems through the bronze layer to downstream consumption layers. The procedure supports operational monitoring and alerting by providing detailed execution metrics that can be queried from the audit log table to track ETL performance trends, identify bottlenecks, detect anomalies, and ensure SLA compliance. The batch ID correlation mechanism enables end-to-end tracking of data flows across multiple procedures and tables, facilitating impact analysis when issues occur and supporting data quality investigations. The procedure's error handling approach ensures that failures are properly logged and reported while maintaining data consistency through appropriate use of COMMIT statements in both success and error paths.\n\n## Code Structure and Design\n\nThe procedure bronze.usp_Load_bronze_Layer_Full is structured as a master orchestration procedure that coordinates the execution of 12 child procedures responsible for individual table loads. The procedure declares 17 variables at the beginning to manage execution state, timing, error handling, and statistical tracking. The v_ProcedureName variable stores the fully qualified procedure name 'bronze.usp_Load_bronze_Layer_Full' for identification purposes in logs and audit records. Timing variables include v_StartTime initialized to SYSTIMESTAMP for capturing the exact start of execution, v_EndTime for capturing completion time, and v_ExecutionTime for storing the calculated duration in seconds. Status tracking variables include v_OverallStatus initialized to 'SUCCESS' and updated to 'FAILED' if errors occur, v_ErrorMessage for storing SQLERRM output, v_ErrorNumber for storing SQLCODE output, and v_ErrorSeverity, v_ErrorState, and v_ErrorLine initialized to zero for compatibility with error logging schema. Statistical counter variables include v_TotalRowsProcessed for the sum of all rows handled, v_TotalRowsInserted for successful inserts, v_TotalRowsFailed for failed records, v_TablesProcessed for the count of tables attempted, v_TablesSucceeded for successful table loads, and v_TablesFailed for failed table loads. Metadata variables include v_CurrentUser initialized to USER function output to capture the database user executing the procedure, and v_BatchID generated from the start timestamp formatted as 'YYYY-MM-DD HH24:MI:SS.FF3'. The procedure calls 12 child procedures in sequence, each following the naming convention bronze.usp_Load_bz_[TableName] and accepting v_BatchID as a parameter. The called procedures are bronze.usp_Load_bz_New_Monthly_HC_Report, bronze.usp_Load_bz_SchTask, bronze.usp_Load_bz_Hiring_Initiator_Project_Info, bronze.usp_Load_bz_Timesheet_New, bronze.usp_Load_bz_report_392_all, bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne, bronze.usp_Load_bz_vw_consultant_timesheet_daywise, bronze.usp_Load_bz_DimDate, bronze.usp_Load_bz_holidays_Mexico, bronze.usp_Load_bz_holidays_Canada, bronze.usp_Load_bz_holidays, and bronze.usp_Load_bz_holidays_India. After all child procedures complete, the procedure executes two SELECT statements to aggregate statistics from the bronze.bz_Audit_Log table, filtering by batch_id and status to separate successful and failed operations. The first SELECT retrieves COUNT(*) into v_TablesSucceeded and NVL(SUM(records_inserted), 0) into v_TotalRowsInserted for records with status 'SUCCESS'. The second SELECT retrieves COUNT(*) into v_TablesFailed and NVL(SUM(records_failed), 0) into v_TotalRowsFailed for records with status 'FAILED'. The execution time calculation uses EXTRACT functions to parse the INTERVAL result from subtracting v_StartTime from v_EndTime, converting days to seconds by multiplying by 86400, hours to seconds by multiplying by 3600, minutes to seconds by multiplying by 60, and adding the seconds component directly. The procedure uses DBMS_OUTPUT.PUT_LINE for console logging throughout execution, outputting formatted messages with delimiters consisting of 80 equal signs for visual separation of log sections. The master audit record insertion uses an INSERT INTO statement targeting bronze.bz_Audit_Log with 14 columns: source_table, target_table, load_timestamp, start_timestamp, end_timestamp, processed_by, processing_time, status, records_processed, records_inserted, records_failed, batch_id, load_type, and created_date. The EXCEPTION block uses WHEN OTHERS to catch all exceptions, captures error details using SQLERRM and SQLCODE, recalculates execution time, sets status to 'FAILED', logs error details to console, inserts an error audit record with error_message column populated, commits the error record, and re-throws the error using RAISE_APPLICATION_ERROR with error code -20001. The procedure uses COMMIT statements in both the success path after inserting the master audit record and in the error path after inserting the error audit record to ensure audit trail persistence. The procedure depends on the existence of the bronze.bz_Audit_Log table with the appropriate schema to support audit logging operations. The procedure assumes that all 12 child procedures exist and are executable by the user running the master procedure. The procedure does not implement transaction rollback in the error handler, allowing child procedures to manage their own transaction boundaries and commit strategies.\n\n## Data Flow and Processing Logic\n\nThe execution flow begins with the initialization phase where the procedure captures the start timestamp using SYSTIMESTAMP and assigns it to v_StartTime. The batch ID is generated by formatting the start timestamp using TO_CHAR with format mask 'YYYY-MM-DD HH24:MI:SS.FF3', creating a unique identifier for the current execution cycle. The procedure outputs a formatted header to the console using DBMS_OUTPUT.PUT_LINE, displaying the pipeline name, start time, executing user, and batch ID with visual delimiters. The processing phase begins with the sequential invocation of 12 child procedures, each responsible for loading a specific bronze layer table. The first child procedure bronze.usp_Load_bz_New_Monthly_HC_Report is called with v_BatchID as a parameter, followed by incrementing v_TablesProcessed by 1. The second child procedure bronze.usp_Load_bz_SchTask is called with v_BatchID, followed by incrementing v_TablesProcessed. This pattern continues for all 12 child procedures: bronze.usp_Load_bz_Hiring_Initiator_Project_Info, bronze.usp_Load_bz_Timesheet_New, bronze.usp_Load_bz_report_392_all, bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne, bronze.usp_Load_bz_vw_consultant_timesheet_daywise, bronze.usp_Load_bz_DimDate, bronze.usp_Load_bz_holidays_Mexico, bronze.usp_Load_bz_holidays_Canada, bronze.usp_Load_bz_holidays, and bronze.usp_Load_bz_holidays_India, with each call followed by incrementing v_TablesProcessed. After all child procedures complete, the statistics calculation phase begins with the first SELECT statement querying bronze.bz_Audit_Log to count successful table loads and sum records inserted, filtering by batch_id = v_BatchID and status = 'SUCCESS', storing results in v_TablesSucceeded and v_TotalRowsInserted. The second SELECT statement queries bronze.bz_Audit_Log to count failed table loads and sum records failed, filtering by batch_id = v_BatchID and status = 'FAILED', storing results in v_TablesFailed and v_TotalRowsFailed. The total rows processed is calculated by adding v_TotalRowsInserted and NVL(v_TotalRowsFailed, 0). The end timestamp is captured using SYSTIMESTAMP and assigned to v_EndTime. The execution time is calculated by extracting day, hour, minute, and second components from the interval (v_EndTime - v_StartTime) and converting to total seconds. The completion logging phase outputs a formatted summary to the console including end time, execution time, tables processed, tables succeeded, tables failed, total rows inserted, and total rows failed. The audit record insertion phase executes an INSERT INTO statement targeting bronze.bz_Audit_Log with values including 'source_layer.*' for source_table, 'bronze.*' for target_table, v_StartTime for load_timestamp and start_timestamp, v_EndTime for end_timestamp, v_CurrentUser for processed_by, v_ExecutionTime for processing_time, v_OverallStatus for status, v_TotalRowsProcessed for records_processed, v_TotalRowsInserted for records_inserted, v_TotalRowsFailed for records_failed, v_BatchID for batch_id, 'FULL_REFRESH_ALL_TABLES' for load_type, and SYSTIMESTAMP for created_date. A COMMIT statement is executed to persist the master audit record and all changes made during the execution cycle. If any exception occurs during execution, the error handling flow is triggered through the EXCEPTION block. The error capture phase assigns SQLERRM to v_ErrorMessage, SQLCODE to v_ErrorNumber, and initializes v_ErrorSeverity, v_ErrorState, and v_ErrorLine to 0. The end timestamp is captured and execution time is calculated using the same logic as the success path. The overall status is set to 'FAILED'. The error logging phase outputs formatted error details to the console including error number, error severity, error state, error line, and error message. The error audit record insertion phase executes an INSERT INTO statement targeting bronze.bz_Audit_Log with values similar to the success path but with status 'FAILED' and error_message populated with 'Error [error_number]: [error_message]'. A COMMIT statement is executed to persist the error audit record. The error re-throw phase executes RAISE_APPLICATION_ERROR with error code -20001 and the error message to propagate the exception to the calling context.\n\n## ASCII Workflow Diagram\n\n```\nSTART\n  |\n  ↓\n[Initialize v_StartTime = SYSTIMESTAMP]\n  |\n  ↓\n[Generate v_BatchID from v_StartTime]\n  |\n  ↓\n[Log Pipeline Start]\n  |\n  ↓\n[Call bronze.usp_Load_bz_New_Monthly_HC_Report(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_SchTask(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_Hiring_Initiator_Project_Info(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_Timesheet_New(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_report_392_all(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_vw_consultant_timesheet_daywise(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_DimDate(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_holidays_Mexico(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_holidays_Canada(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_holidays(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[Call bronze.usp_Load_bz_holidays_India(v_BatchID)] → [Increment v_TablesProcessed]\n  |\n  ↓\n[SELECT COUNT(*), SUM(records_inserted) FROM bz_Audit_Log WHERE status='SUCCESS']\n  |\n  ↓\n[SELECT COUNT(*), SUM(records_failed) FROM bz_Audit_Log WHERE status='FAILED']\n  |\n  ↓\n[Calculate v_TotalRowsProcessed]\n  |\n  ↓\n[Set v_EndTime = SYSTIMESTAMP]\n  |\n  ↓\n[Calculate v_ExecutionTime]\n  |\n  ↓\n[Log Completion Summary]\n  |\n  ↓\n[INSERT Master Audit Record into bronze.bz_Audit_Log]\n  |\n  ↓\n[COMMIT]\n  |\n  ↓\nEND\n\n\nEXCEPTION PATH:\n  |\n  ↓\n[EXCEPTION - WHEN OTHERS]\n  |\n  ↓\n[Capture v_ErrorMessage = SQLERRM]\n  |\n  ↓\n[Capture v_ErrorNumber = SQLCODE]\n  |\n  ↓\n[Set v_ErrorSeverity = 0, v_ErrorState = 0, v_ErrorLine = 0]\n  |\n  ↓\n[Set v_EndTime = SYSTIMESTAMP]\n  |\n  ↓\n[Calculate v_ExecutionTime]\n  |\n  ↓\n[Set v_OverallStatus = 'FAILED']\n  |\n  ↓\n[Log Error Details]\n  |\n  ↓\n[INSERT Error Audit Record into bronze.bz_Audit_Log]\n  |\n  ↓\n[COMMIT]\n  |\n  ↓\n[RAISE_APPLICATION_ERROR(-20001, v_ErrorMessage)]\n  |\n  ↓\nEND\n```\n\n## Data Mapping\n\n| Source Field | Target Field | Transformation Logic | Data Type |\n|--------------|--------------|---------------------|----------|\n| v_StartTime | load_timestamp | Direct assignment of SYSTIMESTAMP | TIMESTAMP |\n| v_StartTime | start_timestamp | Direct assignment of SYSTIMESTAMP | TIMESTAMP |\n| v_EndTime | end_timestamp | Calculated SYSTIMESTAMP at completion | TIMESTAMP |\n| v_CurrentUser | processed_by | USER function output | VARCHAR2(100) |\n| v_ExecutionTime | processing_time | Calculated as EXTRACT(DAY)*86400 + EXTRACT(HOUR)*3600 + EXTRACT(MINUTE)*60 + EXTRACT(SECOND) from (v_EndTime - v_StartTime) | NUMBER |\n| v_BatchID | batch_id | TO_CHAR(v_StartTime, 'YYYY-MM-DD HH24:MI:SS.FF3') | VARCHAR2(100) |\n| v_OverallStatus | status | 'SUCCESS' or 'FAILED' based on execution outcome | VARCHAR2(50) |\n| v_TotalRowsProcessed | records_processed | v_TotalRowsInserted + NVL(v_TotalRowsFailed, 0) | NUMBER |\n| v_TotalRowsInserted | records_inserted | SUM(records_inserted) from audit log WHERE status='SUCCESS' | NUMBER |\n| v_TotalRowsFailed | records_failed | SUM(records_failed) from audit log WHERE status='FAILED' | NUMBER |\n| 'source_layer.*' | source_table | Static literal value for master audit record | VARCHAR2 |\n| 'bronze.*' | target_table | Static literal value for master audit record | VARCHAR2 |\n| 'FULL_REFRESH_ALL_TABLES' | load_type | Static literal value indicating full refresh operation | VARCHAR2 |\n| SYSTIMESTAMP | created_date | Current timestamp at audit record creation | TIMESTAMP |\n| v_ErrorMessage | error_message | 'Error ' \\|\\| TO_CHAR(v_ErrorNumber) \\|\\| ': ' \\|\\| v_ErrorMessage | VARCHAR2(4000) |\n\n## Complexity Analysis\n\n| Metric | Value | Notes |\n|--------|-------|-------|\n| Number of Procedures Called | 12 | bronze.usp_Load_bz_New_Monthly_HC_Report, bronze.usp_Load_bz_SchTask, bronze.usp_Load_bz_Hiring_Initiator_Project_Info, bronze.usp_Load_bz_Timesheet_New, bronze.usp_Load_bz_report_392_all, bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne, bronze.usp_Load_bz_vw_consultant_timesheet_daywise, bronze.usp_Load_bz_DimDate, bronze.usp_Load_bz_holidays_Mexico, bronze.usp_Load_bz_holidays_Canada, bronze.usp_Load_bz_holidays, bronze.usp_Load_bz_holidays_India |\n| Number of Database Tables Accessed | 1 | bronze.bz_Audit_Log (for SELECT and INSERT operations) |\n| Number of INSERT Statements | 2 | One master audit record insert in success path, one error audit record insert in exception path |\n| Number of SELECT Statements | 2 | Two aggregate queries on bronze.bz_Audit_Log for statistics calculation |\n| Number of Variables Declared | 17 | v_ProcedureName, v_StartTime, v_EndTime, v_ExecutionTime, v_OverallStatus, v_ErrorMessage, v_ErrorNumber, v_ErrorSeverity, v_ErrorState, v_ErrorLine, v_TotalRowsProcessed, v_TotalRowsInserted, v_TotalRowsFailed, v_TablesProcessed, v_TablesSucceeded, v_TablesFailed, v_CurrentUser, v_BatchID |\n| Number of Exception Handlers | 1 | WHEN OTHERS exception handler |\n| Number of Nested Blocks | 0 | No nested BEGIN-END blocks within the main procedure body |\n| Number of Conditional Branches | 0 | No IF or CASE statements present in the source code |\n| Number of Loop Structures | 0 | No FOR, WHILE, or LOOP statements present |\n| Number of COMMIT Statements | 2 | One COMMIT in success path after master audit insert, one COMMIT in exception path after error audit insert |\n| Number of DBMS_OUTPUT Statements | 19 | Multiple DBMS_OUTPUT.PUT_LINE calls for logging throughout execution |\n| Number of Arithmetic Operations | 12 | 12 increment operations (v_TablesProcessed := v_TablesProcessed + 1) |\n| Number of Function Calls | 8 | SYSTIMESTAMP (4 times), USER (1 time), TO_CHAR (3 times), EXTRACT (8 times for execution time calculation), SQLERRM (1 time), SQLCODE (1 time), NVL (3 times) |\n\n## Sensitive and Privacy Data Assessment\n\n| Field/Column | Data Classification | Privacy Risk | Recommendation |\n|--------------|-------------------|--------------|----------------|\n| bz_New_Monthly_HC_Report | Human Capital/HR Data | High | Contains employee headcount information which may include PII such as employee names, IDs, departments, and organizational data. Implement column-level encryption for PII fields, restrict access using role-based access control (RBAC), enable audit logging for all access, and ensure compliance with GDPR/CCPA requirements. |\n| bz_Hiring_Initiator_Project_Info | HR/Recruitment Data | High | Contains hiring and recruitment information including candidate details, hiring managers, and project assignments. This constitutes PII and confidential business information. Apply data masking for non-production environments, implement strict access controls, and ensure data retention policies comply with employment regulations. |\n| bz_Timesheet_New | Employee Time Tracking | High | Contains employee timesheet data including hours worked, project assignments, and potentially compensation-related information. This is sensitive HR data that may be used for payroll calculations. Encrypt sensitive columns, implement row-level security to ensure employees can only access their own data, and maintain comprehensive audit trails. |\n| bz_vw_billing_timesheet_daywise_ne | Billing/Financial Data | High | Contains billing information derived from timesheet data, potentially including client billing rates, project costs, and revenue information. This is confidential financial data. Restrict access to authorized finance and billing personnel only, implement encryption at rest and in transit, and ensure compliance with financial data protection regulations. |\n| bz_vw_consultant_timesheet_daywise | Consultant Time/Billing Data | High | Contains consultant timesheet and potentially billing information, which may include contractor PII and financial terms. Apply data classification policies, implement access controls based on business need-to-know, and ensure compliance with contractor data protection requirements. |\n| v_CurrentUser | System Metadata | Low | Captures the database user executing the procedure for audit purposes. While not sensitive itself, this information should be protected to prevent unauthorized access pattern analysis. Maintain in audit logs with appropriate retention policies. |\n| batch_id | System Metadata | Low | Technical identifier for batch tracking. Not sensitive but should be protected as part of overall audit trail integrity. |\n| bz_SchTask | Operational Data | Medium | Contains scheduled task information which may reveal business processes and operational patterns. Protect to prevent exposure of business intelligence. Implement access controls based on operational roles. |\n| bz_report_392_all | Business Report Data | Medium | Contains aggregated report data which may include sensitive business metrics. Classification depends on report content. Review report contents to determine if additional protection is required. |\n| bz_DimDate | Reference Data | Low | Date dimension table containing calendar information. Generally not sensitive but should be protected from unauthorized modification. |\n| bz_holidays_* (India, Mexico, Canada, general) | Reference Data | Low | Holiday calendar data for various countries. Not sensitive but should maintain data integrity controls. |\n\n## Key Outputs\n\nThe procedure produces several key outputs that support operational monitoring, audit compliance, and data lineage tracking. The primary output is a master audit record inserted into the bronze.bz_Audit_Log table that summarizes the entire pipeline execution, including source and target identifiers ('source_layer.*' and 'bronze.*'), timing information (load timestamp, start timestamp, end timestamp), execution metadata (processed by user, processing time in seconds, batch ID), status indicator ('SUCCESS' or 'FAILED'), statistical metrics (records processed, records inserted, records failed), load type identifier ('FULL_REFRESH_ALL_TABLES'), and creation timestamp. The procedure generates detailed console output through DBMS_OUTPUT.PUT_LINE statements that provide real-time execution visibility, including a formatted header with pipeline name, start time, executing user, and batch ID at the beginning of execution, and a formatted summary with end time, execution time, tables processed count, tables succeeded count, tables failed count, total rows inserted, and total rows failed at completion. In the event of an error, the procedure produces an error audit record in the bronze.bz_Audit_Log table with status 'FAILED' and a formatted error message containing the error number and error description, along with console output displaying error number, error severity, error state, error line, and error message for immediate troubleshooting. The batch ID output serves as a correlation key that links all child procedure executions and their individual audit records to the master pipeline execution, enabling end-to-end tracking of data flows and facilitating impact analysis when issues occur. The statistical outputs (v_TablesSucceeded, v_TablesFailed, v_TotalRowsInserted, v_TotalRowsFailed, v_TotalRowsProcessed) provide quantitative metrics for monitoring ETL performance, detecting anomalies, and ensuring SLA compliance. The execution time output enables performance trend analysis and capacity planning by tracking how long the full pipeline takes to complete under various data volumes and system loads. The procedure's outputs support data governance requirements by maintaining a complete audit trail of all data movements into the bronze layer, including who executed the load, when it occurred, what data was processed, and whether the operation succeeded or failed. The console logging outputs provide immediate feedback during execution for interactive monitoring and troubleshooting, while the persistent audit records in the database support historical analysis, compliance reporting, and automated monitoring through queries against the audit log table. The error re-throw mechanism (RAISE_APPLICATION_ERROR) ensures that failures are propagated to calling applications or job schedulers, enabling automated alerting and workflow management in enterprise ETL orchestration platforms."}
+# Oracle Stored Procedure Documentation
+# Procedure: bronze.usp_Load_bronze_Layer_Full
+
+## Overview
+**Procedure Name:** bronze.usp_Load_bronze_Layer_Full
+**Schema:** bronze
+**Type:** Orchestration Procedure
+**Purpose:** Master ETL procedure that orchestrates the full refresh load of all bronze layer tables from source systems
+
+## Description
+This stored procedure serves as the main entry point for the bronze layer ETL pipeline. It executes a series of individual table load procedures in sequence, manages batch processing, tracks execution metrics, and logs comprehensive audit information for monitoring and troubleshooting purposes.
+
+## Parameters
+**Input Parameters:** None
+**Output Parameters:** None
+
+## Procedure Logic
+
+### Variable Declarations
+The procedure declares the following variables for execution tracking and audit logging:
+
+- **v_ProcedureName** (VARCHAR2(200)): Stores the procedure name for logging
+- **v_StartTime** (TIMESTAMP): Captures the start time of execution
+- **v_EndTime** (TIMESTAMP): Captures the end time of execution
+- **v_ExecutionTime** (NUMBER): Calculates total execution time in seconds
+- **v_OverallStatus** (VARCHAR2(50)): Tracks overall execution status (SUCCESS/FAILED)
+- **v_ErrorMessage** (VARCHAR2(4000)): Stores error messages if failures occur
+- **v_ErrorNumber** (NUMBER): Stores Oracle error code
+- **v_ErrorSeverity** (NUMBER): Error severity level
+- **v_ErrorState** (NUMBER): Error state information
+- **v_ErrorLine** (NUMBER): Line number where error occurred
+- **v_TotalRowsProcessed** (NUMBER): Total count of rows processed across all tables
+- **v_TotalRowsInserted** (NUMBER): Total count of rows successfully inserted
+- **v_TotalRowsFailed** (NUMBER): Total count of rows that failed to load
+- **v_TablesProcessed** (NUMBER): Count of tables processed
+- **v_TablesSucceeded** (NUMBER): Count of tables loaded successfully
+- **v_TablesFailed** (NUMBER): Count of tables that failed to load
+- **v_CurrentUser** (VARCHAR2(100)): Current database user executing the procedure
+- **v_BatchID** (VARCHAR2(100)): Unique batch identifier for the execution run
+
+### Execution Flow
+
+#### 1. Initialization Phase
+- Generates a unique Batch ID using timestamp format: 'YYYY-MM-DD HH24:MI:SS.FF3'
+- Logs pipeline start information including:
+  - Start timestamp
+  - Executing user
+  - Batch ID
+
+#### 2. Table Loading Phase
+The procedure sequentially calls individual table load procedures, passing the Batch ID to each:
+
+**Table 1:** bz_New_Monthly_HC_Report
+- Procedure: bronze.usp_Load_bz_New_Monthly_HC_Report(v_BatchID)
+
+**Table 2:** bz_SchTask
+- Procedure: bronze.usp_Load_bz_SchTask(v_BatchID)
+- Note: Excludes TIMESTAMP column
+
+**Table 3:** bz_Hiring_Initiator_Project_Info
+- Procedure: bronze.usp_Load_bz_Hiring_Initiator_Project_Info(v_BatchID)
+
+**Table 4:** bz_Timesheet_New
+- Procedure: bronze.usp_Load_bz_Timesheet_New(v_BatchID)
+
+**Table 5:** bz_report_392_all
+- Procedure: bronze.usp_Load_bz_report_392_all(v_BatchID)
+
+**Table 6:** bz_vw_billing_timesheet_daywise_ne
+- Procedure: bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne(v_BatchID)
+
+**Table 7:** bz_vw_consultant_timesheet_daywise
+- Procedure: bronze.usp_Load_bz_vw_consultant_timesheet_daywise(v_BatchID)
+
+**Table 8:** bz_DimDate
+- Procedure: bronze.usp_Load_bz_DimDate(v_BatchID)
+
+**Table 9:** bz_holidays_Mexico
+- Procedure: bronze.usp_Load_bz_holidays_Mexico(v_BatchID)
+
+**Table 10:** bz_holidays_Canada
+- Procedure: bronze.usp_Load_bz_holidays_Canada(v_BatchID)
+
+**Table 11:** bz_holidays
+- Procedure: bronze.usp_Load_bz_holidays(v_BatchID)
+
+**Table 12:** bz_holidays_India
+- Procedure: bronze.usp_Load_bz_holidays_India(v_BatchID)
+
+After each table load, the tables processed counter is incremented.
+
+#### 3. Summary Statistics Calculation
+The procedure queries the bronze.bz_Audit_Log table to calculate:
+
+**Success Metrics:**
+- Count of successfully loaded tables
+- Total rows inserted across all successful loads
+
+**Failure Metrics:**
+- Count of failed table loads
+- Total rows that failed to load
+
+**Overall Metrics:**
+- Total rows processed (sum of inserted and failed)
+- Execution time in seconds
+
+#### 4. Completion Logging
+Logs comprehensive execution summary including:
+- End timestamp
+- Total execution time
+- Tables processed, succeeded, and failed counts
+- Row counts (inserted and failed)
+
+#### 5. Master Audit Record
+Inserts a master audit record into bronze.bz_Audit_Log with:
+- Source: 'source_layer.*'
+- Target: 'bronze.*'
+- Load type: 'FULL_REFRESH_ALL_TABLES'
+- All execution metrics and statistics
+- Batch ID for traceability
+
+#### 6. Transaction Commit
+Commits all changes to persist audit logs and data loads.
+
+### Error Handling
+
+The procedure includes comprehensive exception handling:
+
+**On Error:**
+1. Captures error details:
+   - Error message (SQLERRM)
+   - Error number (SQLCODE)
+   - Error severity, state, and line number
+
+2. Calculates execution time up to point of failure
+
+3. Sets overall status to 'FAILED'
+
+4. Logs detailed error information to console output
+
+5. Inserts error audit record into bronze.bz_Audit_Log with:
+   - Error details
+   - Execution metrics up to failure point
+   - Failed status
+
+6. Commits the error audit record
+
+7. Re-throws the error using RAISE_APPLICATION_ERROR with error code -20001
+
+## Dependencies
+
+### Called Procedures
+- bronze.usp_Load_bz_New_Monthly_HC_Report
+- bronze.usp_Load_bz_SchTask
+- bronze.usp_Load_bz_Hiring_Initiator_Project_Info
+- bronze.usp_Load_bz_Timesheet_New
+- bronze.usp_Load_bz_report_392_all
+- bronze.usp_Load_bz_vw_billing_timesheet_daywise_ne
+- bronze.usp_Load_bz_vw_consultant_timesheet_daywise
+- bronze.usp_Load_bz_DimDate
+- bronze.usp_Load_bz_holidays_Mexico
+- bronze.usp_Load_bz_holidays_Canada
+- bronze.usp_Load_bz_holidays
+- bronze.usp_Load_bz_holidays_India
+
+### Database Objects
+**Tables:**
+- bronze.bz_Audit_Log (for logging and metrics)
+
+**Audit Log Schema:**
+- source_table
+- target_table
+- load_timestamp
+- start_timestamp
+- end_timestamp
+- processed_by
+- processing_time
+- status
+- records_processed
+- records_inserted
+- records_failed
+- batch_id
+- load_type
+- error_message
+- created_date
+
+## Execution Example
+
+```sql
+-- Execute the bronze layer full load
+BEGIN
+    bronze.usp_Load_bronze_Layer_Full;
+END;
+/
+```
+
+## Monitoring and Troubleshooting
+
+### Check Execution Status
+```sql
+-- View latest execution summary
+SELECT *
+FROM bronze.bz_Audit_Log
+WHERE source_table = 'source_layer.*'
+  AND target_table = 'bronze.*'
+  AND load_type = 'FULL_REFRESH_ALL_TABLES'
+ORDER BY load_timestamp DESC
+FETCH FIRST 1 ROW ONLY;
+```
+
+### Check Individual Table Loads
+```sql
+-- View all table loads for a specific batch
+SELECT 
+    source_table,
+    target_table,
+    status,
+    records_inserted,
+    records_failed,
+    processing_time,
+    error_message
+FROM bronze.bz_Audit_Log
+WHERE batch_id = '<batch_id_value>'
+  AND source_table != 'source_layer.*'
+ORDER BY load_timestamp;
+```
+
+### Check Failed Loads
+```sql
+-- View failed table loads
+SELECT 
+    batch_id,
+    source_table,
+    target_table,
+    error_message,
+    load_timestamp
+FROM bronze.bz_Audit_Log
+WHERE status = 'FAILED'
+ORDER BY load_timestamp DESC;
+```
+
+## Performance Considerations
+
+1. **Sequential Processing**: Tables are loaded sequentially, not in parallel. Consider parallelization for performance improvement.
+
+2. **Full Refresh**: All tables are fully refreshed on each execution. Consider incremental loads for large tables.
+
+3. **Transaction Management**: Single commit at the end ensures atomicity but may hold locks longer.
+
+4. **Audit Log Growth**: The bz_Audit_Log table will grow with each execution. Implement archival/purge strategy.
+
+## Best Practices
+
+1. **Scheduling**: Schedule during off-peak hours due to full refresh nature
+2. **Monitoring**: Set up alerts on failed status in audit log
+3. **Backup**: Ensure backup strategy is in place before execution
+4. **Testing**: Test in non-production environment first
+5. **Documentation**: Keep individual table load procedures documented
+6. **Error Notification**: Implement email/alert notification on failures
+
+## Maintenance Notes
+
+- Review and optimize individual table load procedures regularly
+- Monitor execution times and optimize slow-running loads
+- Archive old audit log records periodically
+- Update documentation when adding/removing tables from the pipeline
+- Ensure all child procedures follow consistent error handling patterns
+
+## Version History
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | - | - | Initial creation with 12 table loads |
+
+## Related Procedures
+
+- All individual table load procedures (usp_Load_bz_*)
+- Potential incremental load procedures (if implemented)
+- Audit log maintenance procedures (if implemented)
+
+---
+**Document Generated:** As part of DI Oracle Documentation DMS Clone process
+**Last Updated:** Current execution timestamp
