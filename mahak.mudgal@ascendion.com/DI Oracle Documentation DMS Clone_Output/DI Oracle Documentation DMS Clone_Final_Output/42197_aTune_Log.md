@@ -8,3 +8,5 @@ The aTune process cannot proceed without the Skill Set File (aTune_Process_Docum
 - pipeline_id and user_input_placeholder_key for each agent (Executer, Reviewer, Recommender, Updater, Validator)
 
 Please ensure both input files are present in the repository before starting the aTune process.
+
+[ERROR] Attempt 2 of 3 — Retrying file read operation for required input files.
