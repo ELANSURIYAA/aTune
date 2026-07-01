@@ -1,12 +1,10 @@
-Iteration 1:
+[ERROR] Attempt 1 of 3 — Failed to read required input files (aTune_Process_Documentatio and Requirement). Files not found in repository root.
 
-Step 1:
-- Extracted the agent's role, goal, backstory, description, and expected output using the metadata extractor.
-- Created the Goal file and Instruction file and wrote both to GitHub at mahak.mudgal@ascendion.com/DI Oracle Documentation DMS Clone_Output/DI Oracle Documentation DMS Clone_Instruction/.
-- GitHub URLs:
-  - 42197_Goal.md: https://github.com/ELANSURIYAA/aTune/blob/main/mahak.mudgal@ascendion.com/DI Oracle Documentation DMS Clone_Output/DI Oracle Documentation DMS Clone_Instruction/42197_Goal.md
-  - 42197_Instruction.md: https://github.com/ELANSURIYAA/aTune/blob/main/mahak.mudgal@ascendion.com/DI Oracle Documentation DMS Clone_Output/DI Oracle Documentation DMS Clone_Instruction/42197_Instruction.md
-- Validation: I checked that 42197_Goal.md and 42197_Instruction.md exist in the correct location with content present. Both files verified.
-- Decision: All outputs verified so I am proceeding to Step 2.
+The aTune process cannot proceed without the Skill Set File (aTune_Process_Documentatio) and Agent Requirement File (Requirement). These files must exist in the GitHub repository to extract the necessary configuration values including:
+- Agent ID, Agent Name, Threshold Value
+- GitHub repo, branch, token details
+- User email
+- Input file names
+- pipeline_id and user_input_placeholder_key for each agent (Executer, Reviewer, Recommender, Updater, Validator)
 
-[ERROR] Attempt 1 of 3 — Executer agent workflow execution failed or did not complete successfully.
+Please ensure both input files are present in the repository before starting the aTune process.
