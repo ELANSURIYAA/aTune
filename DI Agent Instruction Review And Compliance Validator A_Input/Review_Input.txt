@@ -1,67 +1,55 @@
 Reviewer Validation Checklist
 
 Completeness Checks
-
 - Verify that all mandatory sections from the instructions are present in the agent output.
 - Confirm that all required fields and columns specified in the instructions are included.
-- Ensure all requested analyses and validations are covered.
-- Check that all entities/files/components mentioned in the instructions are analyzed.
+- Check that all requested analyses and validations are covered.
+- Ensure all entities/files/components mentioned in the instructions are analyzed.
 - Validate that all dependencies and integrations referenced in the instructions are addressed.
-- Confirm that all business rules from the instructions are covered.
-- Ensure all requested use cases/scenarios are included.
-- Verify that all required tables and headers are generated.
-- Confirm all required classifications, tags, and statuses are included.
-- Ensure gap/missing item handling requirements are followed.
-- Validate that all formatting requirements from the instructions are adhered to.
-- Confirm that no requested section is skipped.
-- Ensure all referenced files/content are analyzed where required.
-- Verify that all mandatory mappings and relationships are included.
-- Confirm that all required inferred or derived fields are generated if instructed.
-- Ensure all iteration/resolution tracking requirements are included if mentioned.
-- Validate that all input expectations and output expectations are addressed.
+- Confirm all business rules from the instructions are covered.
+- Ensure all formatting requirements from the instructions are followed.
+- Verify that no requested section is skipped.
+- Confirm all referenced files/content are analyzed where required.
+- Ensure all mandatory mappings/relationships are included.
+- Validate that all required inferred/derived fields are generated if instructed.
 
 Accuracy Checks
-
-- Verify that the output aligns with the provided instructions.
-- Confirm that the output correctly reflects the instruction content.
-- Ensure no hallucinated content exists in the output.
-- Validate that no unsupported assumptions are introduced.
-- Check that dependency mappings are logically correct.
-- Confirm that technical mappings are valid.
-- Ensure gap identification is justified by the instruction content.
-- Validate that risk/severity classifications are appropriate.
-- Confirm that inferred content is explicitly tagged if required.
-- Ensure findings are traceable to the instructions.
-- Validate that no contradictions exist across sections.
-- Confirm business rule interpretations are correct.
-- Ensure terminology is used consistently.
-- Validate that required formatting standards are followed correctly.
-- Confirm that no false-positive gaps are generated.
+- Confirm that the output aligns with the provided instructions.
+- Verify that no hallucinated content exists in the output.
+- Ensure no unsupported assumptions are introduced.
+- Validate that dependency mappings are logically correct.
+- Confirm that gap identification is justified by the instructions.
+- Ensure risk/severity classifications are appropriate if present.
+- Validate that findings are traceable to the instructions.
+- Confirm no contradictions exist across sections.
+- Ensure business rule interpretations are correct.
+- Validate that terminology is used consistently.
+- Confirm required formatting standards are followed correctly.
+- Ensure no false-positive gaps are generated.
 - Ensure no false-negative omissions occur.
-- Validate that values, tables, and classifications accurately match the instruction content.
+- Validate that values/tables/classifications accurately match the instructions.
 - Confirm relationships between entities/components are correctly interpreted.
 - Ensure status/resolution tracking is accurate if applicable.
 - Validate that recommendations align with the identified findings.
-- Confirm that data extracted from the instructions is represented correctly.
+- Confirm data extracted from the instructions is represented correctly.
 - Ensure no instruction is misinterpreted or partially implemented.
 
 Efficiency Checks
-
 - Verify that duplicate analysis is avoided.
 - Confirm that redundant explanations are avoided.
 - Ensure repeated gap entries are avoided.
 - Validate that output remains concise and structured.
-- Confirm that unnecessary sections are not generated.
+- Confirm unnecessary sections are not generated.
 - Ensure duplicate dependency mappings are avoided.
-- Validate that repeated risks and recommendations are eliminated.
-- Confirm that formatting remains clean and optimized.
+- Validate that repeated risks/recommendations are eliminated.
+- Confirm formatting remains clean and optimized.
 - Ensure excessive verbosity is avoided.
 - Validate that overlapping findings are consolidated.
-- Confirm that tables are not unnecessarily repeated.
+- Confirm tables are not unnecessarily repeated.
 - Ensure output is token-efficient while maintaining completeness.
 - Validate that repeated content from the instructions is minimized unless necessary.
-- Confirm that similar findings are grouped logically where appropriate.
-- Ensure redundant classifications and tags are avoided.
-- Validate that duplicate validations and checks are eliminated.
-- Confirm that large sections are summarized efficiently where allowed.
+- Confirm similar findings are grouped logically where appropriate.
+- Ensure redundant classifications/tags are avoided.
+- Validate that duplicate validations/checks are eliminated.
+- Confirm large sections are summarized efficiently where allowed.
 - Ensure output structure improves readability and review efficiency.
