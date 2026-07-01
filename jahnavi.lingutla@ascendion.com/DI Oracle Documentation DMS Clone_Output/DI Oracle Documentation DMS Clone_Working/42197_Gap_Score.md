@@ -1,19 +1,39 @@
 QUALITY SCORE
 
-| Dimension    | Weight | Reviewer Check Score | Raw Score | Weighted Score | Notes                                         |
-|--------------|--------|----------------------|-----------|----------------|-----------------------------------------------|
-| Completeness | 40%    | 17/17                | 100/100   | 40.0/40        | 17 of 17 completeness reviewer checks satisfied |
-| Accuracy     | 40%    | 16/16                | 100/100   | 40.0/40        | 16 of 16 accuracy reviewer checks satisfied     |
-| Efficiency   | 20%    | 8/8                  | 100/100   | 20.0/20        | 8 of 8 efficiency reviewer checks satisfied     |
-| TOTAL        | 100%   |                      |           | 100.0/100      |                                               |
+Dimension: Completeness
+Weight: 40%
+Reviewer Check Score: 7/17
+Raw Score: 41.18/100
+Weighted Score: 16.47/40
+Notes: 7 of 17 completeness reviewer checks satisfied
 
-SCORE JUSTIFICATION
+Dimension: Accuracy
+Weight: 40%
+Reviewer Check Score: 13/17
+Raw Score: 76.47/100
+Weighted Score: 30.59/40
+Notes: 13 of 17 accuracy reviewer checks satisfied
 
-The executor output achieves a perfect score of 100/100 as all reviewer checks from REVIEW_INPUTS are fully satisfied. All 17 completeness checks are met: the output is a valid JSON object with the "document" key containing full Markdown documentation, metadata appears at the top with Author, Created on (empty), and Description fields, all required sections are present in the exact order (Overview of Program, Code Structure and Design, Data Flow and Processing Logic, ASCII Workflow Diagram, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, Key Outputs), the Overview contains a single paragraph with minimum 50 sentences, Code Structure and Design contains no bullet points, the ASCII workflow diagram is present with correct formatting showing only steps from source code, Data Mapping uses the required table format with mappings inferable from source, Complexity Analysis uses the required table format with deterministic values, Sensitive and Privacy Data Assessment follows the required table format with appropriate classifications, Key Outputs are documented, API Cost Calculations section is correctly excluded, all 12 table loads are addressed, audit logging and error handling are documented, all variables and exception handling are covered, and no required content is skipped. All 16 accuracy checks are satisfied: the output strictly follows instructions without extra explanation, documentation is fully traceable to the Oracle PL/SQL implementation, no content is hallucinated, all technical steps and variables are accurately reflected, the ASCII workflow diagram includes only steps present in source code, Data Mapping does not invent columns, Complexity Analysis uses only measurable values, sensitive data classification is appropriately applied, terminology and section order are consistent, error handling and audit logic are accurately described, batch processing references are supported by input, no unsupported assumptions are present, formatting standards are followed exactly, no false-positive or false-negative omissions occur, and all findings are traceable to instructions or input. All 8 efficiency checks are met: duplicate analysis is avoided, no repeated gap entries exist, output is concise and structured, duplicate dependency mappings are eliminated, formatting is clean and optimized, overlapping findings are consolidated, tables are not unnecessarily repeated, output is token-efficient while maintaining completeness, documentation does not include repeated metadata, large sections are summarized efficiently where allowed, output structure improves readability, only required sections are generated, output does not include sample code or generic logs unless present in source, and output avoids unnecessary commentary.
+Dimension: Efficiency
+Weight: 20%
+Reviewer Check Score: 14/14
+Raw Score: 100/100
+Weighted Score: 20.00/20
+Notes: 14 of 14 efficiency reviewer checks satisfied
+
+TOTAL SCORE: 67.06/100
+
+---
 
 GAP COUNTS
 
-Total Gaps Found: 0
-Not Present (NP): 0
-Not Done Correctly (NC): 0
+Total Gaps Found: 14
+Not Present (NP): 10
+Not Done Correctly (NC): 4
 Not Done Optimally (NO): 0
+
+---
+
+SCORE JUSTIFICATION
+
+The EXECUTOR_OUTPUT achieves a total quality score of 67.06/100. The Completeness dimension scores 16.47/40 due to 10 missing required sections and structural elements: the output is not formatted as a JSON object with a "document" key (GAP-001), metadata section is absent (GAP-002), required sections are missing including Code Structure and Design, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, Key Outputs, and API Cost Calculations (GAP-003), the Overview is not formatted as a single 50-sentence paragraph (GAP-004), the ASCII workflow diagram is absent (GAP-006), and multiple required sections are not present (GAP-005, GAP-007, GAP-008, GAP-009, GAP-010). The Accuracy dimension scores 30.59/40 due to 4 accuracy violations: the output does not follow the JSON format requirement (GAP-011), the ASCII workflow diagram requirement is not met (GAP-012), and the Data Mapping and Complexity Analysis sections when created must follow strict evidence-based rules (GAP-013, GAP-014). The Efficiency dimension scores 20.00/20 as all 14 efficiency reviewer checks are satisfied with no duplicate analysis, redundant explanations, repeated gap entries, or unnecessary verbosity detected in the current output structure.
