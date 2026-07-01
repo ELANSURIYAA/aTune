@@ -1,55 +1,100 @@
-# Gap Remediation Report
+# Gap Remediation Report - DI Oracle Documentation DMS Clone Agent
 
-## DI Oracle Documentation DMS Clone - Instruction Prompt Remediation
+## Instruction Prompt Analysis
+**Agent Name:** DI Oracle Documentation DMS Clone  
+**Current Instruction Status:** Minimal/Incomplete (only contains agent name and description placeholders)
 
 ---
 
-## **Gap Remediation Table**
+## Gap Remediation Table
 
 | Gap ID | Gap Description | Instruction Section / Part | Change Type | Required Modification | Status |
-|--------|-----------------|----------------------------|-------------|----------------------|---------|
-| N/A | No gaps identified | N/A | N/A | No modifications required | Completed |
+|--------|-----------------|----------------------------|-------------|----------------------|--------|
+| GAP-001 | The output must be a valid JSON object containing only the "document" key as specified in completeness check 1 of REVIEW_INPUTS. | Expected Output | Add | Add instruction: "The agent must output a valid JSON object with the following structure: `{\"document\": \"[full markdown documentation content]\"}`. The JSON must contain only the 'document' key with the complete Markdown documentation as its value." | Completed |
+| GAP-002 | The "document" value must contain full Markdown documentation as specified in completeness check 2 of REVIEW_INPUTS. | Expected Output | Add | Add instruction: "The 'document' value must contain complete Markdown-formatted documentation including all required sections: metadata, Overview of Program, Code Structure and Design, ASCII workflow diagram, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, and Key Outputs." | Completed |
+| GAP-003 | Metadata (Author, Created on, Description) must appear only once at the very top inside the "document" value as specified in completeness check 3 of REVIEW_INPUTS. | Expected Output - Documentation Structure | Add | Add instruction: "Metadata Section Requirements:\n- Must appear only once at the very top of the documentation inside the 'document' value\n- Must include the following fields:\n  - Author: [Author name]\n  - Created on: [Leave empty]\n  - Description: [Brief description]" | Completed |
+| GAP-004 | The "Created on" field must be left empty as specified in completeness check 4 of REVIEW_INPUTS. | Expected Output - Documentation Structure | Add | Add instruction: "The 'Created on' field in the metadata section must be included but left blank (no value)." | Completed |
+| GAP-005 | The following sections must be present in exact order: Overview of Program, Code Structure and Design, Data Flow and Processing Logic, Data Mapping, Complexity Analysis, Sensitive and Privacy Data Assessment, Key Outputs, API Cost Calculations as specified in completeness check 5 of REVIEW_INPUTS. | Expected Output - Documentation Structure | Add | Add instruction: "Required Documentation Sections (in exact order):\n1. Metadata (at the top)\n2. Overview of Program\n3. Code Structure and Design\n4. Data Flow and Processing Logic\n5. Data Mapping\n6. Complexity Analysis\n7. Sensitive and Privacy Data Assessment\n8. Key Outputs\n9. API Cost Calculations (for internal tracking only - see GAP-013)" | Completed |
+| GAP-006 | The Overview of Program must be a single concise paragraph with minimum 50 sentences and must not include generic Oracle descriptions as specified in completeness check 6 of REVIEW_INPUTS. | Expected Output - Overview of Program Section | Add | Add instruction: "Overview of Program Section Requirements:\n- Must be written as a single concise paragraph\n- Must contain a minimum of 50 sentences\n- Must describe the specific procedure/program implementation from the input\n- Must NOT include generic Oracle descriptions or boilerplate content\n- Must focus on the actual functionality, purpose, and technical implementation details from the source code" | Completed |
+| GAP-007 | Code Structure and Design must not contain any bullet points, each starting with an action verb, and must cover all technical elements explicitly present in the source as specified in completeness check 7 of REVIEW_INPUTS. | Expected Output - Code Structure and Design Section | Add | Add instruction: "Code Structure and Design Section Requirements:\n- Must be written as narrative paragraphs (NO bullet points)\n- Each sentence must start with an action verb (e.g., Declares, Initializes, Executes, Inserts, Calculates, Handles)\n- Must cover ALL technical elements explicitly present in the source code including:\n  - Variable declarations\n  - Procedure calls\n  - SQL queries\n  - Control flow logic\n  - Error handling mechanisms\n  - Commit/transaction logic\n  - Logging and audit operations\n- Must not skip any technical component from the source" | Completed |
+| GAP-008 | An ASCII workflow diagram must be present, formatted as specified, and must include only steps explicitly found in the source code as specified in completeness check 8 of REVIEW_INPUTS. | Expected Output - ASCII Workflow Diagram | Add | Add instruction: "ASCII Workflow Diagram Requirements:\n- Must be included in the documentation\n- Must use zig-zag/snake layout format:\n  ```\n  [Step 1] --> [Step 2] --> [Step 3]\n                              |\n                              v\n  [Step 6] <-- [Step 5] <-- [Step 4]\n  ```\n- Must include ONLY steps explicitly found in the source code\n- Must not include assumed or inferred steps\n- Each step must be traceable to specific code elements" | Completed |
+| GAP-009 | The Data Mapping section must use the required Markdown table format and include only mappings explicitly inferable from the source, or state "Not explicitly present in source" as specified in completeness check 9 of REVIEW_INPUTS. | Expected Output - Data Mapping Section | Add | Add instruction: "Data Mapping Section Requirements:\n- Must use Markdown table format:\n  ```\n  | Source | Target |\n  |--------|--------|\n  | [source field] | [target field] |\n  ```\n- Must include ONLY mappings explicitly inferable from the source code\n- If mappings cannot be determined from the source, state: 'Not explicitly present in source'\n- Must not invent or assume column mappings\n- Each mapping must be directly traceable to the source code" | Completed |
+| GAP-010 | The Complexity Analysis section must use the required Markdown table format and only include deterministic values or "Not explicitly present in source" as specified in completeness check 10 of REVIEW_INPUTS. | Expected Output - Complexity Analysis Section | Add | Add instruction: "Complexity Analysis Section Requirements:\n- Must use Markdown table format:\n  ```\n  | Metric | Value |\n  |--------|-------|\n  | [metric name] | [measured value] |\n  ```\n- Must include ONLY deterministic values measurable from the source code\n- For unmeasurable metrics, state: 'Not explicitly present in source'\n- Must not estimate or assume complexity values\n- Examples of measurable metrics: number of procedures called, number of variables declared, number of SQL statements, number of tables accessed" | Completed |
+| GAP-011 | The Sensitive and Privacy Data Assessment section must follow the required table format or output "No sensitive data found" if applicable as specified in completeness check 11 of REVIEW_INPUTS. | Expected Output - Sensitive and Privacy Data Assessment Section | Add | Add instruction: "Sensitive and Privacy Data Assessment Section Requirements:\n- Must use table format:\n  ```\n  | Field/Column | Data Classification | Justification |\n  |--------------|---------------------|---------------|\n  | [field name] | [classification] | [reason] |\n  ```\n- If no sensitive data is identified in the source code, state: 'No sensitive data found'\n- Apply classification only to fields clearly containing sensitive data (PII, financial, health, etc.)\n- Each classification must be justified based on the source code analysis\n- Must not over-classify or under-classify data" | Completed |
+| GAP-012 | Key Outputs must be listed as bullet points and only include critical outputs directly produced by the implementation, or state "Not explicitly present in source" as specified in completeness check 12 of REVIEW_INPUTS. | Expected Output - Key Outputs Section | Add | Add instruction: "Key Outputs Section Requirements:\n- Must list outputs as bullet points\n- Must include ONLY critical outputs directly produced by the implementation\n- Examples: tables populated, audit records created, log entries generated, return values\n- If outputs cannot be determined from the source, state: 'Not explicitly present in source'\n- Must not include intermediate or assumed outputs\n- Each output must be directly traceable to the source code" | Completed |
+| GAP-013 | API Cost should not be included in the final output as specified in completeness check 13 of REVIEW_INPUTS. | Expected Output - API Cost Section | Delete | Delete instruction: Remove or exclude the API Cost Calculations section from the final documentation output. The API cost should be calculated internally but NOT included in the final JSON output delivered to the user. | Completed |
+| GAP-014 | All 12 table loads and their corresponding procedures from the input must be addressed in the documentation as specified in completeness check 14 of REVIEW_INPUTS. | Expected Output - Content Coverage | Add | Add instruction: "Content Coverage Requirements:\n- All table loads and their corresponding procedures from the input must be documented\n- For the specific input provided, ensure all 12 table loads are addressed:\n  1. bz_New_Monthly_HC_Report\n  2. bz_SchTask\n  3. bz_Hiring_Initiator_Project_Info\n  4. bz_Timesheet_New\n  5. bz_report_392_all\n  6. bz_vw_billing_timesheet_daywise_ne\n  7. bz_vw_consultant_timesheet_daywise\n  8. bz_DimDate\n  9. bz_holidays_Mexico\n  10. bz_holidays_Canada\n  11. bz_holidays\n  12. bz_holidays_India\n- Each procedure call must be documented in the appropriate sections" | Completed |
+| GAP-015 | Audit logging, error handling, and summary statistics logic from the input must be documented in the appropriate sections as specified in completeness check 15 of REVIEW_INPUTS. | Expected Output - Content Coverage | Add | Add instruction: "Audit Logging, Error Handling, and Summary Statistics Requirements:\n- Audit logging mechanism must be documented:\n  - INSERT INTO bz_Audit_Log statements\n  - Audit fields captured (procedure name, status, timestamps, row counts, etc.)\n- Error handling logic must be documented:\n  - EXCEPTION blocks\n  - Error capture variables (error message, number, severity, state, line)\n  - Error logging procedures\n- Summary statistics logic must be documented:\n  - SELECT queries for aggregated metrics\n  - Variables: v_TablesSucceeded, v_TablesFailed, v_TotalRowsInserted, v_TotalRowsFailed\n  - Calculation methods" | Completed |
+| GAP-016 | All variables, exception handling, and commit logic from the input must be covered in the documentation as specified in completeness check 16 of REVIEW_INPUTS. | Expected Output - Content Coverage | Add | Add instruction: "Variable, Exception Handling, and Commit Logic Requirements:\n- All variables declared in the source must be documented:\n  - v_ProcedureName, v_StartTime, v_EndTime, v_ExecutionTime\n  - v_OverallStatus, v_ErrorMessage, v_ErrorNumber, v_ErrorSeverity, v_ErrorState, v_ErrorLine\n  - v_TotalRowsProcessed, v_TotalRowsInserted, v_TotalRowsFailed\n  - v_TablesProcessed, v_TablesSucceeded, v_TablesFailed\n  - v_CurrentUser, v_BatchID\n- Exception handling mechanisms must be documented:\n  - WHEN OTHERS blocks\n  - Error capture and logging logic\n  - Rollback procedures (if present)\n- Commit logic must be documented:\n  - COMMIT statements\n  - Transaction boundaries\n  - Commit timing and conditions" | Completed |
+| GAP-017 | No required section or content from the input must be skipped as specified in completeness check 17 of REVIEW_INPUTS. | Expected Output - Content Coverage | Add | Add instruction: "Completeness Requirement:\n- No required section from the instruction template must be skipped\n- No content element from the input source code must be omitted\n- All technical components must be documented\n- All procedure calls, variable declarations, SQL statements, and logic flows must be covered\n- Verify completeness before generating final output" | Completed |
+| GAP-018 | The output must strictly follow the provided instructions and must not include any explanation before or after the JSON as specified in accuracy check 1 of REVIEW_INPUTS. | Expected Output - Output Format | Add | Add instruction: "Output Format Requirements:\n- The output must be a pure JSON object\n- NO text, explanation, or commentary before the JSON\n- NO text, explanation, or commentary after the JSON\n- NO markdown code blocks (no ```json tags)\n- The output must start with { and end with }\n- The JSON must be valid and parseable" | Completed |
+| GAP-019 | The documentation content must be fully traceable to the actual Oracle SQL / PL-SQL implementation provided as specified in accuracy check 2 of REVIEW_INPUTS. | Expected Output - Accuracy Requirements | Add | Add instruction: "Traceability Requirement:\n- All documentation content must be fully traceable to the actual Oracle SQL/PL-SQL implementation provided in the input\n- Every statement, description, and technical detail must reference specific elements in the source code\n- Do not document functionality that is not present in the source\n- Maintain direct linkage between documentation and source code elements" | Completed |
+| GAP-020 | No content must be hallucinated or assumed beyond what is explicitly present in the input as specified in accuracy check 3 of REVIEW_INPUTS. | Expected Output - Accuracy Requirements | Add | Add instruction: "No Hallucination Policy:\n- Do NOT hallucinate or invent content\n- Do NOT assume functionality beyond what is explicitly present in the source code\n- Do NOT add inferred behavior that is not directly observable in the code\n- Do NOT include generic descriptions or boilerplate content\n- Document ONLY what is explicitly present and verifiable in the input" | Completed |
+| GAP-021 | All technical steps, variables, procedures, and logic in the input must be accurately reflected in the documentation as specified in accuracy check 4 of REVIEW_INPUTS. | Expected Output - Accuracy Requirements | Add | Add instruction: "Accuracy Requirement:\n- All technical steps from the source must be accurately reflected\n- All variables (18 declared variables in the example) must be documented\n- All procedures (12 usp_Load_bz_* procedures in the example) must be documented\n- All logic flows (batch processing, error handling, audit logging) must be accurately described\n- No omissions or inaccuracies are permitted" | Completed |
+| GAP-022 | The ASCII workflow diagram must only include steps present in the source code and must follow the required zig-zag/snake layout as specified in accuracy check 5 of REVIEW_INPUTS. | Expected Output - ASCII Workflow Diagram | Add | Add instruction: "ASCII Workflow Diagram Accuracy:\n- Include ONLY steps explicitly present in the source code\n- Follow the zig-zag/snake layout format exactly\n- Do not add assumed or inferred steps\n- Each step must be verifiable in the source code\n- Maintain proper flow direction and sequence" | Completed |
+| GAP-023 | The Data Mapping section must not invent columns or mappings and must only include what is inferable from the source as specified in accuracy check 6 of REVIEW_INPUTS. | Expected Output - Data Mapping Section | Add | Add instruction: "Data Mapping Accuracy:\n- Do NOT invent columns or mappings\n- Include ONLY mappings explicitly inferable from the source code\n- If mappings are not present or inferable, state: 'Not explicitly present in source'\n- Each mapping must be directly traceable to source code elements\n- Do not assume mappings based on naming conventions alone" | Completed |
+| GAP-024 | The Complexity Analysis must use only measurable values from the source or state "Not explicitly present in source" as specified in accuracy check 7 of REVIEW_INPUTS. | Expected Output - Complexity Analysis Section | Add | Add instruction: "Complexity Analysis Accuracy:\n- Use ONLY measurable values from the source code\n- For unmeasurable metrics, state: 'Not explicitly present in source'\n- Do not estimate or calculate complexity values not present in the code\n- Examples of measurable values: count of procedures, count of variables, count of SQL statements, count of tables\n- Do not include subjective complexity assessments" | Completed |
+| GAP-025 | Sensitive data classification must only be applied to fields clearly containing sensitive data as per the input as specified in accuracy check 8 of REVIEW_INPUTS. | Expected Output - Sensitive and Privacy Data Assessment Section | Add | Add instruction: "Sensitive Data Classification Accuracy:\n- Apply classification ONLY to fields clearly containing sensitive data\n- Base classification on actual field names, data types, and usage in the source code\n- Do not over-classify non-sensitive data\n- Do not under-classify clearly sensitive data (PII, financial, health, credentials)\n- Provide clear justification for each classification based on source code evidence" | Completed |
+| GAP-026 | Terminology and section order must be consistent with the instructions as specified in accuracy check 9 of REVIEW_INPUTS. | Expected Output - Consistency Requirements | Add | Add instruction: "Consistency Requirements:\n- Use consistent terminology throughout the documentation\n- Maintain exact section order as specified in the instructions\n- Use consistent formatting for similar elements\n- Follow naming conventions from the source code\n- Do not introduce alternative terminology or section names" | Completed |
+| GAP-027 | Error handling and audit logic must be accurately described and placed in the correct sections as specified in accuracy check 10 of REVIEW_INPUTS. | Expected Output - Content Placement | Add | Add instruction: "Error Handling and Audit Logic Placement:\n- Error handling logic (EXCEPTION blocks) must be accurately described\n- Audit logic (INSERT INTO bz_Audit_Log statements) must be accurately described\n- Place error handling descriptions in the Code Structure and Design section\n- Place audit logging descriptions in the Code Structure and Design section\n- Include error handling steps in the ASCII workflow diagram\n- Include audit logging steps in the ASCII workflow diagram" | Completed |
+| GAP-028 | All references to batch processing, audit logs, and summary statistics must be directly supported by the input as specified in accuracy check 11 of REVIEW_INPUTS. | Expected Output - Accuracy Requirements | Add | Add instruction: "Batch Processing, Audit Logs, and Summary Statistics Accuracy:\n- All references to batch processing (v_BatchID usage) must be directly supported by the source code\n- All references to audit logs (bz_Audit_Log table) must be directly supported by the source code\n- All references to summary statistics (SELECT queries) must be directly supported by the source code\n- Provide specific evidence from the source for each reference\n- Do not reference functionality not present in the source" | Completed |
+| GAP-029 | The output must not include unsupported assumptions, extra commentary, or recommendations as specified in accuracy check 12 of REVIEW_INPUTS. | Expected Output - Content Restrictions | Add | Add instruction: "Content Restrictions:\n- Do NOT include unsupported assumptions\n- Do NOT include extra commentary or explanations\n- Do NOT include recommendations or suggestions\n- Do NOT include best practices or optimization advice\n- Provide ONLY factual documentation of the source code as-is\n- Maintain objective, descriptive tone" | Completed |
+| GAP-030 | All formatting standards (Markdown tables, ASCII diagram, bullet points) must be followed exactly as instructed as specified in accuracy check 13 of REVIEW_INPUTS. | Expected Output - Formatting Requirements | Add | Add instruction: "Formatting Standards:\n- Markdown tables: Use proper table syntax with headers and alignment\n- ASCII diagram: Use zig-zag/snake layout with proper connectors (-->, <--, |, v)\n- Bullet points: Use standard Markdown bullet format (-)\n- Headings: Use proper Markdown heading levels (##, ###)\n- Code blocks: Use proper Markdown code block syntax when needed\n- Follow all formatting specifications exactly as instructed" | Completed |
+| GAP-031 | No false-positive or false-negative omissions must occur in the mapping or complexity analysis as specified in accuracy check 14 of REVIEW_INPUTS. | Expected Output - Accuracy Requirements | Add | Add instruction: "False-Positive and False-Negative Prevention:\n- Data Mapping: Do not include mappings not present in the source (false-positive)\n- Data Mapping: Do not omit mappings that are present in the source (false-negative)\n- Complexity Analysis: Do not include metrics not measurable from the source (false-positive)\n- Complexity Analysis: Do not omit metrics that are measurable from the source (false-negative)\n- Verify accuracy of all inclusions and exclusions" | Completed |
+| GAP-032 | The API cost must be reported in the correct format and with the required precision as specified in accuracy check 15 of REVIEW_INPUTS. | Expected Output - API Cost (Internal Only) | Add | Add instruction: "API Cost Calculation (Internal Only - Not in Final Output):\n- Calculate API cost based on token usage\n- Report in the correct format with required precision\n- Include cost breakdown if specified\n- NOTE: This section should NOT be included in the final JSON output (see GAP-013)\n- API cost is for internal tracking only" | Completed |
+| GAP-033 | All findings and documentation points must be traceable to either the instructions or the input file as specified in accuracy check 16 of REVIEW_INPUTS. | Expected Output - Traceability Requirements | Add | Add instruction: "Complete Traceability Requirement:\n- Every finding in the documentation must be traceable to either:\n  1. The instruction prompt (for structural/formatting requirements)\n  2. The input source file (for content and technical details)\n- Maintain clear linkage between documentation and source\n- Do not include content that cannot be traced to instructions or input\n- Verify traceability before generating final output" | Completed |
 
 ---
 
-## **Notes**
-
-### Gap Report Status
-- **Gap Report File:** `42197_Gap_Report.md`
-- **Content Status:** Empty - No content found in the gap report file
-- **Gaps Identified:** 0
+## Notes
 
 ### Instruction Prompt Status
-- **Instruction File:** `42197_Instruction.md`
-- **Agent Name:** DI Oracle Documentation DMS Clone
-- **Current State:** The instruction prompt exists but contains minimal content:
-  - Description field: Empty
-  - Expected Output field: Empty
+The current instruction prompt is **critically incomplete**. It contains only:
+- Agent Name: "DI Oracle Documentation DMS Clone"
+- Description: "." (placeholder)
+- Expected Output: "." (placeholder)
 
-### Analysis Summary
-Since the Gap Report file is completely empty with no identified gaps, there are no remediation actions to perform. No deviations from the instruction prompt have been reported, therefore no modifications, additions, or deletions are required.
+### Critical Findings
+1. **No Input Specifications**: The instruction does not define what inputs the agent should receive (Oracle SQL/PL-SQL source code, configuration parameters, etc.)
+2. **No Processing Logic**: The instruction does not define how the agent should process the input
+3. **No Output Structure**: The instruction does not define the JSON structure, Markdown format, or section requirements
+4. **No Quality Criteria**: The instruction does not define accuracy, completeness, or validation requirements
+5. **No Examples**: The instruction does not provide examples of expected output
 
-### Recommendations for Future Execution
-1. **Verify Gap Analysis:** Ensure that a proper gap analysis has been conducted before running the remediation process
-2. **Populate Gap Report:** If gaps exist, the Gap Report should be properly populated with:
-   - Gap ID
-   - Gap Description
-   - Severity/Impact
-   - Current vs Expected Behavior
-3. **Re-run Remediation:** Once gaps are identified and documented, re-execute this remediation agent
+### Sections Not Found in Current Instruction
+All gap remediation items represent **new additions** because the current instruction prompt is essentially empty. The following major sections need to be added:
+- Input Specifications
+- Processing Requirements
+- Output Structure and Format
+- Documentation Section Requirements (Metadata, Overview, Code Structure, etc.)
+- Accuracy and Completeness Requirements
+- Validation Rules
+- Formatting Standards
+- Content Restrictions
+
+### Ambiguous Mappings
+None - all gaps are clearly mapped to missing instruction sections that need to be added.
+
+### Missing Context
+The instruction prompt needs to be completely rebuilt with:
+1. Clear definition of input sources (Oracle SQL/PL-SQL code)
+2. Detailed output structure (JSON with "document" key containing Markdown)
+3. Comprehensive section-by-section requirements
+4. Accuracy and traceability rules
+5. Formatting and content standards
+6. Validation and quality criteria
+
+### Recommendation Priority
+**CRITICAL**: The instruction prompt must be completely rewritten to include all 33 gap remediation items. The current instruction is non-functional and cannot produce the expected output without these additions.
 
 ---
 
-## **Execution Metadata**
-
-- **Process Date:** Generated as per current execution
-- **Input Files Processed:** 2
-  - Instruction Prompt: ✅ Retrieved
-  - Gap Report: ✅ Retrieved (Empty)
-- **Output Status:** ✅ Completed
-- **Remediation Actions Required:** 0
-- **Remediation Actions Completed:** 0
-
----
-
-**End of Report**
+## Summary
+- **Total Gaps Identified**: 33
+- **Gaps Remediated**: 33
+- **Change Type Breakdown**:
+  - Add: 32
+  - Delete: 1
+  - Delete and Replace: 0
+- **Status**: All gaps have been analyzed and remediation actions specified
+- **Next Steps**: Rebuild the instruction prompt incorporating all 33 remediation items
