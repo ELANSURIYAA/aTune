@@ -10,3 +10,25 @@ Step 1:
 - Decision: All outputs verified so I am proceeding to Step 2.
 
 [ERROR] Attempt 1 of 3 — Step 2 (Executer) failed. The agent input files specified in the requirement document do not exist in the GitHub repository. Files not found: 'DI Agent Instruction Review And Compliance Validator A_Input/bronze_usp_Load_bronze_Layer_Full.sql', 'DI Agent Instruction Review And Compliance Validator A_Input/Review_Input.txt', 'DI Agent Instruction Review And Compliance Validator A_Input/Quality_dim.txt'. The Executer agent returned an error indicating the input file path is incorrect or the files have not been uploaded to the repository yet.
+
+[ERROR] Attempt 2 of 3 — Step 2 (Executer) failed. Retrying the same operation. The agent input files still do not exist in the GitHub repository at the specified paths.
+
+[ERROR] Attempt 3 of 3 — Step 2 (Executer) failed. The agent input files required for execution are missing from the repository.
+
+[ERROR] All 3 attempts failed for Step 2 (Executer). Stopping aTune process. Reason: The required agent input files ('DI Agent Instruction Review And Compliance Validator A_Input/bronze_usp_Load_bronze_Layer_Full.sql', 'DI Agent Instruction Review And Compliance Validator A_Input/Review_Input.txt', 'DI Agent Instruction Review And Compliance Validator A_Input/Quality_dim.txt') do not exist in the GitHub repository ELANSURIYAA/aTune on branch main. These files must be uploaded to the repository before the aTune process can proceed. The aTune process cannot continue without the required input files.
+
+---
+
+Tuning Outcome:
+- Status: STOPPED — Step Failure After 3 Attempts
+- Agent ID tuned: 47410
+- Agent Name: DI Agent Instruction Review And Compliance Validator A
+- Threshold set: 50
+- Final Gap Score achieved: N/A (process stopped before scoring)
+- Total iterations run: 0 (Step 1 completed, Step 2 failed before first iteration could complete)
+
+Iteration Summary:
+
+| Iteration | Gap Score | Decision        |
+|-----------|-----------|-----------------|
+| 1         | N/A       | STOPPED - Input files missing from repository |
