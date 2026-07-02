@@ -1,0 +1,29 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that all mandatory sections specified in the agent instructions are present in the output.
+- Confirm that the agent’s orchestration steps (Extractor, Executer, Reviewer, Recommender, Updater, Validator) are fully covered in the output.
+- Check that all required fields from the agent instructions (Agent Name, Role, Goal, Backstory, Description, Expected Output) are addressed.
+- Ensure that all error handling and validation requirements from the instructions are included.
+- Validate that all output validation and logging requirements are present as per the instructions.
+- Confirm that the final summary and log file requirements are addressed.
+- Verify that the absence of input files is noted and handled according to the instructions.
+
+Accuracy Checks
+
+- Confirm that the output aligns strictly with the agent instructions and does not introduce unsupported assumptions.
+- Ensure that no hallucinated or fabricated content is present in the output.
+- Check that all references to input files are accurate and reflect the actual files present (or absent).
+- Validate that all error handling and validation steps are described accurately as per the instructions.
+- Confirm that the output does not contradict any requirements specified in the agent instructions.
+- Ensure that the output correctly notes the absence of input files and does not attempt to process non-existent content.
+
+Efficiency Checks
+
+- Verify that the output avoids redundant or duplicate sections.
+- Ensure that unnecessary or empty sections are not generated in the absence of input files.
+- Confirm that the output remains concise and does not include excessive verbosity.
+- Check that the output structure is optimized for reviewer readability and efficiency.
+- Validate that repeated checks or validations are not present.
+- Ensure that the output does not include unnecessary references to missing input files beyond the required absence handling.
