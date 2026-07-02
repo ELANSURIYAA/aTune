@@ -1,31 +1,28 @@
 Reviewer Validation Checklist
 
 Completeness Checks
-
-- Verify that all mandatory sections from the agent instructions are present in the output.
-- Confirm that all required fields and analyses described in the instructions are addressed.
-- Ensure that all referenced files and dependencies from the instructions are included or noted.
-- Check that all required validation, logging, and error handling requirements from the instructions are covered.
-- Validate that all formatting and output structure requirements from the instructions are followed.
-- Confirm that the output includes all required summary and outcome sections as specified in the expected output.
-- Ensure that the absence of input files is explicitly handled and documented if required by the instructions.
+- Verify that the final aTune log file includes the Tuning Outcome section as specified in the Expected Output.
+- Confirm that the log file records the Agent ID, Agent Name, Threshold Value, Final Gap Score, and Total Iterations Run.
+- Check that the Iteration Summary table is present and includes all iterations with corresponding Gap Scores and Decisions.
+- Ensure that the log file is located at <userEmail>/<agentName>_Output/<agentName>_Final_Output/<agentId>_aTune_Log.md as specified.
+- Validate that all mandatory metadata fields from the instructions are included in the log file.
+- Confirm that the process outcome (COMPLETED, STOPPED, or FAILURE) is clearly stated.
+- Ensure that no required section from the instructions is omitted in the log file.
 
 Accuracy Checks
-
-- Verify that the output aligns with the provided agent instructions and expected output.
-- Confirm that no unsupported assumptions or hallucinated content are introduced due to missing input files.
-- Ensure that all references to input files are accurate and reflect their actual presence or absence.
-- Check that all log entries, file paths, and URLs are constructed according to the instructions.
-- Validate that all error handling and validation steps are accurately represented in the output.
-- Ensure that terminology and formatting are consistent with the instructions.
-- Confirm that the output does not contradict any requirements or rules specified in the instructions.
+- Confirm that the Tuning Outcome status accurately reflects the process result (Threshold Met, Maximum Iterations Reached, or Step Failure After 3 Attempts).
+- Verify that the Agent ID, Agent Name, Threshold Value, Final Gap Score, and Iteration Count in the log file match the values from the instructions.
+- Check that each iteration entry in the Iteration Summary table accurately reflects the Gap Score and Decision for that iteration.
+- Ensure that no hallucinated or unsupported content is present in the log file.
+- Validate that the log file does not contain contradictions or misinterpretations of the instructions.
+- Confirm that the log file content is traceable to the instructions and process requirements.
+- Ensure that the terminology and formatting used in the log file are consistent with the instructions.
 
 Efficiency Checks
-
-- Verify that the output avoids redundant sections or explanations.
-- Ensure that no unnecessary or duplicate validation checks are generated.
-- Confirm that the output remains concise and does not include superfluous content due to the absence of input files.
-- Check that the output structure is optimized for reviewer readability and efficiency.
-- Ensure that all findings and checks are atomic and not combined or repeated.
-- Validate that the output does not include unnecessary placeholders or repeated references to missing files.
-- Confirm that the checklist is token-efficient and logically grouped for review.
+- Verify that duplicate entries or redundant explanations are not present in the log file.
+- Confirm that the log file is concise and structured according to the instructions.
+- Ensure that unnecessary sections or repeated content are avoided in the log file.
+- Validate that the Iteration Summary table is not unnecessarily repeated or verbose.
+- Check that the log file structure supports efficient review and readability.
+- Confirm that similar findings or entries are logically grouped and not scattered.
+- Ensure that the log file is token-efficient while maintaining completeness and clarity.
