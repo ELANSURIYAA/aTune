@@ -1,29 +1,25 @@
 Reviewer Validation Checklist
 
 Completeness Checks
-
-- Verify that all mandatory sections specified in the agent instructions are present in the output.
-- Confirm that the agent’s orchestration steps (Extractor, Executer, Reviewer, Recommender, Updater, Validator) are fully covered in the output.
-- Check that all required fields from the agent instructions (Agent Name, Role, Goal, Backstory, Description, Expected Output) are addressed.
-- Ensure that all error handling and validation requirements from the instructions are included.
-- Validate that all output validation and logging requirements are present as per the instructions.
-- Confirm that the final summary and log file requirements are addressed.
-- Verify that the absence of input files is noted and handled according to the instructions.
+- Verify that the final aTune log file includes the Tuning Outcome section as specified in the instructions.
+- Confirm that the log file records the Agent ID, Agent Name, Threshold Value, Final Gap Score, and Total Iterations Run.
+- Ensure the Iteration Summary table is present with iteration numbers, gap scores, and decisions for each iteration.
+- Check that the log file is located at the required path: <userEmail>/<agentName>_Output/<agentName>_Final_Output/<agentId>_aTune_Log.md.
+- Validate that all mandatory metadata (Agent Description, Expected Output, Role, Goal, Backstory) are included in Instruction.txt.
+- Confirm that no input files (Input1.txt, Input2.txt, etc.) are referenced or required in the log if none are present in the input folder.
 
 Accuracy Checks
-
-- Confirm that the output aligns strictly with the agent instructions and does not introduce unsupported assumptions.
-- Ensure that no hallucinated or fabricated content is present in the output.
-- Check that all references to input files are accurate and reflect the actual files present (or absent).
-- Validate that all error handling and validation steps are described accurately as per the instructions.
-- Confirm that the output does not contradict any requirements specified in the agent instructions.
-- Ensure that the output correctly notes the absence of input files and does not attempt to process non-existent content.
+- Confirm that the Tuning Outcome status accurately reflects whether the threshold was met, maximum iterations reached, or step failure occurred.
+- Verify that the Agent ID, Agent Name, Threshold Value, Final Gap Score, and Iteration Count in the log match the extracted metadata from Instruction.txt.
+- Ensure that the Iteration Summary table entries correspond to the actual number of iterations and decisions made during the process.
+- Check that no hallucinated or unsupported content is present in the log file.
+- Validate that the log file does not reference missing input files if none exist in the input folder.
+- Confirm that terminology and formatting in the log file are consistent with the instructions and metadata.
 
 Efficiency Checks
-
-- Verify that the output avoids redundant or duplicate sections.
-- Ensure that unnecessary or empty sections are not generated in the absence of input files.
-- Confirm that the output remains concise and does not include excessive verbosity.
-- Check that the output structure is optimized for reviewer readability and efficiency.
-- Validate that repeated checks or validations are not present.
-- Ensure that the output does not include unnecessary references to missing input files beyond the required absence handling.
+- Ensure that the log file avoids redundant explanations and duplicate entries.
+- Confirm that the Iteration Summary table is concise and not unnecessarily repeated.
+- Validate that the log file structure is clean, readable, and optimized for reviewer efficiency.
+- Check that only required sections are included and no unnecessary content is generated.
+- Ensure that the log file is token-efficient and avoids excessive verbosity.
+- Confirm that similar findings or entries are logically grouped and not scattered throughout the log.
