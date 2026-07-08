@@ -2,25 +2,23 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that the output contains a diagnosis object for each ticket as required by the agent instructions.
-- Confirm that all mandatory fields are present in each diagnosis object: ticket_id, error_category, failing_layer, extracted_signals, root_cause_in_different_module, root_cause_hint, and notes.
-- Ensure that all required error categories (e.g., JDBC/driver, missing column, ambiguous column, Python NameError, Delta schema mismatch, wrong join key/data quality, OOM/performance) are supported and classified if present in the input.
-- Check that the flag for root_cause_in_different_module is explicitly set in each diagnosis object.
-- Ensure that the output is formatted as a JSON array as specified in the expected output.
+- Verify that all mandatory diagnosis fields specified in the expected output ({ticket_id, error_category, failing_layer, extracted_signals[], root_cause_in_different_module, root_cause_hint, notes}) are present in the output.
+- Confirm that the output is structured as a JSON array of diagnosis objects as required.
+- Ensure that all required error categories (e.g., JDBC/driver, missing column, ambiguous column, Python NameError, Delta schema mismatch, wrong join key/data quality, OOM/performance) are supported in the classification logic.
+- Check that the output includes explicit handling for cases where the root cause is in a different module than the failing task, as per instructions.
+- Validate that all mandatory flags and fields are included even if no input file was provided.
 
 Accuracy Checks
 
-- Confirm that the output structure and field names exactly match the expected JSON schema described in the instructions.
-- Verify that no hallucinated or unsupported fields are present in the output.
-- Ensure that all mandatory fields are populated with appropriate values (not left blank or null unless justified by the input).
-- Check that the classification of error_category is logically consistent with the ticket description if available.
-- Ensure that the root_cause_in_different_module flag is set only when justified by the stack trace or ticket context.
-- Confirm that terminology and field values are consistent with the agent instructions.
+- Confirm that the output format strictly matches the expected JSON structure and field names.
+- Ensure that no hallucinated or unsupported fields are present in the output.
+- Verify that the output does not introduce unsupported assumptions or content not justified by the instructions.
+- Check that all diagnosis fields are populated with valid values or null/empty where appropriate, given the absence of input data.
+- Ensure that the output does not contradict the agent instructions or expected output schema.
 
 Efficiency Checks
 
-- Ensure that no duplicate diagnosis objects are generated for the same ticket.
-- Confirm that redundant or repeated explanations are avoided in the notes or other fields.
-- Verify that the output is concise and does not include unnecessary sections or verbose content.
-- Check that the JSON structure is clean, with no repeated or unnecessary fields.
-- Ensure that the output is token-efficient and optimized for reviewer readability.
+- Confirm that the output does not contain duplicate diagnosis objects or repeated fields.
+- Ensure that the output is concise and does not include unnecessary sections or verbose explanations.
+- Check that the output structure is optimized for reviewer readability and does not include redundant or empty objects.
+- Validate that the output is token-efficient and avoids unnecessary repetition, especially in the absence of input data.
