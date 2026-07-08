@@ -2,26 +2,30 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that the output contains a diagnosis section for each ticket as required by the agent instructions.
-- Confirm that all mandatory fields specified in the expected output (ticket_id, error_category, failing_layer, extracted_signals[], root_cause_in_different_module, root_cause_hint, notes) are present in each diagnosis object.
-- Ensure that all error categories mentioned in the agent instructions are supported and classified where applicable.
-- Check that the output format is a JSON array of diagnosis objects as specified in the expected output.
-- Confirm that the output includes explicit handling for cases where the root cause is in a different module, as required by the instructions.
-- Ensure that all mandatory flags and fields are set even if no input file was provided.
+- Verify that the output contains a diagnosis object for each ticket as required by the instructions.
+- Confirm that all mandatory fields are present in each diagnosis object: ticket_id, error_category, failing_layer, extracted_signals, root_cause_in_different_module, root_cause_hint, and notes.
+- Ensure that all required classifications (error_category) are included as specified in the instructions.
+- Check that the output is formatted as a JSON array of diagnosis objects.
+- Confirm that all mandatory flags (e.g., root_cause_in_different_module) are explicitly set as required.
+- Ensure that all formatting requirements for the JSON structure are followed.
+- Verify that no required section or field is omitted from the output.
 
 Accuracy Checks
 
-- Verify that the output structure and field names exactly match the expected output schema from the agent instructions.
-- Confirm that no hallucinated tickets, errors, or fields are present in the output.
-- Ensure that no unsupported assumptions or content are introduced beyond the agent instructions.
-- Check that all flags and fields are set to appropriate default values or are clearly marked if input data is missing.
-- Confirm that the output does not contradict any requirements from the agent instructions.
-- Ensure that terminology and classification labels are consistent with those specified in the instructions.
+- Confirm that the output aligns with the agent instructions and expected output structure.
+- Ensure that no hallucinated or unsupported fields are present in the diagnosis objects.
+- Verify that all field names and values match the required terminology and structure.
+- Check that the root_cause_in_different_module flag is only set based on explicit evidence in the input (if available).
+- Ensure that no unsupported assumptions or content are introduced in the output.
+- Confirm that the output does not contradict the agent instructions or expected output.
+- Verify that all diagnosis objects are traceable to the instructions, given the absence of input files.
 
 Efficiency Checks
 
-- Verify that the output does not contain duplicate diagnosis objects or repeated fields.
-- Ensure that unnecessary sections, explanations, or verbose content are not generated in the absence of input data.
-- Confirm that the output remains concise and only includes the required structure and fields as per the instructions.
-- Check that the output is token-efficient and avoids redundant or empty sections.
-- Ensure that the output structure is clean and optimized for reviewer readability.
+- Ensure that no duplicate diagnosis objects are generated.
+- Confirm that redundant fields or explanations are not included in the output.
+- Verify that the output remains concise and does not contain unnecessary sections or verbosity.
+- Ensure that the JSON structure is clean and optimized for review.
+- Confirm that similar findings are not repeated unnecessarily.
+- Check that the output is token-efficient and avoids excessive or repeated content.
+- Ensure that the output structure supports readability and review efficiency.
