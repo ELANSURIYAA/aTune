@@ -2,29 +2,30 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that the output contains a diagnosis object for each ticket if any input tickets are provided.
-- Confirm that all mandatory fields are present in each diagnosis object: ticket_id, error_category, failing_layer, extracted_signals, root_cause_in_different_module, root_cause_hint, and notes.
-- Ensure that all required error categories (as per instructions) are considered if relevant to the input.
-- Check that the flag for root_cause_in_different_module is explicitly set in each diagnosis object.
-- Validate that the expected JSON array structure is used for the output.
-- Confirm that all formatting requirements specified in the instructions are followed.
-- Ensure that if no input tickets are present, the output appropriately reflects this (e.g., empty array or explanatory note).
+- Verify that the output includes a diagnosis object for each ticket as required by the instructions.
+- Confirm that all mandatory fields are present in each diagnosis object: ticket_id, error_category, failing_layer, extracted_signals[], root_cause_in_different_module, root_cause_hint, and notes.
+- Ensure that all error categories specified in the instructions (e.g., JDBC/driver, missing column, ambiguous column, Python NameError, Delta schema mismatch, wrong join key/data quality, OOM/performance) are handled if present in the input.
+- Check that the flag for root_cause_in_different_module is explicitly set when applicable.
+- Confirm that the output is formatted as a JSON array as specified in the expected output.
+- Ensure that all required technical signals (offending column names, table names, variable names, driver strings, file paths) are extracted if present in the input.
+- Verify that no mandatory section or required field from the instructions is omitted.
 
 Accuracy Checks
 
-- Confirm that the output format strictly matches the expected JSON array of diagnosis objects as described in the instructions.
+- Confirm that the output structure and field names exactly match the expected JSON schema from the instructions.
 - Ensure that no hallucinated or unsupported fields are present in the output.
-- Verify that all mandatory fields are populated with logically valid values (e.g., boolean for root_cause_in_different_module).
-- Check that the output does not introduce unsupported assumptions or content not justified by the input or instructions.
-- Ensure that terminology and field names are used exactly as specified in the instructions.
-- Confirm that the output does not contradict the agent’s instructions or expected output structure.
-- Validate that the output does not misinterpret or partially implement any instruction requirements.
+- Verify that the diagnosis objects do not contain unsupported assumptions or fabricated data.
+- Check that the root_cause_in_different_module flag is set only when justified by the input (if available).
+- Confirm that all extracted signals are relevant and traceable to the input content (if available).
+- Ensure that terminology and classifications used in the output are consistent with the instructions.
+- Verify that the output does not contradict any requirements or logic specified in the instructions.
+- Confirm that the output does not omit any required diagnosis fields or misinterpret the instruction requirements.
 
 Efficiency Checks
 
-- Ensure that duplicate diagnosis objects are not generated for the same ticket.
+- Ensure that no duplicate diagnosis objects are generated for the same ticket.
 - Confirm that redundant explanations or repeated content are avoided in the output.
-- Check that the output is concise and contains only the required fields and information.
-- Ensure that the output structure is clean, readable, and optimized for review.
-- Validate that unnecessary sections or fields are not included in the output.
-- Confirm that the output is token-efficient and avoids excessive verbosity.
+- Verify that the output is concise and does not include unnecessary sections or fields.
+- Ensure that the JSON array is structured for easy review and does not contain excessive verbosity.
+- Confirm that similar findings are grouped logically where appropriate and not unnecessarily repeated.
+- Check that the output structure supports efficient review and readability.
