@@ -2,23 +2,24 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that all mandatory diagnosis fields specified in the expected output ({ticket_id, error_category, failing_layer, extracted_signals[], root_cause_in_different_module, root_cause_hint, notes}) are present in the output.
-- Confirm that the output is structured as a JSON array of diagnosis objects as required.
-- Ensure that all required error categories (e.g., JDBC/driver, missing column, ambiguous column, Python NameError, Delta schema mismatch, wrong join key/data quality, OOM/performance) are supported in the classification logic.
-- Check that the output includes explicit handling for cases where the root cause is in a different module than the failing task, as per instructions.
-- Validate that all mandatory flags and fields are included even if no input file was provided.
+- Verify that the output contains a diagnosis object for each ticket as required by the agent instructions, even if no input file was found.
+- Confirm that all mandatory fields specified in the expected output schema ({ticket_id, error_category, failing_layer, extracted_signals[], root_cause_in_different_module, root_cause_hint, notes}) are present in each diagnosis object.
+- Ensure that the output structure is a JSON array as specified in the expected output.
+- Check that all required classification and extraction steps (error_category, extracted_signals, root_cause flags) are addressed per the agent description.
+- Validate that the output includes explicit handling for missing or absent input content, as no input file was found.
 
 Accuracy Checks
 
-- Confirm that the output format strictly matches the expected JSON structure and field names.
-- Ensure that no hallucinated or unsupported fields are present in the output.
-- Verify that the output does not introduce unsupported assumptions or content not justified by the instructions.
-- Check that all diagnosis fields are populated with valid values or null/empty where appropriate, given the absence of input data.
-- Ensure that the output does not contradict the agent instructions or expected output schema.
+- Confirm that the output strictly follows the expected output schema and does not introduce unsupported fields or omit required ones.
+- Ensure that no hallucinated or fabricated ticket data is present in the output.
+- Verify that any gap or missing input handling is clearly indicated and justified in the output notes or structure.
+- Check that the output does not misinterpret the agent instructions or expected output requirements.
+- Ensure that terminology and field names match exactly as specified in the agent instructions and expected output.
 
 Efficiency Checks
 
-- Confirm that the output does not contain duplicate diagnosis objects or repeated fields.
-- Ensure that the output is concise and does not include unnecessary sections or verbose explanations.
-- Check that the output structure is optimized for reviewer readability and does not include redundant or empty objects.
-- Validate that the output is token-efficient and avoids unnecessary repetition, especially in the absence of input data.
+- Confirm that the output does not contain redundant or repeated diagnosis objects or fields.
+- Ensure that the output remains concise and does not include unnecessary sections or verbose explanations.
+- Check that the output structure is clean, optimized, and reviewer-friendly, with no extraneous content.
+- Validate that the output is token-efficient and avoids unnecessary repetition or filler content.
+- Ensure that the output is logically organized for rapid reviewer validation.
