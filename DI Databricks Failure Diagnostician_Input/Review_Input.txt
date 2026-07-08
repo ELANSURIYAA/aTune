@@ -1,0 +1,27 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that the output contains a diagnosis section for each ticket as required by the agent instructions.
+- Confirm that all mandatory fields specified in the expected output (ticket_id, error_category, failing_layer, extracted_signals[], root_cause_in_different_module, root_cause_hint, notes) are present in each diagnosis object.
+- Ensure that all error categories mentioned in the agent instructions are supported and classified where applicable.
+- Check that the output format is a JSON array of diagnosis objects as specified in the expected output.
+- Confirm that the output includes explicit handling for cases where the root cause is in a different module, as required by the instructions.
+- Ensure that all mandatory flags and fields are set even if no input file was provided.
+
+Accuracy Checks
+
+- Verify that the output structure and field names exactly match the expected output schema from the agent instructions.
+- Confirm that no hallucinated tickets, errors, or fields are present in the output.
+- Ensure that no unsupported assumptions or content are introduced beyond the agent instructions.
+- Check that all flags and fields are set to appropriate default values or are clearly marked if input data is missing.
+- Confirm that the output does not contradict any requirements from the agent instructions.
+- Ensure that terminology and classification labels are consistent with those specified in the instructions.
+
+Efficiency Checks
+
+- Verify that the output does not contain duplicate diagnosis objects or repeated fields.
+- Ensure that unnecessary sections, explanations, or verbose content are not generated in the absence of input data.
+- Confirm that the output remains concise and only includes the required structure and fields as per the instructions.
+- Check that the output is token-efficient and avoids redundant or empty sections.
+- Ensure that the output structure is clean and optimized for reviewer readability.
