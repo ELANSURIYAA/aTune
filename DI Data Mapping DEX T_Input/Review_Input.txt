@@ -1,0 +1,25 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that all mandatory sections specified in the agent instructions are present in the output, even if no input file was found.
+- Confirm that the output includes all required fields and blocks as per the expected JSON structure (overall, configuration, mappingResults, entityScores, aiInsights).
+- Ensure that all formatting and structural requirements from the instructions are followed in the output.
+- Check that the output includes appropriate handling for the absence of input files (e.g., error message or status indicating missing input).
+- Validate that no required section or field from the instructions is omitted due to missing input content.
+
+Accuracy Checks
+
+- Confirm that the output aligns with the provided agent instructions and expected output template.
+- Ensure that no unsupported assumptions or fabricated content are introduced in the absence of input files.
+- Verify that any error or status message accurately reflects the missing input file scenario.
+- Check that all fields in the output are populated as per the instructions, with nulls or error explanations only where justified by missing input.
+- Ensure that no hallucinated or extraneous content is present in the output.
+
+Efficiency Checks
+
+- Confirm that the output avoids unnecessary or redundant sections when input files are missing.
+- Ensure that error handling is concise and does not introduce excessive verbosity.
+- Check that the output structure remains clean and optimized for reviewer efficiency, even in the absence of input files.
+- Validate that no duplicate error messages or repeated explanations are present.
+- Ensure that the output remains token-efficient and focused on the required error handling as per the instructions.
