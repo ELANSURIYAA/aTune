@@ -2,37 +2,38 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that all mandatory sections specified in the agent instructions are present in the output.
-- Confirm that all required fields and blocks from the expected JSON output template are included.
-- Ensure that all required analyses, such as mappingResults, entityScores, and aiInsights, are covered.
-- Check that all entities, tables, and components referenced in the instructions are addressed, even if no input file was provided.
-- Validate that all dependencies, integrations, and business rules from the instructions are reflected in the output.
-- Confirm that all requested validations, use cases, and scenarios from the instructions are present.
-- Ensure that all mandatory headers, classifications, tags, and statuses are included as per the instructions.
-- Verify that gap/missing item handling requirements are covered, especially in the absence of input files.
-- Confirm that all formatting requirements from the instructions are followed.
-- Ensure that no requested section from the instructions is skipped or omitted.
+- Verify that the output includes all mandatory sections as specified in the agent instructions (overall, configuration, mappingResults, entityScores, aiInsights).
+- Confirm that all required fields in the output JSON (e.g., matchScore, status, mappingRule, reasoning, dataQualityCheckRules) are present and populated for every mappingResults entry.
+- Ensure that every target column from every target table (as would be defined in the input) is represented in mappingResults, with no omissions.
+- Check that all required summary statistics (matchPercentage, totalAttributes, approvedCount, pendingCount, rejectedCount, autoApprovedCount) are included in the overall block.
+- Validate that all configuration details (source/target schema, tables, businessContext, aiHints) are present and populated.
+- Confirm that all required AI insights sections (implicitRelationships, alternateMates, domainGroupings) are included, even if empty.
+- Ensure that every mappingResults entry has a corresponding matchTable row with matching values.
+- Check that all required status values (APPROVED, AUTO_APPROVED, PENDING, REJECTED) are used appropriately where applicable.
+- Verify that the output structure strictly follows the expected JSON template with no missing blocks.
+- Confirm that all required domain tags are present for every table and mapping entry.
 
 Accuracy Checks
 
-- Confirm that the output aligns strictly with the provided agent instructions and expected output template.
-- Ensure that no hallucinated content or unsupported assumptions are introduced in the absence of input files.
-- Validate that dependency mappings, technical mappings, and business rule interpretations are logically correct as per instructions.
-- Check that all findings, values, tables, and classifications accurately match the requirements in the instructions.
-- Ensure that all terminology and formatting standards are used consistently and correctly.
-- Confirm that no contradictions exist across sections of the output.
-- Verify that all required fields are populated and justified as per the expected output.
-- Ensure that no instruction is misinterpreted or partially implemented.
-- Confirm that the output correctly reflects the absence of input files, if applicable, without fabricating data.
+- Confirm that the output format strictly matches the expected JSON schema, with correct field names and nesting.
+- Ensure that no fabricated or hallucinated content is present in the output (e.g., no source-side content invented if not available from knowledge bases).
+- Validate that all status assignments (APPROVED, AUTO_APPROVED, PENDING, REJECTED) are justified according to the rules in the instructions.
+- Check that all matchScore values are integers between 0 and 100 and align with the matching logic described in the instructions.
+- Ensure that every mappingResults entry includes a non-empty domain and dataQualityCheckRules value.
+- Confirm that no unsupported assumptions or content are introduced in the output.
+- Verify that all transformation rules and reasoning fields are populated and align with the mapping logic.
+- Ensure that the output contains no contradictions or inconsistencies across sections.
+- Validate that all terminology and field values are used consistently and as defined in the instructions.
+- Confirm that the output contains no extraneous or missing fields beyond those specified in the template.
 
 Efficiency Checks
 
-- Verify that duplicate analysis, redundant explanations, and repeated gap entries are avoided.
-- Ensure that the output remains concise, structured, and free of unnecessary sections.
-- Confirm that duplicate dependency mappings, risks, recommendations, and validations are eliminated.
-- Check that formatting is clean, optimized, and avoids excessive verbosity.
-- Ensure that overlapping findings are consolidated and similar findings are grouped logically where appropriate.
-- Confirm that tables and content are not unnecessarily repeated.
-- Validate that the output is token-efficient while maintaining completeness.
-- Ensure that large sections are summarized efficiently where allowed by the instructions.
-- Confirm that the output structure improves readability and review efficiency.
+- Ensure that no duplicate mappingResults or matchTable entries are present.
+- Confirm that redundant explanations, repeated gap entries, or unnecessary sections are avoided.
+- Check that the output is concise, well-structured, and free of excessive verbosity.
+- Validate that similar findings are logically grouped where appropriate and that overlapping findings are consolidated.
+- Ensure that tables, statistics, and insights are not unnecessarily repeated in the output.
+- Confirm that formatting is clean, optimized, and improves readability for reviewers.
+- Ensure that the output is token-efficient while maintaining completeness and accuracy.
+- Check that duplicate validations or checks are eliminated from the output.
+- Validate that the output structure supports efficient review and traceability of all required elements.
