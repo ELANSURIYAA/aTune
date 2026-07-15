@@ -2,29 +2,29 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that all mandatory sections specified in the agent instructions are present in the output.
-- Confirm that all required fields and JSON blocks (overall, configuration, mappingResults, entityScores, aiInsights) are included as per the expected output template.
-- Ensure that all required analyses and mappings described in the instructions are covered, even if no input file was provided.
-- Check that all referenced metadata (agent role, goal, backstory, description, expected output) is reflected in the output structure and logic.
-- Validate that the output includes all required status and classification fields (e.g., APPROVED, AUTO_APPROVED, PENDING, REJECTED) as described in the instructions.
-- Confirm that all gap/missing item handling requirements (e.g., handling of missing input files) are addressed as per the instructions.
-- Ensure that all formatting and structural requirements from the instructions are followed in the output.
+- Verify that the output includes all mandatory sections as specified in the agent instructions, including overall, configuration, mappingResults, entityScores, and aiInsights.
+- Confirm that all required fields in the output JSON structure are present and populated, as per the expected output template.
+- Ensure that all required analyses, such as mapping logic, entity scoring, and AI insights (implicitRelationships, alternateMates, domainGroupings), are included.
+- Check that all dependencies and integrations mentioned in the instructions are addressed, even if no input file was provided.
+- Validate that all formatting requirements for the JSON output are followed, including field names and structure.
+- Confirm that the output includes appropriate handling for missing input files, as per the agent’s error handling rules.
+- Ensure that no mandatory section or field from the instructions is skipped or omitted.
 
 Accuracy Checks
 
-- Confirm that the output strictly aligns with the provided agent instructions and expected output template.
-- Verify that no hallucinated content or unsupported assumptions are introduced in the absence of input files.
-- Ensure that all status assignments and field values are justified according to the instructions.
-- Check that all values, fields, and classifications match the requirements and logic described in the instructions.
-- Validate that the output does not contradict any section of the agent instructions or expected output.
-- Confirm that all error handling and gap reporting is accurate and instruction-aligned for missing input files.
-- Ensure that terminology and field names are used consistently with the instructions and expected output template.
+- Verify that the output aligns strictly with the provided agent instructions and expected output template.
+- Confirm that no hallucinated content or unsupported assumptions are introduced in the absence of input files.
+- Ensure that error handling for missing input files is correctly implemented and clearly explained in the output, as required by the instructions.
+- Check that all field values, especially status and error messages, accurately reflect the scenario where no input file was found.
+- Validate that terminology and formatting are consistent with the agent’s specification.
+- Ensure that no false-positive mappings, gaps, or findings are generated due to missing input content.
+- Confirm that the output does not contradict any instruction or expected behavior for missing input scenarios.
 
 Efficiency Checks
 
-- Verify that the output avoids unnecessary or redundant sections in the absence of input files.
-- Confirm that the output remains concise and does not include excessive verbosity or repeated explanations.
-- Ensure that no duplicate validations, mappings, or classifications are generated.
-- Check that the output structure is clean, optimized, and reviewer-friendly.
-- Validate that the output is token-efficient while maintaining completeness and instruction compliance.
-- Confirm that large sections are not generated unnecessarily when input files are missing.
+- Verify that the output avoids unnecessary or redundant sections, explanations, or fields not required by the instructions.
+- Ensure that the output remains concise and structured, especially in the absence of input files.
+- Confirm that no duplicate error messages or redundant handling of missing input files are present.
+- Check that the output is token-efficient and does not include excessive verbosity or repeated content.
+- Validate that the output structure supports readability and review efficiency, even when handling missing input scenarios.
+- Ensure that only the required error handling and minimal necessary content are generated for the missing input file case.
