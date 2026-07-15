@@ -2,51 +2,36 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that all mandatory sections specified in the agent instructions are present in the output.
-- Confirm that all required fields and blocks from the expected JSON output template are included.
-- Ensure that all required analyses, such as mappingResults, matchTable, entityScores, and aiInsights, are covered.
-- Check that all entities, tables, and components referenced in the instructions are addressed in the output.
-- Validate that all dependencies and integrations described in the instructions are captured.
-- Confirm that all business rules and processing instructions from the agent description are reflected in the output.
-- Ensure that all requested validations, such as dataQualityCheckRules, are present for each mapping entry.
-- Verify that all use cases and scenarios described in the instructions are covered.
-- Confirm that all required tables, headers, and classifications/tags/statuses are included as per the output template.
-- Ensure that all gap/missing item handling requirements (e.g., REJECTED status for unmappable columns) are covered.
-- Validate that all formatting requirements and output structure rules are followed.
-- Confirm that no requested section from the instructions is skipped.
-- Ensure that all referenced files/content are analyzed where required, or their absence is correctly handled.
-- Verify that all mandatory mappings/relationships are included as per the instructions.
-- Confirm that all required inferred/derived fields are generated if instructed.
-- Ensure that the output includes a clear error message if input files are missing or unavailable.
+- Verify that the output includes all mandatory sections as specified in the agent instructions (overall, configuration, mappingResults, matchTable, entityScores, aiInsights).
+- Confirm that all required fields in the output JSON structure are present and populated (e.g., matchScore, status, mappingRule, reasoning, domain, dataQualityCheckRules, etc.).
+- Check that every target column from every target table in the input (if provided) is represented in mappingResults, with no omissions.
+- Ensure that all required analyses (implicitRelationships, alternateMates, domainGroupings) are included in aiInsights.
+- Validate that all referenced files/content (e.g., glossary, profile report, DQ report) are analyzed if enabled in the input.
+- Confirm that all required statistics (matchPercentage, totalAttributes, approvedCount, pendingCount, rejectedCount, autoApprovedCount) are included in the overall block.
+- Ensure that all required configuration details (source/target schema, tables, businessContext, aiHints) are present.
+- Check that all required mapping rules and data quality check rules are generated for each mappingResults entry.
+- Confirm that all formatting and structural requirements for the JSON output are followed.
+- If no input file is present, ensure the output handles this scenario gracefully and does not fabricate mappings.
 
 Accuracy Checks
 
-- Verify that the output aligns with the provided agent instructions and expected output template.
-- Confirm that the output does not contain any hallucinated content or unsupported assumptions.
-- Ensure that dependency and technical mappings are logically and technically correct.
-- Validate that gap identification and status assignments are justified by the input content or its absence.
-- Confirm that business rule interpretations are correct and traceable to the instructions.
-- Ensure that terminology is used consistently and matches the instructions.
-- Validate that required formatting standards are followed exactly as specified.
-- Confirm that no false-positive gaps or false-negative omissions occur in the mapping results.
-- Ensure that values, tables, and classifications accurately match the expected structure.
-- Verify that relationships between entities/components are correctly interpreted and represented.
-- Confirm that status/resolution tracking is accurate and justified.
-- Ensure that recommendations, if present, align with the identified findings.
-- Validate that the output does not misinterpret or partially implement any instruction.
-- Confirm that the output includes a clear and accurate error message when input files are missing.
+- Confirm that the output strictly aligns with the agent instructions and expected output format.
+- Verify that no content is hallucinated or fabricated beyond what is supported by the instructions and input files.
+- Ensure that all field values (e.g., matchScore, status, mappingRule, reasoning) are logically consistent and justified based on the instructions and input.
+- Check that all dependency mappings, technical mappings, and domain tags are valid and instruction-compliant.
+- Validate that all status assignments (APPROVED, AUTO_APPROVED, PENDING, REJECTED) follow the rules specified in the instructions.
+- Confirm that all business rule interpretations and transformation rules are correct and traceable to the input or instructions.
+- Ensure that all terminology and field names are used consistently and as defined in the instructions.
+- Check that no unsupported assumptions or contradictions are introduced in the output.
+- Validate that all required formatting standards (e.g., integer ranges, non-empty fields) are followed.
+- If no input file is present, confirm that the output does not misinterpret the absence of input or generate false mappings.
 
 Efficiency Checks
 
-- Verify that duplicate analysis and redundant explanations are avoided in the output.
-- Ensure that repeated gap entries and duplicate dependency mappings are not present.
-- Confirm that the output remains concise, structured, and free of unnecessary sections.
-- Validate that formatting is clean and optimized for readability and review efficiency.
-- Ensure that excessive verbosity and overlapping findings are avoided.
-- Confirm that tables and content are not unnecessarily repeated.
-- Validate that the output is token-efficient while maintaining completeness.
-- Ensure that similar findings are logically grouped where appropriate.
-- Confirm that redundant classifications, tags, and validations are avoided.
-- Validate that large sections are summarized efficiently where allowed by the instructions.
+- Ensure that duplicate analysis, redundant explanations, and repeated gap entries are avoided in the output.
+- Confirm that the output is concise, well-structured, and free from unnecessary sections or verbosity.
+- Check that duplicate dependency mappings, risks, recommendations, and validations are eliminated.
+- Validate that tables and findings are not unnecessarily repeated and that similar findings are logically grouped where appropriate.
 - Ensure that the output structure improves readability and review efficiency.
-- Confirm that the output includes only the required error message and does not generate unnecessary content when input files are missing.
+- Confirm that the output is token-efficient while maintaining completeness and accuracy.
+- If no input file is present, ensure that the output does not include unnecessary placeholders or boilerplate for missing content.
