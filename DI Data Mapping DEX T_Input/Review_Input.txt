@@ -4,27 +4,33 @@ Completeness Checks
 
 - Verify that all mandatory sections specified in the agent instructions are present in the output.
 - Confirm that all required fields and blocks from the expected JSON output template are included.
-- Ensure that all configuration, mappingResults, entityScores, and aiInsights sections are generated, even if input files are missing.
-- Check that all required headers, classifications, and tags are present as per the agent instructions.
-- Validate that the output includes handling for missing input files, as per the agent’s error-handling requirements.
-- Confirm that no referenced section from the agent instructions is omitted in the output.
-- Ensure that all formatting and structural requirements from the instructions are followed.
+- Check that all required analyses, mappings, and AI insights are covered as per the instructions.
+- Ensure all referenced configuration, mappingResults, entityScores, and aiInsights sections are generated.
+- Validate that all required statistics (matchPercentage, totalAttributes, approvedCount, etc.) are present.
+- Confirm that all formatting and structural requirements from the instructions are followed.
+- Ensure that no requested section from the instructions is skipped.
+- Verify that all mandatory headers and classifications are included as per the expected output.
+- Confirm that gap/missing item handling requirements are addressed, especially when input files are missing.
+- Ensure that the output includes a clear error message if input content is unavailable, as per the agent’s error handling rules.
 
 Accuracy Checks
 
-- Confirm that the output aligns strictly with the agent instructions and expected output template.
-- Verify that no hallucinated or fabricated content is present in the output.
-- Ensure that error handling for missing input files is correctly implemented and justified in the output.
-- Check that all terminology and field names are used consistently and as specified in the instructions.
-- Validate that no unsupported assumptions or content are introduced due to missing input files.
-- Confirm that the output does not contradict any requirements or constraints from the agent instructions.
-- Ensure that the output structure and field values match the expected JSON schema exactly.
+- Check that the output aligns with the provided agent instructions and expected output template.
+- Confirm that no hallucinated content or unsupported assumptions are introduced in the output.
+- Validate that error handling for missing input files is implemented as specified in the instructions.
+- Ensure that all terminology and field names are used consistently and match the expected output.
+- Verify that the output structure strictly follows the required JSON schema, with no extraneous content.
+- Confirm that all findings, statistics, and sections are traceable to the instructions or input file (if present).
+- Ensure that no contradictions exist across sections of the output.
+- Validate that the output does not misinterpret or partially implement any instruction.
+- Confirm that the output includes only justified and instruction-aligned error messages when input files are missing.
 
 Efficiency Checks
 
-- Verify that the output does not include redundant or duplicate sections.
-- Ensure that the output remains concise and does not contain unnecessary verbosity or filler content.
-- Confirm that no unnecessary or repeated error messages are generated for missing input files.
-- Check that the output structure is optimized for readability and review efficiency.
-- Ensure that only required error handling and minimal necessary content are included when input files are missing.
-- Validate that the output is token-efficient and avoids repeating information from the agent instructions.
+- Check that duplicate analysis and redundant explanations are avoided in the output.
+- Ensure that unnecessary sections are not generated when input files are missing.
+- Confirm that the output remains concise and structured, even in error scenarios.
+- Validate that formatting remains clean and optimized, with no excessive verbosity.
+- Ensure that output is token-efficient while maintaining completeness and clarity.
+- Confirm that repeated content or redundant validations are eliminated.
+- Verify that the output structure improves readability and review efficiency, especially in the absence of input files.
