@@ -2,26 +2,29 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that the output contains all mandatory sections as specified in the agent instructions, including overall summary, configuration, mappingResults, entityScores, and AI insights.
-- Confirm that all required fields in the expected JSON output (such as matchScore, status, mappingRule, reasoning, domain, dataQualityCheckRules, etc.) are present and populated.
-- Ensure that every section and field described in the Expected Output and Agent Description is included in the output, even if no input files were provided.
-- Check that the output structure strictly follows the JSON template provided in the instructions.
-- Validate that the output does not omit any required block or field, even in the absence of input files.
-- Confirm that the output includes appropriate handling or messaging for missing input content, as per the agent’s error-handling instructions.
+- Verify that all mandatory sections specified in the agent instructions are present in the output.
+- Confirm that all required fields and blocks from the expected JSON output template are included.
+- Ensure that all configuration, mappingResults, entityScores, and aiInsights sections are generated, even if input files are missing.
+- Check that all required headers, classifications, and tags are present as per the agent instructions.
+- Validate that the output includes handling for missing input files, as per the agent’s error-handling requirements.
+- Confirm that no referenced section from the agent instructions is omitted in the output.
+- Ensure that all formatting and structural requirements from the instructions are followed.
 
 Accuracy Checks
 
-- Ensure that the output aligns with the agent instructions and expected output format, with no fabricated or hallucinated content.
-- Confirm that all fields and sections are populated with values that are justified by the available instructions and metadata.
-- Check that no unsupported assumptions or content are introduced in the absence of input files.
-- Verify that error or missing input handling in the output matches the rules specified in the agent instructions.
-- Confirm that terminology and field names are used exactly as specified in the instructions and expected output template.
-- Ensure that the output does not contradict any requirements or constraints from the agent instructions.
+- Confirm that the output aligns strictly with the agent instructions and expected output template.
+- Verify that no hallucinated or fabricated content is present in the output.
+- Ensure that error handling for missing input files is correctly implemented and justified in the output.
+- Check that all terminology and field names are used consistently and as specified in the instructions.
+- Validate that no unsupported assumptions or content are introduced due to missing input files.
+- Confirm that the output does not contradict any requirements or constraints from the agent instructions.
+- Ensure that the output structure and field values match the expected JSON schema exactly.
 
 Efficiency Checks
 
-- Confirm that the output does not include redundant sections or repeated explanations.
-- Ensure that the output remains concise and does not introduce unnecessary verbosity in the absence of input files.
-- Check that the output structure is clean, optimized, and easy to review.
-- Verify that no duplicate fields or sections are generated in the output.
-- Ensure that the output is token-efficient and avoids unnecessary repetition of content or structure.
+- Verify that the output does not include redundant or duplicate sections.
+- Ensure that the output remains concise and does not contain unnecessary verbosity or filler content.
+- Confirm that no unnecessary or repeated error messages are generated for missing input files.
+- Check that the output structure is optimized for readability and review efficiency.
+- Ensure that only required error handling and minimal necessary content are included when input files are missing.
+- Validate that the output is token-efficient and avoids repeating information from the agent instructions.
