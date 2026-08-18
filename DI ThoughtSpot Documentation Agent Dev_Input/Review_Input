@@ -1,0 +1,34 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that all mandatory sections specified in the agent instructions are present in the output.
+- Confirm that all required fields, columns, or analyses mentioned in the instructions are included.
+- Check that all referenced entities, files, or components from the instructions are addressed.
+- Ensure that all required validations and use cases from the instructions are covered.
+- Validate that all mandatory headers, classifications, tags, or statuses required by the instructions are included.
+- Confirm that all formatting requirements from the instructions are followed.
+- Verify that no requested section from the instructions is skipped.
+- Ensure that all gap or missing item handling requirements from the instructions are addressed.
+
+Accuracy Checks
+
+- Confirm that the output aligns with the provided instructions.
+- Ensure that no hallucinated content or unsupported assumptions are present.
+- Check that all dependency and technical mappings are logically correct as per the instructions.
+- Validate that all business rule interpretations are correct and consistent with the instructions.
+- Ensure that terminology and formatting standards from the instructions are used consistently.
+- Confirm that no false-positive gaps or false-negative omissions occur based on the instructions.
+- Verify that all relationships between entities or components are correctly interpreted as per the instructions.
+- Ensure that no instruction is misinterpreted or only partially implemented.
+
+Efficiency Checks
+
+- Verify that duplicate analysis and redundant explanations are avoided.
+- Ensure that repeated gap entries and duplicate dependency mappings are eliminated.
+- Confirm that the output remains concise, structured, and free of unnecessary sections.
+- Check that excessive verbosity is avoided and formatting remains clean and optimized.
+- Ensure that overlapping findings are consolidated and similar findings are logically grouped where appropriate.
+- Validate that output structure improves readability and review efficiency.
+- Confirm that large sections are summarized efficiently where allowed by the instructions.
+- Ensure that redundant classifications, tags, and validations are avoided.
