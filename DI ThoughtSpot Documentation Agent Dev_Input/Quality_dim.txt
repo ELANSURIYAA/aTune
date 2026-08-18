@@ -1,0 +1,21 @@
+1. Decomposition
+
+2. Prompt Hygiene
+
+3. Knowledge Base Wiring
+
+4. Guardrail Coverage
+
+5. Tool Usage
+
+6. Reusability
+
+7. AQG Readiness
+
+8. HITL Design
+
+9. Config Hygiene
+
+10. Executive Summary Agent
+
+11. Agent Design Quality
