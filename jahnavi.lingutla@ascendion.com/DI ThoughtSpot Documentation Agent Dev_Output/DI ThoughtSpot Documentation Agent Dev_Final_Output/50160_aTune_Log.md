@@ -1,1 +1,2 @@
 [ERROR] Attempt 1 of 3 — Agent metadata extraction failed. Error: Token Verification Failed : Token is Invalid or Expired
+[ERROR] Attempt 2 of 3 — Agent metadata extraction failed. Error: Token Verification Failed : Token is Invalid or Expired
