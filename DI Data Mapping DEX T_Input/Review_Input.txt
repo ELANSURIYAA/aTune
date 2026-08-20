@@ -1,25 +1,32 @@
 Reviewer Validation Checklist
 
 Completeness Checks
-- Verify that all mandatory sections specified in the agent instructions are present in the output JSON.
-- Confirm that all required fields and blocks (overall, configuration, mappingResults, entityScores, aiInsights) are included in the output.
-- Ensure that all required analyses and mapping logic described in the instructions are covered.
-- Check that all referenced files/content (if any) are analyzed where required, or that their absence is correctly handled.
-- Confirm that all formatting and structural requirements from the instructions are followed.
-- Ensure that no requested section is skipped, even if no input file was found.
-- Verify that the output includes appropriate handling for missing input files as per agent instructions.
+
+- Verify that all mandatory sections specified in the agent instructions are present in the output.
+- Confirm that all required fields (overall mapping summary, configuration details, mappingResults, entityScores, AI insights) are included and populated in the output JSON.
+- Ensure that all required analyses and justifications for mappings are covered, as per the instructions.
+- Check that all formatting requirements for the output JSON structure are followed.
+- Validate that all requested validations and mapping rules are present, even if no input file was provided.
+- Confirm that all mandatory headers and sections from the expected output template are included.
+- Ensure that gap/missing item handling requirements are addressed if mentioned in the instructions.
 
 Accuracy Checks
-- Confirm that the output aligns with the provided agent instructions and expected output format.
-- Ensure that no hallucinated content or unsupported assumptions are introduced in the absence of input files.
-- Verify that all fields and sections are populated as per the instructions, or that missing input is explicitly handled.
-- Check that terminology and field names are used consistently and as specified in the instructions.
-- Ensure that the output does not contradict any requirements or constraints from the instructions.
-- Confirm that the output does not fabricate data or mappings in the absence of input files.
+
+- Confirm that the output strictly aligns with the provided agent instructions and expected output format.
+- Ensure that no hallucinated content or unsupported assumptions are introduced in the output.
+- Verify that all dependency mappings, technical mappings, and mapping rules are logically correct and justified as per the instructions.
+- Check that all findings, recommendations, and AI insights are traceable to the instructions.
+- Ensure that terminology and formatting standards are used consistently and correctly.
+- Confirm that no contradictions exist across sections of the output.
+- Validate that no false-positive gaps or false-negative omissions occur in the output.
+- Ensure that no instruction is misinterpreted or partially implemented.
 
 Efficiency Checks
-- Ensure that the output avoids redundant or unnecessary sections in the absence of input files.
-- Confirm that the output remains concise and structured, with no excessive verbosity.
-- Verify that no duplicate or repeated content is generated.
-- Ensure that the output structure improves readability and review efficiency, even when input files are missing.
-- Confirm that the output is token-efficient and does not include unnecessary placeholders or filler content.
+
+- Confirm that duplicate analysis and redundant explanations are avoided in the output.
+- Ensure that the output remains concise, well-structured, and free of unnecessary sections.
+- Verify that repeated gap entries, dependency mappings, or recommendations are eliminated.
+- Check that formatting is clean, optimized, and does not include excessive verbosity.
+- Ensure that output structure improves readability and review efficiency.
+- Confirm that large sections are summarized efficiently where allowed by the instructions.
+- Validate that duplicate validations or checks are eliminated.
