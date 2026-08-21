@@ -2,33 +2,34 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that all mandatory sections specified in the agent instructions are present in the output.
-- Confirm that all required fields, columns, or analyses mentioned in the instructions are included.
-- Check that all referenced entities, files, or components from the instructions are addressed.
-- Ensure that all required validations and use cases from the instructions are covered.
-- Validate that all mandatory headers, classifications, tags, or statuses required by the instructions are included.
-- Confirm that all formatting requirements from the instructions are followed.
-- Verify that no requested section from the instructions is skipped.
-- Ensure that all gap or missing item handling requirements from the instructions are addressed.
+- Instruction.txt is present and contains the full agent metadata (Agent Description, Expected Output, Agent Role, Agent Goal, Agent Backstory).
+- All required input files (Input1.txt, Input2.txt, etc.) are present and readable in the DI ThoughtSpot Documentation Agent Dev_Input folder.
+- All mandatory sections, fields, and analyses specified in the agent instructions are included in the output.
+- All entities, tables, and sections from the input files are addressed in the output.
+- All dependencies, integrations, and business rules from both instructions and input files are covered.
+- All formatting and structural requirements from the instructions are followed.
+- No required section or relevant input content is skipped or ignored.
 
 Accuracy Checks
 
-- Confirm that the output aligns with the provided instructions.
-- Ensure that no hallucinated content or unsupported assumptions are present.
-- Check that all dependency and technical mappings are logically correct as per the instructions.
-- Validate that all business rule interpretations are correct and consistent with the instructions.
-- Ensure that terminology and formatting standards from the instructions are used consistently.
-- Confirm that no false-positive gaps or false-negative omissions occur based on the instructions.
-- Verify that all relationships between entities or components are correctly interpreted as per the instructions.
-- Ensure that no instruction is misinterpreted or only partially implemented.
+- Output aligns exactly with the provided agent instructions and expected output.
+- Output correctly reflects the content of all provided input files.
+- No hallucinated or unsupported content is introduced.
+- All dependency and technical mappings are logically and technically correct.
+- All gap identifications are justified by the input content.
+- All business rule interpretations are correct and traceable to the instructions or input files.
+- All terminology and formatting standards are used consistently and correctly.
+- No false-positive gaps or false-negative omissions are present.
+- All values, tables, and classifications accurately match the source content.
+- No instruction is misinterpreted or partially implemented.
 
 Efficiency Checks
 
-- Verify that duplicate analysis and redundant explanations are avoided.
-- Ensure that repeated gap entries and duplicate dependency mappings are eliminated.
-- Confirm that the output remains concise, structured, and free of unnecessary sections.
-- Check that excessive verbosity is avoided and formatting remains clean and optimized.
-- Ensure that overlapping findings are consolidated and similar findings are logically grouped where appropriate.
-- Validate that output structure improves readability and review efficiency.
-- Confirm that large sections are summarized efficiently where allowed by the instructions.
-- Ensure that redundant classifications, tags, and validations are avoided.
+- Duplicate analysis, explanations, and gap entries are avoided in the output.
+- Output remains concise, well-structured, and free of unnecessary sections.
+- Redundant dependency mappings, risks, recommendations, and validations are eliminated.
+- Formatting is clean, optimized, and avoids excessive verbosity.
+- Overlapping findings are consolidated and similar findings are grouped logically.
+- Output is token-efficient while maintaining completeness and accuracy.
+- Large sections are summarized efficiently where allowed by the instructions.
+- Output structure improves readability and review efficiency.
