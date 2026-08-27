@@ -1,10 +1,14 @@
+Iteration 1:
+
+Step 1:
+
 [ERROR] Attempt 1 of 3 — Agent metadata extraction failed. Error: Token Verification Failed : Token is Invalid or Expired
 
 [ERROR] Attempt 2 of 3 — Agent metadata extraction failed. Error: Token Verification Failed : Token is Invalid or Expired
 
 [ERROR] Attempt 3 of 3 — Agent metadata extraction failed. Error: Token Verification Failed : Token is Invalid or Expired
 
-[ERROR] All 3 attempts failed for Step 1: Extract Agent Metadata. Stopping aTune process. Reason: The AAVA agent metadata extractor tool returned a 401 authentication error indicating the API token is invalid or expired. Without the agent's metadata (role, goal, backstory, description, expected output), the tuning process cannot proceed.
+[ERROR] All 3 attempts failed for Step 1: Extract Agent Metadata. Stopping aTune process. Reason: The AAVA agent metadata extractor tool returned a 401 authentication error on all three attempts. The API token used by the tool is invalid or expired. Cannot proceed without agent metadata (role, goal, backstory, description, expected output).
 
 ---
 
@@ -13,19 +17,16 @@ Tuning Outcome:
 - Agent ID tuned: 50160
 - Agent Name: DI ThoughtSpot Documentation Agent Dev
 - Threshold set: 50
-- Final Gap Score achieved: N/A (process stopped at Step 1)
-- Total iterations run: 0
+- Final Gap Score achieved: N/A (process stopped before first iteration completed)
+- Total iterations run: 0 (Step 1 failed before any iteration could complete)
 
 Iteration Summary:
 
 | Iteration | Gap Score | Decision        |
 |-----------|-----------|-----------------|
-| N/A       | N/A       | STOPPED - Authentication failure prevented metadata extraction |
+| N/A       | N/A       | STOPPED (Step 1 authentication failure) |
 
 ---
 
 Root Cause:
-The AAVA API token used by the metadata extractor tool is invalid or expired. The aTune process requires valid authentication to extract the agent's metadata before any tuning work can begin.
-
-Recommended Action:
-Verify and update the AAVA API token in the metadata extractor tool configuration, then restart the aTune process.
+The aTune process could not begin because the AAVA agent metadata extractor tool authentication failed. The API token hardcoded in the tool source is invalid or expired. This is a system-level configuration issue that must be resolved before aTune can extract the agent's metadata and proceed with the tuning process.
