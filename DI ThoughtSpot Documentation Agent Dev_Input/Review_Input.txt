@@ -2,21 +2,47 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that all available agent instruction metadata (description, expected output, role, goal, backstory) is documented, or that the absence of such metadata is explicitly noted.
-- Confirm that the checklist documents the absence of input files if Input1.txt is not present in the agent input folder.
-- Ensure that all sections required by the available instructions are addressed, or that their absence is explicitly stated.
-- Check that any referenced files or content are noted as missing if not found.
+- All mandatory sections from the agent instructions are present in the output.
+- All required analyses specified in the agent instructions are covered.
+- All entities, files, or components mentioned in the instructions are analyzed.
+- All content from Input1.txt is addressed in the output.
+- All dependencies and integrations referenced in the instructions or input file are included.
+- All formatting requirements from the instructions are followed.
+- No requested section from the instructions is skipped.
+- All relevant sections from Input1.txt are analyzed and included.
+- All required classifications, tags, or statuses are present if specified.
+- All gap or missing item handling requirements are covered if mentioned in the instructions or input.
 
 Accuracy Checks
 
-- Validate that the checklist accurately reflects the lack of agent instruction metadata due to extraction failure.
-- Confirm that the checklist does not introduce unsupported assumptions or hallucinated requirements in the absence of input files or instructions.
-- Ensure that any statements about missing files or metadata are factually correct based on the tool results.
-- Check that the checklist does not misrepresent the available information or the absence thereof.
+- Output aligns with the provided agent instructions.
+- Output correctly reflects the content of Input1.txt.
+- No hallucinated or unsupported content is present in the output.
+- No unsupported assumptions are introduced in the analysis.
+- Dependency and technical mappings are logically and technically correct.
+- Gap identification is justified by the input content.
+- Terminology is used consistently as per the instructions and input file.
+- No contradictions exist across sections of the output.
+- Business rule interpretations are correct and instruction-aligned.
+- Required formatting standards are followed exactly as specified.
+- No false-positive gaps or findings are generated.
+- No false-negative omissions occur; all relevant content is included.
+- Values, tables, and classifications accurately match the source content.
+- Relationships between entities/components are correctly interpreted.
+- Data extracted from Input1.txt is represented accurately.
+- No instruction is misinterpreted or partially implemented.
 
 Efficiency Checks
 
-- Ensure that the checklist avoids redundant or unnecessary checks given the absence of both agent instructions and input files.
-- Confirm that the checklist remains concise and does not include superfluous sections or explanations.
-- Check that the checklist structure is clear and optimized for reviewer use, even when minimal information is available.
-- Verify that no duplicate or overlapping checks are present in the checklist.
+- Duplicate analysis and redundant explanations are avoided in the output.
+- Repeated gap entries and findings are eliminated.
+- Output remains concise, structured, and free of unnecessary sections.
+- Duplicate dependency mappings are avoided.
+- Formatting is clean and optimized for readability.
+- Excessive verbosity is avoided; output is token-efficient.
+- Overlapping findings are consolidated where appropriate.
+- Tables are not unnecessarily repeated.
+- Similar findings are logically grouped where allowed.
+- Redundant classifications, tags, or validations are avoided.
+- Large sections are summarized efficiently where permitted by instructions.
+- Output structure improves readability and review efficiency.
