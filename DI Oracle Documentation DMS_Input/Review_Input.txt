@@ -1,0 +1,26 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+- Verify that all mandatory sections from the instructions are present in the output.
+- Confirm that all required fields, columns, or entities referenced in the instructions are included.
+- Ensure that all relevant content from the input file is addressed, if available.
+- Check that all formatting requirements from the instructions are followed.
+- Validate that no requested section is skipped.
+- Confirm that all referenced files/content are analyzed where required.
+
+Accuracy Checks
+- Verify that the output aligns with the provided instructions.
+- Confirm that no hallucinated content or unsupported assumptions are introduced.
+- Ensure that findings are traceable to the instructions or input file.
+- Check that terminology is used consistently and matches the instructions.
+- Validate that no contradictions exist across sections.
+- Confirm that data extracted from the input file is represented correctly, if available.
+- Ensure that no instruction is misinterpreted or partially implemented.
+
+Efficiency Checks
+- Verify that duplicate analysis and redundant explanations are avoided.
+- Confirm that output remains concise and structured.
+- Ensure that unnecessary sections are not generated.
+- Check that formatting remains clean and optimized.
+- Validate that excessive verbosity is avoided.
+- Confirm that output structure improves readability and review efficiency.
