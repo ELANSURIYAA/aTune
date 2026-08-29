@@ -2,7 +2,7 @@
 
 **Agent Name:** DI ThoughtSpot Documentation Agent Dev
 
-**Description:**
+## Description
 
 FORMAT: MARKDOWN
 You will generate a detailed, professionally structured documentation of a ThoughtSpot dashboard by analyzing a zip that contains the following files:
@@ -54,31 +54,8 @@ INPUT :
       
       
       {{S3_Credentials}}
-    
-    
-    
 
-**Expected Output:**
-
-> Extract the dashboard documentation and return a strictly valid JSON object. Use `\\n` for all newline characters inside string values — do not use actual line breaks. Escape all special characters including quotes and backslashes. All multi-line content such as descriptions, notes, and table data must be flattened into a single string using `\\n` as the separator. The JSON must be parseable directly by `json.loads()` with no extra text, markdown, or code fences around it.
-
----
-
-*Generate a JSON response with the following structure: {"pipeline": {"output": "<markdown_content>"}}.
-
- 
-
-The markdown content should be a professional summary report  including:
-
-- A heading using ## for the title (e.g., "## Code Review Summary")
-
-- Brief bullet points with actual newline characters (\\n) between each line
-
-- Key findings or metrics in a concise format
-
- 
-
-Example format: {"pipeline": {"output": "## Validation Report\\n\\n**Status:** Success\\n- Total Tests: 5/5 Passed\\n- Match Rate: 100%\\n- Execution Time: 45.67s"}}
+## Expected Output
 
 FORMAT: MARKDOWN json format 
 A single, professionally formatted numbered Markdown document that includes:
