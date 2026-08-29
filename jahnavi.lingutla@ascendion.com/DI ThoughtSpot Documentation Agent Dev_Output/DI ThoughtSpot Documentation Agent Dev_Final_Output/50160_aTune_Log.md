@@ -11,4 +11,6 @@ Step 1:
 
 [ERROR] Attempt 1 of 3 — The agent input file 'bronze_usp_Load_bronze_Layer_Full.sql' specified in the Agent Requirement File does not exist in the GitHub repository at path 'DI ThoughtSpot Documentation Agent Dev_Input/bronze_usp_Load_bronze_Layer_Full.sql'. The file returned a 404 Not Found error. Cannot proceed with Step 2 (Execute Agent Instructions) without the required input file.
 
-[ERROR] Attempt 2 of 3 — Retrying file read for 'bronze_usp_Load_bronze_Layer_Full.sql' at 'DI ThoughtSpot Documentation Agent Dev_Input/bronze_usp_Load_bronze_Layer_Full.sql'.
+[ERROR] Attempt 2 of 3 — Retrying file read for 'bronze_usp_Load_bronze_Layer_Full.sql' at 'DI ThoughtSpot Documentation Agent Dev_Input/bronze_usp_Load_bronze_Layer_Full.sql'. File still returns 404 Not Found error.
+
+[ERROR] Attempt 3 of 3 — Final retry for 'bronze_usp_Load_bronze_Layer_Full.sql' at 'DI ThoughtSpot Documentation Agent Dev_Input/bronze_usp_Load_bronze_Layer_Full.sql'.
