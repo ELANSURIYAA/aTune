@@ -16,3 +16,16 @@ Step 2:
   - 50160_Agent_Executed_Output.txt: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI ThoughtSpot Documentation Agent Dev_Output/50160_Agent_Executed_Output.txt
 - Validation: I checked that 50160_Agent_Executed_Output.txt exists in the correct location with content present. File verified.
 - Decision: All outputs verified so I am proceeding to Step 3.
+
+Step 3:
+- Created an empty Gap Report file in GitHub to initialise the review cycle.
+- Triggered the Reviewer agent to compare the executed output against the goal and instruction.
+- The Gap Report and Gap Score files were written to GitHub at jahnavi.lingutla@ascendion.com/DI ThoughtSpot Documentation Agent Dev_Output/DI ThoughtSpot Documentation Agent Dev_Working/.
+- GitHub URLs:
+  - 50160_Gap_Report.md: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI ThoughtSpot Documentation Agent Dev_Output/DI ThoughtSpot Documentation Agent Dev_Working/50160_Gap_Report.md
+  - 50160_Gap_Score.md: https://github.com/ELANSURIYAA/aTune/blob/main/jahnavi.lingutla@ascendion.com/DI ThoughtSpot Documentation Agent Dev_Output/DI ThoughtSpot Documentation Agent Dev_Working/50160_Gap_Score.md
+- Validation: I checked that 50160_Gap_Report.md and 50160_Gap_Score.md exist in the correct location with content present. Both files verified.
+- Decision: All outputs verified so I am proceeding to Step 4.
+
+Step 4:
+- Gap score is 20.0. Threshold is 50. 20.0 is less than 50, so I am continuing to Step 5.
