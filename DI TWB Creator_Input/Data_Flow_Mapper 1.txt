@@ -1,0 +1,463 @@
+# Looker → Tableau Migration Mapping Document  
+**report_id:** `c46432c2-1d7b-5578-a5f8-bbb3a5934958`  
+**Validated dashboard:** `data_flow_state` / `Data Flow State`
+
+Validation passed: exactly one extraction row found for the supplied report_id.
+
+Field-count sanity check:
+- `vw_doc_fields` total rows = **97**
+- Dimensions + dimension_groups = **78**
+- Measures = **19**
+- 78 + 19 = **97** ✅
+
+---
+
+## TABLE 0 — TABLEAU WORKBOOK / MODEL OVERVIEW
+
+| Target Workbook | Target Data Model | Source Dashboard ID | Source Dashboard | Connection | Connection Mode | Refresh Strategy | Migration Status |
+|---|---|---|---|---|---|---|---|
+| Data Flow State | data_science.data_state_fact | data_flow_state | Data Flow State | analytics_reporting | Extract | Datagroup `analytics_default_datagroup`; max_cache_age `1 hour`; no sql_trigger returned | REVIEW |
+
+---
+
+## TABLE 1 — TABLEAU DATA SOURCES
+
+| Tableau Data Source | Connection | Base Table | Connection Mode | Custom SQL Required | Custom / Derived SQL | Refresh Hint | Source Reference (Origin System) | Manual Review |
+|---|---|---|---|---|---|---|---|---|
+| Data Flow State - data_science.data_state_fact | analytics_reporting | data_state_fact | Extract | Yes | `select
+      *,
+      date_trunc(
+        hour,
+        coalesce(INSERT_TIMESTAMP_JMS_EVENT, INSERT_TIMESTAMP_PARKING_EVENT,
+                INSERT_TIMESTAMP_PARKING_STOPPED_EVENT, INSERT_TIMESTAMP_TRANSACTION_FACT)
+      ) as CREATE_HOUR,
+      case
+        when INSERT_TIMESTAMP_TRANSACTION_FACT is not null then 'PRESENT_IN_TRANSACTION_FACT'
+        -- JMS and parking event are present, but reporting data has not present in Transaction Fact for 3 or more hours
+        when INSERT_TIMESTAMP_JMS_EVENT is not null
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is not null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null
+            and timediff(hour, CREATE_HOUR, current_timestamp()) >= 3 then 'MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS'
+        -- JMS and parking event are present, but reporting data has not present in Transaction Fact for under 3 hours
+        when INSERT_TIMESTAMP_JMS_EVENT is not null
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is not null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null
+            and timediff(hour, CREATE_HOUR, current_timestamp()) < 3 then 'MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS'
+        -- JMS event is present, but associated parking event has not present for 3 or more hours
+        when timediff(hour, INSERT_TIMESTAMP_JMS_EVENT, current_timestamp()) >= 3
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS'
+        -- JMS event is present, but associated parking event has not present for under 3 hours
+        when timediff(hour, INSERT_TIMESTAMP_JMS_EVENT, current_timestamp()) < 3
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS'
+        -- Parking event is present, but associated JMS event has not present for 3 or more hours
+        when timediff(hour, coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT), current_timestamp()) >= 3
+            and INSERT_TIMESTAMP_JMS_EVENT is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS'
+        -- Parking event is present, but associated JMS event has not present for under 3 hours
+        when timediff(hour, coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT), current_timestamp()) < 3
+            and INSERT_TIMESTAMP_JMS_EVENT is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS'
+      end as DATA_STATE
+    from REPORTING_DBT.REPORTING_DATA_STATE_FACT` | Use extract refresh aligned to datagroup max_cache_age `1 hour` | data_science.data_state_fact | Yes — base explore uses derived SQL and downstream join set includes one compound join with omitted join types |
+
+---
+
+## TABLE 2 — TABLEAU TABLES
+
+| Tableau Data Source | Tableau Table | Layer | Source Physical Table | Primary Key | Custom SQL | Source Reference (Origin Table) | Source Table ID | Migration Status |
+|---|---|---|---|---|---|---|---|---|
+| Data Flow State - data_science.data_state_fact | client_dimension | Physical | `"REPORTING"."VW_CLIENT_DIMENSION"` | client_id | NULL | client_dimension | client_dimension | AUTO |
+| Data Flow State - data_science.data_state_fact | data_state_fact | Logical/Custom SQL | NULL | NULL | `select
+      *,
+      date_trunc(
+        hour,
+        coalesce(INSERT_TIMESTAMP_JMS_EVENT, INSERT_TIMESTAMP_PARKING_EVENT,
+                INSERT_TIMESTAMP_PARKING_STOPPED_EVENT, INSERT_TIMESTAMP_TRANSACTION_FACT)
+      ) as CREATE_HOUR,
+      case
+        when INSERT_TIMESTAMP_TRANSACTION_FACT is not null then 'PRESENT_IN_TRANSACTION_FACT'
+        -- JMS and parking event are present, but reporting data has not present in Transaction Fact for 3 or more hours
+        when INSERT_TIMESTAMP_JMS_EVENT is not null
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is not null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null
+            and timediff(hour, CREATE_HOUR, current_timestamp()) >= 3 then 'MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS'
+        -- JMS and parking event are present, but reporting data has not present in Transaction Fact for under 3 hours
+        when INSERT_TIMESTAMP_JMS_EVENT is not null
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is not null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null
+            and timediff(hour, CREATE_HOUR, current_timestamp()) < 3 then 'MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS'
+        -- JMS event is present, but associated parking event has not present for 3 or more hours
+        when timediff(hour, INSERT_TIMESTAMP_JMS_EVENT, current_timestamp()) >= 3
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS'
+        -- JMS event is present, but associated parking event has not present for under 3 hours
+        when timediff(hour, INSERT_TIMESTAMP_JMS_EVENT, current_timestamp()) < 3
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS'
+        -- Parking event is present, but associated JMS event has not present for 3 or more hours
+        when timediff(hour, coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT), current_timestamp()) >= 3
+            and INSERT_TIMESTAMP_JMS_EVENT is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS'
+        -- Parking event is present, but associated JMS event has not present for under 3 hours
+        when timediff(hour, coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT), current_timestamp()) < 3
+            and INSERT_TIMESTAMP_JMS_EVENT is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS'
+      end as DATA_STATE
+    from REPORTING_DBT.REPORTING_DATA_STATE_FACT` | data_state_fact | data_state_fact | AUTO |
+| Data Flow State - data_science.data_state_fact | location_dimension | Logical/Custom SQL | NULL | lot_id | `select LD1.*,
+        LD2.ZONE
+      from REPORTING_DBT.REPORTING_VIEW_LOCATION_DIMENSION LD1
+      left join REPORTING.VW_LOT_DIMENSION LD2
+        on LD1.LOT_ID = LD2.LOT_ID` | location_dimension | location_dimension | AUTO |
+
+---
+
+## TABLE 3 — TABLEAU RELATIONSHIPS / JOINS
+
+| Data Source | Left Table | Left Field | Right Table | Right Field | Cardinality | Tableau Modeling Method | Join Type | Join Expression | Source Relationship ID | Manual Review |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Data Flow State - data_science.data_state_fact | data_state_fact | client_id | client_dimension | client_id | many_to_one | Relationship | omitted | `${data_state_fact.client_id} = ${client_dimension.client_id}` | data_state_fact -> client_dimension | Yes — join type omitted in source; do not assume default silently |
+| Data Flow State - data_science.data_state_fact | data_state_fact | NULL | location_dimension | NULL | many_to_one | Physical Join / Custom SQL / Manual Review | omitted | `${data_state_fact.location_id} = ${location_dimension.lot_id}
+      and ${data_state_fact.client_id} = ${client_dimension.client_id}` | data_state_fact -> location_dimension | Yes — compound join, third-table reference (`client_dimension`), and join type omitted |
+
+---
+
+## TABLE 4 — TABLEAU DIMENSIONS
+
+| Tableau Field | Tableau Table | Data Type | Role | Source Column / Expression | Date Granularity | Geographic Role | Hidden | Source Reference (Origin Field) | Source Field ID | Migration Status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| client_account_id_label | client_dimension | String | Dimension | `${TABLE}."CLIENT_ACCOUNT_ID"` | NULL | NULL | False | client_dimension.client_account_id | client_dimension.client_account_id | AUTO |
+| client_business_group_label | client_dimension | String | Dimension | `${TABLE}."BUSINESS_GROUP"` | NULL | NULL | False | client_dimension.client_business_group | client_dimension.client_business_group | AUTO |
+| client_city_label | client_dimension | String | Dimension | `${TABLE}."CITY"` | NULL | NULL | False | client_dimension.client_city | client_dimension.client_city | AUTO |
+| client_country_label | client_dimension | String | Dimension | `${TABLE}."COUNTRY"` | NULL | NULL | True | client_dimension.client_country | client_dimension.client_country | AUTO |
+| client_exclusivity_label | client_dimension | String | Dimension | `${TABLE}."EXCLUSIVE_NON_EXCLUSIVE"` | NULL | NULL | False | client_dimension.client_exclusivity | client_dimension.client_exclusivity | AUTO |
+| client_id_label | client_dimension | String | Dimension | `${TABLE}."CLIENT_ID"` | NULL | NULL | False | client_dimension.client_id | client_dimension.client_id | AUTO |
+| client_industry_label | client_dimension | String | Dimension | `${TABLE}."CLIENT_INDUSTRY"` | NULL | NULL | False | client_dimension.client_industry | client_dimension.client_industry | AUTO |
+| client_mor_indicator_label | client_dimension | String | Dimension | `${TABLE}."MOR_INDICATOR"` | NULL | NULL | False | client_dimension.client_mor_indicator | client_dimension.client_mor_indicator | AUTO |
+| client_ranking_label | client_dimension | String | Dimension | `${TABLE}."CLIENT_RANKING"` | NULL | NULL | False | client_dimension.client_ranking | client_dimension.client_ranking | AUTO |
+| client_state_label | client_dimension | String | Dimension | `${TABLE}."STATE"` | NULL | NULL | False | client_dimension.client_state | client_dimension.client_state | AUTO |
+| client_type_label | client_dimension | String | Dimension | `${TABLE}."CLIENT_TYPE"` | NULL | NULL | False | client_dimension.client_type | client_dimension.client_type | AUTO |
+| coordinates_label | client_dimension | Geographic field | Dimension | `(location field — lat/long not separately captured, verify against source .lkml)` | NULL | Geographic field | False | client_dimension.coordinates | client_dimension.coordinates | REVIEW |
+| is_test_label | client_dimension | Boolean | Dimension | `${TABLE}."IS_TEST_OR_DEMO"` | NULL | NULL | False | client_dimension.is_test | client_dimension.is_test | AUTO |
+| client_name_label | client_dimension | String | Dimension | `${TABLE}."CLIENT_NAME"` | NULL | NULL | False | client_dimension.name | client_dimension.name | AUTO |
+| salesforce_id_label | client_dimension | String | Dimension | `${TABLE}."SF_ACCOUNT_ID"` | NULL | NULL | False | client_dimension.salesforce_id | client_dimension.salesforce_id | AUTO |
+| capture_group_id_label | data_state_fact | String | Dimension | `${TABLE}."CAPTURE_GROUP_ID"` | NULL | NULL | False | data_state_fact.capture_group_id | data_state_fact.capture_group_id | AUTO |
+| client_id_label | data_state_fact | Number (decimal) | Dimension | `${TABLE}."CLIENT_ID"` | NULL | NULL | False | data_state_fact.client_id | data_state_fact.client_id | AUTO |
+| create_hour_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."CREATE_HOUR"` | NULL | NULL | False | data_state_fact.create_hour | data_state_fact.create_hour | AUTO |
+| parking_create_date_utc_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."CREATE_TIME_PARKING"` | NULL | NULL | False | data_state_fact.create_time_parking | data_state_fact.create_time_parking | AUTO |
+| data_state_label | data_state_fact | String | Dimension | `${TABLE}."DATA_STATE"` | NULL | NULL | False | data_state_fact.data_state | data_state_fact.data_state | AUTO |
+| transaction_id_label | data_state_fact | String | Dimension | `${TABLE}."DBT_TRANSACTION_ID"` | NULL | NULL | False | data_state_fact.dbt_transaction_id | data_state_fact.dbt_transaction_id | AUTO |
+| fees_applied_label | data_state_fact | String | Dimension | `${TABLE}."FEES_APPLIED"` | NULL | NULL | False | data_state_fact.fees_applied | data_state_fact.fees_applied | AUTO |
+| fees_applied_parking_label | data_state_fact | String | Dimension | `${TABLE}."FEES_APPLIED_PARKING"` | NULL | NULL | False | data_state_fact.fees_applied_parking | data_state_fact.fees_applied_parking | AUTO |
+| fees_applied_stopped_session_label | data_state_fact | String | Dimension | `${TABLE}."FEES_APPLIED_STOPPED_SESSION"` | NULL | NULL | False | data_state_fact.fees_applied_stopped_session | data_state_fact.fees_applied_stopped_session | AUTO |
+| payment_gateway_reference_label | data_state_fact | String | Dimension | `${TABLE}."GATEWAY_REFERENCE"` | NULL | NULL | False | data_state_fact.gateway_reference | data_state_fact.gateway_reference | AUTO |
+| payment_date_utc_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."GATEWAY_TRANSACTION_TIME_UTC"` | NULL | NULL | False | data_state_fact.gateway_transaction_time_utc | data_state_fact.gateway_transaction_time_utc | AUTO |
+| insert_timestamp_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."INSERT_TIMESTAMP"` | NULL | NULL | False | data_state_fact.insert_timestamp | data_state_fact.insert_timestamp | AUTO |
+| insert_timestamp_jms_event_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."INSERT_TIMESTAMP_JMS_EVENT"` | NULL | NULL | False | data_state_fact.insert_timestamp_jms_event | data_state_fact.insert_timestamp_jms_event | AUTO |
+| insert_timestamp_parking_event_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."INSERT_TIMESTAMP_PARKING_EVENT"` | NULL | NULL | False | data_state_fact.insert_timestamp_parking_event | data_state_fact.insert_timestamp_parking_event | AUTO |
+| insert_timestamp_parking_stopped_event_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."INSERT_TIMESTAMP_PARKING_STOPPED_EVENT"` | NULL | NULL | False | data_state_fact.insert_timestamp_parking_stopped_event | data_state_fact.insert_timestamp_parking_stopped_event | AUTO |
+| insert_timestamp_transaction_fact_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."INSERT_TIMESTAMP_TRANSACTION_FACT"` | NULL | NULL | False | data_state_fact.insert_timestamp_transaction_fact | data_state_fact.insert_timestamp_transaction_fact | AUTO |
+| subledger_job_id_label | data_state_fact | String | Dimension | `${TABLE}."JOB_ID"` | NULL | NULL | False | data_state_fact.job_id | data_state_fact.job_id | AUTO |
+| last_update_timestamp_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."LAST_UPDATE_TIMESTAMP"` | NULL | NULL | False | data_state_fact.last_update_timestamp | data_state_fact.last_update_timestamp | AUTO |
+| last_updated_transaction_fact_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."LATEST_UPDATED_TRANSACTION_FACT"` | NULL | NULL | False | data_state_fact.latest_updated_transaction_fact | data_state_fact.latest_updated_transaction_fact | AUTO |
+| line_item_id_label | data_state_fact | String | Dimension | `${TABLE}."LINE_ITEM_ID"` | NULL | NULL | False | data_state_fact.line_item_id | data_state_fact.line_item_id | AUTO |
+| location_id_label | data_state_fact | Number (decimal) | Dimension | `${TABLE}."LOCATION_ID"` | NULL | NULL | False | data_state_fact.location_id | data_state_fact.location_id | AUTO |
+| order_id_label | data_state_fact | String | Dimension | `${TABLE}."ORDER_ID"` | NULL | NULL | False | data_state_fact.order_id | data_state_fact.order_id | AUTO |
+| parking_segment_id_label | data_state_fact | String | Dimension | `${TABLE}."PARKING_SEGMENT_ID"` | NULL | NULL | False | data_state_fact.parking_segment_id | data_state_fact.parking_segment_id | AUTO |
+| payment_status_label | data_state_fact | String | Dimension | `${TABLE}."PAYMENT_STATUS"` | NULL | NULL | False | data_state_fact.payment_status | data_state_fact.payment_status | AUTO |
+| parking_product_type_label | data_state_fact | String | Dimension | `${TABLE}."PRODUCT_TYPE"` | NULL | NULL | False | data_state_fact.product_type | data_state_fact.product_type | AUTO |
+| staging_check_time_label | data_state_fact | Date/Datetime | Dimension | `${TABLE}."STAGING_CUTOFF_TIMESTAMP"` | NULL | NULL | False | data_state_fact.staging_cutoff_timestamp_time | data_state_fact.staging_cutoff_timestamp_time | AUTO |
+| allow_stop_label | location_dimension | Boolean | Dimension | `${TABLE}."ALLOW_STOP"` | NULL | NULL | False | location_dimension.allow_stop | location_dimension.allow_stop | AUTO |
+| transaction_fee_charge_on_top_label | location_dimension | String | Dimension | `${TABLE}."CHARGE_ON_TOP"` | NULL | NULL | False | location_dimension.charge_on_top | location_dimension.charge_on_top | AUTO |
+| client_city_label | location_dimension | String | Dimension | `${TABLE}."CITY"` | NULL | NULL | False | location_dimension.city | location_dimension.city | AUTO |
+| client_id_label | location_dimension | String | Dimension | `${TABLE}."CLIENT_ID"` | NULL | NULL | False | location_dimension.client_id | location_dimension.client_id | AUTO |
+| client_location_id_label | location_dimension | String | Dimension | `${TABLE}."CLIENT_LOT_ID"` | NULL | NULL | False | location_dimension.client_lot_id | location_dimension.client_lot_id | AUTO |
+| close_date_label | location_dimension | Date/Datetime | Dimension | `${TABLE}."CLOSE_DATE"` | date, month, quarter, year | NULL | False | location_dimension.close_date | location_dimension.close_date | AUTO |
+| coin_meters_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."COIN_METERS_COUNT"` | NULL | NULL | False | location_dimension.coin_meters | location_dimension.coin_meters | AUTO |
+| location_coordinates_label | location_dimension | Geographic field | Dimension | `(location field — lat/long not separately captured, verify against source .lkml)` | NULL | Geographic field | False | location_dimension.coordinates | location_dimension.coordinates | REVIEW |
+| country_code_label | location_dimension | String | Dimension | `${TABLE}."COUNTRY"` | NULL | NULL | False | location_dimension.country | location_dimension.country | AUTO |
+| credit_card_meters_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."CREDIT_CARD_METERS_COUNT"` | NULL | NULL | False | location_dimension.credit_card_meters | location_dimension.credit_card_meters | AUTO |
+| currency_label | location_dimension | String | Dimension | `${TABLE}."CURRENCY_NAME"` | NULL | NULL | False | location_dimension.currency_name | location_dimension.currency_name | AUTO |
+| enforcement_grace_minutes_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."ENFORCEMENT_GRACE_MINUTES"` | NULL | NULL | False | location_dimension.enforcement_grace_minutes | location_dimension.enforcement_grace_minutes | AUTO |
+| fps_amount_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."FPS_AMOUNT"` | NULL | NULL | False | location_dimension.fps_amount_dimension | location_dimension.fps_amount_dimension | AUTO |
+| has_disable_reminders_label | location_dimension | Boolean | Dimension | `${TABLE}."HAS_DISABLE_REMINDERS"` | NULL | NULL | False | location_dimension.has_disable_reminders | location_dimension.has_disable_reminders | AUTO |
+| has_receipt_at_start_label | location_dimension | Boolean | Dimension | `${TABLE}."HAS_RECEIPT_AT_START"` | NULL | NULL | False | location_dimension.has_receipt_at_start | location_dimension.has_receipt_at_start | AUTO |
+| is_extension_not_allowed_label | location_dimension | Boolean | Dimension | `${TABLE}."IS_EXTENSION_NOT_ALLOWED"` | NULL | NULL | False | location_dimension.is_extension_not_allowed | location_dimension.is_extension_not_allowed | AUTO |
+| is_off_street_label | location_dimension | Boolean | Dimension | `${TABLE}."IS_OFF_STREET"` | NULL | NULL | False | location_dimension.is_off_street | location_dimension.is_off_street | AUTO |
+| is_plate_based_label | location_dimension | Boolean | Dimension | `${TABLE}."IS_PLATE_BASED"` | NULL | NULL | False | location_dimension.is_plate_based | location_dimension.is_plate_based | AUTO |
+| is_premier_bays_label | location_dimension | Boolean | Dimension | `${TABLE}."IS_PREMIER_BAYS"` | NULL | NULL | False | location_dimension.is_premier_bays | location_dimension.is_premier_bays | AUTO |
+| is_stall_based_label | location_dimension | Boolean | Dimension | `${TABLE}."IS_STALL_BASED"` | NULL | NULL | False | location_dimension.is_stall_based | location_dimension.is_stall_based | AUTO |
+| location_id_label | location_dimension | String | Dimension | `${TABLE}."LOT_ID"` | NULL | NULL | False | location_dimension.lot_id | location_dimension.lot_id | AUTO |
+| location_name_label | location_dimension | String | Dimension | `${TABLE}."LOT_NAME"` | NULL | NULL | False | location_dimension.lot_name | location_dimension.lot_name | AUTO |
+| location_status_label | location_dimension | String | Dimension | `${TABLE}."LOT_STATUS"` | NULL | NULL | False | location_dimension.lot_status | location_dimension.lot_status | AUTO |
+| location_type_label | location_dimension | String | Dimension | `${TABLE}."LOT_TYPE"` | NULL | NULL | False | location_dimension.lot_type | location_dimension.lot_type | AUTO |
+| open_date_label | location_dimension | Date/Datetime | Dimension | `${TABLE}."OPEN_DATE"` | date, month, quarter, year | NULL | False | location_dimension.open_date | location_dimension.open_date | AUTO |
+| location_receipt_fee_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."RECEIPT_FEE"` | NULL | NULL | False | location_dimension.receipt_fee_dimension | location_dimension.receipt_fee_dimension | AUTO |
+| location_region_id_label | location_dimension | String | Dimension | `${TABLE}."REGION_ID"` | NULL | NULL | False | location_dimension.region_id | location_dimension.region_id | AUTO |
+| region_name_label | location_dimension | String | Dimension | `${TABLE}."REGION_NAME"` | NULL | NULL | False | location_dimension.region_name | location_dimension.region_name | AUTO |
+| location_reminder_fee_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."REMINDER_FEE"` | NULL | NULL | False | location_dimension.reminder_fee_dimension | location_dimension.reminder_fee_dimension | AUTO |
+| requires_cvv_label | location_dimension | Boolean | Dimension | `${TABLE}."REQUIRES_CVV"` | NULL | NULL | False | location_dimension.requires_cvv | location_dimension.requires_cvv | AUTO |
+| street_address_label | location_dimension | String | Dimension | `${TABLE}."STREET_ADDRESS"` | NULL | NULL | False | location_dimension.street_address | location_dimension.street_address | AUTO |
+| transaction_fee_tell_user_label | location_dimension | String | Dimension | `${TABLE}."TELL_USER"` | NULL | NULL | False | location_dimension.tell_user | location_dimension.tell_user | AUTO |
+| location_transaction_fee_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."TRANSACTION_FEE"` | NULL | NULL | False | location_dimension.transaction_fee_dimension | location_dimension.transaction_fee_dimension | AUTO |
+| transaction_fee_threshold_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."THRESHOLD"` | NULL | NULL | False | location_dimension.transaction_fee_threshold | location_dimension.transaction_fee_threshold | AUTO |
+| transaction_fee_type_label | location_dimension | String | Dimension | `${TABLE}."TRANSACTION_FEE_TYPE"` | NULL | NULL | False | location_dimension.transaction_fee_type | location_dimension.transaction_fee_type | AUTO |
+| wait_time_after_max_stay_label | location_dimension | Number (decimal) | Dimension | `${TABLE}."WAIT_TIME_AFTER_MAX_STAY"` | NULL | NULL | False | location_dimension.wait_time_after_max_stay | location_dimension.wait_time_after_max_stay | AUTO |
+| zone_label | location_dimension | String | Dimension | `${TABLE}."ZONE"` | NULL | NULL | False | location_dimension.zone | location_dimension.zone | AUTO |
+
+---
+
+## TABLE 5 — TABLEAU MEASURES
+
+| Tableau Measure | Tableau Table | Aggregation | Tableau Expression | Format | Measure Filters | Dependencies | LOD Required | Source Reference (Origin Measure) | Source Field ID | Migration Status | Manual Review Reason |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| client_count_distinct_label | client_dimension | COUNTD | Count distinct of `${name}` | NULL | NULL | client_dimension.name | No | client_dimension.count_distinct | client_dimension.count_distinct | AUTO | NULL |
+| consumer_fee_label | data_state_fact | SUM | `SUM(${TABLE}."CONSUMER_FEE")` | NULL | NULL | `${TABLE}."CONSUMER_FEE"` | No | data_state_fact.consumer_fee | data_state_fact.consumer_fee | AUTO | NULL |
+|  | data_state_fact | COUNT | Count by type semantics; source formula `(no sql: — native/count/location field)` | NULL | NULL | NULL | No | data_state_fact.no_of_records | data_state_fact.no_of_records | AUTO | NULL |
+| parking_amount_transaction_fact_label | data_state_fact | SUM | `SUM(${TABLE}."PARKING_AMOUNT_TRANSACTION_FACT")` | NULL | NULL | `${TABLE}."PARKING_AMOUNT_TRANSACTION_FACT"` | No | data_state_fact.parking_amount_transaction_fact | data_state_fact.parking_amount_transaction_fact | AUTO | NULL |
+| segment_base_cost_parking_label | data_state_fact | SUM | `SUM(${TABLE}."SEGMENT_BASE_COST_PARKING")` | NULL | NULL | `${TABLE}."SEGMENT_BASE_COST_PARKING"` | No | data_state_fact.segment_base_cost_parking | data_state_fact.segment_base_cost_parking | AUTO | NULL |
+| session_base_cost_parking_label | data_state_fact | SUM | `SUM(${TABLE}."SESSION_BASE_COST_PARKING")` | NULL | NULL | `${TABLE}."SESSION_BASE_COST_PARKING"` | No | data_state_fact.session_base_cost_parking | data_state_fact.session_base_cost_parking | AUTO | NULL |
+| session_base_cost_parking_stopped_label | data_state_fact | SUM | `SUM(${TABLE}."SESSION_BASE_COST_PARKING_STOPPED_SESSION")` | NULL | NULL | `${TABLE}."SESSION_BASE_COST_PARKING_STOPPED_SESSION"` | No | data_state_fact.session_base_cost_parking_stopped_session | data_state_fact.session_base_cost_parking_stopped_session | AUTO | NULL |
+| session_cost_total_parking_label | data_state_fact | SUM | `SUM(${TABLE}."SESSION_COST_TOTAL_PARKING")` | NULL | NULL | `${TABLE}."SESSION_COST_TOTAL_PARKING"` | No | data_state_fact.session_cost_total_parking | data_state_fact.session_cost_total_parking | AUTO | NULL |
+| session_cost_total_stopped_session_label | data_state_fact | SUM | `SUM(${TABLE}."SESSION_COST_TOTAL_STOPPED_SESSION")` | NULL | NULL | `${TABLE}."SESSION_COST_TOTAL_STOPPED_SESSION"` | No | data_state_fact.session_cost_total_stopped_session | data_state_fact.session_cost_total_stopped_session | AUTO | NULL |
+| total_amount_jms_label | data_state_fact | SUM | `SUM(${TABLE}."TOTAL_AMOUNT_JMS")` | NULL | NULL | `${TABLE}."TOTAL_AMOUNT_JMS"` | No | data_state_fact.total_amount_jms | data_state_fact.total_amount_jms | AUTO | NULL |
+| total_amount_transaction_fact_label | data_state_fact | SUM | `SUM(${TABLE}."TOTAL_AMOUNT_TRANSACTION_FACT")` | NULL | NULL | `${TABLE}."TOTAL_AMOUNT_TRANSACTION_FACT"` | No | data_state_fact.total_amount_transaction_fact | data_state_fact.total_amount_transaction_fact | AUTO | NULL |
+| coin_meters_count_label | location_dimension | SUM_DISTINCT | `SUM(DISTINCT ${TABLE}."COIN_METERS_COUNT")` | NULL | NULL | `${TABLE}."COIN_METERS_COUNT"` | Yes | location_dimension.coin_meters_count | location_dimension.coin_meters_count | REVIEW | `sum_distinct` requires LOD/distinct-grain handling; never map to plain SUM |
+| location_count_unique_label | location_dimension | COUNTD | Count distinct of `${lot_id}` | NULL | NULL | location_dimension.lot_id | No | location_dimension.count_distinct | location_dimension.count_distinct | AUTO | NULL |
+| credit_card_meters_count_label | location_dimension | SUM_DISTINCT | `SUM(DISTINCT ${TABLE}."CREDIT_CARD_METERS_COUNT")` | NULL | NULL | `${TABLE}."CREDIT_CARD_METERS_COUNT"` | Yes | location_dimension.credit_card_meters_count | location_dimension.credit_card_meters_count | REVIEW | `sum_distinct` requires LOD/distinct-grain handling; never map to plain SUM |
+| fps_amount_label | location_dimension | SUM | `SUM(${TABLE}."FPS_AMOUNT")` | NULL | NULL | `${TABLE}."FPS_AMOUNT"` | No | location_dimension.fps_amount | location_dimension.fps_amount | AUTO | NULL |
+| location_receipt_fee_label | location_dimension | SUM | `SUM(${TABLE}."RECEIPT_FEE")` | decimal_2 | NULL | `${TABLE}."RECEIPT_FEE"` | No | location_dimension.receipt_fee | location_dimension.receipt_fee | AUTO | NULL |
+| location_reminder_fee_label | location_dimension | SUM | `SUM(${TABLE}."REMINDER_FEE")` | decimal_2 | NULL | `${TABLE}."REMINDER_FEE"` | No | location_dimension.reminder_fee | location_dimension.reminder_fee | AUTO | NULL |
+| stall_count_label | location_dimension | SUM_DISTINCT | `SUM(DISTINCT ${TABLE}."STALL_COUNT")` | NULL | NULL | `${TABLE}."STALL_COUNT"` | Yes | location_dimension.stall_count | location_dimension.stall_count | REVIEW | `sum_distinct` requires LOD/distinct-grain handling; never map to plain SUM |
+| location_transaction_fee_label | location_dimension | SUM | `SUM(${TABLE}."TRANSACTION_FEE")` | decimal_2 | NULL | `${TABLE}."TRANSACTION_FEE"` | No | location_dimension.transaction_fee | location_dimension.transaction_fee | AUTO | NULL |
+
+---
+
+## TABLE 6 — TABLEAU CALCULATED FIELDS
+
+| Tableau Calculated Field | Tableau Table | Data Type | Tableau Formula / Translation | Dependencies | Calculation Class | Source Reference (Origin Expression) | Source Reference (Origin Field) | Source Field ID | Migration Status | Manual Review Reason |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Data State (Refactored) | data_state_fact | String | Translate the source `case()` expression into a Tableau `CASE`/`IF` calculated field over `data_state_fact.data_state` | data_state_fact.data_state | Manual Review | `case(
+  when(${data_state_fact.data_state} = "PRESENT_IN_TRANSACTION_FACT", "Present in Transaction Fact"),
+  when(${data_state_fact.data_state} = "MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS", "Missing in Transaction Fact (>= 3 hours)"),
+  when(${data_state_fact.data_state} = "MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS", "Missing in Transaction Fact (< 3 hours)"),
+  when(${data_state_fact.data_state} = "MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS", "Pending Parking Event (>= 3 hours"),
+  when(${data_state_fact.data_state} = "MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS", "Pending Parking Event (< 3 hours)"),
+  when(${data_state_fact.data_state} = "MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS", "Pending JMS Event (>= 3 hours)"),
+  when(${data_state_fact.data_state} = "MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS", "Pending JMS Event (< 3 hours)"),
+  "Unidentified state"
+)` | dynamic field `data_state_refactored`; used on tiles: `Data Flow State; No of records ingested into Transaction Fact; No of records missing in Transaction Fact for >= 3 hours; No of records pending JMS payment settled events for >= 3 hours; No of records pending parking events for >= 3 hours; No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency; No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency` | NULL | REVIEW | Every dashboard dynamic field is manual by definition; no view-backed Tableau model field exists automatically |
+
+---
+
+## TABLE 7 — TABLEAU WORKSHEETS / VISUALS
+
+*(Rebuilt in pure Tableau field/shelf language, verified directly against the actual
+`.twb` workbook — no raw source `view.field` notation is used as a shelf value. Source
+traceability is isolated to its own "Source Reference" column.)*
+
+| Worksheet Name | Chart Type | Marks | Data Source | Columns Shelf | Rows Shelf | Color | Size | Label / Text | Filters | Sort | Source Reference | Migration Status | Manual Review Reason |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Data Flow State Table | Text table / crosstab (bar-in-cell) | Bar | Data State Fact | Data State (Refactored) \* SUM(No of Records) | Date Label / Day of Week | Data State (Refactored) | SUM(No of Records) | SUM(No of Records) | Create Hour: in-range (31 days) | Date Label desc, Data State (Refactored) | Source tile: "Data Flow State"; dims `create_hour_date`+`create_hour_day_of_week`, pivot `data_state_refactored`, measure `no_of_records` | REVIEW | In-cell data bar has no native Tableau equivalent — rebuilt as a sized/colored Bar mark inside a crosstab layout, not a literal in-cell bar |
+| Records Ingested | Bar chart | Bar | Data State Fact | Hour Label | SUM(Ingested Hourly) | — (no color; tile is pre-filtered to one state) | — | — | Create Hour: in-range | — | Source tile: "No of records ingested into Transaction Fact"; measure `no_of_records` filtered `data_state = PRESENT_IN_TRANSACTION_FACT` | REVIEW | Rebuilt as a dedicated pre-aggregated measure (Ingested Hourly) instead of one shared measure + inline filter; verify aggregation logic matches source filter exactly |
+| Missing in Transaction Fact 3h+ | Bar chart | Bar | Data State Fact | Hour Label | SUM(Missing Hourly) | — (no color; tile is pre-filtered to one state) | — | — | Create Hour: in-range | — | Source tile: "No of records missing in Transaction Fact for >= 3 hours"; measure `no_of_records` filtered `data_state = MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS` | REVIEW | Rebuilt as a dedicated pre-aggregated measure (Missing Hourly); verify filter logic matches source |
+| Pending JMS 3h+ | Bar chart | Bar | Data State Fact | Hour Label | SUM(JMS Hourly) | — (no color; tile is pre-filtered to one state) | — | — | Create Hour: in-range | — | Source tile: "No of records pending JMS payment settled events for >= 3 hours"; measure `no_of_records` filtered `data_state = MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS` | REVIEW | Rebuilt as a dedicated pre-aggregated measure (JMS Hourly); verify filter logic matches source |
+| Pending Parking 3h+ | Bar chart | Bar | Data State Fact | Hour Label | SUM(Parking Hourly) | — (no color; tile is pre-filtered to one state) | — | — | Create Hour: in-range | — | Source tile: "No of records pending parking events for >= 3 hours"; measure `no_of_records` filtered `data_state = MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS` | REVIEW | Rebuilt as a dedicated pre-aggregated measure (Parking Hourly); verify filter logic matches source |
+| Pending JMS by Client | Text table / crosstab (bar-in-cell) | Bar | Data State Fact | SUM(No of Records) + SUM(Segment Base Cost - Parking Event) | Client Name | — | — | Both measures as text | Create Hour: in-range (7 days) | SUM(No of Records) desc | Source tile: "No of transactions pending JMS events... by client"; dim `client_dimension.name`, measures `no_of_records`+`segment_base_cost_parking`, filtered `data_state = MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS` | REVIEW | In-cell data bar has no native Tableau equivalent — rebuilt as text/Bar mark |
+| Pending Parking by Client | Text table / crosstab (bar-in-cell) | Bar | Data State Fact | Product Type \* (SUM(No of Records) + SUM(Total Amount - JMS-based)) | Client Name | — | — | Both measures as text | Create Hour: in-range (this month) | Product Type, SUM(No of Records) desc | Source tile: "No of transactions pending parking events... by client"; dims `client_dimension.name`+`product_type`, measures `no_of_records`+`total_amount_jms`, filtered `data_state = MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS` | REVIEW | In-cell data bar has no native Tableau equivalent — rebuilt as text/Bar mark |
+
+## TABLE 8 — TABLEAU FILTERS
+
+| Filter Name | Target Field | Filter Type | Default Value | Multi-Select | Scope | Applied To | Source Filter / Binding | Source Filter ID | Migration Status | Manual Review Reason |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Timeframe | data_state_fact.create_hour_date | Date filter | 31 day | True | Dashboard | Data Flow State; No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency; No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Top-level dashboard filter with listen bindings | Timeframe | AUTO | NULL |
+| Order ID | data_state_fact.order_id | Categorical field filter |  | True | Dashboard | Data Flow State; No of records pending JMS payment settled events for >= 3 hours; No of records pending parking events for >= 3 hours; No of records missing in Transaction Fact for >= 3 hours; No of records ingested into Transaction Fact; No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency; No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Top-level dashboard filter with listen bindings | Order ID | AUTO | NULL |
+| Payment Gateway Reference | data_state_fact.gateway_reference | Categorical field filter |  | True | Dashboard | Data Flow State; No of records pending JMS payment settled events for >= 3 hours; No of records pending parking events for >= 3 hours; No of records missing in Transaction Fact for >= 3 hours; No of records ingested into Transaction Fact; No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency; No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Top-level dashboard filter with listen bindings | Payment Gateway Reference | AUTO | NULL |
+| Job ID | data_state_fact.job_id | Categorical field filter |  | True | Dashboard | Data Flow State; No of records pending JMS payment settled events for >= 3 hours; No of records pending parking events for >= 3 hours; No of records missing in Transaction Fact for >= 3 hours; No of records ingested into Transaction Fact; No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency; No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Top-level dashboard filter with listen bindings | Job ID | AUTO | NULL |
+| Data Flow State\|data_state_fact.create_hour_date | data_state_fact.create_hour_date | Fixed worksheet filter | 31 day ago for 31 day | False | Worksheet | Data Flow State | Tile inline filter | Data Flow State\|data_state_fact.create_hour_date | AUTO | NULL |
+| No of records pending JMS payment settled events for >= 3 hours\|data_state_fact.create_hour_date | data_state_fact.create_hour_date | Fixed worksheet filter | 72 hours | False | Worksheet | No of records pending JMS payment settled events for >= 3 hours | Tile inline filter | No of records pending JMS payment settled events for >= 3 hours\|data_state_fact.create_hour_date | AUTO | NULL |
+| No of records pending JMS payment settled events for >= 3 hours\|data_state_fact.data_state | data_state_fact.data_state | Fixed worksheet filter | `"MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS"` | False | Worksheet | No of records pending JMS payment settled events for >= 3 hours | Tile inline filter | No of records pending JMS payment settled events for >= 3 hours\|data_state_fact.data_state | AUTO | NULL |
+| No of records pending parking events for >= 3 hours\|data_state_fact.create_hour_date | data_state_fact.create_hour_date | Fixed worksheet filter | 72 hours | False | Worksheet | No of records pending parking events for >= 3 hours | Tile inline filter | No of records pending parking events for >= 3 hours\|data_state_fact.create_hour_date | AUTO | NULL |
+| No of records pending parking events for >= 3 hours\|data_state_fact.data_state | data_state_fact.data_state | Fixed worksheet filter | `"MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS"` | False | Worksheet | No of records pending parking events for >= 3 hours | Tile inline filter | No of records pending parking events for >= 3 hours\|data_state_fact.data_state | AUTO | NULL |
+| No of records missing in Transaction Fact for >= 3 hours\|data_state_fact.create_hour_date | data_state_fact.create_hour_date | Fixed worksheet filter | 72 hours | False | Worksheet | No of records missing in Transaction Fact for >= 3 hours | Tile inline filter | No of records missing in Transaction Fact for >= 3 hours\|data_state_fact.create_hour_date | AUTO | NULL |
+| No of records missing in Transaction Fact for >= 3 hours\|data_state_fact.data_state | data_state_fact.data_state | Fixed worksheet filter | `"MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS"` | False | Worksheet | No of records missing in Transaction Fact for >= 3 hours | Tile inline filter | No of records missing in Transaction Fact for >= 3 hours\|data_state_fact.data_state | AUTO | NULL |
+| No of records ingested into Transaction Fact\|data_state_fact.create_hour_date | data_state_fact.create_hour_date | Fixed worksheet filter | 72 hours | False | Worksheet | No of records ingested into Transaction Fact | Tile inline filter | No of records ingested into Transaction Fact\|data_state_fact.create_hour_date | AUTO | NULL |
+| No of records ingested into Transaction Fact\|data_state_fact.data_state | data_state_fact.data_state | Fixed worksheet filter | `"PRESENT_IN_TRANSACTION_FACT"` | False | Worksheet | No of records ingested into Transaction Fact | Tile inline filter | No of records ingested into Transaction Fact\|data_state_fact.data_state | AUTO | NULL |
+| No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency\|data_state_fact.create_hour_date | data_state_fact.create_hour_date | Fixed worksheet filter | this month | False | Worksheet | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | Tile inline filter | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency\|data_state_fact.create_hour_date | AUTO | NULL |
+| No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency\|data_state_fact.data_state | data_state_fact.data_state | Fixed worksheet filter | `"MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS"` | False | Worksheet | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | Tile inline filter | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency\|data_state_fact.data_state | AUTO | NULL |
+| No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency\|data_state_fact.create_hour_date | data_state_fact.create_hour_date | Fixed worksheet filter | 7 day ago for 7 day | False | Worksheet | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Tile inline filter | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency\|data_state_fact.create_hour_date | AUTO | NULL |
+| No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency\|data_state_fact.data_state | data_state_fact.data_state | Fixed worksheet filter | `"MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS"` | False | Worksheet | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Tile inline filter | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency\|data_state_fact.data_state | AUTO | NULL |
+
+---
+
+## TABLE 9 — TABLEAU DASHBOARD LAYOUT
+
+| Tableau Dashboard | Target Workbook | Dashboard Size / Strategy | Layout Type | Object / Worksheet | Container / Placement | X / Column | Y / Row | Width | Height | Fit | Display Order | Source Tile ID | Migration Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Data Flow State | Data Flow State | Automatic / tiled best-fit derived from a single-column stacked source layout; exact pixel canvas not present | newspaper → Tableau tiled | No of records ingested into Transaction Fact | Full-width vertical tiled stack | 0 | 0 | 24 | 17 | Fit Width | 1 | No of records ingested into Transaction Fact | AUTO |
+| Data Flow State | Data Flow State | Automatic / tiled best-fit derived from a single-column stacked source layout; exact pixel canvas not present | newspaper → Tableau tiled | Data Flow State | Full-width vertical tiled stack | 0 | 17 | 24 | 12 | Entire View | 2 | Data Flow State | AUTO |
+| Data Flow State | Data Flow State | Automatic / tiled best-fit derived from a single-column stacked source layout; exact pixel canvas not present | newspaper → Tableau tiled | No of records pending JMS payment settled events for >= 3 hours | Full-width vertical tiled stack | 0 | 29 | 24 | 13 | Fit Width | 3 | No of records pending JMS payment settled events for >= 3 hours | AUTO |
+| Data Flow State | Data Flow State | Automatic / tiled best-fit derived from a single-column stacked source layout; exact pixel canvas not present | newspaper → Tableau tiled | No of records pending parking events for >= 3 hours | Full-width vertical tiled stack | 0 | 42 | 24 | 14 | Fit Width | 4 | No of records pending parking events for >= 3 hours | AUTO |
+| Data Flow State | Data Flow State | Automatic / tiled best-fit derived from a single-column stacked source layout; exact pixel canvas not present | newspaper → Tableau tiled | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | Full-width vertical tiled stack | 0 | 56 | 24 | 9 | Entire View | 5 | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | AUTO |
+| Data Flow State | Data Flow State | Automatic / tiled best-fit derived from a single-column stacked source layout; exact pixel canvas not present | newspaper → Tableau tiled | No of records missing in Transaction Fact for >= 3 hours | Full-width vertical tiled stack | 0 | 65 | 24 | 15 | Fit Width | 6 | No of records missing in Transaction Fact for >= 3 hours | AUTO |
+| Data Flow State | Data Flow State | Automatic / tiled best-fit derived from a single-column stacked source layout; exact pixel canvas not present | newspaper → Tableau tiled | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Full-width vertical tiled stack | 0 | 80 | 24 | 11 | Entire View | 7 | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | AUTO |
+
+---
+
+## TABLE 10 — SOURCE → TABLEAU TRACEABILITY
+
+| Tableau Object Type | Tableau Object | Target Parent | Source Reference Type | Source Reference (Origin Object) | Source ID | Mapping Method | Migration Status | Notes |
+|---|---|---|---|---|---|---|---|---|
+| Data Source | Data Flow State - data_science.data_state_fact | Data Flow State | explore | data_state_fact | data_science.data_state_fact | Explore/model translated to one Tableau logical data source | REVIEW | Derived-table base explore; extract strategy from datagroup; downstream join complexity affects status |
+| Table | client_dimension | Data Flow State - data_science.data_state_fact | view | client_dimension | client_dimension | Physical LookML view mapped to Tableau table | AUTO | Physical table via `sql_table_name` |
+| Table | data_state_fact | Data Flow State - data_science.data_state_fact | view | data_state_fact | data_state_fact | Derived LookML view mapped to Tableau logical/custom SQL table | AUTO | Full derived SQL preserved verbatim |
+| Table | location_dimension | Data Flow State - data_science.data_state_fact | view | location_dimension | location_dimension | Derived LookML view mapped to Tableau logical/custom SQL table | AUTO | Full derived SQL preserved verbatim |
+| Relationship | data_state_fact ↔ client_dimension | Data Flow State - data_science.data_state_fact | join | client_dimension | data_state_fact->client_dimension | Parsed single-equality join into Tableau relationship candidate | REVIEW | Join type omitted in source; verify explicit Tableau join semantics |
+| Relationship | data_state_fact ↔ location_dimension | Data Flow State - data_science.data_state_fact | join | location_dimension | data_state_fact->location_dimension | Compound `sql_on` requires physical join/custom SQL/manual redesign | REVIEW | Compound predicate plus third-table reference |
+| Dimension | client_account_id_label | client_dimension | dimension | client_account_id | client_dimension.client_account_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_business_group_label | client_dimension | dimension | client_business_group | client_dimension.client_business_group | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_city_label | client_dimension | dimension | client_city | client_dimension.client_city | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_country_label | client_dimension | dimension | client_country | client_dimension.client_country | Direct field mapping with type translation | AUTO | Hidden field in source |
+| Dimension | client_exclusivity_label | client_dimension | dimension | client_exclusivity | client_dimension.client_exclusivity | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_id_label | client_dimension | dimension | client_id | client_dimension.client_id | Direct field mapping with type translation | AUTO | Primary key |
+| Dimension | client_industry_label | client_dimension | dimension | client_industry | client_dimension.client_industry | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_mor_indicator_label | client_dimension | dimension | client_mor_indicator | client_dimension.client_mor_indicator | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_ranking_label | client_dimension | dimension | client_ranking | client_dimension.client_ranking | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_state_label | client_dimension | dimension | client_state | client_dimension.client_state | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_type_label | client_dimension | dimension | client_type | client_dimension.client_type | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | coordinates_label | client_dimension | dimension | coordinates | client_dimension.coordinates | Location type translated to geographic field placeholder | REVIEW | Loader gap: lat/long not separately captured |
+| Dimension | is_test_label | client_dimension | dimension | is_test | client_dimension.is_test | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_name_label | client_dimension | dimension | name | client_dimension.name | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | salesforce_id_label | client_dimension | dimension | salesforce_id | client_dimension.salesforce_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | capture_group_id_label | data_state_fact | dimension | capture_group_id | data_state_fact.capture_group_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_id_label | data_state_fact | dimension | client_id | data_state_fact.client_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | create_hour_label | data_state_fact | dimension_group | create_hour | data_state_fact.create_hour | Time dimension_group translated to Tableau date/datetime | AUTO | Timeframe expansions used downstream on tiles |
+| Dimension | parking_create_date_utc_label | data_state_fact | dimension_group | create_time_parking | data_state_fact.create_time_parking | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | data_state_label | data_state_fact | dimension | data_state | data_state_fact.data_state | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | transaction_id_label | data_state_fact | dimension | dbt_transaction_id | data_state_fact.dbt_transaction_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | fees_applied_label | data_state_fact | dimension | fees_applied | data_state_fact.fees_applied | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | fees_applied_parking_label | data_state_fact | dimension | fees_applied_parking | data_state_fact.fees_applied_parking | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | fees_applied_stopped_session_label | data_state_fact | dimension | fees_applied_stopped_session | data_state_fact.fees_applied_stopped_session | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | payment_gateway_reference_label | data_state_fact | dimension | gateway_reference | data_state_fact.gateway_reference | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | payment_date_utc_label | data_state_fact | dimension_group | gateway_transaction_time_utc | data_state_fact.gateway_transaction_time_utc | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | insert_timestamp_label | data_state_fact | dimension_group | insert_timestamp | data_state_fact.insert_timestamp | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | insert_timestamp_jms_event_label | data_state_fact | dimension_group | insert_timestamp_jms_event | data_state_fact.insert_timestamp_jms_event | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | insert_timestamp_parking_event_label | data_state_fact | dimension_group | insert_timestamp_parking_event | data_state_fact.insert_timestamp_parking_event | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | insert_timestamp_parking_stopped_event_label | data_state_fact | dimension_group | insert_timestamp_parking_stopped_event | data_state_fact.insert_timestamp_parking_stopped_event | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | insert_timestamp_transaction_fact_label | data_state_fact | dimension_group | insert_timestamp_transaction_fact | data_state_fact.insert_timestamp_transaction_fact | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | subledger_job_id_label | data_state_fact | dimension | job_id | data_state_fact.job_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | last_update_timestamp_label | data_state_fact | dimension_group | last_update_timestamp | data_state_fact.last_update_timestamp | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | last_updated_transaction_fact_label | data_state_fact | dimension_group | latest_updated_transaction_fact | data_state_fact.latest_updated_transaction_fact | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | line_item_id_label | data_state_fact | dimension | line_item_id | data_state_fact.line_item_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | location_id_label | data_state_fact | dimension | location_id | data_state_fact.location_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | order_id_label | data_state_fact | dimension | order_id | data_state_fact.order_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | parking_segment_id_label | data_state_fact | dimension | parking_segment_id | data_state_fact.parking_segment_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | payment_status_label | data_state_fact | dimension | payment_status | data_state_fact.payment_status | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | parking_product_type_label | data_state_fact | dimension | product_type | data_state_fact.product_type | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | staging_check_time_label | data_state_fact | dimension_group | staging_cutoff_timestamp_time | data_state_fact.staging_cutoff_timestamp_time | Time dimension_group translated to Tableau date/datetime | AUTO | NULL |
+| Dimension | allow_stop_label | location_dimension | dimension | allow_stop | location_dimension.allow_stop | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | transaction_fee_charge_on_top_label | location_dimension | dimension | charge_on_top | location_dimension.charge_on_top | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_city_label | location_dimension | dimension | city | location_dimension.city | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_id_label | location_dimension | dimension | client_id | location_dimension.client_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | client_location_id_label | location_dimension | dimension | client_lot_id | location_dimension.client_lot_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | close_date_label | location_dimension | dimension_group | close_date | location_dimension.close_date | Time dimension_group translated to Tableau date/datetime | AUTO | Timeframes `date, month, quarter, year` |
+| Dimension | coin_meters_label | location_dimension | dimension | coin_meters | location_dimension.coin_meters | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | location_coordinates_label | location_dimension | dimension | coordinates | location_dimension.coordinates | Location type translated to geographic field placeholder | REVIEW | Loader gap: lat/long not separately captured |
+| Dimension | country_code_label | location_dimension | dimension | country | location_dimension.country | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | credit_card_meters_label | location_dimension | dimension | credit_card_meters | location_dimension.credit_card_meters | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | currency_label | location_dimension | dimension | currency_name | location_dimension.currency_name | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | enforcement_grace_minutes_label | location_dimension | dimension | enforcement_grace_minutes | location_dimension.enforcement_grace_minutes | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | fps_amount_label | location_dimension | dimension | fps_amount_dimension | location_dimension.fps_amount_dimension | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | has_disable_reminders_label | location_dimension | dimension | has_disable_reminders | location_dimension.has_disable_reminders | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | has_receipt_at_start_label | location_dimension | dimension | has_receipt_at_start | location_dimension.has_receipt_at_start | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | is_extension_not_allowed_label | location_dimension | dimension | is_extension_not_allowed | location_dimension.is_extension_not_allowed | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | is_off_street_label | location_dimension | dimension | is_off_street | location_dimension.is_off_street | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | is_plate_based_label | location_dimension | dimension | is_plate_based | location_dimension.is_plate_based | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | is_premier_bays_label | location_dimension | dimension | is_premier_bays | location_dimension.is_premier_bays | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | is_stall_based_label | location_dimension | dimension | is_stall_based | location_dimension.is_stall_based | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | location_id_label | location_dimension | dimension | lot_id | location_dimension.lot_id | Direct field mapping with type translation | AUTO | Primary key |
+| Dimension | location_name_label | location_dimension | dimension | lot_name | location_dimension.lot_name | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | location_status_label | location_dimension | dimension | lot_status | location_dimension.lot_status | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | location_type_label | location_dimension | dimension | lot_type | location_dimension.lot_type | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | open_date_label | location_dimension | dimension_group | open_date | location_dimension.open_date | Time dimension_group translated to Tableau date/datetime | AUTO | Timeframes `date, month, quarter, year` |
+| Dimension | location_receipt_fee_label | location_dimension | dimension | receipt_fee_dimension | location_dimension.receipt_fee_dimension | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | location_region_id_label | location_dimension | dimension | region_id | location_dimension.region_id | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | region_name_label | location_dimension | dimension | region_name | location_dimension.region_name | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | location_reminder_fee_label | location_dimension | dimension | reminder_fee_dimension | location_dimension.reminder_fee_dimension | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | requires_cvv_label | location_dimension | dimension | requires_cvv | location_dimension.requires_cvv | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | street_address_label | location_dimension | dimension | street_address | location_dimension.street_address | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | transaction_fee_tell_user_label | location_dimension | dimension | tell_user | location_dimension.tell_user | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | location_transaction_fee_label | location_dimension | dimension | transaction_fee_dimension | location_dimension.transaction_fee_dimension | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | transaction_fee_threshold_label | location_dimension | dimension | transaction_fee_threshold | location_dimension.transaction_fee_threshold | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | transaction_fee_type_label | location_dimension | dimension | transaction_fee_type | location_dimension.transaction_fee_type | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | wait_time_after_max_stay_label | location_dimension | dimension | wait_time_after_max_stay | location_dimension.wait_time_after_max_stay | Direct field mapping with type translation | AUTO | NULL |
+| Dimension | zone_label | location_dimension | dimension | zone | location_dimension.zone | Direct field mapping with type translation | AUTO | NULL |
+| Measure | client_count_distinct_label | client_dimension | measure | count_distinct | client_dimension.count_distinct | Measure semantics translated to Tableau aggregation | AUTO | Count distinct over referenced field |
+| Measure | consumer_fee_label | data_state_fact | measure | consumer_fee | data_state_fact.consumer_fee | SUM aggregation preserved | AUTO | NULL |
+| Measure |  | data_state_fact | measure | no_of_records | data_state_fact.no_of_records | Native count translated by type semantics | AUTO | No SQL required for count |
+| Measure | parking_amount_transaction_fact_label | data_state_fact | measure | parking_amount_transaction_fact | data_state_fact.parking_amount_transaction_fact | SUM aggregation preserved | AUTO | NULL |
+| Measure | segment_base_cost_parking_label | data_state_fact | measure | segment_base_cost_parking | data_state_fact.segment_base_cost_parking | SUM aggregation preserved | AUTO | NULL |
+| Measure | session_base_cost_parking_label | data_state_fact | measure | session_base_cost_parking | data_state_fact.session_base_cost_parking | SUM aggregation preserved | AUTO | NULL |
+| Measure | session_base_cost_parking_stopped_label | data_state_fact | measure | session_base_cost_parking_stopped_session | data_state_fact.session_base_cost_parking_stopped_session | SUM aggregation preserved | AUTO | NULL |
+| Measure | session_cost_total_parking_label | data_state_fact | measure | session_cost_total_parking | data_state_fact.session_cost_total_parking | SUM aggregation preserved | AUTO | NULL |
+| Measure | session_cost_total_parking_label | data_state_fact | measure | session_cost_total_stopped_session | data_state_fact.session_cost_total_stopped_session | SUM aggregation preserved | AUTO | Duplicate display label with different source field |
+| Measure | total_amount_jms_label | data_state_fact | measure | total_amount_jms | data_state_fact.total_amount_jms | SUM aggregation preserved | AUTO | NULL |
+| Measure | total_amount_transaction_fact_label | data_state_fact | measure | total_amount_transaction_fact | data_state_fact.total_amount_transaction_fact | SUM aggregation preserved | AUTO | NULL |
+| Measure | coin_meters_count_label | location_dimension | measure | coin_meters_count | location_dimension.coin_meters_count | `sum_distinct` requires Tableau LOD/distinct-grain design | REVIEW | Never map to plain SUM |
+| Measure | location_count_unique_label | location_dimension | measure | count_distinct | location_dimension.count_distinct | Count distinct translated to Tableau COUNTD | AUTO | NULL |
+| Measure | credit_card_meters_count_label | location_dimension | measure | credit_card_meters_count | location_dimension.credit_card_meters_count | `sum_distinct` requires Tableau LOD/distinct-grain design | REVIEW | Never map to plain SUM |
+| Measure | fps_amount_label | location_dimension | measure | fps_amount | location_dimension.fps_amount | SUM aggregation preserved | AUTO | NULL |
+| Measure | location_receipt_fee_label | location_dimension | measure | receipt_fee | location_dimension.receipt_fee | SUM aggregation preserved with formatting | AUTO | decimal_2 |
+| Measure | location_reminder_fee_label | location_dimension | measure | reminder_fee | location_dimension.reminder_fee | SUM aggregation preserved with formatting | AUTO | decimal_2 |
+| Measure | stall_count_label | location_dimension | measure | stall_count | location_dimension.stall_count | `sum_distinct` requires Tableau LOD/distinct-grain design | REVIEW | Never map to plain SUM |
+| Measure | location_transaction_fee_label | location_dimension | measure | transaction_fee | location_dimension.transaction_fee | SUM aggregation preserved with formatting | AUTO | decimal_2 |
+| Calculated Field | Data State (Refactored) | Data Flow State - data_science.data_state_fact | dynamic_field | data_state_refactored | data_state_refactored | Dashboard dynamic field translated to Tableau calc, one row deduped across tile usage | REVIEW | Manual by definition; used on seven tiles |
+| Worksheet | Data Flow State | Data Flow State | element | Data Flow State | Data Flow State | Tile fields/pivots/sorts/filters mapped to Tableau table worksheet | REVIEW | Dynamic field and pivot semantics require validation |
+| Worksheet | No of records ingested into Transaction Fact | Data Flow State | element | No of records ingested into Transaction Fact | No of records ingested into Transaction Fact | Tile mapped to bar worksheet with hour on columns and count on rows | REVIEW | Dynamic field used for color |
+| Worksheet | No of records missing in Transaction Fact for >= 3 hours | Data Flow State | element | No of records missing in Transaction Fact for >= 3 hours | No of records missing in Transaction Fact for >= 3 hours | Tile mapped to bar worksheet with hour on columns and count on rows | REVIEW | Dynamic field used for color |
+| Worksheet | No of records pending JMS payment settled events for >= 3 hours | Data Flow State | element | No of records pending JMS payment settled events for >= 3 hours | No of records pending JMS payment settled events for >= 3 hours | Tile mapped to bar worksheet with hour on columns and count on rows | REVIEW | Dynamic field used for color |
+| Worksheet | No of records pending parking events for >= 3 hours | Data Flow State | element | No of records pending parking events for >= 3 hours | No of records pending parking events for >= 3 hours | Tile mapped to bar worksheet with hour on columns and count on rows | REVIEW | Dynamic field used for color |
+| Worksheet | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Data Flow State | element | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Tile mapped to crosstab with client name and two measures | AUTO | NULL |
+| Worksheet | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | Data Flow State | element | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | Tile mapped to crosstab with pivot/color on product_type | AUTO | NULL |
+| Filter | Timeframe | Data Flow State | filter | Timeframe | Timeframe | Dashboard filter mapped using listen bindings | AUTO | Date filter applied to three tiles |
+| Filter | Order ID | Data Flow State | filter | Order ID | Order ID | Dashboard filter mapped using listen bindings | AUTO | Applied to six tiles |
+| Filter | Payment Gateway Reference | Data Flow State | filter | Payment Gateway Reference | Payment Gateway Reference | Dashboard filter mapped using listen bindings | AUTO | Applied to six tiles |
+| Filter | Job ID | Data Flow State | filter | Job ID | Job ID | Dashboard filter mapped using listen bindings | AUTO | Applied to six tiles |
+| Filter | Data Flow State\|data_state_fact.create_hour_date | Data Flow State / Data Flow State | element filter | data_state_fact.create_hour_date | Data Flow State\|data_state_fact.create_hour_date | Inline tile constraint translated to worksheet filter | AUTO | Fixed date constraint |
+| Filter | No of records pending JMS payment settled events for >= 3 hours\|data_state_fact.create_hour_date | Data Flow State / No of records pending JMS payment settled events for >= 3 hours | element filter | data_state_fact.create_hour_date | No of records pending JMS payment settled events for >= 3 hours\|data_state_fact.create_hour_date | Inline tile constraint translated to worksheet filter | AUTO | Fixed 72-hour constraint |
+| Filter | No of records pending JMS payment settled events for >= 3 hours\|data_state_fact.data_state | Data Flow State / No of records pending JMS payment settled events for >= 3 hours | element filter | data_state_fact.data_state | No of records pending JMS payment settled events for >= 3 hours\|data_state_fact.data_state | Inline tile constraint translated to worksheet filter | AUTO | Fixed enum constraint |
+| Filter | No of records pending parking events for >= 3 hours\|data_state_fact.create_hour_date | Data Flow State / No of records pending parking events for >= 3 hours | element filter | data_state_fact.create_hour_date | No of records pending parking events for >= 3 hours\|data_state_fact.create_hour_date | Inline tile constraint translated to worksheet filter | AUTO | Fixed 72-hour constraint |
+| Filter | No of records pending parking events for >= 3 hours\|data_state_fact.data_state | Data Flow State / No of records pending parking events for >= 3 hours | element filter | data_state_fact.data_state | No of records pending parking events for >= 3 hours\|data_state_fact.data_state | Inline tile constraint translated to worksheet filter | AUTO | Fixed enum constraint |
+| Filter | No of records missing in Transaction Fact for >= 3 hours\|data_state_fact.create_hour_date | Data Flow State / No of records missing in Transaction Fact for >= 3 hours | element filter | data_state_fact.create_hour_date | No of records missing in Transaction Fact for >= 3 hours\|data_state_fact.create_hour_date | Inline tile constraint translated to worksheet filter | AUTO | Fixed 72-hour constraint |
+| Filter | No of records missing in Transaction Fact for >= 3 hours\|data_state_fact.data_state | Data Flow State / No of records missing in Transaction Fact for >= 3 hours | element filter | data_state_fact.data_state | No of records missing in Transaction Fact for >= 3 hours\|data_state_fact.data_state | Inline tile constraint translated to worksheet filter | AUTO | Fixed enum constraint |
+| Filter | No of records ingested into Transaction Fact\|data_state_fact.create_hour_date | Data Flow State / No of records ingested into Transaction Fact | element filter | data_state_fact.create_hour_date | No of records ingested into Transaction Fact\|data_state_fact.create_hour_date | Inline tile constraint translated to worksheet filter | AUTO | Fixed 72-hour constraint |
+| Filter | No of records ingested into Transaction Fact\|data_state_fact.data_state | Data Flow State / No of records ingested into Transaction Fact | element filter | data_state_fact.data_state | No of records ingested into Transaction Fact\|data_state_fact.data_state | Inline tile constraint translated to worksheet filter | AUTO | Fixed enum constraint |
+| Filter | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency\|data_state_fact.create_hour_date | Data Flow State / No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | element filter | data_state_fact.create_hour_date | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency\|data_state_fact.create_hour_date | Inline tile constraint translated to worksheet filter | AUTO | Relative date text `this month` |
+| Filter | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency\|data_state_fact.data_state | Data Flow State / No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | element filter | data_state_fact.data_state | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency\|data_state_fact.data_state | Inline tile constraint translated to worksheet filter | AUTO | Fixed enum constraint |
+| Filter | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency\|data_state_fact.create_hour_date | Data Flow State / No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | element filter | data_state_fact.create_hour_date | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency\|data_state_fact.create_hour_date | Inline tile constraint translated to worksheet filter | AUTO | Relative date text `7 day ago for 7 day` |
+| Filter | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency\|data_state_fact.data_state | Data Flow State / No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | element filter | data_state_fact.data_state | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency\|data_state_fact.data_state | Inline tile constraint translated to worksheet filter | AUTO | Fixed enum constraint |
+| Dashboard Layout | No of records ingested into Transaction Fact | Data Flow State | element | No of records ingested into Transaction Fact | No of records ingested into Transaction Fact | Newspaper grid row/col/size mapped to Tableau tiled placement | AUTO | Row 0 col 0 width 24 height 17 |
+| Dashboard Layout | Data Flow State | Data Flow State | element | Data Flow State | Data Flow State | Newspaper grid row/col/size mapped to Tableau tiled placement | AUTO | Row 17 col 0 width 24 height 12 |
+| Dashboard Layout | No of records pending JMS payment settled events for >= 3 hours | Data Flow State | element | No of records pending JMS payment settled events for >= 3 hours | No of records pending JMS payment settled events for >= 3 hours | Newspaper grid row/col/size mapped to Tableau tiled placement | AUTO | Row 29 col 0 width 24 height 13 |
+| Dashboard Layout | No of records pending parking events for >= 3 hours | Data Flow State | element | No of records pending parking events for >= 3 hours | No of records pending parking events for >= 3 hours | Newspaper grid row/col/size mapped to Tableau tiled placement | AUTO | Row 42 col 0 width 24 height 14 |
+| Dashboard Layout | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | Data Flow State | element | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | No of transactions pending parking events (>= 3 hours) in the last 7 complete days Monetary value in the client's country currency | Newspaper grid row/col/size mapped to Tableau tiled placement | AUTO | Row 56 col 0 width 24 height 9 |
+| Dashboard Layout | No of records missing in Transaction Fact for >= 3 hours | Data Flow State | element | No of records missing in Transaction Fact for >= 3 hours | No of records missing in Transaction Fact for >= 3 hours | Newspaper grid row/col/size mapped to Tableau tiled placement | AUTO | Row 65 col 0 width 24 height 15 |
+| Dashboard Layout | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Data Flow State | element | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | No of transactions pending JMS events in the last 7 complete days, by client Parking amount in the client's country currency | Newspaper grid row/col/size mapped to Tableau tiled placement | AUTO | Row 80 col 0 width 24 height 11 |
+
+---
+
+## TABLE 11 — MIGRATION READINESS / MANUAL REVIEW
+
+| Tableau Object Class | Total | Auto-Creatable | Manual Review | % Ready | Top Blockers | Affected Target Objects | Required Action |
+|---|---:|---:|---:|---:|---|---|---|
+| Data Sources | 1 | 0 | 1 | 0.00% | Derived SQL base explore; unsafe join structure downstream | Data Flow State - data_science.data_state_fact | Validate custom SQL data source and downstream join design before automation |
+| Tables | 3 | 3 | 0 | 100.00% | None | None | Auto-create as modeled |
+| Relationships / Joins | 2 | 0 | 2 | 0.00% | Omitted join type; compound join; third-table reference in join expression | data_state_fact ↔ client_dimension; data_state_fact ↔ location_dimension | Explicitly design Tableau relationships/physical joins; do not infer defaults |
+| Dimensions | 78 | 76 | 2 | 97.44% | Geographic lat/long loader gap for location fields | coordinates_label; location_coordinates_label | Verify source `.lkml` for latitude/longitude handling and map manually |
+| Measures | 19 | 16 | 3 | 84.21% | `sum_distinct` / LOD-required semantics | coin_meters_count_label; credit_card_meters_count_label; stall_count_label | Recreate with FIXED LOD or equivalent distinct-grain logic |
+| Calculated Fields | 1 | 0 | 1 | 0.00% | Dashboard dynamic field; no view-backed model object | Data State (Refactored) | Manually recreate Tableau calculated field from the source dynamic-field expression |
+| Worksheets / Visuals | 7 | 2 | 5 | 28.57% | Dynamic field on tile drives color/pivot semantics | Data Flow State; No of records ingested into Transaction Fact; No of records missing in Transaction Fact for >= 3 hours; No of records pending JMS payment settled events for >= 3 hours; No of records pending parking events for >= 3 hours | Rebuild visual calculations and verify shelves/colors/pivot behavior manually |
+| Filters | 17 | 17 | 0 | 100.00% | None | None | Auto-create filters and bindings |
+| Dashboard Layout | 7 | 7 | 0 | 100.00% | None | None | Auto-create tiled dashboard layout from newspaper grid |
