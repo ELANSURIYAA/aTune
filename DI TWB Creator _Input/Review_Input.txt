@@ -1,0 +1,22 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+- Verify that all available agent instructions from Instruction.txt are addressed in the output.
+- Confirm that the absence of input files (Input1.txt and beyond) is explicitly handled in the output.
+- Ensure that any mandatory sections referenced in the instructions are included, if present.
+- Check that all required fields, analyses, or business rules from the instructions are covered, if specified.
+- Validate that the output documents the lack of input content where applicable.
+
+Accuracy Checks
+- Confirm that the output aligns strictly with the available instructions from Instruction.txt.
+- Ensure that no unsupported assumptions or hallucinated content are introduced due to missing input files.
+- Validate that the output does not misinterpret the agent instructions or invent requirements.
+- Check that any gap handling or missing item documentation is accurate and instruction-aligned.
+- Ensure terminology and formatting are consistent with the instructions, if specified.
+
+Efficiency Checks
+- Verify that the output avoids redundant explanations or duplicate sections given the limited instructions and missing input files.
+- Confirm that the output remains concise and does not generate unnecessary content.
+- Ensure that the output structure is optimized for readability and review efficiency.
+- Check that no duplicate validations or repeated gap entries are present.
+- Validate that the output summarizes the absence of input files efficiently, without excessive verbosity.
