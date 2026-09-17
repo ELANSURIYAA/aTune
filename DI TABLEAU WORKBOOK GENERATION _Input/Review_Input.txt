@@ -1,0 +1,19 @@
+Reviewer Validation Checklist
+
+Completeness Checks
+
+- Verify that all available agent instructions and metadata (if any) are referenced in the output.
+- Confirm that the output documents the absence of input files and missing metadata.
+- Ensure that the output includes a statement regarding the inability to process due to missing agent description and input content.
+
+Accuracy Checks
+
+- Check that the output does not introduce unsupported assumptions or hallucinated content.
+- Validate that the output accurately reflects the lack of available agent instructions and input files.
+- Confirm that no fabricated analysis or results are presented in the absence of source content.
+
+Efficiency Checks
+
+- Ensure that the output avoids unnecessary sections or redundant explanations given the lack of input and metadata.
+- Confirm that the output remains concise and does not include superfluous content.
+- Verify that the output structure is optimized for clarity and review efficiency in the context of missing data.
