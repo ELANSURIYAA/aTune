@@ -2,18 +2,70 @@ Reviewer Validation Checklist
 
 Completeness Checks
 
-- Verify that all available agent instructions and metadata (if any) are referenced in the output.
-- Confirm that the output documents the absence of input files and missing metadata.
-- Ensure that the output includes a statement regarding the inability to process due to missing agent description and input content.
+Verify that the output has one datasource, "Data Flow State - data_science.data_state_fact", containing all 3 tables from TABLE 2 (data_state_fact, client_dimension, location_dimension) and both relationships from TABLE 3.
+Confirm that all 97 mapped fields are present: 78 dimensions from TABLE 4 (client_dimension 15, data_state_fact 26, location_dimension 37) and 19 measures from TABLE 5, each in its correct table.
+Ensure that the calculated field "Data State (Refactored)" from TABLE 6 exists and handles all 7 DATA_STATE codes plus the "Unidentified state" fallback.
+Verify that all 7 worksheets from TABLE 7 exist:
+Data Flow State Table
+Records Ingested
+Missing in Transaction Fact 3h+
+Pending JMS 3h+
+Pending Parking 3h+
+Pending JMS by Client
+Pending Parking by Client
+Confirm that all 17 filters from TABLE 8 exist:
+4 dashboard filter cards: Timeframe, Order ID, Payment Gateway Reference and Job ID.
+7 CREATE_HOUR date filters, one per worksheet.
+6 DATA_STATE restrictions, one on each of the 4 hourly sheets and each of the 2 by-client sheets.
+Ensure that the "Data Flow State" dashboard contains all 7 tiles from TABLE 9 and all 4 filter cards.
+Verify that every REVIEW item in the mapping has a manual-review note in the output:
+the custom-SQL datasource
+both relationships
+both geographic fields
+the 3 sum_distinct measures
+Data State (Refactored)
+the 5 rebuilt worksheets
 
 Accuracy Checks
 
-- Check that the output does not introduce unsupported assumptions or hallucinated content.
-- Validate that the output accurately reflects the lack of available agent instructions and input files.
-- Confirm that no fabricated analysis or results are presented in the absence of source content.
+Check that the connection and table sources match TABLES 0–2:
+a Snowflake connection in Extract mode;
+data_state_fact and location_dimension as Custom SQL identical to the mapping;
+client_dimension as the table REPORTING.VW_CLIENT_DIMENSION.
+Validate that the relationships match TABLE 3:
+data_state_fact.CLIENT_ID = client_dimension.CLIENT_ID;
+data_state_fact.LOCATION_ID = location_dimension.LOT_ID, plus the client_id clause;
+both many-to-one, with no join type silently assumed.
+Confirm that every field keeps its TABLE 4 datatype and dimension role, and that only client_dimension.COUNTRY is hidden.
+Check that the measures follow TABLE 5 exactly:
+SUM wherever the mapping says SUM;
+COUNTD on the client name and on LOT_ID;
+COUNT for No of Records;
+a FIXED LOD on LOT_ID for the 3 sum_distinct measures, never a plain SUM;
+2-decimal formatting on the receipt, reminder and transaction fee measures.
+Validate that "Data State (Refactored)" maps each code to its exact TABLE 6 label.
+Confirm that each worksheet's marks, columns, rows, color, size, label and sort match TABLE 7, with dates taken from CREATE_HOUR rather than pre-computed string labels.
+Check that the filter values match TABLE 8:
+Relative-date windows: 31 days, 72 hours, 7 complete days and this month.
+DATA_STATE: single-code restrictions, and both by-client sheets must use real filters for them.
+Order ID, Payment Gateway Reference and Job ID: multi-select, defaulting to all values, and applied to all 7 worksheets.
+Validate that the dashboard matches TABLE 9:
+automatic sizing;
+the source tile order and height proportions (17:12:13:14:9:15:11);
+full-width tiles with the correct Fit Width / Entire View setting;
+no clipped or overlapping zones.
+Ensure that no unsupported content is introduced (no columns, calculations or worksheets that aren't in the mapping) and that every field reference resolves.
+Confirm that conflicts in the source are resolved and documented rather than silently changed:
+the Timeframe filter listens on tiles that have their own date windows;
+one join clause references a third table;
+the "Pending Parking Event (>= 3 hours" label is missing its closing parenthesis.
 
 Efficiency Checks
 
-- Ensure that the output avoids unnecessary sections or redundant explanations given the lack of input and metadata.
-- Confirm that the output remains concise and does not include superfluous content.
-- Verify that the output structure is optimized for clarity and review efficiency in the context of missing data.
+Ensure that the output uses one datasource and one connection, with logical relationships instead of a flattened table or fan-out joins.
+Confirm that Custom SQL is used only for the two mapped tables, and FIXED LOD only for the 3 sum_distinct measures.
+Verify that there are no unused or duplicate objects: no extra columns, calculations, formulas, worksheets, zones or filters.
+Ensure that each hourly sheet defines its DATA_STATE logic in one place only, either a filter or a measure, not both.
+Ensure that each dashboard filter is a single filter shared across sheets.
+Confirm that date filters are relative with no hard-coded dates, and that an extract is enabled for the hourly refresh.
+Verify that manual-review notes are concise, cover only REVIEW items, and are numbered without gaps.
