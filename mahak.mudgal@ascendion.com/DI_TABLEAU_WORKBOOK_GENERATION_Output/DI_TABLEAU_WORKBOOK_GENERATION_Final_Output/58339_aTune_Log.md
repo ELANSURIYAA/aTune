@@ -5,3 +5,7 @@ The aTune process requires two input files to begin:
 2. Agent Requirement File - containing Agent Name, Agent ID, Threshold Value, GitHub details, and folder structure
 
 These files must be provided in the repository before the tuning process can start. Please ensure both files are uploaded to the repository and provide their correct file paths.
+
+[ERROR] Attempt 2 of 3 — Retrying file read operation with alternative file names and paths.
+
+Attempting to locate input files in repository...
