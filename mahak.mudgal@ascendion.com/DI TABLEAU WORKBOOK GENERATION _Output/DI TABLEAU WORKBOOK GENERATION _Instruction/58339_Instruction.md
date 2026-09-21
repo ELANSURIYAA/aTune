@@ -1,4 +1,4 @@
-# Agent Instructions
+# Agent Instruction File
 
 **Agent Name:** DI TABLEAU WORKBOOK GENERATION 
 
@@ -41,7 +41,7 @@ production, not speculative hardening:
 - **v6** added **Rules 17–18** (duplicate `simple-id/@uuid`; invented
   `<semantic-values>` → Desktop Error `D2E8DA72`).
 - **v7** added **Rules 19–20** (join-key type mismatch across relationships;
-  bare row-level IF measures without explicit `SUM(...)`)
+  bare row-level IF measures without explicit `SUM(...)`).
 - **v8** (this version) adds **Rules 21–25** and the Looker→Tableau semantic
   mapping section, root-caused from the completed **Data Flow State**
   migration (Excel-demo and live-SQL tracks, hourly KPI pollution,
