@@ -1,9 +1,18 @@
-[ERROR] Attempt 1 of 3 — Failed to read required input files from GitHub. The following files are missing or inaccessible:
+[ERROR] Attempt 1 of 3 — Step 1 (Extract Agent Metadata) prerequisite check failed. Required input files missing from GitHub:
 - DI_TABLEAU_WORKBOOK_GENERATION_Input/Data_Flow_Mapper 1.txt (404 Not Found)
 - DI_TABLEAU_WORKBOOK_GENERATION_Input/Connection.txt (404 Not Found)
 
-These input files are required to execute Step 2 (Executer agent). Without the agent input files specified in the Agent Requirement File, the aTune process cannot proceed.
+These input files are mandatory for the agent execution pipeline (Steps 2–7). Without them, the Executer agent cannot run, and the tuning process cannot proceed.
 
-Reason: The input files listed in the Agent Requirement File under "Agent Input Folder" do not exist at the expected paths in the GitHub repository. The file names may be incorrect, or the files may not have been uploaded to the repository yet.
+Root cause: The Agent Requirement File specified these file names under "Agent Input Folder", but they do not exist at the expected paths in the GitHub repository (ELANSURIYAA/aTune, branch: main).
 
-Stopping aTune process. Cannot proceed without required input files.
+Required action before aTune can start:
+1. Upload the missing input files to the correct GitHub paths:
+   - DI_TABLEAU_WORKBOOK_GENERATION_Input/Data_Flow_Mapper 1.txt
+   - DI_TABLEAU_WORKBOOK_GENERATION_Input/Connection.txt
+2. Verify the files contain the actual mapper document and connection configuration required by the DI TABLEAU WORKBOOK GENERATION agent (Agent ID 58339).
+3. Re-run aTune once the files are present.
+
+Status: STOPPED — Missing Required Input Files
+
+The aTune process cannot continue without the agent's input files. No iterations were run.
