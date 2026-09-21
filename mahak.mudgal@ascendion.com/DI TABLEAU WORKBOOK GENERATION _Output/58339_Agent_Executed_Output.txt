@@ -1,0 +1,1142 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<workbook source-build='2024.1.0 (20241.24.0213.1150)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault />
+    <_.fcp.MarkAnimation.true...MarkAnimation />
+    <_.fcp.ObjectModelEncapsulateLegacy.true...ObjectModelEncapsulateLegacy />
+    <_.fcp.ObjectModelTableType.true...ObjectModelTableType />
+    <_.fcp.SchemaViewerObjectModel.true...SchemaViewerObjectModel />
+    <_.fcp.SetMembershipControl.true...SetMembershipControl />
+    <_.fcp.VConnDownstreamExtractsWithWarnings.true...VConnDownstreamExtractsWithWarnings />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='Data Flow State - data_science.data_state_fact' inline='true' name='federated.1abc2def' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='analytics_reporting' name='snowflake.1abc2def'>
+            <connection authentication='username-password' class='snowflake' dbname='REPORTING_DBT' odbc-connect-string-extras='' one-time-sql='' schema='REPORTING' server='analytics_reporting' service='' username='tableau_user' warehouse='COMPUTE_WH' />
+          </named-connection>
+        </named-connections>
+        <relation connection='snowflake.1abc2def' name='Custom SQL Query' type='text'>
+          select
+      *,
+      date_trunc(
+        hour,
+        coalesce(INSERT_TIMESTAMP_JMS_EVENT, INSERT_TIMESTAMP_PARKING_EVENT,
+                INSERT_TIMESTAMP_PARKING_STOPPED_EVENT, INSERT_TIMESTAMP_TRANSACTION_FACT)
+      ) as CREATE_HOUR,
+      case
+        when INSERT_TIMESTAMP_TRANSACTION_FACT is not null then 'PRESENT_IN_TRANSACTION_FACT'
+        -- JMS and parking event are present, but reporting data has not present in Transaction Fact for 3 or more hours
+        when INSERT_TIMESTAMP_JMS_EVENT is not null
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is not null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null
+            and timediff(hour, CREATE_HOUR, current_timestamp()) &gt;= 3 then 'MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS'
+        -- JMS and parking event are present, but reporting data has not present in Transaction Fact for under 3 hours
+        when INSERT_TIMESTAMP_JMS_EVENT is not null
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is not null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null
+            and timediff(hour, CREATE_HOUR, current_timestamp()) &lt; 3 then 'MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS'
+        -- JMS event is present, but associated parking event has not present for 3 or more hours
+        when timediff(hour, INSERT_TIMESTAMP_JMS_EVENT, current_timestamp()) &gt;= 3
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS'
+        -- JMS event is present, but associated parking event has not present for under 3 hours
+        when timediff(hour, INSERT_TIMESTAMP_JMS_EVENT, current_timestamp()) &lt; 3
+            and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS'
+        -- Parking event is present, but associated JMS event has not present for 3 or more hours
+        when timediff(hour, coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT), current_timestamp()) &gt;= 3
+            and INSERT_TIMESTAMP_JMS_EVENT is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS'
+        -- Parking event is present, but associated JMS event has not present for under 3 hours
+        when timediff(hour, coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT), current_timestamp()) &lt; 3
+            and INSERT_TIMESTAMP_JMS_EVENT is null
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS'
+      end as DATA_STATE
+    from REPORTING_DBT.REPORTING_DATA_STATE_FACT
+        </relation>
+        <cols>
+          <map key='[CAPTURE_GROUP_ID]' value='[Custom SQL Query].[CAPTURE_GROUP_ID]' />
+          <map key='[CLIENT_ID]' value='[Custom SQL Query].[CLIENT_ID]' />
+          <map key='[CONSUMER_FEE]' value='[Custom SQL Query].[CONSUMER_FEE]' />
+          <map key='[CREATE_HOUR]' value='[Custom SQL Query].[CREATE_HOUR]' />
+          <map key='[CREATE_TIME_PARKING]' value='[Custom SQL Query].[CREATE_TIME_PARKING]' />
+          <map key='[DATA_STATE]' value='[Custom SQL Query].[DATA_STATE]' />
+          <map key='[DBT_TRANSACTION_ID]' value='[Custom SQL Query].[DBT_TRANSACTION_ID]' />
+          <map key='[FEES_APPLIED]' value='[Custom SQL Query].[FEES_APPLIED]' />
+          <map key='[FEES_APPLIED_PARKING]' value='[Custom SQL Query].[FEES_APPLIED_PARKING]' />
+          <map key='[FEES_APPLIED_STOPPED_SESSION]' value='[Custom SQL Query].[FEES_APPLIED_STOPPED_SESSION]' />
+          <map key='[GATEWAY_REFERENCE]' value='[Custom SQL Query].[GATEWAY_REFERENCE]' />
+          <map key='[GATEWAY_TRANSACTION_TIME_UTC]' value='[Custom SQL Query].[GATEWAY_TRANSACTION_TIME_UTC]' />
+          <map key='[INSERT_TIMESTAMP]' value='[Custom SQL Query].[INSERT_TIMESTAMP]' />
+          <map key='[INSERT_TIMESTAMP_JMS_EVENT]' value='[Custom SQL Query].[INSERT_TIMESTAMP_JMS_EVENT]' />
+          <map key='[INSERT_TIMESTAMP_PARKING_EVENT]' value='[Custom SQL Query].[INSERT_TIMESTAMP_PARKING_EVENT]' />
+          <map key='[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]' value='[Custom SQL Query].[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]' />
+          <map key='[INSERT_TIMESTAMP_TRANSACTION_FACT]' value='[Custom SQL Query].[INSERT_TIMESTAMP_TRANSACTION_FACT]' />
+          <map key='[JOB_ID]' value='[Custom SQL Query].[JOB_ID]' />
+          <map key='[LAST_UPDATE_TIMESTAMP]' value='[Custom SQL Query].[LAST_UPDATE_TIMESTAMP]' />
+          <map key='[LATEST_UPDATED_TRANSACTION_FACT]' value='[Custom SQL Query].[LATEST_UPDATED_TRANSACTION_FACT]' />
+          <map key='[LINE_ITEM_ID]' value='[Custom SQL Query].[LINE_ITEM_ID]' />
+          <map key='[LOCATION_ID]' value='[Custom SQL Query].[LOCATION_ID]' />
+          <map key='[ORDER_ID]' value='[Custom SQL Query].[ORDER_ID]' />
+          <map key='[PARKING_AMOUNT_TRANSACTION_FACT]' value='[Custom SQL Query].[PARKING_AMOUNT_TRANSACTION_FACT]' />
+          <map key='[PARKING_SEGMENT_ID]' value='[Custom SQL Query].[PARKING_SEGMENT_ID]' />
+          <map key='[PAYMENT_STATUS]' value='[Custom SQL Query].[PAYMENT_STATUS]' />
+          <map key='[PRODUCT_TYPE]' value='[Custom SQL Query].[PRODUCT_TYPE]' />
+          <map key='[SEGMENT_BASE_COST_PARKING]' value='[Custom SQL Query].[SEGMENT_BASE_COST_PARKING]' />
+          <map key='[SESSION_BASE_COST_PARKING]' value='[Custom SQL Query].[SESSION_BASE_COST_PARKING]' />
+          <map key='[SESSION_BASE_COST_PARKING_STOPPED_SESSION]' value='[Custom SQL Query].[SESSION_BASE_COST_PARKING_STOPPED_SESSION]' />
+          <map key='[SESSION_COST_TOTAL_PARKING]' value='[Custom SQL Query].[SESSION_COST_TOTAL_PARKING]' />
+          <map key='[SESSION_COST_TOTAL_STOPPED_SESSION]' value='[Custom SQL Query].[SESSION_COST_TOTAL_STOPPED_SESSION]' />
+          <map key='[STAGING_CUTOFF_TIMESTAMP]' value='[Custom SQL Query].[STAGING_CUTOFF_TIMESTAMP]' />
+          <map key='[TOTAL_AMOUNT_JMS]' value='[Custom SQL Query].[TOTAL_AMOUNT_JMS]' />
+          <map key='[TOTAL_AMOUNT_TRANSACTION_FACT]' value='[Custom SQL Query].[TOTAL_AMOUNT_TRANSACTION_FACT]' />
+        </cols>
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>CAPTURE_GROUP_ID</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[CAPTURE_GROUP_ID]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>CAPTURE_GROUP_ID</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CLIENT_ID</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[CLIENT_ID]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>CLIENT_ID</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CONSUMER_FEE</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[CONSUMER_FEE]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>CONSUMER_FEE</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CREATE_HOUR</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[CREATE_HOUR]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>CREATE_HOUR</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>CREATE_TIME_PARKING</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[CREATE_TIME_PARKING]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>CREATE_TIME_PARKING</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>DATA_STATE</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[DATA_STATE]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>DATA_STATE</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>DBT_TRANSACTION_ID</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[DBT_TRANSACTION_ID]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>DBT_TRANSACTION_ID</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>FEES_APPLIED</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[FEES_APPLIED]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>FEES_APPLIED</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>FEES_APPLIED_PARKING</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[FEES_APPLIED_PARKING]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>FEES_APPLIED_PARKING</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>FEES_APPLIED_STOPPED_SESSION</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[FEES_APPLIED_STOPPED_SESSION]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>FEES_APPLIED_STOPPED_SESSION</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>GATEWAY_REFERENCE</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[GATEWAY_REFERENCE]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>GATEWAY_REFERENCE</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>GATEWAY_TRANSACTION_TIME_UTC</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[GATEWAY_TRANSACTION_TIME_UTC]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>GATEWAY_TRANSACTION_TIME_UTC</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>INSERT_TIMESTAMP</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[INSERT_TIMESTAMP]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>INSERT_TIMESTAMP</remote-alias>
+            <ordinal>13</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>INSERT_TIMESTAMP_JMS_EVENT</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[INSERT_TIMESTAMP_JMS_EVENT]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>INSERT_TIMESTAMP_JMS_EVENT</remote-alias>
+            <ordinal>14</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>INSERT_TIMESTAMP_PARKING_EVENT</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[INSERT_TIMESTAMP_PARKING_EVENT]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>INSERT_TIMESTAMP_PARKING_EVENT</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>INSERT_TIMESTAMP_PARKING_STOPPED_EVENT</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>INSERT_TIMESTAMP_PARKING_STOPPED_EVENT</remote-alias>
+            <ordinal>16</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>INSERT_TIMESTAMP_TRANSACTION_FACT</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[INSERT_TIMESTAMP_TRANSACTION_FACT]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>INSERT_TIMESTAMP_TRANSACTION_FACT</remote-alias>
+            <ordinal>17</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>JOB_ID</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[JOB_ID]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>JOB_ID</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>LAST_UPDATE_TIMESTAMP</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[LAST_UPDATE_TIMESTAMP]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>LAST_UPDATE_TIMESTAMP</remote-alias>
+            <ordinal>19</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>LATEST_UPDATED_TRANSACTION_FACT</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[LATEST_UPDATED_TRANSACTION_FACT]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>LATEST_UPDATED_TRANSACTION_FACT</remote-alias>
+            <ordinal>20</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>LINE_ITEM_ID</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[LINE_ITEM_ID]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>LINE_ITEM_ID</remote-alias>
+            <ordinal>21</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>LOCATION_ID</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[LOCATION_ID]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>LOCATION_ID</remote-alias>
+            <ordinal>22</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>ORDER_ID</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[ORDER_ID]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>ORDER_ID</remote-alias>
+            <ordinal>23</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>PARKING_AMOUNT_TRANSACTION_FACT</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[PARKING_AMOUNT_TRANSACTION_FACT]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>PARKING_AMOUNT_TRANSACTION_FACT</remote-alias>
+            <ordinal>24</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>PARKING_SEGMENT_ID</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[PARKING_SEGMENT_ID]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>PARKING_SEGMENT_ID</remote-alias>
+            <ordinal>25</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>PAYMENT_STATUS</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[PAYMENT_STATUS]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>PAYMENT_STATUS</remote-alias>
+            <ordinal>26</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>PRODUCT_TYPE</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[PRODUCT_TYPE]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>PRODUCT_TYPE</remote-alias>
+            <ordinal>27</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SEGMENT_BASE_COST_PARKING</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[SEGMENT_BASE_COST_PARKING]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>SEGMENT_BASE_COST_PARKING</remote-alias>
+            <ordinal>28</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SESSION_BASE_COST_PARKING</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[SESSION_BASE_COST_PARKING]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>SESSION_BASE_COST_PARKING</remote-alias>
+            <ordinal>29</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SESSION_BASE_COST_PARKING_STOPPED_SESSION</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[SESSION_BASE_COST_PARKING_STOPPED_SESSION]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>SESSION_BASE_COST_PARKING_STOPPED_SESSION</remote-alias>
+            <ordinal>30</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SESSION_COST_TOTAL_PARKING</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[SESSION_COST_TOTAL_PARKING]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>SESSION_COST_TOTAL_PARKING</remote-alias>
+            <ordinal>31</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SESSION_COST_TOTAL_STOPPED_SESSION</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[SESSION_COST_TOTAL_STOPPED_SESSION]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>SESSION_COST_TOTAL_STOPPED_SESSION</remote-alias>
+            <ordinal>32</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>STAGING_CUTOFF_TIMESTAMP</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[STAGING_CUTOFF_TIMESTAMP]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>STAGING_CUTOFF_TIMESTAMP</remote-alias>
+            <ordinal>33</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>TOTAL_AMOUNT_JMS</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[TOTAL_AMOUNT_JMS]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>TOTAL_AMOUNT_JMS</remote-alias>
+            <ordinal>34</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>TOTAL_AMOUNT_TRANSACTION_FACT</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[TOTAL_AMOUNT_TRANSACTION_FACT]</local-name>
+            <parent-name>[Custom SQL Query]</parent-name>
+            <remote-alias>TOTAL_AMOUNT_TRANSACTION_FACT</remote-alias>
+            <ordinal>35</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Capture Group ID' datatype='string' name='[CAPTURE_GROUP_ID]' role='dimension' type='nominal' />
+      <column caption='Client ID' datatype='real' name='[CLIENT_ID]' role='dimension' type='quantitative' />
+      <column caption='Consumer Fee' datatype='real' name='[CONSUMER_FEE]' role='measure' type='quantitative' />
+      <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
+      <column caption='Parking Create Date UTC' datatype='datetime' name='[CREATE_TIME_PARKING]' role='dimension' type='ordinal' />
+      <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
+      <column caption='Transaction ID' datatype='string' name='[DBT_TRANSACTION_ID]' role='dimension' type='nominal' />
+      <column caption='Fees Applied' datatype='string' name='[FEES_APPLIED]' role='dimension' type='nominal' />
+      <column caption='Fees Applied Parking' datatype='string' name='[FEES_APPLIED_PARKING]' role='dimension' type='nominal' />
+      <column caption='Fees Applied Stopped Session' datatype='string' name='[FEES_APPLIED_STOPPED_SESSION]' role='dimension' type='nominal' />
+      <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE]' role='dimension' type='nominal' />
+      <column caption='Payment Date UTC' datatype='datetime' name='[GATEWAY_TRANSACTION_TIME_UTC]' role='dimension' type='ordinal' />
+      <column caption='Insert Timestamp' datatype='datetime' name='[INSERT_TIMESTAMP]' role='dimension' type='ordinal' />
+      <column caption='Insert Timestamp JMS Event' datatype='datetime' name='[INSERT_TIMESTAMP_JMS_EVENT]' role='dimension' type='ordinal' />
+      <column caption='Insert Timestamp Parking Event' datatype='datetime' name='[INSERT_TIMESTAMP_PARKING_EVENT]' role='dimension' type='ordinal' />
+      <column caption='Insert Timestamp Parking Stopped Event' datatype='datetime' name='[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]' role='dimension' type='ordinal' />
+      <column caption='Insert Timestamp Transaction Fact' datatype='datetime' name='[INSERT_TIMESTAMP_TRANSACTION_FACT]' role='dimension' type='ordinal' />
+      <column caption='Subledger Job ID' datatype='string' name='[JOB_ID]' role='dimension' type='nominal' />
+      <column caption='Last Update Timestamp' datatype='datetime' name='[LAST_UPDATE_TIMESTAMP]' role='dimension' type='ordinal' />
+      <column caption='Last Updated Transaction Fact' datatype='datetime' name='[LATEST_UPDATED_TRANSACTION_FACT]' role='dimension' type='ordinal' />
+      <column caption='Line Item ID' datatype='string' name='[LINE_ITEM_ID]' role='dimension' type='nominal' />
+      <column caption='Location ID' datatype='real' name='[LOCATION_ID]' role='dimension' type='quantitative' />
+      <column caption='Order ID' datatype='string' name='[ORDER_ID]' role='dimension' type='nominal' />
+      <column caption='Parking Amount Transaction Fact' datatype='real' name='[PARKING_AMOUNT_TRANSACTION_FACT]' role='measure' type='quantitative' />
+      <column caption='Parking Segment ID' datatype='string' name='[PARKING_SEGMENT_ID]' role='dimension' type='nominal' />
+      <column caption='Payment Status' datatype='string' name='[PAYMENT_STATUS]' role='dimension' type='nominal' />
+      <column caption='Parking Product Type' datatype='string' name='[PRODUCT_TYPE]' role='dimension' type='nominal' />
+      <column caption='Segment Base Cost Parking' datatype='real' name='[SEGMENT_BASE_COST_PARKING]' role='measure' type='quantitative' />
+      <column caption='Session Base Cost Parking' datatype='real' name='[SESSION_BASE_COST_PARKING]' role='measure' type='quantitative' />
+      <column caption='Session Base Cost Parking Stopped' datatype='real' name='[SESSION_BASE_COST_PARKING_STOPPED_SESSION]' role='measure' type='quantitative' />
+      <column caption='Session Cost Total Parking' datatype='real' name='[SESSION_COST_TOTAL_PARKING]' role='measure' type='quantitative' />
+      <column caption='Session Cost Total Stopped Session' datatype='real' name='[SESSION_COST_TOTAL_STOPPED_SESSION]' role='measure' type='quantitative' />
+      <column caption='Staging Check Time' datatype='datetime' name='[STAGING_CUTOFF_TIMESTAMP]' role='dimension' type='ordinal' />
+      <column caption='Total Amount JMS' datatype='real' name='[TOTAL_AMOUNT_JMS]' role='measure' type='quantitative' />
+      <column caption='Total Amount Transaction Fact' datatype='real' name='[TOTAL_AMOUNT_TRANSACTION_FACT]' role='measure' type='quantitative' />
+      <column caption='Data State (Refactored)' datatype='string' name='[Calculation_1]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='CASE [DATA_STATE]&#13;&#10;  WHEN &quot;PRESENT_IN_TRANSACTION_FACT&quot; THEN &quot;Present in Transaction Fact&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot; THEN &quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS&quot; THEN &quot;Missing in Transaction Fact (&lt; 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending Parking Event (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending Parking Event (&lt; 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending JMS Event (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending JMS Event (&lt; 3 hours)&quot;&#13;&#10;  ELSE &quot;Unidentified state&quot;&#13;&#10;END' />
+      </column>
+      <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[Calculation_1]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>&quot;Present in Transaction Fact&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;</bucket>
+            </map>
+            <map to='#e15759'>
+              <bucket>&quot;Pending JMS Event (&gt;= 3 hours)&quot;</bucket>
+            </map>
+            <map to='#76b7b2'>
+              <bucket>&quot;Pending Parking Event (&gt;= 3 hours)&quot;</bucket>
+            </map>
+            <map to='#59a14f'>
+              <bucket>&quot;Missing in Transaction Fact (&lt; 3 hours)&quot;</bucket>
+            </map>
+            <map to='#edc948'>
+              <bucket>&quot;Pending JMS Event (&lt; 3 hours)&quot;</bucket>
+            </map>
+            <map to='#b07aa1'>
+              <bucket>&quot;Pending Parking Event (&lt; 3 hours)&quot;</bucket>
+            </map>
+            <map to='#9c755f'>
+              <bucket>&quot;Unidentified state&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Data Flow State Table'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1abc2def'>
+            <column caption='Data State (Refactored)' datatype='string' name='[Calculation_1]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='CASE [DATA_STATE]&#13;&#10;  WHEN &quot;PRESENT_IN_TRANSACTION_FACT&quot; THEN &quot;Present in Transaction Fact&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot; THEN &quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS&quot; THEN &quot;Missing in Transaction Fact (&lt; 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending Parking Event (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending Parking Event (&lt; 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending JMS Event (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending JMS Event (&lt; 3 hours)&quot;&#13;&#10;  ELSE &quot;Unidentified state&quot;&#13;&#10;END' />
+            </column>
+            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='1' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_1]' derivation='None' name='[none:Calculation_1:nk]' pivot='key' type='nominal' />
+            <column-instance column='[CREATE_HOUR]' derivation='Day' name='[dy:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.1abc2def].[none:Calculation_1:nk]' />
+              <size column='[federated.1abc2def].[sum:Calculation_2:qk]' />
+              <text column='[federated.1abc2def].[sum:Calculation_2:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.1abc2def].[dy:CREATE_HOUR:ok]</rows>
+        <cols>([federated.1abc2def].[none:Calculation_1:nk] * [federated.1abc2def].[sum:Calculation_2:qk])</cols>
+      </table>
+      <simple-id uuid='{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}' />
+    </worksheet>
+    <worksheet name='Records Ingested'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1abc2def'>
+            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='1' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
+            <column-instance column='[CREATE_HOUR]' derivation='Hour' name='[hr:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
+            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;PRESENT_IN_TRANSACTION_FACT&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='relative-time' column='[federated.1abc2def].[hr:CREATE_HOUR:ok]' direction='previous' period='hours' quantity='72' />
+          <slices>
+            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
+            <column>[federated.1abc2def].[hr:CREATE_HOUR:ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+          </pane>
+        </panes>
+        <rows>[federated.1abc2def].[sum:Calculation_2:qk]</rows>
+        <cols>[federated.1abc2def].[hr:CREATE_HOUR:ok]</cols>
+      </table>
+      <simple-id uuid='{B2C3D4E5-F6A7-8901-BCDE-F12345678901}' />
+    </worksheet>
+    <worksheet name='Missing in Transaction Fact 3h+'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1abc2def'>
+            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='1' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
+            <column-instance column='[CREATE_HOUR]' derivation='Hour' name='[hr:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
+            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='relative-time' column='[federated.1abc2def].[hr:CREATE_HOUR:ok]' direction='previous' period='hours' quantity='72' />
+          <slices>
+            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
+            <column>[federated.1abc2def].[hr:CREATE_HOUR:ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+          </pane>
+        </panes>
+        <rows>[federated.1abc2def].[sum:Calculation_2:qk]</rows>
+        <cols>[federated.1abc2def].[hr:CREATE_HOUR:ok]</cols>
+      </table>
+      <simple-id uuid='{C3D4E5F6-A7B8-9012-CDEF-123456789012}' />
+    </worksheet>
+    <worksheet name='Pending JMS 3h+'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1abc2def'>
+            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='1' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
+            <column-instance column='[CREATE_HOUR]' derivation='Hour' name='[hr:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
+            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='relative-time' column='[federated.1abc2def].[hr:CREATE_HOUR:ok]' direction='previous' period='hours' quantity='72' />
+          <slices>
+            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
+            <column>[federated.1abc2def].[hr:CREATE_HOUR:ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+          </pane>
+        </panes>
+        <rows>[federated.1abc2def].[sum:Calculation_2:qk]</rows>
+        <cols>[federated.1abc2def].[hr:CREATE_HOUR:ok]</cols>
+      </table>
+      <simple-id uuid='{D4E5F6A7-B8C9-0123-DEF1-234567890123}' />
+    </worksheet>
+    <worksheet name='Pending Parking 3h+'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1abc2def'>
+            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='1' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
+            <column-instance column='[CREATE_HOUR]' derivation='Hour' name='[hr:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
+            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='relative-time' column='[federated.1abc2def].[hr:CREATE_HOUR:ok]' direction='previous' period='hours' quantity='72' />
+          <slices>
+            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
+            <column>[federated.1abc2def].[hr:CREATE_HOUR:ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+          </pane>
+        </panes>
+        <rows>[federated.1abc2def].[sum:Calculation_2:qk]</rows>
+        <cols>[federated.1abc2def].[hr:CREATE_HOUR:ok]</cols>
+      </table>
+      <simple-id uuid='{E5F6A7B8-C9D0-1234-EF12-345678901234}' />
+    </worksheet>
+    <worksheet name='Pending JMS by Client'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1abc2def'>
+            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='1' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
+            <column caption='Segment Base Cost Parking' datatype='real' name='[SEGMENT_BASE_COST_PARKING]' role='measure' type='quantitative' />
+            <column-instance column='[CREATE_HOUR]' derivation='Day' name='[dy:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
+            <column-instance column='[SEGMENT_BASE_COST_PARKING]' derivation='Sum' name='[sum:SEGMENT_BASE_COST_PARKING:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
+            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='relative-time' column='[federated.1abc2def].[dy:CREATE_HOUR:ok]' direction='previous' period='days' quantity='7' />
+          <slices>
+            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
+            <column>[federated.1abc2def].[dy:CREATE_HOUR:ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Text' />
+            <encodings>
+              <text column='[federated.1abc2def].[sum:Calculation_2:qk]' />
+              <text column='[federated.1abc2def].[sum:SEGMENT_BASE_COST_PARKING:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols>([federated.1abc2def].[sum:Calculation_2:qk] + [federated.1abc2def].[sum:SEGMENT_BASE_COST_PARKING:qk])</cols>
+      </table>
+      <simple-id uuid='{F6A7B8C9-D0E1-2345-F123-456789012345}' />
+    </worksheet>
+    <worksheet name='Pending Parking by Client'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1abc2def'>
+            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='1' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
+            <column caption='Parking Product Type' datatype='string' name='[PRODUCT_TYPE]' role='dimension' type='nominal' />
+            <column caption='Total Amount JMS' datatype='real' name='[TOTAL_AMOUNT_JMS]' role='measure' type='quantitative' />
+            <column-instance column='[CREATE_HOUR]' derivation='Month' name='[mn:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
+            <column-instance column='[PRODUCT_TYPE]' derivation='None' name='[none:PRODUCT_TYPE:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[TOTAL_AMOUNT_JMS]' derivation='Sum' name='[sum:TOTAL_AMOUNT_JMS:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
+            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='relative-time' column='[federated.1abc2def].[mn:CREATE_HOUR:ok]' direction='current' period='months' quantity='1' />
+          <slices>
+            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
+            <column>[federated.1abc2def].[mn:CREATE_HOUR:ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Text' />
+            <encodings>
+              <text column='[federated.1abc2def].[sum:Calculation_2:qk]' />
+              <text column='[federated.1abc2def].[sum:TOTAL_AMOUNT_JMS:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols>([federated.1abc2def].[none:PRODUCT_TYPE:nk] * ([federated.1abc2def].[sum:Calculation_2:qk] + [federated.1abc2def].[sum:TOTAL_AMOUNT_JMS:qk]))</cols>
+      </table>
+      <simple-id uuid='{A7B8C9D0-E1F2-3456-1234-567890123456}' />
+    </worksheet>
+  </worksheets>
+  <dashboards>
+    <dashboard name='Data Flow State' type='tiled'>
+      <style />
+      <size maxheight='800' maxwidth='1000' minheight='800' minwidth='1000' />
+      <zones>
+        <zone h='17' id='1' name='Records Ingested' w='24' x='0' y='0'>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='4' />
+          </zone-style>
+        </zone>
+        <zone h='12' id='2' name='Data Flow State Table' w='24' x='0' y='17'>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='4' />
+          </zone-style>
+        </zone>
+        <zone h='13' id='3' name='Pending JMS 3h+' w='24' x='0' y='29'>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='4' />
+          </zone-style>
+        </zone>
+        <zone h='14' id='4' name='Pending Parking 3h+' w='24' x='0' y='42'>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='4' />
+          </zone-style>
+        </zone>
+        <zone h='9' id='5' name='Pending Parking by Client' w='24' x='0' y='56'>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='4' />
+          </zone-style>
+        </zone>
+        <zone h='15' id='6' name='Missing in Transaction Fact 3h+' w='24' x='0' y='65'>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='4' />
+          </zone-style>
+        </zone>
+        <zone h='11' id='7' name='Pending JMS by Client' w='24' x='0' y='80'>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='4' />
+          </zone-style>
+        </zone>
+      </zones>
+      <devicelayouts>
+        <devicelayout name='Default'>
+          <size maxheight='800' maxwidth='1000' minheight='800' minwidth='1000' />
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{B8C9D0E1-F2A3-4567-2345-678901234567}' />
+    </dashboard>
+  </dashboards>
+  <windows source-height='30'>
+    <window class='worksheet' name='Data Flow State Table'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.1abc2def].[none:Calculation_1:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{C9D0E1F2-A3B4-5678-3456-789012345678}' />
+    </window>
+    <window class='worksheet' name='Records Ingested'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{D0E1F2A3-B4C5-6789-4567-890123456789}' />
+    </window>
+    <window class='worksheet' name='Missing in Transaction Fact 3h+'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{E1F2A3B4-C5D6-7890-5678-901234567890}' />
+    </window>
+    <window class='worksheet' name='Pending JMS 3h+'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{F2A3B4C5-D6E7-8901-6789-012345678901}' />
+    </window>
+    <window class='worksheet' name='Pending Parking 3h+'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{A3B4C5D6-E7F8-9012-7890-123456789012}' />
+    </window>
+    <window class='worksheet' name='Pending JMS by Client'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{B4C5D6E7-F8A9-0123-8901-234567890123}' />
+    </window>
+    <window class='worksheet' name='Pending Parking by Client'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{C5D6E7F8-A9B0-1234-9012-345678901234}' />
+    </window>
+    <window class='dashboard' name='Data Flow State'>
+      <viewpoints>
+        <viewpoint name='Records Ingested'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Data Flow State Table'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Pending JMS 3h+'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Pending Parking 3h+'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Pending Parking by Client'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Missing in Transaction Fact 3h+'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Pending JMS by Client'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='-1' />
+      <simple-id uuid='{D6E7F8A9-B0C1-2345-0123-456789012345}' />
+    </window>
+  </windows>
+</workbook>
