@@ -1,31 +1,56 @@
 Completeness Checks
 
-Existing prompt retention
+Existing prompt (v8) retention
 
-Verify that the refined prompt keeps every instruction from the existing prompt, with nothing removed, truncated or summarized away. This covers:
-rules, constraints and restrictions
-input and output paths
-file names and naming conventions
-output format
-examples and step order
-Confirm that the existing sections and headings are kept in their original order, and that new content goes inside the relevant section or in a clearly marked new section.
-Ensure that the generated workbook still satisfies every rule in the existing prompt.
+Verify that every v8 section is present, in its original order:
+header (FORMAT, PURPOSE), role statement and reference-migration note
+VERSION HISTORY v1–v8
+the conflict-precedence paragraph
+MAPPER TABLE CONTRACT (Tables 0–11, plus the Table 10/11 reconciliation)
+INPUT PARAMETERS (mapper_document, connection_mode, migration_notes) and "does NOT take as input"
+TOOLS AVAILABLE
+LOOKER → TABLEAU SEMANTIC MAPPING (visualization types, field/calc patterns, connection modes)
+GOLDEN RULES
+RESOLVED CONSTANTS and the worked example
+PHASES 1–7
+APPENDICES A–E
+the end-of-prompt usage paragraph
+Confirm that all 25 Golden Rules are retained, each with its root cause and rule text: 1, 2/3, 4/14, 5, 6/13, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25.
+Confirm that every Phase 6 validation item and the Phase 7 output summary block are retained.
+Confirm that all appendices are retained: A.1–A.3, B.1–B.10, C, D (the D2E8DA72 errors) and E.1–E.6.
+Ensure that each new fix is added the v8 way:
+a new Golden Rule numbered 26 or higher, with its root cause;
+a v9 VERSION HISTORY entry;
+a Phase 6 validation line;
+an Appendix B WRONG/RIGHT pair;
+an updated "Golden rules applied: N/N" count.
 
-Model
+New rules the refined prompt must add (reported issues)
 
-Verify that the output has one datasource, "Data Flow State - data_science.data_state_fact", containing all 3 tables from TABLE 2 (data_state_fact, client_dimension, location_dimension) and both relationships from TABLE 3.
-Confirm that all 97 mapped fields exist in their correct tables:
-78 dimensions from TABLE 4: client_dimension 15, data_state_fact 26, location_dimension 37.
-19 measures from TABLE 5.
+Filters: add a rule and a skeleton for:
+worksheet <filter> elements: a CREATE_HOUR date window, categorical DATA_STATE for Table 8 worksheet-scope rows, and categorical all-values filters for Order ID / Payment Gateway Reference / Job ID;
+dashboard filter zones bound to the worksheet that owns the filter.
+Calculations: add a rule that every calculated field's name, caption and formula traces to a Table 5/6 row, and that each worksheet copy is identical to the datasource definition.
+Worksheets: add a rule that worksheet names equal the Table 7 "Worksheet Name" values exactly (7 sheets).
+Visuals: add a rule and a skeleton for:
+column-instance references: <column-instance> declared in <datasource-dependencies>, and [ds].[deriv:FIELD:type] on rows, cols, encodings, filters and sorts;
+measures placed on an axis;
+color and size encodings;
+sorts.
+Confirm that every newly used element or attribute is demonstrated in a Phase skeleton or in Appendix A, so Rule 18 doesn't forbid it. This covers filter, groupfilter, column-instance, sort, color, size and default-format.
 
-Calculations
+Workbook
 
-Ensure that all 19 TABLE 5 measures and the TABLE 6 calculated field "Data State (Refactored)" exist.
-Verify that every calculated field used on a worksheet is also declared in that worksheet's <datasource-dependencies>.
-
-Worksheets
-
-Verify that exactly 7 worksheets exist, named exactly as below, with no extra, duplicate or hidden sheets:
+Verify that there is one datasource with 3 tables (data_state_fact, client_dimension, location_dimension) and the 2 Table 3 relationships.
+Confirm that every Table 4 dimension and Table 5 measure is emitted, or is listed as a Mapper/Excel-contract gap in the Phase 7 summary.
+Ensure that all of these calculated fields exist:
+Data State (Refactored)
+client_identifier
+count_distinct
+No of Records
+the 4 hourly slice measures
+the date and hour label fields (physical or calculated)
+Verify that exactly 7 worksheets exist:
 Data Flow State Table
 Records Ingested
 Missing in Transaction Fact 3h+
@@ -33,145 +58,143 @@ Pending JMS 3h+
 Pending Parking 3h+
 Pending JMS by Client
 Pending Parking by Client
-Confirm that each of the 7 worksheets has:
-a non-empty Rows shelf and a non-empty Columns shelf,
-a mark defined on every pane,
-a <window> entry.
-Ensure that each worksheet appears exactly once on the "Data Flow State" dashboard.
-
-Filters
-
-Verify that all 17 TABLE 8 filters exist:
-7 CREATE_HOUR date filters, one per worksheet.
-6 DATA_STATE filters: one on each of the 4 hourly sheets and each of the 2 by-client sheets.
-The 4 dashboard filters: Timeframe, Order ID, Payment Gateway Reference and Job ID.
-Verify that the worksheet-level filters exist as real <filter> elements inside the worksheets, not only as dashboard cards.
-Confirm that the Order ID, Payment Gateway Reference and Job ID filters exist on all 7 worksheets.
-Confirm that all 4 dashboard filter cards exist on the dashboard.
-
-Dashboard and notes
-
-Ensure that the dashboard contains all 7 tiles from TABLE 9 and all 4 filter cards.
-Verify that every REVIEW item in the mapping has a manual-review note:
-the source/Custom SQL decision
-both relationships
-both geographic fields
-the 3 sum_distinct measures
-Data State (Refactored)
-the 5 rebuilt worksheets
-the Timeframe conflict
+Confirm that all 17 Table 8 filters exist:
+7 CREATE_HOUR windows, one per worksheet;
+2 DATA_STATE filters, on the two by-client sheets;
+Order ID, Payment Gateway Reference and Job ID filters on all 7 worksheets;
+4 dashboard filter zones: Timeframe, Order ID, Payment Gateway Reference and Job ID.
+Ensure that there is one dashboard with all 7 worksheet zones and 4 filter zones, and 8 windows (7 worksheet windows plus 1 dashboard window with 7 viewpoints).
+Verify that the number of manual-review comments equals the Table 10 REVIEW rows and the Table 11 Manual-Review total (Rule 16).
 
 Accuracy Checks
 
-Existing prompt retention
+Existing prompt (v8) retention
 
-Check that no existing instruction is reworded in a way that changes its meaning, is weakened, or is contradicted by newly added content.
-Validate that existing literal values are kept verbatim, including field names, paths, file names, versions and banned or allowed constructs.
-Confirm that when a new requirement conflicts with an existing prompt rule, the existing rule wins and the prompt states the conflict and its resolution explicitly.
+Check that no v8 rule is removed, weakened, reworded in a way that changes its meaning, or contradicted by new content.
+Validate that v8 literals are unchanged:
+Tableau version 18.1 and the source-build string
+the Phase 5 element order
+password=''
+selection-relaxation-allow
+the 2N + 2 UUID formula
+dashboard size 1920×1080
+error code D2E8DA72
+Confirm that the v8 shapes behind the reported issues are corrected in place, with each old shape moved to Appendix B as a WRONG example:
+Phase 3 and A.3 filter zones use name='{FILTER_CAPTION}'.
+Phase 2 and A.2 use bare [ds].[field] shelf references.
+Phase 2's "NO <filter> block" comment conflicts with Table 8 worksheet-scope filters.
+B.6 and E.2 use worksheet names that differ from Table 7.
+Phase 1 and A.1 put unique-key='true' on the fact-side end-point.
+Confirm that the precedence clause is retained and applied, and that every Mapper-vs-v8 conflict is listed in the Phase 7 summary:
+Custom SQL
+dashboard sizing
+the COUNTD fallback
+hour/date labels
+the missing ")" in the parking ≥ 3h label
 
 Model and fields
 
-Check that the source follows the existing prompt's data-source rule:
-If Custom SQL is allowed: a Snowflake connection in Extract mode, with data_state_fact and location_dimension as Custom SQL identical to the mapping and client_dimension as the table REPORTING.VW_CLIENT_DIMENSION.
-If Custom SQL is banned: three Excel sheet relations named after the TABLE 2 tables, with the data_state_fact sheet already containing CREATE_HOUR and DATA_STATE.
-Validate that the relationships match TABLE 3:
-data_state_fact.CLIENT_ID = client_dimension.CLIENT_ID;
-data_state_fact.LOCATION_ID = location_dimension.LOT_ID, plus the client_id clause;
-both many-to-one.
-Confirm that every field keeps its TABLE 4 datatype and dimension role, and that only client_dimension.COUNTRY is hidden.
+Check that connection_mode is honored (Rule 25):
+live-sql: a federated connection with DB_TYPE taken from Table 0/1; type='table' relations inside <relation type='collection'>; zero Custom SQL (Rule 4). CREATE_HOUR and DATA_STATE are rebuilt as Tableau calculations from the Table 2 SQL logic.
+excel-direct: a single Excel connection to a flat sheet, using only columns physically present in the sample contract.
+Validate that the relationships match Table 3:
+CLIENT_ID = CLIENT_ID;
+LOCATION_ID = LOT_ID;
+the compound client clause is flagged Manual Review rather than silently dropped;
+many-to-one, with the dimension side unique.
+Confirm Rule 19: the join keys (CLIENT_ID on both sides, LOCATION_ID and LOT_ID) are string/Count on both sides.
+Confirm Rule 12: every <cols> map and <metadata-record> is a physical column from Table 2/4. no_of_records, count_distinct and CNT_* are never physical unless they are in the Excel contract.
+Confirm that the Table 4 datatypes are kept (join keys excepted, per Rule 19), and that only client_dimension.COUNTRY is hidden.
 
 Calculations
 
-Check that each measure formula matches TABLE 5 exactly:
-SUM wherever the mapping says SUM;
-COUNT for No of Records;
-COUNTD([CLIENT_NAME]) for client count, with no fallback to CLIENT_ID and no IFNULL/ZN wrapping;
-COUNTD([LOT_ID]) for location count;
-SUM({FIXED [LOT_ID] : MIN([col])}) for coin meters, credit card meters and stall count;
-2-decimal format on the receipt, reminder and transaction fee measures.
-Validate that every calculated field's caption matches the mapping name, and that its formula references fields from the correct table.
-Confirm that formulas use valid Tableau syntax only: no Looker ${...} or when(...), and no SQL-only functions.
-Check that datatype and role match the formula:
-Aggregate calculations are role=measure and type=quantitative.
-"Data State (Refactored)" is a string dimension.
-Validate that each calculation's copy inside a worksheet's <datasource-dependencies> is identical to the datasource-level definition (same formula, datatype and role).
-Confirm that "Data State (Refactored)" maps all 7 codes to their exact TABLE 6 labels, with ELSE "Unidentified state".
-Confirm that each hourly count measure counts only its own DATA_STATE code.
+Check that "Data State (Refactored)" is:
+a Tableau CASE [DATA_STATE] WHEN … THEN … END, never Looker case(when());
+covering all 7 codes with their Table 6 labels, and ELSE "Unidentified state";
+using the parking ≥ 3h label "(>= 3 hours)" per B.3, with that fix noted.
+Validate the core measures:
+client_identifier = IF ISNULL([CLIENT_NAME]) OR [CLIENT_NAME] = "" THEN [CLIENT_ID] ELSE [CLIENT_NAME] END;
+count_distinct = COUNTD([client_identifier]) (Rule 2/3);
+No of Records = COUNT([DBT_TRANSACTION_ID]) (Rule 12).
+Confirm that the SUM measures are either pass-throughs with Sum aggregation or distinctly named calculations (B.2).
+Confirm that columns used as both a dimension and a measure get distinctly named measure calculations: FPS_AMOUNT, RECEIPT_FEE, REMINDER_FEE, TRANSACTION_FEE, COIN_METERS_COUNT, CREDIT_CARD_METERS_COUNT.
+Check that coin meters, credit card meters and stall count use {FIXED [LOT_ID] : …} and never a plain SUM.
+Check that the 3 fee measures have 2-decimal formatting.
+Validate the hourly slice measures (Rule 21). Each hourly tile has its own measure, and none shares No of Records:
+excel-direct: CNT_INGESTED, CNT_MISSING, CNT_JMS, CNT_PARKING.
+live-sql: SUM(IF [DATA_STATE] = "<code>" THEN 1 ELSE 0 END) with that tile's code.
+Confirm Rule 5 (valid Tableau grammar), Rule 20 (row-level IF/CASE measures wrapped in SUM) and Rule 6/13 (no self-referencing duplicates).
+Confirm that every calculated field repeated in a worksheet's <datasource-dependencies> is identical to the datasource definition: same formula, datatype and role.
 
 Filters
 
-Check that every filter's column points to a column instance in the form [ds].[derivation:FIELD:type], and that the instance is declared in that worksheet's <datasource-dependencies>.
-Validate that the date filters are class='relative-date' on CREATE_HOUR, with these values:
-Worksheet(s)	Window	Tableau setting
-Data Flow State Table	last 31 days	day, −30…0 (−31…−1 is also acceptable)
-The 4 hourly sheets	last 72 hours	hour, −71…0
-Pending JMS by Client	7 complete days	day, −7…−1
-Pending Parking by Client	this month	month, 0…0
-Confirm that the DATA_STATE filters are:
-class='categorical' and inclusive;
-a single member spelled exactly as the source code;
-using a level that matches the filter's column instance;
-real filters on both by-client sheets.
-Check that the Order ID, Payment Gateway Reference and Job ID filters are categorical and default to all values with nothing pre-selected.
-Validate each dashboard filter card:
-The zone name is a worksheet that actually contains that filter.
-The param is identical to that filter's column reference.
-The mode is multi-select.
-Timeframe is bound to Data Flow State Table, with a default of 31 days.
-Ensure that no filter targets a field that doesn't exist in the datasource or a pre-computed label column.
+Check that the CREATE_HOUR windows match Table 8, using relative-date settings or a range relative to TODAY()/NOW() with no literal dates:
+Worksheet(s)	Window
+Data Flow State Table	31 days
+The 4 hourly sheets	72 hours
+Pending JMS by Client	7 complete days
+Pending Parking by Client	this month
+Validate the DATA_STATE filters:
+Each by-client sheet has an inclusive categorical DATA_STATE filter with exactly one code (Table 8 worksheet scope, which Rule 1 permits).
+The hourly sheets are not isolated with a categorical state filter (Rules 1 and 21, E.4).
+Confirm that the Order ID, Payment Gateway Reference and Job ID filters are categorical, multi-select and default to all values, on all 7 worksheets.
+Check each dashboard filter zone:
+The zone name is a worksheet that contains that filter.
+The param equals that filter's exact column reference.
+The field is declared in the dashboard's <datasource-dependencies> (Rule 8).
+Timeframe is on CREATE_HOUR, bound to Data Flow State Table, with a default of 31 days.
+Ensure that every filter column resolves to a field declared in that worksheet's <datasource-dependencies>.
 
 Worksheets and visuals
 
-Check that each worksheet matches TABLE 7:
-Worksheet	Columns	Rows	Encodings	Sort
-Data Flow State Table	Data State (Refactored) × SUM(No of Records)	exact date / weekday of CREATE_HOUR	Color: Data State (Refactored). Size and Label: SUM(No of Records)	date descending
-The 4 hourly sheets	CREATE_HOUR truncated to hour, keeping the date	that sheet's state count	none	none
-Pending JMS by Client	SUM(No of Records) and SUM(segment_base_cost_parking)	CLIENT_NAME	Label: both measures	CLIENT_NAME by SUM(No of Records), descending
-Pending Parking by Client	PRODUCT_TYPE × (SUM(No of Records), SUM(total_amount_jms))	CLIENT_NAME	Label: both measures	CLIENT_NAME by SUM(No of Records), descending
-Confirm that every worksheet uses Bar marks on every pane.
-Validate that bars have length: every sheet has a measure on the Rows or Columns axis, not only on Size or Label.
-Check that every shelf, encoding, sort and filter reference uses column-instance form, with no bare [ds].[FIELD] references:
-Dimensions use none, tdy, wd or thr.
-Measures use sum or usr.
-Discrete fields end in nk or ok; continuous fields end in qk.
-Confirm that encodings, sorts and filters only reference fields present on that sheet or declared in its dependencies.
-Validate that the workbook opens in Tableau Desktop with every worksheet rendering its chart:
+Confirm that worksheet names equal Table 7 exactly and that there are 7 of them (Rule 15).
+Confirm that every pane uses Bar marks, including the three looker_grid tiles (Rule 24).
+Check each worksheet's layout:
+Worksheet	Rows	Columns	Encodings
+Data Flow State Table	date label / day of week (Rule 23)	Data State (Refactored) × SUM(No of Records)	Color: Data State (Refactored). Size and Text: SUM(No of Records)
+The 4 hourly sheets	that tile's own slice measure	discrete hour label that keeps the date (HOUR_LABEL, or a formatted DATETRUNC('hour', [CREATE_HOUR])), per Rule 22	none
+Pending JMS by Client	CLIENT_NAME, or client_identifier if flagged (Rule 7)	SUM(No of Records) and SUM(SEGMENT_BASE_COST_PARKING)	Text: both measures
+Pending Parking by Client	CLIENT_NAME, or client_identifier if flagged (Rule 7)	PRODUCT_TYPE × (SUM(No of Records), SUM(TOTAL_AMOUNT_JMS))	Text: both measures
+Validate that every sheet has a measure on the Rows or Columns axis, not only on Text or Size.
+Validate that all references use column-instance form, with no bare [ds].[FIELD].
+Validate that the Table 7 sorts are applied.
+Confirm that the workbook opens in Tableau Desktop with all 7 sheets rendering:
 no blank sheets;
-no "field does not exist" errors;
-no red (invalid) fields on shelves.
+no red (invalid) fields on shelves;
+no D2E8DA72 errors.
 
-Dashboard and integrity
+Dashboard and structure
 
-Validate that the dashboard matches TABLE 9:
-automatic sizing;
-tile order and height proportions of 17:12:13:14:9:15:11;
-full-width tiles with the correct Fit Width / Entire View setting.
-Validate that no zone is clipped (y+h ≤ canvas height) or overlaps another.
-Confirm that each worksheet zone's name exactly matches a worksheet.
-Ensure that no unsupported content is introduced and that every field reference resolves.
-Confirm that conflicts in the source are resolved and documented rather than silently changed:
-the Timeframe filter overlaps the tiles' own date windows;
-one join clause references a third table;
-the "Pending Parking Event (>= 3 hours" label is missing its closing parenthesis.
+Check Rule 9: fixed 1920×1080. v8 overrides Table 9's "Automatic"; note the conflict.
+Validate that the Table 9 geometry is used verbatim:
+tile order: Records Ingested, Data Flow State Table, Pending JMS 3h+, Pending Parking 3h+, Pending Parking by Client, Missing in Transaction Fact 3h+, Pending JMS by Client;
+height proportions of 17:12:13:14:9:15:11;
+full-width tiles;
+every zone within 0–100000, with no clipping or overlap.
+Confirm the remaining structural rules:
+Rule 10: windows as specified.
+Rule 17: 16 distinct UUIDs.
+Rule 11: password=''.
+No <active-tab>.
+All special characters are escaped.
+The file parses cleanly with a strict XML parser.
 
 Efficiency Checks
 
-Existing prompt retention
+Prompt
 
-Ensure that new instructions are merged into the matching existing sections rather than repeated in a separate block.
-Confirm that there are no duplicate or overlapping instructions between existing and new content.
-Verify that the prompt grows only by what these checks require, and that retained content is not padded or restated.
+Ensure that new rules are merged into the existing Golden Rules table, Phase 6 and Appendix B, with no parallel rule sets and no restatement of existing rules.
+Confirm that Appendix E stays calibration-only: no Data Flow State literals are moved into the generic Phases.
+Verify that the prompt grows only by what the four reported issues require.
 
 Workbook
 
-Ensure that the workbook uses one datasource and one connection, with logical relationships instead of a flattened table or fan-out joins.
-Confirm that Custom SQL, where allowed, is used only for the two mapped tables.
-Confirm that FIXED LOD is used only for the 3 sum_distinct measures.
-Verify that each calculation is defined once at datasource level and reused across worksheets.
-Verify that there are no duplicate formulas and no unused calculated fields.
-Ensure that there are exactly 7 worksheets, 1 dashboard and 4 filter cards, with no unused sheets, zones or empty containers.
+Ensure that there is one datasource and one connection:
+live-sql: relationships, not a flattened table.
+excel-direct: a flat sheet only.
+Confirm that each calculation is defined once and reused, and that there are no unused calculations, columns or duplicate formulas.
+Confirm that each hourly tile uses one slice measure and has no redundant state filter.
 Confirm that each worksheet has at most one filter per field.
-Confirm that each hourly sheet defines its DATA_STATE logic in one place only, either a filter or a measure, not both.
-Confirm that each dashboard filter is a single filter shared across sheets, not unlinked copies.
-Verify that date filters are relative with no hard-coded dates, that no pre-computed date or hour label columns exist, and that an extract is enabled where the source allows it.
-Ensure that manual-review notes are concise, cover only REVIEW items, and are numbered without gaps.
+Verify that no elements are invented (Rule 18) and that there are no empty containers.
+Verify that the workbook has exactly 7 worksheets, 1 dashboard, 4 filter zones and 8 windows.
+Ensure that manual-review comments are concise and that the Phase 7 summary lists each Mapper-vs-v8 conflict in one line.
