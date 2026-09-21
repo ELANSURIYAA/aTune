@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<workbook source-build='2024.1.0 (20241.24.0213.1150)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+<workbook source-build='2024.1.0 (20241.24.0213.1120)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <document-format-change-manifest>
     <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault />
     <_.fcp.MarkAnimation.true...MarkAnimation />
@@ -8,21 +8,159 @@
     <_.fcp.SchemaViewerObjectModel.true...SchemaViewerObjectModel />
     <_.fcp.SetMembershipControl.true...SetMembershipControl />
     <_.fcp.VConnDownstreamExtractsWithWarnings.true...VConnDownstreamExtractsWithWarnings />
+    <_.fcp.connection.bigquery.true...connection.bigquery />
   </document-format-change-manifest>
   <preferences>
     <preference name='ui.encoding.shelf.height' value='24' />
     <preference name='ui.shelf.height' value='26' />
   </preferences>
   <datasources>
-    <datasource caption='Data Flow State - data_science.data_state_fact' inline='true' name='federated.1abc2def' version='18.1'>
+    <datasource caption='Data Flow State - data_science.data_state_fact' inline='true' name='federated.1' version='18.1'>
       <connection class='federated'>
         <named-connections>
-          <named-connection caption='analytics_reporting' name='snowflake.1abc2def'>
-            <connection authentication='username-password' class='snowflake' dbname='REPORTING_DBT' odbc-connect-string-extras='' one-time-sql='' schema='REPORTING' server='analytics_reporting' service='' username='tableau_user' warehouse='COMPUTE_WH' />
+          <named-connection caption='analytics_reporting' name='snowflake.1'>
+            <connection authentication='Username Password' class='snowflake' dbname='REPORTING_DBT' odbc-connect-string-extras='' one-time-sql='' schema='REPORTING' server='analytics_reporting' service='' username='' warehouse='COMPUTE_WH' workgroup-auth-mode=''>
+            </connection>
           </named-connection>
         </named-connections>
-        <relation connection='snowflake.1abc2def' name='Custom SQL Query' type='text'>
-          select
+        <_.fcp.ObjectModelEncapsulateLegacy.false...relation type='collection'>
+          <relation type='table' name='[Custom SQL Query - data_state_fact]'>
+            <columns>
+              <column datatype='string' name='CAPTURE_GROUP_ID' role='dimension' type='nominal' />
+              <column datatype='real' name='CLIENT_ID' role='dimension' type='quantitative' />
+              <column datatype='datetime' name='CREATE_HOUR' role='dimension' type='datetime' />
+              <column datatype='datetime' name='CREATE_TIME_PARKING' role='dimension' type='datetime' />
+              <column datatype='string' name='DATA_STATE' role='dimension' type='nominal' />
+              <column datatype='string' name='DBT_TRANSACTION_ID' role='dimension' type='nominal' />
+              <column datatype='string' name='FEES_APPLIED' role='dimension' type='nominal' />
+              <column datatype='string' name='FEES_APPLIED_PARKING' role='dimension' type='nominal' />
+              <column datatype='string' name='FEES_APPLIED_STOPPED_SESSION' role='dimension' type='nominal' />
+              <column datatype='string' name='GATEWAY_REFERENCE' role='dimension' type='nominal' />
+              <column datatype='datetime' name='GATEWAY_TRANSACTION_TIME_UTC' role='dimension' type='datetime' />
+              <column datatype='datetime' name='INSERT_TIMESTAMP' role='dimension' type='datetime' />
+              <column datatype='datetime' name='INSERT_TIMESTAMP_JMS_EVENT' role='dimension' type='datetime' />
+              <column datatype='datetime' name='INSERT_TIMESTAMP_PARKING_EVENT' role='dimension' type='datetime' />
+              <column datatype='datetime' name='INSERT_TIMESTAMP_PARKING_STOPPED_EVENT' role='dimension' type='datetime' />
+              <column datatype='datetime' name='INSERT_TIMESTAMP_TRANSACTION_FACT' role='dimension' type='datetime' />
+              <column datatype='string' name='JOB_ID' role='dimension' type='nominal' />
+              <column datatype='datetime' name='LAST_UPDATE_TIMESTAMP' role='dimension' type='datetime' />
+              <column datatype='datetime' name='LATEST_UPDATED_TRANSACTION_FACT' role='dimension' type='datetime' />
+              <column datatype='string' name='LINE_ITEM_ID' role='dimension' type='nominal' />
+              <column datatype='real' name='LOCATION_ID' role='dimension' type='quantitative' />
+              <column datatype='string' name='ORDER_ID' role='dimension' type='nominal' />
+              <column datatype='string' name='PARKING_SEGMENT_ID' role='dimension' type='nominal' />
+              <column datatype='string' name='PAYMENT_STATUS' role='dimension' type='nominal' />
+              <column datatype='string' name='PRODUCT_TYPE' role='dimension' type='nominal' />
+              <column datatype='datetime' name='STAGING_CUTOFF_TIMESTAMP' role='dimension' type='datetime' />
+              <column datatype='real' name='CONSUMER_FEE' role='measure' type='quantitative' />
+              <column datatype='real' name='PARKING_AMOUNT_TRANSACTION_FACT' role='measure' type='quantitative' />
+              <column datatype='real' name='SEGMENT_BASE_COST_PARKING' role='measure' type='quantitative' />
+              <column datatype='real' name='SESSION_BASE_COST_PARKING' role='measure' type='quantitative' />
+              <column datatype='real' name='SESSION_BASE_COST_PARKING_STOPPED_SESSION' role='measure' type='quantitative' />
+              <column datatype='real' name='SESSION_COST_TOTAL_PARKING' role='measure' type='quantitative' />
+              <column datatype='real' name='SESSION_COST_TOTAL_STOPPED_SESSION' role='measure' type='quantitative' />
+              <column datatype='real' name='TOTAL_AMOUNT_JMS' role='measure' type='quantitative' />
+              <column datatype='real' name='TOTAL_AMOUNT_TRANSACTION_FACT' role='measure' type='quantitative' />
+            </columns>
+            <metadata-records>
+              <metadata-record class='column'>
+                <remote-name>CAPTURE_GROUP_ID</remote-name>
+                <remote-type>129</remote-type>
+                <local-name>[CAPTURE_GROUP_ID]</local-name>
+                <parent-name>[Custom SQL Query - data_state_fact]</parent-name>
+                <remote-alias>CAPTURE_GROUP_ID</remote-alias>
+                <ordinal>1</ordinal>
+                <local-type>string</local-type>
+                <aggregation>Count</aggregation>
+                <contains-null>true</contains-null>
+              </metadata-record>
+            </metadata-records>
+          </relation>
+          <relation join='inner' type='join'>
+            <clause type='join'>
+              <expression op='='>
+                <expression op='[Custom SQL Query - data_state_fact].[CLIENT_ID]' />
+                <expression op='[client_dimension].[CLIENT_ID]' />
+              </expression>
+            </clause>
+            <relation name='client_dimension' table='[REPORTING].[VW_CLIENT_DIMENSION]' type='table'>
+              <columns>
+                <column datatype='string' name='CLIENT_ACCOUNT_ID' role='dimension' type='nominal' />
+                <column datatype='string' name='BUSINESS_GROUP' role='dimension' type='nominal' />
+                <column datatype='string' name='CITY' role='dimension' type='nominal' />
+                <column datatype='string' name='COUNTRY' role='dimension' type='nominal' />
+                <column datatype='string' name='EXCLUSIVE_NON_EXCLUSIVE' role='dimension' type='nominal' />
+                <column datatype='string' name='CLIENT_ID' role='dimension' type='nominal' />
+                <column datatype='string' name='CLIENT_INDUSTRY' role='dimension' type='nominal' />
+                <column datatype='string' name='MOR_INDICATOR' role='dimension' type='nominal' />
+                <column datatype='string' name='CLIENT_RANKING' role='dimension' type='nominal' />
+                <column datatype='string' name='STATE' role='dimension' type='nominal' />
+                <column datatype='string' name='CLIENT_TYPE' role='dimension' type='nominal' />
+                <column datatype='boolean' name='IS_TEST_OR_DEMO' role='dimension' type='nominal' />
+                <column datatype='string' name='CLIENT_NAME' role='dimension' type='nominal' />
+                <column datatype='string' name='SF_ACCOUNT_ID' role='dimension' type='nominal' />
+              </columns>
+            </relation>
+          </relation>
+          <relation join='inner' type='join'>
+            <clause type='join'>
+              <expression op='AND'>
+                <expression op='='>
+                  <expression op='[Custom SQL Query - data_state_fact].[LOCATION_ID]' />
+                  <expression op='[Custom SQL Query - location_dimension].[LOT_ID]' />
+                </expression>
+                <expression op='='>
+                  <expression op='[Custom SQL Query - data_state_fact].[CLIENT_ID]' />
+                  <expression op='[client_dimension].[CLIENT_ID]' />
+                </expression>
+              </expression>
+            </clause>
+            <relation type='table' name='[Custom SQL Query - location_dimension]'>
+              <columns>
+                <column datatype='boolean' name='ALLOW_STOP' role='dimension' type='nominal' />
+                <column datatype='string' name='CHARGE_ON_TOP' role='dimension' type='nominal' />
+                <column datatype='string' name='CITY' role='dimension' type='nominal' />
+                <column datatype='string' name='CLIENT_ID' role='dimension' type='nominal' />
+                <column datatype='string' name='CLIENT_LOT_ID' role='dimension' type='nominal' />
+                <column datatype='date' name='CLOSE_DATE' role='dimension' type='datetime' />
+                <column datatype='real' name='COIN_METERS_COUNT' role='measure' type='quantitative' />
+                <column datatype='string' name='COUNTRY' role='dimension' type='nominal' />
+                <column datatype='real' name='CREDIT_CARD_METERS_COUNT' role='measure' type='quantitative' />
+                <column datatype='string' name='CURRENCY_NAME' role='dimension' type='nominal' />
+                <column datatype='real' name='ENFORCEMENT_GRACE_MINUTES' role='dimension' type='quantitative' />
+                <column datatype='real' name='FPS_AMOUNT' role='measure' type='quantitative' />
+                <column datatype='boolean' name='HAS_DISABLE_REMINDERS' role='dimension' type='nominal' />
+                <column datatype='boolean' name='HAS_RECEIPT_AT_START' role='dimension' type='nominal' />
+                <column datatype='boolean' name='IS_EXTENSION_NOT_ALLOWED' role='dimension' type='nominal' />
+                <column datatype='boolean' name='IS_OFF_STREET' role='dimension' type='nominal' />
+                <column datatype='boolean' name='IS_PLATE_BASED' role='dimension' type='nominal' />
+                <column datatype='boolean' name='IS_PREMIER_BAYS' role='dimension' type='nominal' />
+                <column datatype='boolean' name='IS_STALL_BASED' role='dimension' type='nominal' />
+                <column datatype='string' name='LOT_ID' role='dimension' type='nominal' />
+                <column datatype='string' name='LOT_NAME' role='dimension' type='nominal' />
+                <column datatype='string' name='LOT_STATUS' role='dimension' type='nominal' />
+                <column datatype='string' name='LOT_TYPE' role='dimension' type='nominal' />
+                <column datatype='date' name='OPEN_DATE' role='dimension' type='datetime' />
+                <column datatype='real' name='RECEIPT_FEE' role='measure' type='quantitative' />
+                <column datatype='string' name='REGION_ID' role='dimension' type='nominal' />
+                <column datatype='string' name='REGION_NAME' role='dimension' type='nominal' />
+                <column datatype='real' name='REMINDER_FEE' role='measure' type='quantitative' />
+                <column datatype='boolean' name='REQUIRES_CVV' role='dimension' type='nominal' />
+                <column datatype='string' name='STREET_ADDRESS' role='dimension' type='nominal' />
+                <column datatype='string' name='TELL_USER' role='dimension' type='nominal' />
+                <column datatype='real' name='TRANSACTION_FEE' role='measure' type='quantitative' />
+                <column datatype='real' name='THRESHOLD' role='dimension' type='quantitative' />
+                <column datatype='string' name='TRANSACTION_FEE_TYPE' role='dimension' type='nominal' />
+                <column datatype='real' name='WAIT_TIME_AFTER_MAX_STAY' role='dimension' type='quantitative' />
+                <column datatype='string' name='ZONE' role='dimension' type='nominal' />
+                <column datatype='real' name='STALL_COUNT' role='measure' type='quantitative' />
+              </columns>
+            </relation>
+          </relation>
+        </_.fcp.ObjectModelEncapsulateLegacy.false...relation>
+        <_.fcp.ObjectModelEncapsulateLegacy.true...relation type='collection'>
+          <relation type='table' name='[Custom SQL Query - data_state_fact]'>
+            <text>select
       *,
       date_trunc(
         hour,
@@ -30,530 +168,338 @@
                 INSERT_TIMESTAMP_PARKING_STOPPED_EVENT, INSERT_TIMESTAMP_TRANSACTION_FACT)
       ) as CREATE_HOUR,
       case
-        when INSERT_TIMESTAMP_TRANSACTION_FACT is not null then 'PRESENT_IN_TRANSACTION_FACT'
+        when INSERT_TIMESTAMP_TRANSACTION_FACT is not null then &apos;PRESENT_IN_TRANSACTION_FACT&apos;
         -- JMS and parking event are present, but reporting data has not present in Transaction Fact for 3 or more hours
         when INSERT_TIMESTAMP_JMS_EVENT is not null
             and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is not null
             and INSERT_TIMESTAMP_TRANSACTION_FACT is null
-            and timediff(hour, CREATE_HOUR, current_timestamp()) &gt;= 3 then 'MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS'
+            and timediff(hour, CREATE_HOUR, current_timestamp()) &gt;= 3 then &apos;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&apos;
         -- JMS and parking event are present, but reporting data has not present in Transaction Fact for under 3 hours
         when INSERT_TIMESTAMP_JMS_EVENT is not null
             and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is not null
             and INSERT_TIMESTAMP_TRANSACTION_FACT is null
-            and timediff(hour, CREATE_HOUR, current_timestamp()) &lt; 3 then 'MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS'
+            and timediff(hour, CREATE_HOUR, current_timestamp()) &lt; 3 then &apos;MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS&apos;
         -- JMS event is present, but associated parking event has not present for 3 or more hours
         when timediff(hour, INSERT_TIMESTAMP_JMS_EVENT, current_timestamp()) &gt;= 3
             and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is null
-            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS'
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then &apos;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&apos;
         -- JMS event is present, but associated parking event has not present for under 3 hours
         when timediff(hour, INSERT_TIMESTAMP_JMS_EVENT, current_timestamp()) &lt; 3
             and coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT) is null
-            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS'
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then &apos;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS&apos;
         -- Parking event is present, but associated JMS event has not present for 3 or more hours
         when timediff(hour, coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT), current_timestamp()) &gt;= 3
             and INSERT_TIMESTAMP_JMS_EVENT is null
-            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS'
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then &apos;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&apos;
         -- Parking event is present, but associated JMS event has not present for under 3 hours
         when timediff(hour, coalesce(INSERT_TIMESTAMP_PARKING_EVENT, INSERT_TIMESTAMP_PARKING_STOPPED_EVENT), current_timestamp()) &lt; 3
             and INSERT_TIMESTAMP_JMS_EVENT is null
-            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then 'MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS'
+            and INSERT_TIMESTAMP_TRANSACTION_FACT is null then &apos;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS&apos;
       end as DATA_STATE
-    from REPORTING_DBT.REPORTING_DATA_STATE_FACT
-        </relation>
+    from REPORTING_DBT.REPORTING_DATA_STATE_FACT</text>
+          </relation>
+          <relation join='inner' type='join'>
+            <clause type='join'>
+              <expression op='='>
+                <expression op='[Custom SQL Query - data_state_fact].[CLIENT_ID]' />
+                <expression op='[client_dimension].[CLIENT_ID]' />
+              </expression>
+            </clause>
+            <relation name='client_dimension' table='[REPORTING].[VW_CLIENT_DIMENSION]' type='table' />
+          </relation>
+          <relation join='inner' type='join'>
+            <clause type='join'>
+              <expression op='AND'>
+                <expression op='='>
+                  <expression op='[Custom SQL Query - data_state_fact].[LOCATION_ID]' />
+                  <expression op='[Custom SQL Query - location_dimension].[LOT_ID]' />
+                </expression>
+                <expression op='='>
+                  <expression op='[Custom SQL Query - data_state_fact].[CLIENT_ID]' />
+                  <expression op='[client_dimension].[CLIENT_ID]' />
+                </expression>
+              </expression>
+            </clause>
+            <relation type='table' name='[Custom SQL Query - location_dimension]'>
+              <text>select LD1.*,
+        LD2.ZONE
+      from REPORTING_DBT.REPORTING_VIEW_LOCATION_DIMENSION LD1
+      left join REPORTING.VW_LOT_DIMENSION LD2
+        on LD1.LOT_ID = LD2.LOT_ID</text>
+            </relation>
+          </relation>
+        </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
         <cols>
-          <map key='[CAPTURE_GROUP_ID]' value='[Custom SQL Query].[CAPTURE_GROUP_ID]' />
-          <map key='[CLIENT_ID]' value='[Custom SQL Query].[CLIENT_ID]' />
-          <map key='[CONSUMER_FEE]' value='[Custom SQL Query].[CONSUMER_FEE]' />
-          <map key='[CREATE_HOUR]' value='[Custom SQL Query].[CREATE_HOUR]' />
-          <map key='[CREATE_TIME_PARKING]' value='[Custom SQL Query].[CREATE_TIME_PARKING]' />
-          <map key='[DATA_STATE]' value='[Custom SQL Query].[DATA_STATE]' />
-          <map key='[DBT_TRANSACTION_ID]' value='[Custom SQL Query].[DBT_TRANSACTION_ID]' />
-          <map key='[FEES_APPLIED]' value='[Custom SQL Query].[FEES_APPLIED]' />
-          <map key='[FEES_APPLIED_PARKING]' value='[Custom SQL Query].[FEES_APPLIED_PARKING]' />
-          <map key='[FEES_APPLIED_STOPPED_SESSION]' value='[Custom SQL Query].[FEES_APPLIED_STOPPED_SESSION]' />
-          <map key='[GATEWAY_REFERENCE]' value='[Custom SQL Query].[GATEWAY_REFERENCE]' />
-          <map key='[GATEWAY_TRANSACTION_TIME_UTC]' value='[Custom SQL Query].[GATEWAY_TRANSACTION_TIME_UTC]' />
-          <map key='[INSERT_TIMESTAMP]' value='[Custom SQL Query].[INSERT_TIMESTAMP]' />
-          <map key='[INSERT_TIMESTAMP_JMS_EVENT]' value='[Custom SQL Query].[INSERT_TIMESTAMP_JMS_EVENT]' />
-          <map key='[INSERT_TIMESTAMP_PARKING_EVENT]' value='[Custom SQL Query].[INSERT_TIMESTAMP_PARKING_EVENT]' />
-          <map key='[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]' value='[Custom SQL Query].[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]' />
-          <map key='[INSERT_TIMESTAMP_TRANSACTION_FACT]' value='[Custom SQL Query].[INSERT_TIMESTAMP_TRANSACTION_FACT]' />
-          <map key='[JOB_ID]' value='[Custom SQL Query].[JOB_ID]' />
-          <map key='[LAST_UPDATE_TIMESTAMP]' value='[Custom SQL Query].[LAST_UPDATE_TIMESTAMP]' />
-          <map key='[LATEST_UPDATED_TRANSACTION_FACT]' value='[Custom SQL Query].[LATEST_UPDATED_TRANSACTION_FACT]' />
-          <map key='[LINE_ITEM_ID]' value='[Custom SQL Query].[LINE_ITEM_ID]' />
-          <map key='[LOCATION_ID]' value='[Custom SQL Query].[LOCATION_ID]' />
-          <map key='[ORDER_ID]' value='[Custom SQL Query].[ORDER_ID]' />
-          <map key='[PARKING_AMOUNT_TRANSACTION_FACT]' value='[Custom SQL Query].[PARKING_AMOUNT_TRANSACTION_FACT]' />
-          <map key='[PARKING_SEGMENT_ID]' value='[Custom SQL Query].[PARKING_SEGMENT_ID]' />
-          <map key='[PAYMENT_STATUS]' value='[Custom SQL Query].[PAYMENT_STATUS]' />
-          <map key='[PRODUCT_TYPE]' value='[Custom SQL Query].[PRODUCT_TYPE]' />
-          <map key='[SEGMENT_BASE_COST_PARKING]' value='[Custom SQL Query].[SEGMENT_BASE_COST_PARKING]' />
-          <map key='[SESSION_BASE_COST_PARKING]' value='[Custom SQL Query].[SESSION_BASE_COST_PARKING]' />
-          <map key='[SESSION_BASE_COST_PARKING_STOPPED_SESSION]' value='[Custom SQL Query].[SESSION_BASE_COST_PARKING_STOPPED_SESSION]' />
-          <map key='[SESSION_COST_TOTAL_PARKING]' value='[Custom SQL Query].[SESSION_COST_TOTAL_PARKING]' />
-          <map key='[SESSION_COST_TOTAL_STOPPED_SESSION]' value='[Custom SQL Query].[SESSION_COST_TOTAL_STOPPED_SESSION]' />
-          <map key='[STAGING_CUTOFF_TIMESTAMP]' value='[Custom SQL Query].[STAGING_CUTOFF_TIMESTAMP]' />
-          <map key='[TOTAL_AMOUNT_JMS]' value='[Custom SQL Query].[TOTAL_AMOUNT_JMS]' />
-          <map key='[TOTAL_AMOUNT_TRANSACTION_FACT]' value='[Custom SQL Query].[TOTAL_AMOUNT_TRANSACTION_FACT]' />
+          <map key='[ALLOW_STOP (location_dimension)]' value='[Custom SQL Query - location_dimension].[ALLOW_STOP]' />
+          <map key='[BUSINESS_GROUP (client_dimension)]' value='[client_dimension].[BUSINESS_GROUP]' />
+          <map key='[CAPTURE_GROUP_ID (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[CAPTURE_GROUP_ID]' />
+          <map key='[CHARGE_ON_TOP (location_dimension)]' value='[Custom SQL Query - location_dimension].[CHARGE_ON_TOP]' />
+          <map key='[CITY (client_dimension)]' value='[client_dimension].[CITY]' />
+          <map key='[CITY (location_dimension)]' value='[Custom SQL Query - location_dimension].[CITY]' />
+          <map key='[CLIENT_ACCOUNT_ID (client_dimension)]' value='[client_dimension].[CLIENT_ACCOUNT_ID]' />
+          <map key='[CLIENT_ID (client_dimension)]' value='[client_dimension].[CLIENT_ID]' />
+          <map key='[CLIENT_ID (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[CLIENT_ID]' />
+          <map key='[CLIENT_ID (location_dimension)]' value='[Custom SQL Query - location_dimension].[CLIENT_ID]' />
+          <map key='[CLIENT_INDUSTRY (client_dimension)]' value='[client_dimension].[CLIENT_INDUSTRY]' />
+          <map key='[CLIENT_LOT_ID (location_dimension)]' value='[Custom SQL Query - location_dimension].[CLIENT_LOT_ID]' />
+          <map key='[CLIENT_NAME (client_dimension)]' value='[client_dimension].[CLIENT_NAME]' />
+          <map key='[CLIENT_RANKING (client_dimension)]' value='[client_dimension].[CLIENT_RANKING]' />
+          <map key='[CLIENT_TYPE (client_dimension)]' value='[client_dimension].[CLIENT_TYPE]' />
+          <map key='[CLOSE_DATE (location_dimension)]' value='[Custom SQL Query - location_dimension].[CLOSE_DATE]' />
+          <map key='[COIN_METERS_COUNT (location_dimension)]' value='[Custom SQL Query - location_dimension].[COIN_METERS_COUNT]' />
+          <map key='[CONSUMER_FEE (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[CONSUMER_FEE]' />
+          <map key='[COUNTRY (client_dimension)]' value='[client_dimension].[COUNTRY]' />
+          <map key='[COUNTRY (location_dimension)]' value='[Custom SQL Query - location_dimension].[COUNTRY]' />
+          <map key='[CREATE_HOUR (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[CREATE_HOUR]' />
+          <map key='[CREATE_TIME_PARKING (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[CREATE_TIME_PARKING]' />
+          <map key='[CREDIT_CARD_METERS_COUNT (location_dimension)]' value='[Custom SQL Query - location_dimension].[CREDIT_CARD_METERS_COUNT]' />
+          <map key='[CURRENCY_NAME (location_dimension)]' value='[Custom SQL Query - location_dimension].[CURRENCY_NAME]' />
+          <map key='[DATA_STATE (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[DATA_STATE]' />
+          <map key='[DBT_TRANSACTION_ID (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[DBT_TRANSACTION_ID]' />
+          <map key='[ENFORCEMENT_GRACE_MINUTES (location_dimension)]' value='[Custom SQL Query - location_dimension].[ENFORCEMENT_GRACE_MINUTES]' />
+          <map key='[EXCLUSIVE_NON_EXCLUSIVE (client_dimension)]' value='[client_dimension].[EXCLUSIVE_NON_EXCLUSIVE]' />
+          <map key='[FEES_APPLIED (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[FEES_APPLIED]' />
+          <map key='[FEES_APPLIED_PARKING (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[FEES_APPLIED_PARKING]' />
+          <map key='[FEES_APPLIED_STOPPED_SESSION (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[FEES_APPLIED_STOPPED_SESSION]' />
+          <map key='[FPS_AMOUNT (location_dimension)]' value='[Custom SQL Query - location_dimension].[FPS_AMOUNT]' />
+          <map key='[GATEWAY_REFERENCE (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[GATEWAY_REFERENCE]' />
+          <map key='[GATEWAY_TRANSACTION_TIME_UTC (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[GATEWAY_TRANSACTION_TIME_UTC]' />
+          <map key='[HAS_DISABLE_REMINDERS (location_dimension)]' value='[Custom SQL Query - location_dimension].[HAS_DISABLE_REMINDERS]' />
+          <map key='[HAS_RECEIPT_AT_START (location_dimension)]' value='[Custom SQL Query - location_dimension].[HAS_RECEIPT_AT_START]' />
+          <map key='[INSERT_TIMESTAMP (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[INSERT_TIMESTAMP]' />
+          <map key='[INSERT_TIMESTAMP_JMS_EVENT (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[INSERT_TIMESTAMP_JMS_EVENT]' />
+          <map key='[INSERT_TIMESTAMP_PARKING_EVENT (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[INSERT_TIMESTAMP_PARKING_EVENT]' />
+          <map key='[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]' />
+          <map key='[INSERT_TIMESTAMP_TRANSACTION_FACT (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[INSERT_TIMESTAMP_TRANSACTION_FACT]' />
+          <map key='[IS_EXTENSION_NOT_ALLOWED (location_dimension)]' value='[Custom SQL Query - location_dimension].[IS_EXTENSION_NOT_ALLOWED]' />
+          <map key='[IS_OFF_STREET (location_dimension)]' value='[Custom SQL Query - location_dimension].[IS_OFF_STREET]' />
+          <map key='[IS_PLATE_BASED (location_dimension)]' value='[Custom SQL Query - location_dimension].[IS_PLATE_BASED]' />
+          <map key='[IS_PREMIER_BAYS (location_dimension)]' value='[Custom SQL Query - location_dimension].[IS_PREMIER_BAYS]' />
+          <map key='[IS_STALL_BASED (location_dimension)]' value='[Custom SQL Query - location_dimension].[IS_STALL_BASED]' />
+          <map key='[IS_TEST_OR_DEMO (client_dimension)]' value='[client_dimension].[IS_TEST_OR_DEMO]' />
+          <map key='[JOB_ID (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[JOB_ID]' />
+          <map key='[LAST_UPDATE_TIMESTAMP (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[LAST_UPDATE_TIMESTAMP]' />
+          <map key='[LATEST_UPDATED_TRANSACTION_FACT (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[LATEST_UPDATED_TRANSACTION_FACT]' />
+          <map key='[LINE_ITEM_ID (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[LINE_ITEM_ID]' />
+          <map key='[LOCATION_ID (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[LOCATION_ID]' />
+          <map key='[LOT_ID (location_dimension)]' value='[Custom SQL Query - location_dimension].[LOT_ID]' />
+          <map key='[LOT_NAME (location_dimension)]' value='[Custom SQL Query - location_dimension].[LOT_NAME]' />
+          <map key='[LOT_STATUS (location_dimension)]' value='[Custom SQL Query - location_dimension].[LOT_STATUS]' />
+          <map key='[LOT_TYPE (location_dimension)]' value='[Custom SQL Query - location_dimension].[LOT_TYPE]' />
+          <map key='[MOR_INDICATOR (client_dimension)]' value='[client_dimension].[MOR_INDICATOR]' />
+          <map key='[OPEN_DATE (location_dimension)]' value='[Custom SQL Query - location_dimension].[OPEN_DATE]' />
+          <map key='[ORDER_ID (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[ORDER_ID]' />
+          <map key='[PARKING_AMOUNT_TRANSACTION_FACT (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[PARKING_AMOUNT_TRANSACTION_FACT]' />
+          <map key='[PARKING_SEGMENT_ID (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[PARKING_SEGMENT_ID]' />
+          <map key='[PAYMENT_STATUS (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[PAYMENT_STATUS]' />
+          <map key='[PRODUCT_TYPE (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[PRODUCT_TYPE]' />
+          <map key='[RECEIPT_FEE (location_dimension)]' value='[Custom SQL Query - location_dimension].[RECEIPT_FEE]' />
+          <map key='[REGION_ID (location_dimension)]' value='[Custom SQL Query - location_dimension].[REGION_ID]' />
+          <map key='[REGION_NAME (location_dimension)]' value='[Custom SQL Query - location_dimension].[REGION_NAME]' />
+          <map key='[REMINDER_FEE (location_dimension)]' value='[Custom SQL Query - location_dimension].[REMINDER_FEE]' />
+          <map key='[REQUIRES_CVV (location_dimension)]' value='[Custom SQL Query - location_dimension].[REQUIRES_CVV]' />
+          <map key='[SEGMENT_BASE_COST_PARKING (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[SEGMENT_BASE_COST_PARKING]' />
+          <map key='[SESSION_BASE_COST_PARKING (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[SESSION_BASE_COST_PARKING]' />
+          <map key='[SESSION_BASE_COST_PARKING_STOPPED_SESSION (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[SESSION_BASE_COST_PARKING_STOPPED_SESSION]' />
+          <map key='[SESSION_COST_TOTAL_PARKING (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[SESSION_COST_TOTAL_PARKING]' />
+          <map key='[SESSION_COST_TOTAL_STOPPED_SESSION (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[SESSION_COST_TOTAL_STOPPED_SESSION]' />
+          <map key='[SF_ACCOUNT_ID (client_dimension)]' value='[client_dimension].[SF_ACCOUNT_ID]' />
+          <map key='[STAGING_CUTOFF_TIMESTAMP (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[STAGING_CUTOFF_TIMESTAMP]' />
+          <map key='[STALL_COUNT (location_dimension)]' value='[Custom SQL Query - location_dimension].[STALL_COUNT]' />
+          <map key='[STATE (client_dimension)]' value='[client_dimension].[STATE]' />
+          <map key='[STREET_ADDRESS (location_dimension)]' value='[Custom SQL Query - location_dimension].[STREET_ADDRESS]' />
+          <map key='[TELL_USER (location_dimension)]' value='[Custom SQL Query - location_dimension].[TELL_USER]' />
+          <map key='[THRESHOLD (location_dimension)]' value='[Custom SQL Query - location_dimension].[THRESHOLD]' />
+          <map key='[TOTAL_AMOUNT_JMS (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[TOTAL_AMOUNT_JMS]' />
+          <map key='[TOTAL_AMOUNT_TRANSACTION_FACT (data_state_fact)]' value='[Custom SQL Query - data_state_fact].[TOTAL_AMOUNT_TRANSACTION_FACT]' />
+          <map key='[TRANSACTION_FEE (location_dimension)]' value='[Custom SQL Query - location_dimension].[TRANSACTION_FEE]' />
+          <map key='[TRANSACTION_FEE_TYPE (location_dimension)]' value='[Custom SQL Query - location_dimension].[TRANSACTION_FEE_TYPE]' />
+          <map key='[WAIT_TIME_AFTER_MAX_STAY (location_dimension)]' value='[Custom SQL Query - location_dimension].[WAIT_TIME_AFTER_MAX_STAY]' />
+          <map key='[ZONE (location_dimension)]' value='[Custom SQL Query - location_dimension].[ZONE]' />
         </cols>
         <metadata-records>
-          <metadata-record class='column'>
-            <remote-name>CAPTURE_GROUP_ID</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[CAPTURE_GROUP_ID]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>CAPTURE_GROUP_ID</remote-alias>
-            <ordinal>1</ordinal>
-            <local-type>string</local-type>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[federated.1]</parent-name>
+            <remote-alias />
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>CLIENT_ID</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[CLIENT_ID]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>CLIENT_ID</remote-alias>
-            <ordinal>2</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>CONSUMER_FEE</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[CONSUMER_FEE]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>CONSUMER_FEE</remote-alias>
-            <ordinal>3</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>CREATE_HOUR</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[CREATE_HOUR]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>CREATE_HOUR</remote-alias>
-            <ordinal>4</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>CREATE_TIME_PARKING</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[CREATE_TIME_PARKING]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>CREATE_TIME_PARKING</remote-alias>
-            <ordinal>5</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>DATA_STATE</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[DATA_STATE]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>DATA_STATE</remote-alias>
-            <ordinal>6</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>DBT_TRANSACTION_ID</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[DBT_TRANSACTION_ID]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>DBT_TRANSACTION_ID</remote-alias>
-            <ordinal>7</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>FEES_APPLIED</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[FEES_APPLIED]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>FEES_APPLIED</remote-alias>
-            <ordinal>8</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>FEES_APPLIED_PARKING</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[FEES_APPLIED_PARKING]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>FEES_APPLIED_PARKING</remote-alias>
-            <ordinal>9</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>FEES_APPLIED_STOPPED_SESSION</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[FEES_APPLIED_STOPPED_SESSION]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>FEES_APPLIED_STOPPED_SESSION</remote-alias>
-            <ordinal>10</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>GATEWAY_REFERENCE</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[GATEWAY_REFERENCE]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>GATEWAY_REFERENCE</remote-alias>
-            <ordinal>11</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>GATEWAY_TRANSACTION_TIME_UTC</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[GATEWAY_TRANSACTION_TIME_UTC]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>GATEWAY_TRANSACTION_TIME_UTC</remote-alias>
-            <ordinal>12</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>INSERT_TIMESTAMP</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[INSERT_TIMESTAMP]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>INSERT_TIMESTAMP</remote-alias>
-            <ordinal>13</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>INSERT_TIMESTAMP_JMS_EVENT</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[INSERT_TIMESTAMP_JMS_EVENT]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>INSERT_TIMESTAMP_JMS_EVENT</remote-alias>
-            <ordinal>14</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>INSERT_TIMESTAMP_PARKING_EVENT</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[INSERT_TIMESTAMP_PARKING_EVENT]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>INSERT_TIMESTAMP_PARKING_EVENT</remote-alias>
-            <ordinal>15</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>INSERT_TIMESTAMP_PARKING_STOPPED_EVENT</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>INSERT_TIMESTAMP_PARKING_STOPPED_EVENT</remote-alias>
-            <ordinal>16</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>INSERT_TIMESTAMP_TRANSACTION_FACT</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[INSERT_TIMESTAMP_TRANSACTION_FACT]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>INSERT_TIMESTAMP_TRANSACTION_FACT</remote-alias>
-            <ordinal>17</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>JOB_ID</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[JOB_ID]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>JOB_ID</remote-alias>
-            <ordinal>18</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>LAST_UPDATE_TIMESTAMP</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[LAST_UPDATE_TIMESTAMP]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>LAST_UPDATE_TIMESTAMP</remote-alias>
-            <ordinal>19</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>LATEST_UPDATED_TRANSACTION_FACT</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[LATEST_UPDATED_TRANSACTION_FACT]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>LATEST_UPDATED_TRANSACTION_FACT</remote-alias>
-            <ordinal>20</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>LINE_ITEM_ID</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[LINE_ITEM_ID]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>LINE_ITEM_ID</remote-alias>
-            <ordinal>21</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>LOCATION_ID</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[LOCATION_ID]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>LOCATION_ID</remote-alias>
-            <ordinal>22</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>ORDER_ID</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[ORDER_ID]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>ORDER_ID</remote-alias>
-            <ordinal>23</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>PARKING_AMOUNT_TRANSACTION_FACT</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[PARKING_AMOUNT_TRANSACTION_FACT]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>PARKING_AMOUNT_TRANSACTION_FACT</remote-alias>
-            <ordinal>24</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>PARKING_SEGMENT_ID</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[PARKING_SEGMENT_ID]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>PARKING_SEGMENT_ID</remote-alias>
-            <ordinal>25</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>PAYMENT_STATUS</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[PAYMENT_STATUS]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>PAYMENT_STATUS</remote-alias>
-            <ordinal>26</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>PRODUCT_TYPE</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[PRODUCT_TYPE]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>PRODUCT_TYPE</remote-alias>
-            <ordinal>27</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>SEGMENT_BASE_COST_PARKING</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[SEGMENT_BASE_COST_PARKING]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>SEGMENT_BASE_COST_PARKING</remote-alias>
-            <ordinal>28</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>SESSION_BASE_COST_PARKING</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[SESSION_BASE_COST_PARKING]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>SESSION_BASE_COST_PARKING</remote-alias>
-            <ordinal>29</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>SESSION_BASE_COST_PARKING_STOPPED_SESSION</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[SESSION_BASE_COST_PARKING_STOPPED_SESSION]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>SESSION_BASE_COST_PARKING_STOPPED_SESSION</remote-alias>
-            <ordinal>30</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>SESSION_COST_TOTAL_PARKING</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[SESSION_COST_TOTAL_PARKING]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>SESSION_COST_TOTAL_PARKING</remote-alias>
-            <ordinal>31</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>SESSION_COST_TOTAL_STOPPED_SESSION</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[SESSION_COST_TOTAL_STOPPED_SESSION]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>SESSION_COST_TOTAL_STOPPED_SESSION</remote-alias>
-            <ordinal>32</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>STAGING_CUTOFF_TIMESTAMP</remote-name>
-            <remote-type>7</remote-type>
-            <local-name>[STAGING_CUTOFF_TIMESTAMP]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>STAGING_CUTOFF_TIMESTAMP</remote-alias>
-            <ordinal>33</ordinal>
-            <local-type>datetime</local-type>
-            <aggregation>Year</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>TOTAL_AMOUNT_JMS</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[TOTAL_AMOUNT_JMS]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>TOTAL_AMOUNT_JMS</remote-alias>
-            <ordinal>34</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>TOTAL_AMOUNT_TRANSACTION_FACT</remote-name>
-            <remote-type>5</remote-type>
-            <local-name>[TOTAL_AMOUNT_TRANSACTION_FACT]</local-name>
-            <parent-name>[Custom SQL Query]</parent-name>
-            <remote-alias>TOTAL_AMOUNT_TRANSACTION_FACT</remote-alias>
-            <ordinal>35</ordinal>
-            <local-type>real</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='integer' name='context'>0</attribute>
+              <attribute datatype='string' name='gridOrigin'>&quot;A1:B6:no:A1:B6:0&quot;</attribute>
+              <attribute datatype='boolean' name='header'>true</attribute>
+              <attribute datatype='integer' name='outcome'>2</attribute>
+            </attributes>
           </metadata-record>
         </metadata-records>
       </connection>
       <aliases enabled='yes' />
-      <column caption='Capture Group ID' datatype='string' name='[CAPTURE_GROUP_ID]' role='dimension' type='nominal' />
-      <column caption='Client ID' datatype='real' name='[CLIENT_ID]' role='dimension' type='quantitative' />
-      <column caption='Consumer Fee' datatype='real' name='[CONSUMER_FEE]' role='measure' type='quantitative' />
-      <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
-      <column caption='Parking Create Date UTC' datatype='datetime' name='[CREATE_TIME_PARKING]' role='dimension' type='ordinal' />
-      <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
-      <column caption='Transaction ID' datatype='string' name='[DBT_TRANSACTION_ID]' role='dimension' type='nominal' />
-      <column caption='Fees Applied' datatype='string' name='[FEES_APPLIED]' role='dimension' type='nominal' />
-      <column caption='Fees Applied Parking' datatype='string' name='[FEES_APPLIED_PARKING]' role='dimension' type='nominal' />
-      <column caption='Fees Applied Stopped Session' datatype='string' name='[FEES_APPLIED_STOPPED_SESSION]' role='dimension' type='nominal' />
-      <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE]' role='dimension' type='nominal' />
-      <column caption='Payment Date UTC' datatype='datetime' name='[GATEWAY_TRANSACTION_TIME_UTC]' role='dimension' type='ordinal' />
-      <column caption='Insert Timestamp' datatype='datetime' name='[INSERT_TIMESTAMP]' role='dimension' type='ordinal' />
-      <column caption='Insert Timestamp JMS Event' datatype='datetime' name='[INSERT_TIMESTAMP_JMS_EVENT]' role='dimension' type='ordinal' />
-      <column caption='Insert Timestamp Parking Event' datatype='datetime' name='[INSERT_TIMESTAMP_PARKING_EVENT]' role='dimension' type='ordinal' />
-      <column caption='Insert Timestamp Parking Stopped Event' datatype='datetime' name='[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT]' role='dimension' type='ordinal' />
-      <column caption='Insert Timestamp Transaction Fact' datatype='datetime' name='[INSERT_TIMESTAMP_TRANSACTION_FACT]' role='dimension' type='ordinal' />
-      <column caption='Subledger Job ID' datatype='string' name='[JOB_ID]' role='dimension' type='nominal' />
-      <column caption='Last Update Timestamp' datatype='datetime' name='[LAST_UPDATE_TIMESTAMP]' role='dimension' type='ordinal' />
-      <column caption='Last Updated Transaction Fact' datatype='datetime' name='[LATEST_UPDATED_TRANSACTION_FACT]' role='dimension' type='ordinal' />
-      <column caption='Line Item ID' datatype='string' name='[LINE_ITEM_ID]' role='dimension' type='nominal' />
-      <column caption='Location ID' datatype='real' name='[LOCATION_ID]' role='dimension' type='quantitative' />
-      <column caption='Order ID' datatype='string' name='[ORDER_ID]' role='dimension' type='nominal' />
-      <column caption='Parking Amount Transaction Fact' datatype='real' name='[PARKING_AMOUNT_TRANSACTION_FACT]' role='measure' type='quantitative' />
-      <column caption='Parking Segment ID' datatype='string' name='[PARKING_SEGMENT_ID]' role='dimension' type='nominal' />
-      <column caption='Payment Status' datatype='string' name='[PAYMENT_STATUS]' role='dimension' type='nominal' />
-      <column caption='Parking Product Type' datatype='string' name='[PRODUCT_TYPE]' role='dimension' type='nominal' />
-      <column caption='Segment Base Cost Parking' datatype='real' name='[SEGMENT_BASE_COST_PARKING]' role='measure' type='quantitative' />
-      <column caption='Session Base Cost Parking' datatype='real' name='[SESSION_BASE_COST_PARKING]' role='measure' type='quantitative' />
-      <column caption='Session Base Cost Parking Stopped' datatype='real' name='[SESSION_BASE_COST_PARKING_STOPPED_SESSION]' role='measure' type='quantitative' />
-      <column caption='Session Cost Total Parking' datatype='real' name='[SESSION_COST_TOTAL_PARKING]' role='measure' type='quantitative' />
-      <column caption='Session Cost Total Stopped Session' datatype='real' name='[SESSION_COST_TOTAL_STOPPED_SESSION]' role='measure' type='quantitative' />
-      <column caption='Staging Check Time' datatype='datetime' name='[STAGING_CUTOFF_TIMESTAMP]' role='dimension' type='ordinal' />
-      <column caption='Total Amount JMS' datatype='real' name='[TOTAL_AMOUNT_JMS]' role='measure' type='quantitative' />
-      <column caption='Total Amount Transaction Fact' datatype='real' name='[TOTAL_AMOUNT_TRANSACTION_FACT]' role='measure' type='quantitative' />
-      <column caption='Data State (Refactored)' datatype='string' name='[Calculation_1]' role='dimension' type='nominal'>
-        <calculation class='tableau' formula='CASE [DATA_STATE]&#13;&#10;  WHEN &quot;PRESENT_IN_TRANSACTION_FACT&quot; THEN &quot;Present in Transaction Fact&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot; THEN &quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS&quot; THEN &quot;Missing in Transaction Fact (&lt; 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending Parking Event (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending Parking Event (&lt; 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending JMS Event (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending JMS Event (&lt; 3 hours)&quot;&#13;&#10;  ELSE &quot;Unidentified state&quot;&#13;&#10;END' />
+      <column caption='Client Account ID' datatype='string' name='[CLIENT_ACCOUNT_ID (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client Business Group' datatype='string' name='[BUSINESS_GROUP (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client City' datatype='string' name='[CITY (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client Country' datatype='string' hidden='true' name='[COUNTRY (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client Exclusivity' datatype='string' name='[EXCLUSIVE_NON_EXCLUSIVE (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client ID' datatype='string' name='[CLIENT_ID (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client Industry' datatype='string' name='[CLIENT_INDUSTRY (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client MOR Indicator' datatype='string' name='[MOR_INDICATOR (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client Ranking' datatype='string' name='[CLIENT_RANKING (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client State' datatype='string' name='[STATE (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client Type' datatype='string' name='[CLIENT_TYPE (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Is Test' datatype='boolean' name='[IS_TEST_OR_DEMO (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client Name' datatype='string' name='[CLIENT_NAME (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Salesforce ID' datatype='string' name='[SF_ACCOUNT_ID (client_dimension)]' role='dimension' type='nominal' />
+      <column caption='Capture Group ID' datatype='string' name='[CAPTURE_GROUP_ID (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Client ID' datatype='real' name='[CLIENT_ID (data_state_fact)]' role='dimension' type='quantitative' />
+      <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Parking Create Date UTC' datatype='datetime' name='[CREATE_TIME_PARKING (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Data State' datatype='string' name='[DATA_STATE (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Transaction ID' datatype='string' name='[DBT_TRANSACTION_ID (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Fees Applied' datatype='string' name='[FEES_APPLIED (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Fees Applied Parking' datatype='string' name='[FEES_APPLIED_PARKING (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Fees Applied Stopped Session' datatype='string' name='[FEES_APPLIED_STOPPED_SESSION (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Payment Date UTC' datatype='datetime' name='[GATEWAY_TRANSACTION_TIME_UTC (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Insert Timestamp' datatype='datetime' name='[INSERT_TIMESTAMP (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Insert Timestamp JMS Event' datatype='datetime' name='[INSERT_TIMESTAMP_JMS_EVENT (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Insert Timestamp Parking Event' datatype='datetime' name='[INSERT_TIMESTAMP_PARKING_EVENT (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Insert Timestamp Parking Stopped Event' datatype='datetime' name='[INSERT_TIMESTAMP_PARKING_STOPPED_EVENT (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Insert Timestamp Transaction Fact' datatype='datetime' name='[INSERT_TIMESTAMP_TRANSACTION_FACT (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Subledger Job ID' datatype='string' name='[JOB_ID (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Last Update Timestamp' datatype='datetime' name='[LAST_UPDATE_TIMESTAMP (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Last Updated Transaction Fact' datatype='datetime' name='[LATEST_UPDATED_TRANSACTION_FACT (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Line Item ID' datatype='string' name='[LINE_ITEM_ID (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Location ID' datatype='real' name='[LOCATION_ID (data_state_fact)]' role='dimension' type='quantitative' />
+      <column caption='Order ID' datatype='string' name='[ORDER_ID (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Parking Segment ID' datatype='string' name='[PARKING_SEGMENT_ID (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Payment Status' datatype='string' name='[PAYMENT_STATUS (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Parking Product Type' datatype='string' name='[PRODUCT_TYPE (data_state_fact)]' role='dimension' type='nominal' />
+      <column caption='Staging Check Time' datatype='datetime' name='[STAGING_CUTOFF_TIMESTAMP (data_state_fact)]' role='dimension' type='datetime' />
+      <column caption='Consumer Fee' datatype='real' name='[CONSUMER_FEE (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Parking Amount Transaction Fact' datatype='real' name='[PARKING_AMOUNT_TRANSACTION_FACT (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Segment Base Cost Parking' datatype='real' name='[SEGMENT_BASE_COST_PARKING (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Session Base Cost Parking' datatype='real' name='[SESSION_BASE_COST_PARKING (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Session Base Cost Parking Stopped' datatype='real' name='[SESSION_BASE_COST_PARKING_STOPPED_SESSION (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Session Cost Total Parking' datatype='real' name='[SESSION_COST_TOTAL_PARKING (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Session Cost Total Stopped Session' datatype='real' name='[SESSION_COST_TOTAL_STOPPED_SESSION (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Total Amount JMS' datatype='real' name='[TOTAL_AMOUNT_JMS (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Total Amount Transaction Fact' datatype='real' name='[TOTAL_AMOUNT_TRANSACTION_FACT (data_state_fact)]' role='measure' type='quantitative' />
+      <column caption='Allow Stop' datatype='boolean' name='[ALLOW_STOP (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Transaction Fee Charge On Top' datatype='string' name='[CHARGE_ON_TOP (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client City' datatype='string' name='[CITY (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client ID' datatype='string' name='[CLIENT_ID (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Client Location ID' datatype='string' name='[CLIENT_LOT_ID (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Close Date' datatype='date' name='[CLOSE_DATE (location_dimension)]' role='dimension' type='datetime' />
+      <column caption='Coin Meters' datatype='real' name='[COIN_METERS_COUNT (location_dimension)]' role='measure' type='quantitative' />
+      <column caption='Country Code' datatype='string' name='[COUNTRY (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Credit Card Meters' datatype='real' name='[CREDIT_CARD_METERS_COUNT (location_dimension)]' role='measure' type='quantitative' />
+      <column caption='Currency' datatype='string' name='[CURRENCY_NAME (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Enforcement Grace Minutes' datatype='real' name='[ENFORCEMENT_GRACE_MINUTES (location_dimension)]' role='dimension' type='quantitative' />
+      <column caption='FPS Amount' datatype='real' name='[FPS_AMOUNT (location_dimension)]' role='measure' type='quantitative' />
+      <column caption='Has Disable Reminders' datatype='boolean' name='[HAS_DISABLE_REMINDERS (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Has Receipt At Start' datatype='boolean' name='[HAS_RECEIPT_AT_START (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Is Extension Not Allowed' datatype='boolean' name='[IS_EXTENSION_NOT_ALLOWED (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Is Off Street' datatype='boolean' name='[IS_OFF_STREET (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Is Plate Based' datatype='boolean' name='[IS_PLATE_BASED (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Is Premier Bays' datatype='boolean' name='[IS_PREMIER_BAYS (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Is Stall Based' datatype='boolean' name='[IS_STALL_BASED (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Location ID' datatype='string' name='[LOT_ID (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Location Name' datatype='string' name='[LOT_NAME (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Location Status' datatype='string' name='[LOT_STATUS (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Location Type' datatype='string' name='[LOT_TYPE (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Open Date' datatype='date' name='[OPEN_DATE (location_dimension)]' role='dimension' type='datetime' />
+      <column caption='Location Receipt Fee' datatype='real' name='[RECEIPT_FEE (location_dimension)]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='SUM([RECEIPT_FEE (location_dimension)])' />
       </column>
-      <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='1' />
+      <column caption='Location Region ID' datatype='string' name='[REGION_ID (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Region Name' datatype='string' name='[REGION_NAME (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Location Reminder Fee' datatype='real' name='[REMINDER_FEE (location_dimension)]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='SUM([REMINDER_FEE (location_dimension)])' />
+      </column>
+      <column caption='Requires CVV' datatype='boolean' name='[REQUIRES_CVV (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Street Address' datatype='string' name='[STREET_ADDRESS (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Transaction Fee Tell User' datatype='string' name='[TELL_USER (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Location Transaction Fee' datatype='real' name='[TRANSACTION_FEE (location_dimension)]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='SUM([TRANSACTION_FEE (location_dimension)])' />
+      </column>
+      <column caption='Transaction Fee Threshold' datatype='real' name='[THRESHOLD (location_dimension)]' role='dimension' type='quantitative' />
+      <column caption='Transaction Fee Type' datatype='string' name='[TRANSACTION_FEE_TYPE (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Wait Time After Max Stay' datatype='real' name='[WAIT_TIME_AFTER_MAX_STAY (location_dimension)]' role='dimension' type='quantitative' />
+      <column caption='Zone' datatype='string' name='[ZONE (location_dimension)]' role='dimension' type='nominal' />
+      <column caption='Stall Count' datatype='real' name='[STALL_COUNT (location_dimension)]' role='measure' type='quantitative' />
+      <column caption='Client Count Distinct' datatype='integer' name='[Calculation_Client_Count]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='COUNTD([CLIENT_NAME (client_dimension)])' />
+      </column>
+      <column caption='No of Records' datatype='integer' name='[Calculation_No_Of_Records]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='COUNT([ORDER_ID (data_state_fact)])' />
+      </column>
+      <column caption='Coin Meters Count' datatype='real' name='[Calculation_Coin_Meters_LOD]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='{FIXED [LOT_ID (location_dimension)] : SUM([COIN_METERS_COUNT (location_dimension)])}' />
+      </column>
+      <column caption='Location Count Unique' datatype='integer' name='[Calculation_Location_Count]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='COUNTD([LOT_ID (location_dimension)])' />
+      </column>
+      <column caption='Credit Card Meters Count' datatype='real' name='[Calculation_Credit_Card_Meters_LOD]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='{FIXED [LOT_ID (location_dimension)] : SUM([CREDIT_CARD_METERS_COUNT (location_dimension)])}' />
+      </column>
+      <column caption='Stall Count' datatype='real' name='[Calculation_Stall_Count_LOD]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='{FIXED [LOT_ID (location_dimension)] : SUM([STALL_COUNT (location_dimension)])}' />
+      </column>
+      <column caption='Data State (Refactored)' datatype='string' name='[Calculation_Data_State_Refactored]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='CASE [DATA_STATE (data_state_fact)]&#10;  WHEN &quot;PRESENT_IN_TRANSACTION_FACT&quot; THEN &quot;Present in Transaction Fact&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot; THEN &quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS&quot; THEN &quot;Missing in Transaction Fact (&lt; 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending Parking Event (&gt;= 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending Parking Event (&lt; 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending JMS Event (&gt;= 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending JMS Event (&lt; 3 hours)&quot;&#10;  ELSE &quot;Unidentified state&quot;&#10;END' />
+      </column>
+      <column caption='Hour Label' datatype='datetime' name='[Calculation_Hour_Label]' role='dimension' type='datetime'>
+        <calculation class='tableau' formula='DATETRUNC(&apos;hour&apos;, [CREATE_HOUR (data_state_fact)])' />
+      </column>
+      <column caption='Date Label' datatype='date' name='[Calculation_Date_Label]' role='dimension' type='datetime'>
+        <calculation class='tableau' formula='DATETRUNC(&apos;day&apos;, [CREATE_HOUR (data_state_fact)])' />
+      </column>
+      <column caption='Day of Week' datatype='string' name='[Calculation_Day_Of_Week]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='DATENAME(&apos;weekday&apos;, [CREATE_HOUR (data_state_fact)])' />
+      </column>
+      <column caption='Ingested Hourly' datatype='integer' name='[Calculation_Ingested_Hourly]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [DATA_STATE (data_state_fact)] = &quot;PRESENT_IN_TRANSACTION_FACT&quot; THEN [Calculation_No_Of_Records] END' />
+      </column>
+      <column caption='Missing Hourly' datatype='integer' name='[Calculation_Missing_Hourly]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [DATA_STATE (data_state_fact)] = &quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot; THEN [Calculation_No_Of_Records] END' />
+      </column>
+      <column caption='JMS Hourly' datatype='integer' name='[Calculation_JMS_Hourly]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [DATA_STATE (data_state_fact)] = &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot; THEN [Calculation_No_Of_Records] END' />
+      </column>
+      <column caption='Parking Hourly' datatype='integer' name='[Calculation_Parking_Hourly]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [DATA_STATE (data_state_fact)] = &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot; THEN [Calculation_No_Of_Records] END' />
       </column>
       <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
       <style>
         <style-rule element='mark'>
-          <encoding attr='color' field='[Calculation_1]' type='palette'>
+          <encoding attr='color' field='[:Measure Names]' type='palette'>
             <map to='#4e79a7'>
-              <bucket>&quot;Present in Transaction Fact&quot;</bucket>
-            </map>
-            <map to='#f28e2b'>
-              <bucket>&quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;</bucket>
-            </map>
-            <map to='#e15759'>
-              <bucket>&quot;Pending JMS Event (&gt;= 3 hours)&quot;</bucket>
-            </map>
-            <map to='#76b7b2'>
-              <bucket>&quot;Pending Parking Event (&gt;= 3 hours)&quot;</bucket>
-            </map>
-            <map to='#59a14f'>
-              <bucket>&quot;Missing in Transaction Fact (&lt; 3 hours)&quot;</bucket>
-            </map>
-            <map to='#edc948'>
-              <bucket>&quot;Pending JMS Event (&lt; 3 hours)&quot;</bucket>
-            </map>
-            <map to='#b07aa1'>
-              <bucket>&quot;Pending Parking Event (&lt; 3 hours)&quot;</bucket>
-            </map>
-            <map to='#9c755f'>
-              <bucket>&quot;Unidentified state&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_Client_Count]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_Coin_Meters_LOD]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_Credit_Card_Meters_LOD]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_Ingested_Hourly]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_JMS_Hourly]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_Location_Count]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_Missing_Hourly]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_No_Of_Records]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_Parking_Hourly]&quot;</bucket>
+              <bucket>&quot;[federated.1].[Calculation_Stall_Count_LOD]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:COIN_METERS_COUNT (location_dimension):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:CONSUMER_FEE (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:CREDIT_CARD_METERS_COUNT (location_dimension):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:FPS_AMOUNT (location_dimension):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:PARKING_AMOUNT_TRANSACTION_FACT (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:RECEIPT_FEE (location_dimension):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:REMINDER_FEE (location_dimension):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:SEGMENT_BASE_COST_PARKING (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:SESSION_BASE_COST_PARKING (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:SESSION_BASE_COST_PARKING_STOPPED_SESSION (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:SESSION_COST_TOTAL_PARKING (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:SESSION_COST_TOTAL_STOPPED_SESSION (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:STALL_COUNT (location_dimension):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:TOTAL_AMOUNT_JMS (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:TOTAL_AMOUNT_TRANSACTION_FACT (data_state_fact):qk]&quot;</bucket>
+              <bucket>&quot;[federated.1].[sum:TRANSACTION_FEE (location_dimension):qk]&quot;</bucket>
             </map>
           </encoding>
         </style-rule>
@@ -565,34 +511,95 @@
       <table>
         <view>
           <datasources>
-            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1' />
           </datasources>
-          <datasource-dependencies datasource='federated.1abc2def'>
-            <column caption='Data State (Refactored)' datatype='string' name='[Calculation_1]' role='dimension' type='nominal'>
-              <calculation class='tableau' formula='CASE [DATA_STATE]&#13;&#10;  WHEN &quot;PRESENT_IN_TRANSACTION_FACT&quot; THEN &quot;Present in Transaction Fact&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot; THEN &quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS&quot; THEN &quot;Missing in Transaction Fact (&lt; 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending Parking Event (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending Parking Event (&lt; 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending JMS Event (&gt;= 3 hours)&quot;&#13;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending JMS Event (&lt; 3 hours)&quot;&#13;&#10;  ELSE &quot;Unidentified state&quot;&#13;&#10;END' />
+          <datasource-dependencies datasource='federated.1'>
+            <column caption='Data State (Refactored)' datatype='string' name='[Calculation_Data_State_Refactored]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='CASE [DATA_STATE (data_state_fact)]&#10;  WHEN &quot;PRESENT_IN_TRANSACTION_FACT&quot; THEN &quot;Present in Transaction Fact&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot; THEN &quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_LESS_THAN_3_HOURS&quot; THEN &quot;Missing in Transaction Fact (&lt; 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending Parking Event (&gt;= 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending Parking Event (&lt; 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot; THEN &quot;Pending JMS Event (&gt;= 3 hours)&quot;&#10;  WHEN &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_LESS_THAN_3_HOURS&quot; THEN &quot;Pending JMS Event (&lt; 3 hours)&quot;&#10;  ELSE &quot;Unidentified state&quot;&#10;END' />
             </column>
-            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='1' />
+            <column caption='Date Label' datatype='date' name='[Calculation_Date_Label]' role='dimension' type='datetime'>
+              <calculation class='tableau' formula='DATETRUNC(&apos;day&apos;, [CREATE_HOUR (data_state_fact)])' />
             </column>
-            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
-            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
-            <column-instance column='[Calculation_1]' derivation='None' name='[none:Calculation_1:nk]' pivot='key' type='nominal' />
-            <column-instance column='[CREATE_HOUR]' derivation='Day' name='[dy:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+            <column caption='Day of Week' datatype='string' name='[Calculation_Day_Of_Week]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='DATENAME(&apos;weekday&apos;, [CREATE_HOUR (data_state_fact)])' />
+            </column>
+            <column caption='No of Records' datatype='integer' name='[Calculation_No_Of_Records]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNT([ORDER_ID (data_state_fact)])' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR (data_state_fact)]' role='dimension' type='datetime' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Subledger Job ID' datatype='string' name='[JOB_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Order ID' datatype='string' name='[ORDER_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_Data_State_Refactored]' derivation='None' name='[none:Calculation_Data_State_Refactored:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_Date_Label]' derivation='None' name='[none:Calculation_Date_Label:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_Day_Of_Week]' derivation='None' name='[none:Calculation_Day_Of_Week:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_No_Of_Records]' derivation='Sum' name='[sum:Calculation_No_Of_Records:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
+          <filter class='relative-time' column='[federated.1].[CREATE_HOUR (data_state_fact)]' direction='previous' include-future='false' include-null='false' period='DAY' quantity='31' unit='day' />
+          <filter class='categorical' column='[federated.1].[GATEWAY_REFERENCE (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:GATEWAY_REFERENCE (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[JOB_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:JOB_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[ORDER_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:ORDER_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.1].[CREATE_HOUR (data_state_fact)]</column>
+            <column>[federated.1].[ORDER_ID (data_state_fact)]</column>
+            <column>[federated.1].[GATEWAY_REFERENCE (data_state_fact)]</column>
+            <column>[federated.1].[JOB_ID (data_state_fact)]</column>
+          </slices>
           <aggregation value='true' />
         </view>
-        <style />
+        <style>
+          <style-rule element='cell'>
+            <format attr='width' field='[federated.1].[none:Calculation_Data_State_Refactored:nk]' value='200' />
+            <format attr='width' field='[federated.1].[none:Calculation_Date_Label:qk]' value='100' />
+            <format attr='width' field='[federated.1].[none:Calculation_Day_Of_Week:nk]' value='100' />
+          </style-rule>
+          <style-rule element='mark'>
+            <encoding attr='color' field='[federated.1].[none:Calculation_Data_State_Refactored:nk]' type='palette'>
+              <map to='#4e79a7'>
+                <bucket>&quot;Present in Transaction Fact&quot;</bucket>
+              </map>
+              <map to='#e15759'>
+                <bucket>&quot;Missing in Transaction Fact (&gt;= 3 hours)&quot;</bucket>
+              </map>
+              <map to='#f28e2b'>
+                <bucket>&quot;Pending JMS Event (&gt;= 3 hours)&quot;</bucket>
+              </map>
+              <map to='#76b7b2'>
+                <bucket>&quot;Pending Parking Event (&gt;= 3 hours)&quot;</bucket>
+              </map>
+              <map to='#edc948'>
+                <bucket>&quot;Missing in Transaction Fact (&lt; 3 hours)&quot;</bucket>
+              </map>
+              <map to='#b07aa1'>
+                <bucket>&quot;Pending JMS Event (&lt; 3 hours)&quot;</bucket>
+              </map>
+              <map to='#59a14f'>
+                <bucket>&quot;Pending Parking Event (&lt; 3 hours)&quot;</bucket>
+              </map>
+              <map to='#bab0ac'>
+                <bucket>&quot;Unidentified state&quot;</bucket>
+              </map>
+            </encoding>
+            <encoding attr='size' field='[federated.1].[sum:Calculation_No_Of_Records:qk]' type='quantitative' />
+          </style-rule>
+        </style>
         <panes>
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
               <breakdown value='auto' />
             </view>
-            <mark class='Automatic' />
+            <mark class='Bar' />
             <encodings>
-              <color column='[federated.1abc2def].[none:Calculation_1:nk]' />
-              <size column='[federated.1abc2def].[sum:Calculation_2:qk]' />
-              <text column='[federated.1abc2def].[sum:Calculation_2:qk]' />
+              <color column='[federated.1].[none:Calculation_Data_State_Refactored:nk]' />
+              <size column='[federated.1].[sum:Calculation_No_Of_Records:qk]' />
+              <text column='[federated.1].[sum:Calculation_No_Of_Records:qk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -602,8 +609,8 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.1abc2def].[dy:CREATE_HOUR:ok]</rows>
-        <cols>([federated.1abc2def].[none:Calculation_1:nk] * [federated.1abc2def].[sum:Calculation_2:qk])</cols>
+        <rows>([federated.1].[none:Calculation_Date_Label:qk] * [federated.1].[none:Calculation_Day_Of_Week:nk])</rows>
+        <cols>([federated.1].[none:Calculation_Data_State_Refactored:nk] * [federated.1].[sum:Calculation_No_Of_Records:qk])</cols>
       </table>
       <simple-id uuid='{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}' />
     </worksheet>
@@ -611,25 +618,45 @@
       <table>
         <view>
           <datasources>
-            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1' />
           </datasources>
-          <datasource-dependencies datasource='federated.1abc2def'>
-            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='1' />
+          <datasource-dependencies datasource='federated.1'>
+            <column caption='Hour Label' datatype='datetime' name='[Calculation_Hour_Label]' role='dimension' type='datetime'>
+              <calculation class='tableau' formula='DATETRUNC(&apos;hour&apos;, [CREATE_HOUR (data_state_fact)])' />
             </column>
-            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
-            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
-            <column-instance column='[CREATE_HOUR]' derivation='Hour' name='[hr:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+            <column caption='Ingested Hourly' datatype='integer' name='[Calculation_Ingested_Hourly]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF [DATA_STATE (data_state_fact)] = &quot;PRESENT_IN_TRANSACTION_FACT&quot; THEN [Calculation_No_Of_Records] END' />
+            </column>
+            <column caption='No of Records' datatype='integer' name='[Calculation_No_Of_Records]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNT([ORDER_ID (data_state_fact)])' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR (data_state_fact)]' role='dimension' type='datetime' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Subledger Job ID' datatype='string' name='[JOB_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Order ID' datatype='string' name='[ORDER_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_Hour_Label]' derivation='None' name='[none:Calculation_Hour_Label:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_Ingested_Hourly]' derivation='Sum' name='[sum:Calculation_Ingested_Hourly:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
-          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
-            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;PRESENT_IN_TRANSACTION_FACT&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          <filter class='relative-time' column='[federated.1].[CREATE_HOUR (data_state_fact)]' direction='previous' include-future='false' include-null='false' period='HOUR' quantity='72' unit='hour' />
+          <filter class='categorical' column='[federated.1].[DATA_STATE (data_state_fact)]'>
+            <groupfilter function='member' level='[none:DATA_STATE (data_state_fact):nk]' member='&quot;PRESENT_IN_TRANSACTION_FACT&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
-          <filter class='relative-time' column='[federated.1abc2def].[hr:CREATE_HOUR:ok]' direction='previous' period='hours' quantity='72' />
+          <filter class='categorical' column='[federated.1].[GATEWAY_REFERENCE (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:GATEWAY_REFERENCE (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[JOB_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:JOB_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[ORDER_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:ORDER_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <slices>
-            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
-            <column>[federated.1abc2def].[hr:CREATE_HOUR:ok]</column>
+            <column>[federated.1].[CREATE_HOUR (data_state_fact)]</column>
+            <column>[federated.1].[DATA_STATE (data_state_fact)]</column>
+            <column>[federated.1].[ORDER_ID (data_state_fact)]</column>
+            <column>[federated.1].[GATEWAY_REFERENCE (data_state_fact)]</column>
+            <column>[federated.1].[JOB_ID (data_state_fact)]</column>
           </slices>
           <aggregation value='true' />
         </view>
@@ -640,36 +667,57 @@
               <breakdown value='auto' />
             </view>
             <mark class='Bar' />
+            <encodings />
           </pane>
         </panes>
-        <rows>[federated.1abc2def].[sum:Calculation_2:qk]</rows>
-        <cols>[federated.1abc2def].[hr:CREATE_HOUR:ok]</cols>
+        <rows>[federated.1].[sum:Calculation_Ingested_Hourly:qk]</rows>
+        <cols>[federated.1].[none:Calculation_Hour_Label:qk]</cols>
       </table>
-      <simple-id uuid='{B2C3D4E5-F6A7-8901-BCDE-F12345678901}' />
+      <simple-id uuid='{B2C3D4E5-F678-90AB-CDEF-1234567890AB}' />
     </worksheet>
     <worksheet name='Missing in Transaction Fact 3h+'>
       <table>
         <view>
           <datasources>
-            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1' />
           </datasources>
-          <datasource-dependencies datasource='federated.1abc2def'>
-            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='1' />
+          <datasource-dependencies datasource='federated.1'>
+            <column caption='Hour Label' datatype='datetime' name='[Calculation_Hour_Label]' role='dimension' type='datetime'>
+              <calculation class='tableau' formula='DATETRUNC(&apos;hour&apos;, [CREATE_HOUR (data_state_fact)])' />
             </column>
-            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
-            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
-            <column-instance column='[CREATE_HOUR]' derivation='Hour' name='[hr:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+            <column caption='Missing Hourly' datatype='integer' name='[Calculation_Missing_Hourly]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF [DATA_STATE (data_state_fact)] = &quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot; THEN [Calculation_No_Of_Records] END' />
+            </column>
+            <column caption='No of Records' datatype='integer' name='[Calculation_No_Of_Records]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNT([ORDER_ID (data_state_fact)])' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR (data_state_fact)]' role='dimension' type='datetime' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Subledger Job ID' datatype='string' name='[JOB_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Order ID' datatype='string' name='[ORDER_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_Hour_Label]' derivation='None' name='[none:Calculation_Hour_Label:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_Missing_Hourly]' derivation='Sum' name='[sum:Calculation_Missing_Hourly:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
-          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
-            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          <filter class='relative-time' column='[federated.1].[CREATE_HOUR (data_state_fact)]' direction='previous' include-future='false' include-null='false' period='HOUR' quantity='72' unit='hour' />
+          <filter class='categorical' column='[federated.1].[DATA_STATE (data_state_fact)]'>
+            <groupfilter function='member' level='[none:DATA_STATE (data_state_fact):nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
-          <filter class='relative-time' column='[federated.1abc2def].[hr:CREATE_HOUR:ok]' direction='previous' period='hours' quantity='72' />
+          <filter class='categorical' column='[federated.1].[GATEWAY_REFERENCE (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:GATEWAY_REFERENCE (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[JOB_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:JOB_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[ORDER_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:ORDER_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <slices>
-            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
-            <column>[federated.1abc2def].[hr:CREATE_HOUR:ok]</column>
+            <column>[federated.1].[CREATE_HOUR (data_state_fact)]</column>
+            <column>[federated.1].[DATA_STATE (data_state_fact)]</column>
+            <column>[federated.1].[ORDER_ID (data_state_fact)]</column>
+            <column>[federated.1].[GATEWAY_REFERENCE (data_state_fact)]</column>
+            <column>[federated.1].[JOB_ID (data_state_fact)]</column>
           </slices>
           <aggregation value='true' />
         </view>
@@ -680,36 +728,57 @@
               <breakdown value='auto' />
             </view>
             <mark class='Bar' />
+            <encodings />
           </pane>
         </panes>
-        <rows>[federated.1abc2def].[sum:Calculation_2:qk]</rows>
-        <cols>[federated.1abc2def].[hr:CREATE_HOUR:ok]</cols>
+        <rows>[federated.1].[sum:Calculation_Missing_Hourly:qk]</rows>
+        <cols>[federated.1].[none:Calculation_Hour_Label:qk]</cols>
       </table>
-      <simple-id uuid='{C3D4E5F6-A7B8-9012-CDEF-123456789012}' />
+      <simple-id uuid='{C3D4E5F6-7890-ABCD-EF12-34567890ABCD}' />
     </worksheet>
     <worksheet name='Pending JMS 3h+'>
       <table>
         <view>
           <datasources>
-            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1' />
           </datasources>
-          <datasource-dependencies datasource='federated.1abc2def'>
-            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='1' />
+          <datasource-dependencies datasource='federated.1'>
+            <column caption='Hour Label' datatype='datetime' name='[Calculation_Hour_Label]' role='dimension' type='datetime'>
+              <calculation class='tableau' formula='DATETRUNC(&apos;hour&apos;, [CREATE_HOUR (data_state_fact)])' />
             </column>
-            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
-            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
-            <column-instance column='[CREATE_HOUR]' derivation='Hour' name='[hr:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+            <column caption='JMS Hourly' datatype='integer' name='[Calculation_JMS_Hourly]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF [DATA_STATE (data_state_fact)] = &quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot; THEN [Calculation_No_Of_Records] END' />
+            </column>
+            <column caption='No of Records' datatype='integer' name='[Calculation_No_Of_Records]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNT([ORDER_ID (data_state_fact)])' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR (data_state_fact)]' role='dimension' type='datetime' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Subledger Job ID' datatype='string' name='[JOB_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Order ID' datatype='string' name='[ORDER_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_Hour_Label]' derivation='None' name='[none:Calculation_Hour_Label:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_JMS_Hourly]' derivation='Sum' name='[sum:Calculation_JMS_Hourly:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
-          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
-            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          <filter class='relative-time' column='[federated.1].[CREATE_HOUR (data_state_fact)]' direction='previous' include-future='false' include-null='false' period='HOUR' quantity='72' unit='hour' />
+          <filter class='categorical' column='[federated.1].[DATA_STATE (data_state_fact)]'>
+            <groupfilter function='member' level='[none:DATA_STATE (data_state_fact):nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
-          <filter class='relative-time' column='[federated.1abc2def].[hr:CREATE_HOUR:ok]' direction='previous' period='hours' quantity='72' />
+          <filter class='categorical' column='[federated.1].[GATEWAY_REFERENCE (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:GATEWAY_REFERENCE (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[JOB_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:JOB_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[ORDER_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:ORDER_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <slices>
-            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
-            <column>[federated.1abc2def].[hr:CREATE_HOUR:ok]</column>
+            <column>[federated.1].[CREATE_HOUR (data_state_fact)]</column>
+            <column>[federated.1].[DATA_STATE (data_state_fact)]</column>
+            <column>[federated.1].[ORDER_ID (data_state_fact)]</column>
+            <column>[federated.1].[GATEWAY_REFERENCE (data_state_fact)]</column>
+            <column>[federated.1].[JOB_ID (data_state_fact)]</column>
           </slices>
           <aggregation value='true' />
         </view>
@@ -720,36 +789,57 @@
               <breakdown value='auto' />
             </view>
             <mark class='Bar' />
+            <encodings />
           </pane>
         </panes>
-        <rows>[federated.1abc2def].[sum:Calculation_2:qk]</rows>
-        <cols>[federated.1abc2def].[hr:CREATE_HOUR:ok]</cols>
+        <rows>[federated.1].[sum:Calculation_JMS_Hourly:qk]</rows>
+        <cols>[federated.1].[none:Calculation_Hour_Label:qk]</cols>
       </table>
-      <simple-id uuid='{D4E5F6A7-B8C9-0123-DEF1-234567890123}' />
+      <simple-id uuid='{D4E5F678-90AB-CDEF-1234-567890ABCDEF}' />
     </worksheet>
     <worksheet name='Pending Parking 3h+'>
       <table>
         <view>
           <datasources>
-            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1' />
           </datasources>
-          <datasource-dependencies datasource='federated.1abc2def'>
-            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='1' />
+          <datasource-dependencies datasource='federated.1'>
+            <column caption='Hour Label' datatype='datetime' name='[Calculation_Hour_Label]' role='dimension' type='datetime'>
+              <calculation class='tableau' formula='DATETRUNC(&apos;hour&apos;, [CREATE_HOUR (data_state_fact)])' />
             </column>
-            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
-            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
-            <column-instance column='[CREATE_HOUR]' derivation='Hour' name='[hr:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+            <column caption='No of Records' datatype='integer' name='[Calculation_No_Of_Records]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNT([ORDER_ID (data_state_fact)])' />
+            </column>
+            <column caption='Parking Hourly' datatype='integer' name='[Calculation_Parking_Hourly]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF [DATA_STATE (data_state_fact)] = &quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot; THEN [Calculation_No_Of_Records] END' />
+            </column>
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR (data_state_fact)]' role='dimension' type='datetime' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Subledger Job ID' datatype='string' name='[JOB_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Order ID' datatype='string' name='[ORDER_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_Hour_Label]' derivation='None' name='[none:Calculation_Hour_Label:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_Parking_Hourly]' derivation='Sum' name='[sum:Calculation_Parking_Hourly:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
-          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
-            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          <filter class='relative-time' column='[federated.1].[CREATE_HOUR (data_state_fact)]' direction='previous' include-future='false' include-null='false' period='HOUR' quantity='72' unit='hour' />
+          <filter class='categorical' column='[federated.1].[DATA_STATE (data_state_fact)]'>
+            <groupfilter function='member' level='[none:DATA_STATE (data_state_fact):nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
-          <filter class='relative-time' column='[federated.1abc2def].[hr:CREATE_HOUR:ok]' direction='previous' period='hours' quantity='72' />
+          <filter class='categorical' column='[federated.1].[GATEWAY_REFERENCE (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:GATEWAY_REFERENCE (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[JOB_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:JOB_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[ORDER_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:ORDER_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <slices>
-            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
-            <column>[federated.1abc2def].[hr:CREATE_HOUR:ok]</column>
+            <column>[federated.1].[CREATE_HOUR (data_state_fact)]</column>
+            <column>[federated.1].[DATA_STATE (data_state_fact)]</column>
+            <column>[federated.1].[ORDER_ID (data_state_fact)]</column>
+            <column>[federated.1].[GATEWAY_REFERENCE (data_state_fact)]</column>
+            <column>[federated.1].[JOB_ID (data_state_fact)]</column>
           </slices>
           <aggregation value='true' />
         </view>
@@ -760,120 +850,162 @@
               <breakdown value='auto' />
             </view>
             <mark class='Bar' />
+            <encodings />
           </pane>
         </panes>
-        <rows>[federated.1abc2def].[sum:Calculation_2:qk]</rows>
-        <cols>[federated.1abc2def].[hr:CREATE_HOUR:ok]</cols>
+        <rows>[federated.1].[sum:Calculation_Parking_Hourly:qk]</rows>
+        <cols>[federated.1].[none:Calculation_Hour_Label:qk]</cols>
       </table>
-      <simple-id uuid='{E5F6A7B8-C9D0-1234-EF12-345678901234}' />
+      <simple-id uuid='{E5F67890-ABCD-EF12-3456-7890ABCDEF12}' />
     </worksheet>
     <worksheet name='Pending JMS by Client'>
       <table>
         <view>
           <datasources>
-            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1' />
           </datasources>
-          <datasource-dependencies datasource='federated.1abc2def'>
-            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='1' />
+          <datasource-dependencies datasource='federated.1'>
+            <column caption='No of Records' datatype='integer' name='[Calculation_No_Of_Records]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNT([ORDER_ID (data_state_fact)])' />
             </column>
-            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
-            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
-            <column caption='Segment Base Cost Parking' datatype='real' name='[SEGMENT_BASE_COST_PARKING]' role='measure' type='quantitative' />
-            <column-instance column='[CREATE_HOUR]' derivation='Day' name='[dy:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[SEGMENT_BASE_COST_PARKING]' derivation='Sum' name='[sum:SEGMENT_BASE_COST_PARKING:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
+            <column caption='Client Name' datatype='string' name='[CLIENT_NAME (client_dimension)]' role='dimension' type='nominal' />
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR (data_state_fact)]' role='dimension' type='datetime' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Subledger Job ID' datatype='string' name='[JOB_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Order ID' datatype='string' name='[ORDER_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Segment Base Cost Parking' datatype='real' name='[SEGMENT_BASE_COST_PARKING (data_state_fact)]' role='measure' type='quantitative' />
+            <column-instance column='[CLIENT_NAME (client_dimension)]' derivation='None' name='[none:CLIENT_NAME (client_dimension):nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_No_Of_Records]' derivation='Sum' name='[sum:Calculation_No_Of_Records:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[SEGMENT_BASE_COST_PARKING (data_state_fact)]' derivation='Sum' name='[sum:SEGMENT_BASE_COST_PARKING (data_state_fact):qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
-          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
-            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          <filter class='relative-time' column='[federated.1].[CREATE_HOUR (data_state_fact)]' direction='previous' include-future='false' include-null='false' period='DAY' quantity='7' unit='day' />
+          <filter class='categorical' column='[federated.1].[DATA_STATE (data_state_fact)]'>
+            <groupfilter function='member' level='[none:DATA_STATE (data_state_fact):nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_JMS_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
-          <filter class='relative-time' column='[federated.1abc2def].[dy:CREATE_HOUR:ok]' direction='previous' period='days' quantity='7' />
+          <filter class='categorical' column='[federated.1].[GATEWAY_REFERENCE (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:GATEWAY_REFERENCE (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[JOB_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:JOB_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[ORDER_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:ORDER_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <slices>
-            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
-            <column>[federated.1abc2def].[dy:CREATE_HOUR:ok]</column>
+            <column>[federated.1].[CREATE_HOUR (data_state_fact)]</column>
+            <column>[federated.1].[DATA_STATE (data_state_fact)]</column>
+            <column>[federated.1].[ORDER_ID (data_state_fact)]</column>
+            <column>[federated.1].[GATEWAY_REFERENCE (data_state_fact)]</column>
+            <column>[federated.1].[JOB_ID (data_state_fact)]</column>
           </slices>
           <aggregation value='true' />
         </view>
-        <style />
+        <style>
+          <style-rule element='cell'>
+            <format attr='width' field='[federated.1].[none:CLIENT_NAME (client_dimension):nk]' value='200' />
+          </style-rule>
+        </style>
         <panes>
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
               <breakdown value='auto' />
             </view>
-            <mark class='Text' />
+            <mark class='Bar' />
             <encodings>
-              <text column='[federated.1abc2def].[sum:Calculation_2:qk]' />
-              <text column='[federated.1abc2def].[sum:SEGMENT_BASE_COST_PARKING:qk]' />
+              <text column='[federated.1].[sum:Calculation_No_Of_Records:qk]' />
+              <text column='[federated.1].[sum:SEGMENT_BASE_COST_PARKING (data_state_fact):qk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
                 <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
               </style-rule>
             </style>
           </pane>
         </panes>
-        <rows />
-        <cols>([federated.1abc2def].[sum:Calculation_2:qk] + [federated.1abc2def].[sum:SEGMENT_BASE_COST_PARKING:qk])</cols>
+        <rows>[federated.1].[none:CLIENT_NAME (client_dimension):nk]</rows>
+        <cols>([federated.1].[sum:Calculation_No_Of_Records:qk] + [federated.1].[sum:SEGMENT_BASE_COST_PARKING (data_state_fact):qk])</cols>
       </table>
-      <simple-id uuid='{F6A7B8C9-D0E1-2345-F123-456789012345}' />
+      <simple-id uuid='{F6789012-3456-7890-ABCD-EF1234567890}' />
     </worksheet>
     <worksheet name='Pending Parking by Client'>
       <table>
         <view>
           <datasources>
-            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1abc2def' />
+            <datasource caption='Data Flow State - data_science.data_state_fact' name='federated.1' />
           </datasources>
-          <datasource-dependencies datasource='federated.1abc2def'>
-            <column caption='No of Records' datatype='integer' name='[Calculation_2]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='1' />
+          <datasource-dependencies datasource='federated.1'>
+            <column caption='No of Records' datatype='integer' name='[Calculation_No_Of_Records]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNT([ORDER_ID (data_state_fact)])' />
             </column>
-            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR]' role='dimension' type='ordinal' />
-            <column caption='Data State' datatype='string' name='[DATA_STATE]' role='dimension' type='nominal' />
-            <column caption='Parking Product Type' datatype='string' name='[PRODUCT_TYPE]' role='dimension' type='nominal' />
-            <column caption='Total Amount JMS' datatype='real' name='[TOTAL_AMOUNT_JMS]' role='measure' type='quantitative' />
-            <column-instance column='[CREATE_HOUR]' derivation='Month' name='[mn:CREATE_HOUR:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[DATA_STATE]' derivation='None' name='[none:DATA_STATE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[PRODUCT_TYPE]' derivation='None' name='[none:PRODUCT_TYPE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_2]' derivation='Sum' name='[sum:Calculation_2:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[TOTAL_AMOUNT_JMS]' derivation='Sum' name='[sum:TOTAL_AMOUNT_JMS:qk]' pivot='key' type='quantitative' />
+            <column caption='Client Name' datatype='string' name='[CLIENT_NAME (client_dimension)]' role='dimension' type='nominal' />
+            <column caption='Create Hour' datatype='datetime' name='[CREATE_HOUR (data_state_fact)]' role='dimension' type='datetime' />
+            <column caption='Data State' datatype='string' name='[DATA_STATE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Payment Gateway Reference' datatype='string' name='[GATEWAY_REFERENCE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Subledger Job ID' datatype='string' name='[JOB_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Order ID' datatype='string' name='[ORDER_ID (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Parking Product Type' datatype='string' name='[PRODUCT_TYPE (data_state_fact)]' role='dimension' type='nominal' />
+            <column caption='Total Amount JMS' datatype='real' name='[TOTAL_AMOUNT_JMS (data_state_fact)]' role='measure' type='quantitative' />
+            <column-instance column='[CLIENT_NAME (client_dimension)]' derivation='None' name='[none:CLIENT_NAME (client_dimension):nk]' pivot='key' type='nominal' />
+            <column-instance column='[PRODUCT_TYPE (data_state_fact)]' derivation='None' name='[none:PRODUCT_TYPE (data_state_fact):nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_No_Of_Records]' derivation='Sum' name='[sum:Calculation_No_Of_Records:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[TOTAL_AMOUNT_JMS (data_state_fact)]' derivation='Sum' name='[sum:TOTAL_AMOUNT_JMS (data_state_fact):qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
-          <filter class='categorical' column='[federated.1abc2def].[none:DATA_STATE:nk]'>
-            <groupfilter function='member' level='[none:DATA_STATE:nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          <filter class='relative-time' column='[federated.1].[CREATE_HOUR (data_state_fact)]' direction='current' include-future='false' include-null='false' period='MONTH' quantity='1' unit='month' />
+          <filter class='categorical' column='[federated.1].[DATA_STATE (data_state_fact)]'>
+            <groupfilter function='member' level='[none:DATA_STATE (data_state_fact):nk]' member='&quot;MISSING_IN_TRANSACTION_FACT_PENDING_PARKING_EVENT_3_OR_MORE_HOURS&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
-          <filter class='relative-time' column='[federated.1abc2def].[mn:CREATE_HOUR:ok]' direction='current' period='months' quantity='1' />
+          <filter class='categorical' column='[federated.1].[GATEWAY_REFERENCE (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:GATEWAY_REFERENCE (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[JOB_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:JOB_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1].[ORDER_ID (data_state_fact)]'>
+            <groupfilter function='level-members' level='[none:ORDER_ID (data_state_fact):nk]' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <slices>
-            <column>[federated.1abc2def].[none:DATA_STATE:nk]</column>
-            <column>[federated.1abc2def].[mn:CREATE_HOUR:ok]</column>
+            <column>[federated.1].[CREATE_HOUR (data_state_fact)]</column>
+            <column>[federated.1].[DATA_STATE (data_state_fact)]</column>
+            <column>[federated.1].[ORDER_ID (data_state_fact)]</column>
+            <column>[federated.1].[GATEWAY_REFERENCE (data_state_fact)]</column>
+            <column>[federated.1].[JOB_ID (data_state_fact)]</column>
           </slices>
           <aggregation value='true' />
         </view>
-        <style />
+        <style>
+          <style-rule element='cell'>
+            <format attr='width' field='[federated.1].[none:CLIENT_NAME (client_dimension):nk]' value='200' />
+            <format attr='width' field='[federated.1].[none:PRODUCT_TYPE (data_state_fact):nk]' value='150' />
+          </style-rule>
+        </style>
         <panes>
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
               <breakdown value='auto' />
             </view>
-            <mark class='Text' />
+            <mark class='Bar' />
             <encodings>
-              <text column='[federated.1abc2def].[sum:Calculation_2:qk]' />
-              <text column='[federated.1abc2def].[sum:TOTAL_AMOUNT_JMS:qk]' />
+              <text column='[federated.1].[sum:Calculation_No_Of_Records:qk]' />
+              <text column='[federated.1].[sum:TOTAL_AMOUNT_JMS (data_state_fact):qk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
                 <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
               </style-rule>
             </style>
           </pane>
         </panes>
-        <rows />
-        <cols>([federated.1abc2def].[none:PRODUCT_TYPE:nk] * ([federated.1abc2def].[sum:Calculation_2:qk] + [federated.1abc2def].[sum:TOTAL_AMOUNT_JMS:qk]))</cols>
+        <rows>[federated.1].[none:CLIENT_NAME (client_dimension):nk]</rows>
+        <cols>([federated.1].[none:PRODUCT_TYPE (data_state_fact):nk] * ([federated.1].[sum:Calculation_No_Of_Records:qk] + [federated.1].[sum:TOTAL_AMOUNT_JMS (data_state_fact):qk]))</cols>
       </table>
-      <simple-id uuid='{A7B8C9D0-E1F2-3456-1234-567890123456}' />
+      <simple-id uuid='{78901234-5678-90AB-CDEF-1234567890AB}' />
     </worksheet>
   </worksheets>
   <dashboards>
-    <dashboard name='Data Flow State' type='tiled'>
+    <dashboard name='Data Flow State'>
       <style />
       <size maxheight='800' maxwidth='1000' minheight='800' minwidth='1000' />
       <zones>
@@ -939,7 +1071,7 @@
           <size maxheight='800' maxwidth='1000' minheight='800' minwidth='1000' />
         </devicelayout>
       </devicelayouts>
-      <simple-id uuid='{B8C9D0E1-F2A3-4567-2345-678901234567}' />
+      <simple-id uuid='{90123456-7890-ABCD-EF12-34567890ABCD}' />
     </dashboard>
   </dashboards>
   <windows source-height='30'>
@@ -967,11 +1099,11 @@
       <viewpoint>
         <highlight>
           <color-one-way>
-            <field>[federated.1abc2def].[none:Calculation_1:nk]</field>
+            <field>[federated.1].[none:Calculation_Data_State_Refactored:nk]</field>
           </color-one-way>
         </highlight>
       </viewpoint>
-      <simple-id uuid='{C9D0E1F2-A3B4-5678-3456-789012345678}' />
+      <simple-id uuid='{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}' />
     </window>
     <window class='worksheet' name='Records Ingested'>
       <cards>
@@ -994,7 +1126,7 @@
           </strip>
         </edge>
       </cards>
-      <simple-id uuid='{D0E1F2A3-B4C5-6789-4567-890123456789}' />
+      <simple-id uuid='{B2C3D4E5-F678-90AB-CDEF-1234567890AB}' />
     </window>
     <window class='worksheet' name='Missing in Transaction Fact 3h+'>
       <cards>
@@ -1017,7 +1149,7 @@
           </strip>
         </edge>
       </cards>
-      <simple-id uuid='{E1F2A3B4-C5D6-7890-5678-901234567890}' />
+      <simple-id uuid='{C3D4E5F6-7890-ABCD-EF12-34567890ABCD}' />
     </window>
     <window class='worksheet' name='Pending JMS 3h+'>
       <cards>
@@ -1040,7 +1172,7 @@
           </strip>
         </edge>
       </cards>
-      <simple-id uuid='{F2A3B4C5-D6E7-8901-6789-012345678901}' />
+      <simple-id uuid='{D4E5F678-90AB-CDEF-1234-567890ABCDEF}' />
     </window>
     <window class='worksheet' name='Pending Parking 3h+'>
       <cards>
@@ -1063,7 +1195,7 @@
           </strip>
         </edge>
       </cards>
-      <simple-id uuid='{A3B4C5D6-E7F8-9012-7890-123456789012}' />
+      <simple-id uuid='{E5F67890-ABCD-EF12-3456-7890ABCDEF12}' />
     </window>
     <window class='worksheet' name='Pending JMS by Client'>
       <cards>
@@ -1086,7 +1218,7 @@
           </strip>
         </edge>
       </cards>
-      <simple-id uuid='{B4C5D6E7-F8A9-0123-8901-234567890123}' />
+      <simple-id uuid='{F6789012-3456-7890-ABCD-EF1234567890}' />
     </window>
     <window class='worksheet' name='Pending Parking by Client'>
       <cards>
@@ -1109,14 +1241,17 @@
           </strip>
         </edge>
       </cards>
-      <simple-id uuid='{C5D6E7F8-A9B0-1234-9012-345678901234}' />
+      <simple-id uuid='{78901234-5678-90AB-CDEF-1234567890AB}' />
     </window>
     <window class='dashboard' name='Data Flow State'>
       <viewpoints>
+        <viewpoint name='Data Flow State Table'>
+          <zoom type='entire-view' />
+        </viewpoint>
         <viewpoint name='Records Ingested'>
           <zoom type='entire-view' />
         </viewpoint>
-        <viewpoint name='Data Flow State Table'>
+        <viewpoint name='Missing in Transaction Fact 3h+'>
           <zoom type='entire-view' />
         </viewpoint>
         <viewpoint name='Pending JMS 3h+'>
@@ -1125,18 +1260,15 @@
         <viewpoint name='Pending Parking 3h+'>
           <zoom type='entire-view' />
         </viewpoint>
-        <viewpoint name='Pending Parking by Client'>
-          <zoom type='entire-view' />
-        </viewpoint>
-        <viewpoint name='Missing in Transaction Fact 3h+'>
-          <zoom type='entire-view' />
-        </viewpoint>
         <viewpoint name='Pending JMS by Client'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Pending Parking by Client'>
           <zoom type='entire-view' />
         </viewpoint>
       </viewpoints>
       <active id='-1' />
-      <simple-id uuid='{D6E7F8A9-B0C1-2345-0123-456789012345}' />
+      <simple-id uuid='{90123456-7890-ABCD-EF12-34567890ABCD}' />
     </window>
   </windows>
 </workbook>
