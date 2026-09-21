@@ -1,10 +1,6 @@
-Iteration 1:
+[ERROR] Attempt 1 of 3 — Input files not found in GitHub repository. The following files are missing from DI TABLEAU WORKBOOK GENERATION_Input folder:
+- bronze_usp_Load_bronze_Layer_Full.sql
+- Review_Input.txt
+- Quality_dim.txt
 
-Step 1:
-- Extracted the agent's role, goal, backstory, description, and expected output using the metadata extractor.
-- Created the Goal file and Instruction file and wrote both to GitHub at mahak.mudgal@ascendion.com/DI TABLEAU WORKBOOK GENERATION_Output/DI TABLEAU WORKBOOK GENERATION_Instruction/.
-- GitHub URLs:
-  - 58339_Goal.md: https://github.com/ELANSURIYAA/aTune/blob/main/mahak.mudgal@ascendion.com/DI TABLEAU WORKBOOK GENERATION_Output/DI TABLEAU WORKBOOK GENERATION_Instruction/58339_Goal.md
-  - 58339_Instruction.md: https://github.com/ELANSURIYAA/aTune/blob/main/mahak.mudgal@ascendion.com/DI TABLEAU WORKBOOK GENERATION_Output/DI TABLEAU WORKBOOK GENERATION_Instruction/58339_Instruction.md
-- Validation: I checked that 58339_Goal.md and 58339_Instruction.md exist in the correct location with content present. Both files verified.
-- Decision: All outputs verified so I am proceeding to Step 2.
+These files are required to proceed with the aTune process. Stopping execution until input files are available in the repository.
