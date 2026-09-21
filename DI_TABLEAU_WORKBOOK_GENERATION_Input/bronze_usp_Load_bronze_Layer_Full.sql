@@ -1,2 +1,0 @@
--- Placeholder input file for DI TABLEAU WORKBOOK GENERATION agent
--- This file will be replaced with actual input during agent execution
